@@ -1,0 +1,38 @@
+<h1>Events</h1>
+<a routerLink="add" class="btn btn-sm btn-success mb-2">Create Event</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th style="width:10%">Image</th>
+            <th style="width:20%">Name</th>
+            <th style="width:15%">Date</th>
+            <th style="width:20%">Location</th>
+            <th style="width:10%">Price</th>
+            <th style="width:15%">Category</th>
+            <th style="width:10%"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let event of events">
+            <td>
+                <img [src]="'http://localhost:4000/' + event.image" alt="{{ event.name }}" width="100" height="100" />
+            </td>
+            <td>{{ event.name }}</td>
+            <td>{{ event.date | date }}</td>
+            <td>{{ event.location }}</td>
+            <td>{{ event.price }}</td>
+            <td>{{ event.category }}</td>
+            <td style="white-space: nowrap">
+                <a routerLink="edit/{{ event.id }}" class="btn btn-sm btn-primary mr-1">Edit</a>
+                <button (click)="deleteEvent(event.id)" class="btn btn-sm btn-danger btn-delete-event">
+                    <span>Delete</span>
+                </button>
+            </td>
+        </tr>
+        <tr *ngIf="!events.length">
+            <td colspan="7" class="text-center">
+                <span>No events available</span>
+            </td>
+        </tr>
+    </tbody>
+</table>

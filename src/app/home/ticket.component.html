@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .ticket {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        p {
+            color: #666;
+        }
+        .ticket-details {
+            margin-top: 30px;
+            border-top: 1px dashed #ccc;
+            padding-top: 20px;
+        }
+        .ticket-number {
+            font-weight: bold;
+            font-size: 24px;
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .instructions {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="ticket">
+        <h2>Thank You for Registering!</h2>
+        <p>You have successfully registered for the event. Below are the details of your registration:</p>
+        <div class="ticket-details">
+          <p><strong>Ticket Number:</strong> {{ ticket_number }}</p>
+          <p><strong>Participant Name:</strong> {{account.title}} {{account.firstName}} {{account.lastName}}</p>
+          <p><strong>Participant Email:</strong> {{account.email}} </p>
+          <p><strong>Instructions:</strong> Please bring a copy of this ticket along with a valid ID to the event venue.</p>
+          <p><strong>Name:</strong>{{ event.name }}</p>
+          <p><strong>Date:</strong> {{ event.date | date }}</p>
+          <p><strong>Location:</strong> {{ event.location }}</p>
+        </div>
+        
+        <p>If you have any questions or need assistance, please don't hesitate to contact us at support&#64;speedyfy.com.</p>
+        <p>Enjoy the event!</p>
+    </div>
+</body>
+</html>

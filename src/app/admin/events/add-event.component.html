@@ -1,0 +1,64 @@
+<h1 *ngIf="isAddMode">Create Event</h1>
+<h1 *ngIf="!isAddMode">Edit Event</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
+        <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+            <div *ngIf="f.name.errors.required">Name is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Photo</label>
+        <input type="file" (change)="onFileSelected($event)" class="form-control-file" />
+    </div> <!-- Closing div added here -->
+    <div class="form-group">
+        <label>Description</label>
+        <textarea formControlName="description" class="form-control" rows="3" [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
+        <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+            <div *ngIf="f.description.errors.required">Description is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Category</label>
+        <select formControlName="category" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.category.errors }">
+                <option value="Half Marathon">Half Marathon</option>
+                <option value="Full Marathon">Full Marathon</option>
+                <option value="Ultra Marathon">Ultra Marathon</option>
+                <option value="Duathlon">Duathlon</option>
+                <option value="5K Marathon">5K Marathon</option>
+                <option value="10K Marathon">10K Marathon</option>
+        </select>
+        <div *ngIf="submitted && f.category.errors" class="invalid-feedback">
+            <div *ngIf="f.category.errors.required">Category is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Date</label>
+        <input type="date" formControlName="date" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.date.errors }" />
+        <div *ngIf="submitted && f.date.errors" class="invalid-feedback">
+            <div *ngIf="f.date.errors.required">Date is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Location</label>
+        <input type="text" formControlName="location" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.location.errors }" />
+        <div *ngIf="submitted && f.location.errors" class="invalid-feedback">
+            <div *ngIf="f.location.errors.required">Location is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Price</label>
+        <input type="number" formControlName="price" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.price.errors }" />
+        <div *ngIf="submitted && f.price.errors" class="invalid-feedback">
+            <div *ngIf="f.price.errors.required">Price is required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Save
+        </button>
+        <button type="button" class="btn btn-secondary ml-2" (click)="onCancel()">Cancel</button>
+    </div>
+</form>
