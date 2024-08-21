@@ -25,12 +25,10 @@ export class RegisterComponent implements OnInit {
             acc_firstname: ['', Validators.required],
             acc_lastname: ['', Validators.required],
             acc_email: ['', [Validators.required, Validators.email]],
-            acc_pnumber: ['', [Validators.required, Validators.pattern('^[0-9]{10,12}$')]], // Adjust the pattern as needed
+            acc_pnumber: ['', [Validators.required, Validators.pattern('^[0-9]{10,12}$')]],
             acc_passwordHash: ['', [Validators.required, Validators.minLength(6)]],
             confirmPassword: ['', Validators.required],
-            acc_role: ['', Validators.required],  // Include this line
-            acc_gender: ['', Validators.required], // New field for gender
-            acceptTerms: [false, Validators.requiredTrue]
+            acc_acceptTerms: [true, Validators.requiredTrue]
         }, {
             validator: MustMatch('acc_passwordHash', 'confirmPassword')
         });        

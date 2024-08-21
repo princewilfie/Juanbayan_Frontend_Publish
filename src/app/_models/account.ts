@@ -7,7 +7,6 @@ export class Account {
     acc_firstname: string;
     acc_lastname: string;
     acc_pnumber: string;
-    acc_gender: string; // New field for gender
     acc_image: string;
     acc_totalpoints: number = 0;
     acc_role: Role;

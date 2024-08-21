@@ -16,29 +16,7 @@
                     <div *ngIf="f.acc_lastname.errors.required">Last Name is required</div>
                 </div>
             </div>
-            <div class="form-group col-5">
-                <label>Gender</label>
-                <select formControlName="acc_gender" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.acc_gender.errors }">
-                    <option value="" disabled selected>Select Gender</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                </select>
-                <div *ngIf="submitted && f.acc_gender.errors" class="invalid-feedback">
-                    <div *ngIf="f.acc_gender.errors.required">Gender is required</div>
-                </div>
-            </div>
         </div>
-        <div class="form-group">
-            <label>Role</label>
-            <select formControlName="acc_role" class="form-control">
-                <option value="" disabled selected>Select Role</option>
-                <option value="Donor">Donor</option>
-                <option value="Beneficiary">Beneficiary</option>
-            </select>
-            <div *ngIf="submitted && f.acc_role.errors" class="invalid-feedback">
-                <div *ngIf="f.acc_role.errors.required">Role is required</div>
-            </div>
-        </div>        
         <div class="form-group">
             <label>Contact Number</label>
             <input type="text" formControlName="acc_pnumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.acc_pnumber.errors }" />
