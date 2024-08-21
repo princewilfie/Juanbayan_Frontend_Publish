@@ -22,17 +22,20 @@ export class RegisterComponent implements OnInit {
 
     ngOnInit() {
         this.form = this.formBuilder.group({
-            title: ['', Validators.required],
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
-            email: ['', [Validators.required, Validators.email]],
-            password: ['', [Validators.required, Validators.minLength(6)]],
+            acc_firstname: ['', Validators.required],
+            acc_lastname: ['', Validators.required],
+            acc_email: ['', [Validators.required, Validators.email]],
+            acc_pnumber: ['', [Validators.required, Validators.pattern('^[0-9]{10,12}$')]], // Adjust the pattern as needed
+            acc_passwordHash: ['', [Validators.required, Validators.minLength(6)]],
             confirmPassword: ['', Validators.required],
+            acc_role: ['', Validators.required],  // Include this line
+            acc_gender: ['', Validators.required], // New field for gender
             acceptTerms: [false, Validators.requiredTrue]
         }, {
-            validator: MustMatch('password', 'confirmPassword')
-        });
+            validator: MustMatch('acc_passwordHash', 'confirmPassword')
+        });        
     }
+    
 
     // convenience getter for easy access to form fields
     get f() { return this.form.controls; }
@@ -49,7 +52,14 @@ export class RegisterComponent implements OnInit {
         }
 
         this.loading = true;
-        this.accountService.register(this.form.value)
+
+         // Add acc_totalpoints to the registration payload with default value of 0
+         const registrationPayload = {
+            ...this.form.value,
+            acc_totalpoints: 0 // Set default value for acc_totalpoints
+        };
+        
+        this.accountService.register(registrationPayload)
             .pipe(first())
             .subscribe({
                 next: () => {

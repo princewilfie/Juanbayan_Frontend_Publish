@@ -2,49 +2,66 @@
 <div class="card-body">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="form-row">
-            <div class="form-group col">
-                <label>Title</label>
-                <select formControlName="title" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
-                    <option value=""></option>
-                    <option value="Mr">Mr</option>
-                    <option value="Mrs">Mrs</option>
-                    <option value="Miss">Miss</option>
-                    <option value="Ms">Ms</option>
-                </select>
-                <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
-                    <div *ngIf="f.title.errors.required">Title is required</div>
-                </div>
-            </div>
             <div class="form-group col-5">
                 <label>First Name</label>
-                <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
-                <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-                    <div *ngIf="f.firstName.errors.required">First Name is required</div>
+                <input type="text" formControlName="acc_firstname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.acc_firstname.errors }" />
+                <div *ngIf="submitted && f.acc_firstname.errors" class="invalid-feedback">
+                    <div *ngIf="f.acc_firstname.errors.required">First Name is required</div>
                 </div>
             </div>
             <div class="form-group col-5">
                 <label>Last Name</label>
-                <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
-                <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
-                    <div *ngIf="f.lastName.errors.required">Last Name is required</div>
+                <input type="text" formControlName="acc_lastname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.acc_lastname.errors }" />
+                <div *ngIf="submitted && f.acc_lastname.errors" class="invalid-feedback">
+                    <div *ngIf="f.acc_lastname.errors.required">Last Name is required</div>
+                </div>
+            </div>
+            <div class="form-group col-5">
+                <label>Gender</label>
+                <select formControlName="acc_gender" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.acc_gender.errors }">
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+                <div *ngIf="submitted && f.acc_gender.errors" class="invalid-feedback">
+                    <div *ngIf="f.acc_gender.errors.required">Gender is required</div>
                 </div>
             </div>
         </div>
         <div class="form-group">
+            <label>Role</label>
+            <select formControlName="acc_role" class="form-control">
+                <option value="" disabled selected>Select Role</option>
+                <option value="Donor">Donor</option>
+                <option value="Beneficiary">Beneficiary</option>
+            </select>
+            <div *ngIf="submitted && f.acc_role.errors" class="invalid-feedback">
+                <div *ngIf="f.acc_role.errors.required">Role is required</div>
+            </div>
+        </div>        
+        <div class="form-group">
+            <label>Contact Number</label>
+            <input type="text" formControlName="acc_pnumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.acc_pnumber.errors }" />
+            <div *ngIf="submitted && f.acc_pnumber.errors" class="invalid-feedback">
+                <div *ngIf="f.acc_pnumber.errors.required">Contact Number is required</div>
+                <div *ngIf="f.acc_pnumber.errors.pattern">Contact Number must be a valid phone number</div>
+            </div>
+        </div>
+        <div class="form-group">
             <label>Email</label>
-            <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
-            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                <div *ngIf="f.email.errors.required">Email is required</div>
-                <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+            <input type="text" formControlName="acc_email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.acc_email.errors }" />
+            <div *ngIf="submitted && f.acc_email.errors" class="invalid-feedback">
+                <div *ngIf="f.acc_email.errors.required">Email is required</div>
+                <div *ngIf="f.acc_email.errors.email">Email must be a valid email address</div>
             </div>
         </div>
         <div class="form-row">
             <div class="form-group col">
                 <label>Password</label>
-                <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
-                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                    <div *ngIf="f.password.errors.required">Password is required</div>
-                    <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                <input type="password" formControlName="acc_passwordHash" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.acc_passwordHash.errors }" />
+                <div *ngIf="submitted && f.acc_passwordHash.errors" class="invalid-feedback">
+                    <div *ngIf="f.acc_passwordHash.errors.required">Password is required</div>
+                    <div *ngIf="f.acc_passwordHash.errors.minlength">Password must be at least 6 characters</div>
                 </div>
             </div>
             <div class="form-group col">

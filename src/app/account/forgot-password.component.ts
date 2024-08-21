@@ -18,7 +18,7 @@ export class ForgotPasswordComponent implements OnInit {
 
     ngOnInit() {
         this.form = this.formBuilder.group({
-            email: ['', [Validators.required, Validators.email]]
+            acc_email: ['', [Validators.required, Validators.email]]
         });
     }
 
@@ -38,7 +38,7 @@ export class ForgotPasswordComponent implements OnInit {
 
         this.loading = true;
         this.alertService.clear();
-        this.accountService.forgotPassword(this.f.email.value)
+        this.accountService.forgotPassword(this.f.acc_email.value)
             .pipe(first())
             .pipe(finalize(() => this.loading = false))
             .subscribe({

@@ -26,8 +26,8 @@ export class AccountService {
         return this.accountSubject.value;
     }
 
-    login(email: string, password: string) {
-        return this.http.post<any>(`${baseUrl}/authenticate`, { email, password }, { withCredentials: true })
+    login(acc_email: string, acc_passwordHash: string) {
+        return this.http.post<any>(`${baseUrl}/authenticate`, { acc_email, acc_passwordHash }, { withCredentials: true })
             .pipe(map(account => {
                 this.accountSubject.next(account);
                 this.startRefreshTokenTimer();
@@ -58,9 +58,11 @@ export class AccountService {
     verifyEmail(token: string) {
         return this.http.post(`${baseUrl}/verify-email`, { token });
     }
+
+    
     
     forgotPassword(email: string) {
-        return this.http.post(`${baseUrl}/forgot-password`, { email });
+        return this.http.post(`${baseUrl}/forgot-password`, { acc_email: email });
     }
     
     validateResetToken(token: string) {

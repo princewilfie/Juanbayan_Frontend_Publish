@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
         }
 
         this.loading = true;
-        this.accountService.login(this.f.email.value, this.f.password.value)
+        this.accountService.login(this.f.acc_email.value, this.f.acc_passwordHash.value)
             .pipe(first())
             .subscribe({
                 next: () => {

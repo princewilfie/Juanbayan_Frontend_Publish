@@ -31,10 +31,10 @@ export class ResetPasswordComponent implements OnInit {
 
     ngOnInit() {
         this.form = this.formBuilder.group({
-            password: ['', [Validators.required, Validators.minLength(6)]],
+            acc_passwordHash: ['', [Validators.required, Validators.minLength(6)]],
             confirmPassword: ['', Validators.required],
         }, {
-            validator: MustMatch('password', 'confirmPassword')
+            validator: MustMatch('acc_passwordHash', 'confirmPassword')
         });
 
         const token = this.route.snapshot.queryParams['token'];
@@ -70,7 +70,7 @@ export class ResetPasswordComponent implements OnInit {
         }
 
         this.loading = true;
-        this.accountService.resetPassword(this.token, this.f.password.value, this.f.confirmPassword.value)
+        this.accountService.resetPassword(this.token, this.f.acc_passwordHash.value, this.f.confirmPassword.value)
             .pipe(first())
             .subscribe({
                 next: () => {
