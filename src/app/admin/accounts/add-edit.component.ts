@@ -57,18 +57,7 @@ export class AddEditComponent implements OnInit {
     onSubmit() {
         this.submitted = true;
         this.alertService.clear();
-    
-        if (this.form.invalid) {
-            // Log individual form control errors
-            Object.keys(this.form.controls).forEach(key => {
-                const controlErrors = this.form.get(key).errors;
-                if (controlErrors) {
-                    console.log(`Form control errors for ${key}:`, controlErrors);
-                }
-            });
-            return;
-        }
-    
+
         this.loading = true;
         if (this.isAddMode) {
             this.createAccount();
@@ -80,11 +69,6 @@ export class AddEditComponent implements OnInit {
 
     private createAccount() {
     const formData = this.form.value;
-
-    // Ensure that the acc_role field is correctly set
-    if (!formData.acc_role) {
-        formData.acc_role = this.form.get('acc_role').value;
-    }
 
     console.log("Creating account with data:", formData); // Log to inspect
 
@@ -103,7 +87,6 @@ export class AddEditComponent implements OnInit {
         });
 }
 
-    
 
     private updateAccount() {
         this.accountService.update(this.id, this.form.value)

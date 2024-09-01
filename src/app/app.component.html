@@ -7,11 +7,15 @@
             <span class="ml-2">JUANBAYAN</span>
         </a>
         <div class="navbar-nav">
-            <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-item nav-link">Home</a>
             <a routerLink="/profile" routerLinkActive="active" class="nav-item nav-link">Profile</a>
             <a *ngIf="account.acc_role === Role.Admin" routerLink="/admin" routerLinkActive="active" class="nav-item nav-link">Admin</a>
             <a (click)="logout()" class="nav-item nav-link">Logout</a>
         </div>
     </nav>
+
+        <!-- subnav router outlet <router-outlet name="subnav"></router-outlet>-->
+
+        <!-- global alert -->
+        <alert></alert>
     <router-outlet></router-outlet>
 </div>
