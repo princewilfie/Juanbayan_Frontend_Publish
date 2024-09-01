@@ -27,13 +27,25 @@ export class AccountService {
     }
 
     login(acc_email: string, acc_passwordHash: string) {
-        return this.http.post<any>(`${baseUrl}/authenticate`, { acc_email, acc_passwordHash }, { withCredentials: true })
-            .pipe(map(account => {
-                this.accountSubject.next(account);
-                this.startRefreshTokenTimer();
-                return account;
-            }));
-    }
+    return this.http.post<any>(`${baseUrl}/authenticate`, { acc_email, acc_passwordHash }, { withCredentials: true })
+        .pipe(map(account => {
+            console.log('Logged in account:', account); // Debugging line
+            this.accountSubject.next(account);
+            this.startRefreshTokenTimer();
+            
+            // Redirect based on role
+            if (account.acc_role === 'Admin') {
+                console.log('Redirecting to Admin dashboard'); // Debugging line
+                this.router.navigate(['/admin']);
+            } else {
+                console.log('Redirecting to User dashboard'); // Debugging line
+                this.router.navigate(['/']);
+            }
+
+            return account;
+        }));
+}
+
 
     logout() {
         this.http.post<any>(`${baseUrl}/revoke-token`, {}, { withCredentials: true }).subscribe();
@@ -112,15 +124,12 @@ export class AccountService {
     private refreshTokenTimeout;
 
     private startRefreshTokenTimer() {
-        // parse json object from base64 encoded jwt token
         const jwtToken = JSON.parse(atob(this.accountValue.jwtToken.split('.')[1]));
-
-        // set a timeout to refresh the token a minute before it expires
         const expires = new Date(jwtToken.exp * 1000);
         const timeout = expires.getTime() - Date.now() - (60 * 1000);
         this.refreshTokenTimeout = setTimeout(() => this.refreshToken().subscribe(), timeout);
     }
-
+    
     private stopRefreshTokenTimer() {
         clearTimeout(this.refreshTokenTimeout);
     }

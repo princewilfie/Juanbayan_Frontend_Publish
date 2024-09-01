@@ -7,14 +7,14 @@
             <th style="width:30%">Name</th>
             <th style="width:30%">Email</th>
             <th style="width:30%">Role</th>
-            <th style="width:10%"></th>
+            <th style="width:10%">Actions</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let account of accounts">
-            <td>{{account.title}} {{account.firstName}} {{account.lastName}}</td>
-            <td>{{account.email}}</td>
-            <td>{{account.role}}</td>
+            <td> {{account.acc_firstname}} {{account.acc_lastname}}</td>
+            <td>{{account.acc_email}}</td>
+            <td>{{account.acc_role}}</td>
             <td style="white-space: nowrap">
                 <a routerLink="edit/{{account.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
                 <button (click)="deleteAccount(account.id)" class="btn btn-sm btn-danger btn-delete-account" [disabled]="account.isDeleting">

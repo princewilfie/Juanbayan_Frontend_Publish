@@ -5,22 +5,26 @@
             <label>First Name</label>
             <input type="text" formControlName="acc_firstname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.acc_firstname.errors }" />
             <div *ngIf="submitted && f.acc_firstname.errors" class="invalid-feedback">
-                <div *ngIf="f.acc_firstname.errors.required">First Name is required</div>
             </div>
         </div>
         <div class="form-group col-5">
             <label>Last Name</label>
             <input type="text" formControlName="acc_lastname" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.acc_lastname.errors }" />
             <div *ngIf="submitted && f.acc_lastname.errors" class="invalid-feedback">
-                <div *ngIf="f.acc_lastname.errors.required">Last Name is required</div>
             </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Contact Number</label>
+        <input type="text" formControlName="acc_pnumber" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.acc_pnumber.errors }" />
+        <div *ngIf="submitted && f.acc_pnumber.errors" class="invalid-feedback">
+            <div *ngIf="f.acc_pnumber.errors.pattern">Contact Number must be a valid phone number</div>
         </div>
     </div>
     <div class="form-group">
         <label>Email</label>
         <input type="text" formControlName="acc_email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.acc_email.errors }" />
         <div *ngIf="submitted && f.acc_email.errors" class="invalid-feedback">
-            <div *ngIf="f.acc_email.errors.required">Email is required</div>
             <div *ngIf="f.acc_email.errors.email">Email must be a valid email address</div>
         </div>
     </div>
@@ -30,8 +34,7 @@
         <div class="form-group col">
             <label>Password</label>
             <input type="password" formControlName="acc_passwordHash" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.acc_passwordHash.errors }" />
-            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                <div *ngIf="f.acc_passwordHash.errors.required">Password is required</div>
+            <div *ngIf="submitted && f.acc_passwordHash.errors" class="invalid-feedback">
                 <div *ngIf="f.acc_passwordHash.errors.minlength">Password must be at least 6 characters</div>
             </div>
         </div>

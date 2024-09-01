@@ -28,12 +28,11 @@ export class RegisterComponent implements OnInit {
             acc_pnumber: ['', [Validators.required, Validators.pattern('^[0-9]{10,12}$')]],
             acc_passwordHash: ['', [Validators.required, Validators.minLength(6)]],
             confirmPassword: ['', Validators.required],
-            acc_acceptTerms: [true, Validators.requiredTrue]
+            acc_acceptTerms: [false, Validators.requiredTrue]
         }, {
             validator: MustMatch('acc_passwordHash', 'confirmPassword')
-        });        
+        });
     }
-    
 
     // convenience getter for easy access to form fields
     get f() { return this.form.controls; }
@@ -50,14 +49,7 @@ export class RegisterComponent implements OnInit {
         }
 
         this.loading = true;
-
-         // Add acc_totalpoints to the registration payload with default value of 0
-         const registrationPayload = {
-            ...this.form.value,
-            acc_totalpoints: 0 // Set default value for acc_totalpoints
-        };
-        
-        this.accountService.register(registrationPayload)
+        this.accountService.register(this.form.value)
             .pipe(first())
             .subscribe({
                 next: () => {

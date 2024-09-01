@@ -3,8 +3,6 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 
 import { AccountService } from '@app/_services';
 
-
-
 @Injectable({ providedIn: 'root' })
 export class AuthGuard {
     constructor(
@@ -14,20 +12,32 @@ export class AuthGuard {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const account = this.accountService.accountValue;
+        const targetRoute = state.url;
+    
+        console.log('AuthGuard - Account Value:', account);
+    
         if (account) {
-            // check if route is restricted by role
             if (route.data.roles && !route.data.roles.includes(account.acc_role)) {
-                // role not authorized so redirect to home page
+                console.log('Role not authorized:', account.acc_role);
                 this.router.navigate(['/']);
                 return false;
             }
-
-            // authorized so return true
+    
+            // Avoid redirect loop
+            if (account.acc_role === 'Admin' && targetRoute !== '/admin') {
+                console.log('Redirecting to Admin');
+                this.router.navigate(['/admin']);
+                return false;
+            }
+    
+            console.log('Role authorized:', account.acc_role);
             return true;
         }
-
-        // not logged in so redirect to login page with the return url 
+    
+        console.log('Not logged in, redirecting to login page');
         this.router.navigate(['/account/login'], { queryParams: { returnUrl: state.url }});
         return false;
     }
+    
+    
 }

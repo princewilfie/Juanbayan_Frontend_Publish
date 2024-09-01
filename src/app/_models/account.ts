@@ -10,5 +10,6 @@ export class Account {
     acc_image: string;
     acc_totalpoints: number = 0;
     acc_role: Role;
+    acc_acceptTerms: string;
     jwtToken?: string;
 }

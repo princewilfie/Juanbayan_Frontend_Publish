@@ -26,6 +26,7 @@ export class UpdateComponent implements OnInit {
         this.form = this.formBuilder.group({
             acc_firstname: [this.account.acc_firstname, Validators.required],
             acc_lastname: [this.account.acc_lastname, Validators.required],
+            acc_pnumber: ['', [Validators.required, Validators.pattern('^[0-9]{10,12}$')]],
             acc_email: [this.account.acc_email, [Validators.required, Validators.email]],
             acc_passwordHash: ['', [Validators.minLength(6)]],
             confirmPassword: ['']

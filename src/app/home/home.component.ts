@@ -1,10 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AccountService, AlertService } from '@app/_services';
 
-import { AccountService } from '@app/_services';
+@Component({
+  templateUrl: 'home.component.html'
+})
+export class HomeComponent implements OnInit {
+  account = this.accountService.accountValue;
 
-@Component({ templateUrl: 'home.component.html' })
-export class HomeComponent {
-    account = this.accountService.accountValue;
 
-    constructor(private accountService: AccountService) { }
+  constructor(
+    private accountService: AccountService, 
+    private router: Router, 
+    private alertService: AlertService
+  ) { }
+
+  ngOnInit() {
+  }
 }
