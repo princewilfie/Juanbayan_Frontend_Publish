@@ -1,10 +1,7 @@
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-7 mt-5">
-            <div class="card shadow-lg">
-                <div class="card-header bg-primary text-white">
-                    <h3 class="mb-0">JUANBAYAN</h3>
-                </div>
+<div class="container-fluid d-flex justify-content-center align-items-center bud">
+    <div class="row">
+        <div class="col-md-6 col-lg-7">
+            <div class="card shadow-lg">    
                 <div class="card-body">
                     <router-outlet></router-outlet>
                 </div>
@@ -12,3 +9,41 @@
         </div>
     </div>
 </div>
+
+<style>
+    /* Ensure container takes full viewport height */
+    .container-fluid {
+        height: 90vh; /* Full viewport height */
+    }
+
+    /* Center content horizontally and vertically */
+    .d-flex {
+        display: flex;
+    }
+
+    .justify-content-center {
+        justify-content: center;
+    }
+
+    .align-items-center {
+        align-items: center;
+    }
+
+    /* Optional: Add margin to the card for spacing */
+    .card {
+        margin: 20px; /* Adjust as needed */
+    }
+
+
+    .bud {
+	background: #ffffff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	font-family: 'Montserrat', sans-serif;
+	height: 90vh;
+	margin: -20px 0 50px;
+}
+
+</style>

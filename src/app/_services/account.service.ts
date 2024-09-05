@@ -27,34 +27,34 @@ export class AccountService {
     }
 
     login(acc_email: string, acc_passwordHash: string) {
-    return this.http.post<any>(`${baseUrl}/authenticate`, { acc_email, acc_passwordHash }, { withCredentials: true })
-        .pipe(map(account => {
-            console.log('Logged in account:', account); // Debugging line
-            this.accountSubject.next(account);
-            this.startRefreshTokenTimer();
-            
-            // Redirect based on role
-            if (account.acc_role === 'Admin') {
-                console.log('Redirecting to Admin dashboard'); // Debugging line
-                this.router.navigate(['/admin']);
-            } else {
-                console.log('Redirecting to User dashboard'); // Debugging line
-                this.router.navigate(['/']);
-            }
-
-            return account;
-        }));
+        return this.http.post<any>(`${baseUrl}/authenticate`, { acc_email, acc_passwordHash }, { withCredentials: true })
+            .pipe(map(account => {
+                // store account details in local storage to keep user logged in between page refreshes
+                localStorage.setItem('account', JSON.stringify(account));
+                this.accountSubject.next(account);
+                this.startRefreshTokenTimer();
+    
+                // Redirect based on role
+                if (account.acc_role === 'Admin') {
+                    this.router.navigate(['/admin']);
+                } else {
+                    this.router.navigate(['/']);
+                }
+    
+                return account;
+            }));
     }
-
-
+    
     logout() {
         return this.http.post<any>(`${baseUrl}/revoke-token`, {}, { withCredentials: true })
             .pipe(finalize(() => {
                 this.stopRefreshTokenTimer();
+                localStorage.removeItem('account');
                 this.accountSubject.next(null);
                 this.router.navigate(['/account/login']);
             })).subscribe();
     }
+    
 
 
     refreshToken() {

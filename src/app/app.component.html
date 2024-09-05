@@ -1,21 +1,24 @@
 <div class="app-container" [ngClass]="{ 'bg-light': account }">
-    <nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="account">
-        <a class="navbar-brand" href="#">
-            <img src="assets/jb-symbol-logo.png" alt="JUANBAYAN Logo" height="40">
-        </a>
-        <a class="navbar-brand" href="#">
-            <span class="ml-2">JUANBAYAN</span>
-        </a>
-        <div class="navbar-nav">
-            <a routerLink="/profile" routerLinkActive="active" class="nav-item nav-link">Profile</a>
-            <a *ngIf="account.acc_role === Role.Admin" routerLink="/admin" routerLinkActive="active" class="nav-item nav-link">Admin</a>
-            <a (click)="logout()" class="nav-item nav-link">Logout</a>
-        </div>
-    </nav>
+    <!-- Conditionally display the navbar -->
+    <ng-container *ngIf="showNavbar">
+        <nav class="navbar navbar-expand navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">
+                <img src="assets/jb-symbol-logo.png" alt="JUANBAYAN Logo" height="40">
+            </a>
+            <a class="navbar-brand" href="#">
+                <span class="ml-2">JUANBAYAN</span>
+            </a>
+            <div class="navbar-nav">
+                <a routerLink="/profile" routerLinkActive="active" class="nav-item nav-link">Profile</a>
+                <a *ngIf="account.acc_role === Role.Admin" routerLink="/admin" routerLinkActive="active" class="nav-item nav-link">Admin</a>
+                <a (click)="logout()" class="nav-item nav-link">Logout</a>
+            </div>
+        </nav>
+    </ng-container>
 
-        <!-- subnav router outlet <router-outlet name="subnav"></router-outlet>-->
+    <!-- global alert -->
+    <alert></alert>
 
-        <!-- global alert -->
-        <alert></alert>
+    <!-- main router outlet for other components -->
     <router-outlet></router-outlet>
 </div>

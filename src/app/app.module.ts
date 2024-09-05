@@ -14,7 +14,7 @@ import { AccountService } from './_services';
 import { AppComponent } from './app.component';
 import { AlertComponent } from './_components';
 import { HomeComponent } from './home';
-
+import { LandingPageComponent } from './landing-page';
 
 @NgModule({
     imports: [
@@ -28,6 +28,7 @@ import { HomeComponent } from './home';
         AppComponent,
         AlertComponent,
         HomeComponent,
+        LandingPageComponent 
     ],
     providers: [
         { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AccountService] },
