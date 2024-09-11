@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Campaign } from '../_models/campaign';
+import { Campaign } from '../_models';
 
 @Injectable({
   providedIn: 'root'
@@ -52,4 +52,9 @@ export class CampaignService {
   reject(id: number): Observable<Campaign> {
     return this.http.put<Campaign>(`${this.apiUrl}/${id}/reject`, null);
   }
+
+  getCampaignsByAccountId(accountId: string | number): Observable<Campaign[]> {
+    return this.http.get<Campaign[]>(`${this.apiUrl}?Acc_ID=${accountId}`);
+  }  
+  
 }

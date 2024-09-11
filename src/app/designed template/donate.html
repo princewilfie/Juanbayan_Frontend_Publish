@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Events</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
+  <style>
+    /* Custom styling */
+    .hero {
+      background-image: url('/src/assets/homeless.jpg'); /* Replace with the actual background image */
+      background-size: cover;
+      background-position: center;
+      color: #fff;
+      padding: 100px 0;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: bold;
+    }
+
+    .event-card img {
+      object-fit: cover;
+      width: 100%;
+      height: 200px;
+    }
+
+    .event-date {
+      background-color: #343a40;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 1.2rem;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      color: #f03c45;
+    }
+
+    .event-organizer {
+      color: #6c757d;
+      font-weight: 500;
+    }
+
+    .card-body {
+      position: relative;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="/src/assets/jblogo.png" alt="Logo" height="30"> <!-- Add your logo here -->
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Search</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="donate.html">Donate</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="fundraise.html">Fundraise</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="bi bi-bell"></i> <!-- You can add notification icon here -->
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="details.component.html">
+              <img src="https://via.placeholder.com/150" alt="User Avatar" class="rounded-circle" width="30"
+                height="30">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <h1>Donation</h1>
+    <p class="lead">Our events</p>
+  </div>
+
+ <div class="container my-5">
+    <div class="row g-4">
+      <!-- Event Card 1 -->
+      <div class="col-md-6">
+        <a href="donate-click.html" class="text-decoration-none">
+          <div class="card event-card">
+            <div class="position-relative">
+              <img src="/src/assets/homeless.jpg" alt="Event Image" class="card-img-top">
+              <div class="event-date position-absolute bg-light p-2 rounded">
+                <span>19</span><br>July
+              </div>
+            </div>
+            <div class="card-body">
+              <p class="event-organizer">Organized by: Jundrel Alonzo</p>
+              <h5 class="card-title">Medical Support for Poor Children in Cebu</h5>
+              <p class="card-text">Make a difference today by donating to support sick children in Cebu.</p>
+              <span class="stretched-link"></span>
+            </div>
+          </div>
+        </a>
+      </div>
+  
+      <!-- Event Card 2 -->
+      <div class="col-md-6">
+        <a href="donate-click.html" class="text-decoration-none">
+          <div class="card event-card">
+            <div class="position-relative">
+              <img src="/src/assets/homeless.jpg" alt="Event Image" class="card-img-top">
+              <div class="event-date position-absolute bg-light p-2 rounded">
+                <span>19</span><br>July
+              </div>
+            </div>
+            <div class="card-body">
+              <p class="event-organizer">Organized by: Miles Mercado</p>
+              <h5 class="card-title">Financial Support for Poor People in Cebu</h5>
+              <p class="card-text">Extend a helping hand by donating to support individuals struggling with financial hardships.</p>
+              <span class="stretched-link"></span>
+            </div>
+          </div>
+        </a>
+      </div>
+  
+      <!-- Event Card 3 -->
+      <div class="col-md-6">
+        <a href="donate-click.html" class="text-decoration-none">
+          <div class="card event-card">
+            <div class="position-relative">
+              <img src="/src/assets/homeless.jpg" alt="Event Image" class="card-img-top">
+              <div class="event-date position-absolute bg-light p-2 rounded">
+                <span>19</span><br>July
+              </div>
+            </div>
+            <div class="card-body">
+              <p class="event-organizer">Organized by: Miles Mercado</p>
+              <h5 class="card-title">Financial Support for Poor People in Cebu</h5>
+              <p class="card-text">Extend a helping hand by donating to support individuals struggling with financial hardships.</p>
+              <span class="stretched-link"></span>
+            </div>
+          </div>
+        </a>
+      </div>
+  
+      <!-- Event Card 4 -->
+      <div class="col-md-6">
+        <a href="donate-click.html" class="text-decoration-none">
+          <div class="card event-card">
+            <div class="position-relative">
+              <img src="/src/assets/homeless.jpg" alt="Event Image" class="card-img-top">
+              <div class="event-date position-absolute bg-light p-2 rounded">
+                <span>19</span><br>July
+              </div>
+            </div>
+            <div class="card-body">
+              <p class="event-organizer">Organized by: Miles Mercado</p>
+              <h5 class="card-title">Financial Support for Poor People in Cebu</h5>
+              <p class="card-text">Extend a helping hand by donating to support individuals struggling with financial hardships.</p>
+              <span class="stretched-link"></span>
+            </div>
+          </div>
+        </a>
+      </div>
+      
+    </div>
+  </div>
+  
+
+      
+
+    </div>
+  </div>
+    <!-- Footer Section -->
+    <footer class="bg-dark text-light pt-5 pb-4 mt-5">
+        <div class="container text-md-left">
+          <div class="row text-md-left">
+            <!-- Logo and Description -->
+            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+              <h5 class="text-uppercase mb-4 font-weight-bold text-info">JuanBayan</h5>
+              <p>Care about people to transforming their lives and exudes a positives Impressiono belive. fundraising NGO organizations.</p>
+              <div>
+                <a href="#"><img src="https://via.placeholder.com/24" alt="Instagram" class="me-2"></a>
+                <a href="#"><img src="https://via.placeholder.com/24" alt="Facebook" class="me-2"></a>
+                <a href="#"><img src="https://via.placeholder.com/24" alt="Twitter" class="me-2"></a>
+                <a href="#"><img src="https://via.placeholder.com/24" alt="Pinterest"></a>
+              </div>
+            </div>
+    
+            <!-- Get Involved -->
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+              <h5 class="text-uppercase mb-4 font-weight-bold">Get Involved</h5>
+              <p>
+                <a href="#" class="text-light" style="text-decoration: none;">About Us</a>
+              </p>
+              <p>
+                <a href="#" class="text-light" style="text-decoration: none;">Contact Us</a>
+              </p>
+              <p>
+                <a href="#" class="text-light" style="text-decoration: none;">Volunteer</a>
+              </p>
+              <p>
+                <a href="#" class="text-light" style="text-decoration: none;">Causes</a>
+              </p>
+              <p>
+                <a href="#" class="text-light" style="text-decoration: none;">Team</a>
+              </p>
+            </div>
+    
+            <!-- Utility -->
+            <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+              <h5 class="text-uppercase mb-4 font-weight-bold">Utility</h5>
+              <p>
+                <a href="#" class="text-light" style="text-decoration: none;">Style Guide</a>
+              </p>
+              <p>
+                <a href="#" class="text-light" style="text-decoration: none;">Licences</a>
+              </p>
+              <p>
+                <a href="#" class="text-light" style="text-decoration: none;">Password</a>
+              </p>
+              <p>
+                <a href="#" class="text-light" style="text-decoration: none;">404 Page</a>
+              </p>
+              <p>
+                <a href="#" class="text-light" style="text-decoration: none;">Changelog</a>
+              </p>
+            </div>
+    
+            <!-- Contact -->
+            <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+              <h5 class="text-uppercase mb-4 font-weight-bold">Contact</h5>
+              <p>
+                <i class="fas fa-home mr-3"></i> 6000 Cebu City, Philippines
+              </p>
+              <p>
+                <i class="fas fa-envelope mr-3"></i> help.juanbayan@gmail.com
+              </p>
+              <p>
+                <i class="fas fa-phone mr-3"></i> 0923 705 8623
+              </p>
+            </div>
+          </div>
+    
+          <!-- Copyright -->
+          <div class="row d-flex justify-content-center">
+            <div class="col-md-7 col-lg-8">
+              <p class="text-center mt-3">
+                Copyright © 2024 JuanBayan | A PLATFORM FOR DONATION CROWDFUNDING AND COMMUNITY EMPOWERMENT IN CEBU CITY
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fundraising Campaigns</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <!-- Custom CSS for Background Image -->
+  <style>
+    .campaign-header {
+      background-image: url('/src/assets/homeless.jpg'); /* Replace with your image URL */
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+      padding: 80px 0;
+    }
+  </style>
+</head>
+<body class="bg-light">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="/src/assets/jblogo.png" alt="Logo" height="30"> <!-- Add your logo here -->
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Search</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="donate.html">Donate</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="fundraise.html">Fundraise</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="bi bi-bell"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="details.component.html">
+              <img src="https://via.placeholder.com/150" alt="User Avatar" class="rounded-circle" width="30" height="30">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Campaigns Section -->
+  <section>
+    <div class="campaign-header text-center">
+      <h1 class="display-4 fw-bold">Our Campaigns</h1>
+      <p class="lead">Donation campaigns to support those in need</p>
+    </div>
+
+    <div class="container py-5">
+      <div class="row g-4">
+        
+        <!-- Campaign Card 1 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm">
+            <img src="/src/assets/homeless.jpg" class="card-img-top" alt="Campaign 1">
+            <div class="card-body">
+              <h5 class="card-title fw-bold">Mau T. Ghenon's critical condition needs fund.</h5>
+              <p class="text-secondary">Raised: ₱8500</p>
+              <p class="text-secondary">Goal: ₱10,000</p>
+              <div class="progress mb-2">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 85%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <a href="fundraise-details.html" class="btn btn-primary">View Details</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Campaign Card 2 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card shadow-sm">
+            <img src="/src/assets/homeless.jpg" class="card-img-top" alt="Campaign 2">
+            <div class="card-body">
+              <h5 class="card-title fw-bold">Fire incident in Lorega needs help for shelter.</h5>
+              <p class="text-secondary">Raised: ₱8500</p>
+              <p class="text-secondary">Goal: ₱10,000</p>
+              <div class="progress mb-2">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 85%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <a href="fundraise-details.html" class="btn btn-primary">View Details</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- More campaigns go here -->
+
+      </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="bg-dark text-light pt-5 pb-4 mt-5">
+      <div class="container">
+        <div class="row">
+          <!-- Footer content here -->
+        </div>
+      </div>
+    </footer>
+
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+<footer class="bg-dark text-light pt-5 pb-4 mt-5">
+    <div class="container text-md-left">
+      <div class="row text-md-left">
+        <!-- Logo and Description -->
+        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+          <h5 class="text-uppercase mb-4 font-weight-bold text-info">JuanBayan</h5>
+          <p>Care about people to transforming their lives and exudes a positives Impressiono belive. fundraising NGO organizations.</p>
+          <div>
+            <a href="#"><img src="https://via.placeholder.com/24" alt="Instagram" class="me-2"></a>
+            <a href="#"><img src="https://via.placeholder.com/24" alt="Facebook" class="me-2"></a>
+            <a href="#"><img src="https://via.placeholder.com/24" alt="Twitter" class="me-2"></a>
+            <a href="#"><img src="https://via.placeholder.com/24" alt="Pinterest"></a>
+          </div>
+        </div>
+
+        <!-- Get Involved -->
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+          <h5 class="text-uppercase mb-4 font-weight-bold">Get Involved</h5>
+          <p>
+            <a href="#" class="text-light" style="text-decoration: none;">About Us</a>
+          </p>
+          <p>
+            <a href="#" class="text-light" style="text-decoration: none;">Contact Us</a>
+          </p>
+          <p>
+            <a href="#" class="text-light" style="text-decoration: none;">Volunteer</a>
+          </p>
+          <p>
+            <a href="#" class="text-light" style="text-decoration: none;">Causes</a>
+          </p>
+          <p>
+            <a href="#" class="text-light" style="text-decoration: none;">Team</a>
+          </p>
+        </div>
+
+        <!-- Utility -->
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+          <h5 class="text-uppercase mb-4 font-weight-bold">Utility</h5>
+          <p>
+            <a href="#" class="text-light" style="text-decoration: none;">Style Guide</a>
+          </p>
+          <p>
+            <a href="#" class="text-light" style="text-decoration: none;">Licences</a>
+          </p>
+          <p>
+            <a href="#" class="text-light" style="text-decoration: none;">Password</a>
+          </p>
+          <p>
+            <a href="#" class="text-light" style="text-decoration: none;">404 Page</a>
+          </p>
+          <p>
+            <a href="#" class="text-light" style="text-decoration: none;">Changelog</a>
+          </p>
+        </div>
+
+        <!-- Contact -->
+        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+          <h5 class="text-uppercase mb-4 font-weight-bold">Contact</h5>
+          <p>
+            <i class="fas fa-home mr-3"></i> 6000 Cebu City, Philippines
+          </p>
+          <p>
+            <i class="fas fa-envelope mr-3"></i> help.juanbayan@gmail.com
+          </p>
+          <p>
+            <i class="fas fa-phone mr-3"></i> 0923 705 8623
+          </p>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-7 col-lg-8">
+          <p class="text-center mt-3">
+            Copyright © 2024 JuanBayan | A PLATFORM FOR DONATION CROWDFUNDING AND COMMUNITY EMPOWERMENT IN CEBU CITY
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

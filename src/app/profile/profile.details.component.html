@@ -1,0 +1,160 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+<style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .profile-header {
+      position: relative;
+      text-align: center;
+      background-color: #fff;
+      padding: 2rem 1rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+    }
+
+    .profile-header img {
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 5px solid #fff;
+    }
+
+    .profile-header h3 {
+      margin-bottom: 0;
+    }
+
+    .profile-header p {
+      margin-top: 5px;
+      color: #666;
+    }
+
+    .card {
+      margin-top: -30px;
+    }
+
+    .nav-button.active {
+      background-color: #0d6efd;
+      color: #fff;
+    }
+
+    .nav-button.active h5 {
+      color: #fff;
+    }
+
+    .campaign-section img {
+      border-radius: 5px;
+    }
+
+    .accomplished {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .accomplished h5, .accomplished h3 {
+      color: white;
+    }
+  </style>
+
+<div class="container mt-5">
+    <div class="profile-header" (click)="openProfileModal()">
+      <!-- Profile Picture -->
+      <img [src]="account.acc_image" alt="Profile Picture">
+      <!-- Profile Name and Role -->
+      <h3>{{ account.acc_firstname }} {{ account.acc_lastname }}</h3>
+  
+      <!-- Contact Information -->
+      <p>Email: {{ account.acc_email }}</p>
+      <p>Phone number: {{ account.acc_pnumber }}</p>
+    </div>
+  
+    <!-- Stats and Activities -->
+    <div class="card shadow-sm">
+      <div class="card-body text-center">
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <a href="/details" id="activitiesButton" class="nav-button btn btn-outline-primary w-100">Your Activities</a>
+          </div>
+          <div class="col-md-3 mb-3">
+            <a href="/accomplishedevents" id="eventsButton" class="nav-button btn btn-outline-primary w-100">Accomplished Events</a>
+          </div>
+          <div class="col-md-3 mb-3">
+            <a href="/accomplishedcamp" id="campaignsButton" class="nav-button btn btn-outline-primary w-100">Accomplished Campaigns</a>
+          </div>
+          <div class="col-md-3 mb-3">
+            <a href="/rewards" id="rewardsButton" class="nav-button btn btn-outline-primary w-100">Redeem Rewards</a>
+          </div>
+        </div>
+        <div class="p-3 bg-light rounded mt-4">
+          <h5 class="mb-0">Earned Points</h5>
+          <h3 class="fw-bold">{{ account.acc_totalpoints }}</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Campaigns Section -->
+  <div class="container mt-5 campaign-section">
+    <div *ngFor="let campaign of campaigns" class="card shadow-sm">
+      <div class="card-body">
+        <h4 class="text-danger">{{ campaign.Campaign_Category === 1 ? 'Medical' : 'Other' }}</h4>
+        <h3 class="card-title">{{ campaign.Campaign_Name }}</h3>
+        <p>{{ campaign.Campaign_Description }}</p>
+        <button class="btn btn-primary" id="requestCollectBtn">Request To Collect</button>
+  
+        <div class="mt-4">
+          <h5>Total Donation</h5>
+          <div class="progress">
+            <div class="progress-bar bg-success" role="progressbar" [style.width]="(campaign.Campaign_CurrentRaised / campaign.Campaign_TargetFund * 100) + '%'" aria-valuenow="25"
+              aria-valuemin="0" aria-valuemax="100">₱{{ campaign.Campaign_CurrentRaised }}</div>
+          </div>
+          <p class="mt-2">Goal: ₱{{ campaign.Campaign_TargetFund }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Profile Modal for Changing Password -->
+  <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="profileModalLabel">Profile Details and Change Password</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <img [src]="account.acc_image" alt="Profile Picture" class="rounded-circle mb-3" width="120" height="120">
+          <h3>{{ account.acc_firstname }} {{ account.acc_lastname }}</h3>
+          <p>Email: {{ account.acc_email }}</p>
+          <p>Phone number: {{ account.acc_pnumber }}</p>
+          <p>Earned Points: {{ account.acc_totalpoints }}</p>
+  
+          <!-- Change Password Form -->
+          <form>
+            <div class="mb-3 text-start">
+              <label for="currentPassword" class="form-label">Current Password</label>
+              <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password" required>
+            </div>
+            <div class="mb-3 text-start">
+              <label for="newPassword" class="form-label">New Password</label>
+              <input type="password" class="form-control" id="newPassword" placeholder="Enter new password" required>
+            </div>
+            <div class="mb-3 text-start">
+              <label for="confirmPassword" class="form-label">Confirm New Password</label>
+              <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password" required>
+            </div>
+            <div id="passwordError" class="text-danger d-none">Passwords do not match!</div>
+            <button type="submit" class="btn btn-primary w-100">Change Password</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

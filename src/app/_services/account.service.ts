@@ -51,7 +51,7 @@ export class AccountService {
                 this.stopRefreshTokenTimer();
                 localStorage.removeItem('account');
                 this.accountSubject.next(null);
-                this.router.navigate(['/account/login']);
+                this.router.navigate(['/account/login-register']);
             })).subscribe();
     }
     

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .profile-header {
+      position: relative;
+      text-align: center;
+      background-color: #fff;
+      padding: 2rem 1rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-header img {
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 5px solid #fff;
+      cursor: pointer;
+    }
+
+    .profile-header h3 {
+      margin-bottom: 0;
+    }
+
+    .profile-header p {
+      margin-top: 5px;
+      color: #666;
+    }
+
+    .card {
+      margin-top: -30px;
+    }
+
+    .nav-button.active {
+      background-color: #0d6efd;
+      color: #fff;
+    }
+
+    .nav-button.active h5 {
+      color: #fff;
+    }
+
+    .campaign-section img {
+      border-radius: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="/src/assets/jblogo.png" alt="Logo" height="30">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Search</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="donate.html">Donate</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="fundraise.html">Fundraise</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="details.component.html">
+              <i class="bi bi-bell"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="details.component.html">
+              <img src="https://via.placeholder.com/150" alt="User Avatar" class="rounded-circle" width="30" height="30">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Profile Header -->
+  <div class="container mt-5">
+    <div class="profile-header">
+      <!-- Profile Picture (with modal trigger) -->
+      <img src="https://via.placeholder.com/150" alt="Profile Picture" data-bs-toggle="modal" data-bs-target="#profileModal">
+      <!-- Profile Name and Role -->
+      <h3>Mark Ocampo</h3>
+      <!-- Contact Information -->
+      <p>Email: princeocampo@gmail.com</p>
+      <p>Phone number: 09123456789</p>
+    </div>
+
+    <!-- Stats and Activities -->
+    <div class="card shadow-sm">
+      <div class="card-body text-center">
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <a href="details.component.html" id="activitiesButton" class="nav-button btn btn-outline-primary w-100">Your Activities</a>
+          </div>
+          <div class="col-md-3 mb-3">
+            <a href="accomplishedevents.html" id="eventsButton" class="nav-button btn btn-outline-primary w-100">Accomplished Events</a>
+          </div>
+          <div class="col-md-3 mb-3">
+            <a href="accomplishedcamp.html" id="campaignsButton" class="nav-button btn btn-outline-primary w-100">Accomplished Campaigns</a>
+          </div>
+          <div class="col-md-3 mb-3">
+            <a href="rewards.html" id="rewardsButton" class="nav-button btn btn-outline-primary w-100">Redeem Rewards</a>
+          </div>
+        </div>
+        <div class="p-3 bg-light rounded mt-4">
+          <h5 class="mb-0">Earned Points</h5>
+          <h3 class="fw-bold">1,879</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Campaigns Section -->
+  <div class="container mt-5">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <!-- Campaign 1 -->
+        <div class="row mb-4">
+          <div class="col-md-3">
+            <img src="https://via.placeholder.com/100" alt="Campaign Image" class="img-fluid rounded">
+          </div>
+          <div class="col-md-9">
+            <h5 class="card-title text-primary">MEDICAL</h5>
+            <p class="card-text">Make A Difference Today By Donating To Support Sick Children In Cebu</p>
+            <a class="btn btn-primary" href="accomplished.html">Accomplished</a>
+          </div>
+        </div>
+        <!-- Campaign 2 -->
+        <div class="row mb-4">
+          <div class="col-md-3">
+            <img src="https://via.placeholder.com/100" alt="Campaign Image" class="img-fluid rounded">
+          </div>
+          <div class="col-md-9">
+            <h5 class="card-title text-primary">FINANCIAL</h5>
+            <p class="card-text">Extend A Helping Hand By Donating To Support Individuals Struggling With Financial
+              Hardships</p>
+              <a class="btn btn-primary" href="accomplished.html">Accomplished</a>
+          </div>
+        </div>
+        <!-- Campaign 3 -->
+        <div class="row">
+          <div class="col-md-3">
+            <img src="https://via.placeholder.com/100" alt="Campaign Image" class="img-fluid rounded">
+          </div>
+          <div class="col-md-9">
+            <h5 class="card-title text-primary">EDUCATIONAL</h5>
+            <p class="card-text">Empower The Future By Donating To Support Underprivileged Filipino Students</p>
+            <a class="btn btn-primary" href="accomplished.html">Accomplished</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Profile Modal for Changing Password -->
+<div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="profileModalLabel">Profile Details and Change Password</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <!-- User Profile Information -->
+          <img src="https://via.placeholder.com/150" alt="Profile Picture" class="rounded-circle mb-3" width="120" height="120">
+          <h3>Mark Ocampo</h3>
+          <p>Email: princeocampo@gmail.com</p>
+          <p>Phone number: 09123456789</p>
+          <p>Earned Points: 1,879</p>
+  
+          <!-- Change Password Form -->
+          <form id="changePasswordForm">
+            <div class="mb-3 text-start">
+              <label for="currentPassword" class="form-label">Current Password</label>
+              <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password" required>
+            </div>
+            <div class="mb-3 text-start">
+              <label for="newPassword" class="form-label">New Password</label>
+              <input type="password" class="form-control" id="newPassword" placeholder="Enter new password" required>
+            </div>
+            <div class="mb-3 text-start">
+              <label for="confirmPassword" class="form-label">Confirm New Password</label>
+              <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password" required>
+            </div>
+            <div id="passwordError" class="text-danger d-none">Passwords do not match!</div>
+            <button type="submit" class="btn btn-primary w-100">Change Password</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  <!-- Footer Section -->
+  <footer class="bg-dark text-light pt-5 pb-4 mt-5">
+    <div class="container text-md-left">
+      <div class="row text-md-left">
+        <!-- Logo and Description -->
+        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+          <h5 class="text-uppercase mb-4 font-weight-bold text-info">JuanBayan</h5>
+          <p>Care about people to transforming their lives and exudes a positives Impressiono belive. fundraising NGO organizations.</p>
+          <div>
+            <a href="#"><img src="https://via.placeholder.com/24" alt="Instagram" class="me-2"></a>
+            <a href="#"><img src="https://via.placeholder.com/24" alt="Facebook" class="me-2"></a>
+            <a href="#"><img src="https://via.placeholder.com/24" alt="Twitter" class="me-2"></a>
+            <a href="#"><img src="https://via.placeholder.com/24" alt="Pinterest"></a>
+          </div>
+        </div>
+
+        <!-- Get Involved -->
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+          <h5 class="text-uppercase mb-4 font-weight-bold">Get Involved</h5>
+          <p>
+            <a href="#" class="text-light" style="text-decoration: none;">About Us</a>
+          </p>
+          <p>
+            <a href="#" class="text-light" style="text-decoration: none;">Contact Us</a>
+          </p>
+          <p>
+            <a href="#" class="text-light" style="text-decoration: none;">Volunteer</a>
+          </p>
+          <p>
+            <a href="#" class="text-light" style="text-decoration: none;">Causes</a>
+          </p>
+          <p>
+            <a href="#" class="text-light" style="text-decoration: none;">Team</a>
+          </p>
+        </div>
+
+        <!-- Utility -->
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+          <h5 class="text-uppercase mb-4 font-weight-bold">Utility</h5>
+          <p>
+            <a href="#" class="text-light" style="text-decoration: none;">Style Guide</a>
+          </p>
+          <p>
+            <a href="#" class="text-light" style="text-decoration: none;">Licences</a>
+          </p>
+          <p>
+            <a href="#" class="text-light" style="text-decoration: none;">Password</a>
+          </p>
+          <p>
+            <a href="#" class="text-light" style="text-decoration: none;">404 Page</a>
+          </p>
+          <p>
+            <a href="#" class="text-light" style="text-decoration: none;">Changelog</a>
+          </p>
+        </div>
+
+        <!-- Contact -->
+        <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+          <h5 class="text-uppercase mb-4 font-weight-bold">Contact</h5>
+          <p>
+            <i class="fas fa-home mr-3"></i> 6000 Cebu City, Philippines
+          </p>
+          <p>
+            <i class="fas fa-envelope mr-3"></i> help.juanbayan@gmail.com
+          </p>
+          <p>
+            <i class="fas fa-phone mr-3"></i> 0923 705 8623
+          </p>
+        </div>
+      </div>
+
+      <!-- Copyright -->
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-7 col-lg-8">
+          <p class="text-center mt-3">
+            Copyright © 2024 JuanBayan | A PLATFORM FOR DONATION CROWDFUNDING AND COMMUNITY EMPOWERMENT IN CEBU CITY
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // JavaScript to highlight the active button
+    document.querySelectorAll('.nav-button').forEach(button => {
+      button.addEventListener('click', function() {
+        document.querySelectorAll('.nav-button').forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+
+</html>

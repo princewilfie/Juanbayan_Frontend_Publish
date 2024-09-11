@@ -4,8 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { AccountRoutingModule } from './account-routing.module';
 import { LayoutComponent } from './layout.component';
-import { LoginComponent } from './login.component';
-import { RegisterComponent } from './register.component';
+import { LoginRegisterComponent } from './login-register.component';
 import { VerifyEmailComponent } from './verify-email.component';
 import { ForgotPasswordComponent } from './forgot-password.component';
 import { ResetPasswordComponent } from './reset-password.component';
@@ -18,8 +17,7 @@ import { ResetPasswordComponent } from './reset-password.component';
     ],
     declarations: [
         LayoutComponent,
-        LoginComponent,
-        RegisterComponent,
+        LoginRegisterComponent,
         VerifyEmailComponent,
         ForgotPasswordComponent,
         ResetPasswordComponent

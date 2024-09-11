@@ -27,7 +27,7 @@ export class AuthGuard implements CanActivate {
 
         // If the user is not logged in and trying to access a protected route
         if (state.url !== '/') {
-            this.router.navigate(['/account/login'], { queryParams: { returnUrl: state.url }});
+            this.router.navigate(['/account/login-register'], { queryParams: { returnUrl: state.url }});
             return false;
         }
 

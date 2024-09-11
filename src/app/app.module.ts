@@ -14,7 +14,8 @@ import { AccountService } from './_services';
 import { AppComponent } from './app.component';
 import { AlertComponent } from './_components';
 import { HomeComponent } from './home';
-import { LandingPageComponent } from './landing-page';
+import { LandingPageComponent } from './landing-page'; // Correct path
+
 
 @NgModule({
     imports: [
@@ -28,7 +29,7 @@ import { LandingPageComponent } from './landing-page';
         AppComponent,
         AlertComponent,
         HomeComponent,
-        LandingPageComponent 
+        LandingPageComponent  
     ],
     providers: [
         { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AccountService] },

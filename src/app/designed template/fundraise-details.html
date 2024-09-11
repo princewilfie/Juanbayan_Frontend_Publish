@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campaign Details</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .campaign-header {
+      background-image: url('/src/assets/homeless.jpg'); /* Replace with your image URL */
+      background-size: cover;
+      background-position: center;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+      padding: 80px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img src="/src/assets/jblogo.png" alt="Logo" height="30"> <!-- Add your logo here -->
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Search</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="donate.html">Donate</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="fundraise.html">Fundraise</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="bi bi-bell"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="details.component.html">
+              <img src="https://via.placeholder.com/150" alt="User Avatar" class="rounded-circle" width="30" height="30">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Campaign Details Section -->
+  <section class="campaign-header text-center">
+    <h1 id="campaign-title" class="display-4 fw-bold">Campaign Title</h1>
+    <p id="campaign-description" class="lead">Campaign details go here</p>
+  </section>
+
+  <div class="container my-5">
+    <div class="row">
+      <div class="col-md-8">
+        <h2>Campaign Details</h2>
+        <p id="campaign-full-description">Full details about the campaign will be here...</p>
+        <h5>Amount Raised:</h5>
+        <p id="campaign-raised"></p>
+        <h5>Goal:</h5>
+        <p id="campaign-goal"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Simple script to handle URL params
+    const urlParams = new URLSearchParams(window.location.search);
+    const campaign = urlParams.get('campaign');
+
+    // Example data (In a real application, you would fetch this from a server)
+    const campaignData = {
+      'Mau T. Ghenon': {
+        title: "Mau T. Ghenon's Critical Condition",
+        description: 'Mau T. Ghenon is in a critical condition and requires urgent medical funding.',
+        raised: '₱8500',
+        goal: '₱10,000'
+      },
+      'Lorega Fire Incident': {
+        title: "Fire Incident in Lorega",
+        description: 'Help Lorega residents rebuild their homes after a devastating fire.',
+        raised: '₱8500',
+        goal: '₱10,000'
+      }
+      // Add more campaign data here
+    };
+
+    // Populate the details page with the correct data
+    if (campaignData[campaign]) {
+      document.getElementById('campaign-title').textContent = campaignData[campaign].title;
+      document.getElementById('campaign-description').textContent = campaignData[campaign].description;
+      document.getElementById('campaign-raised').textContent = campaignData[campaign].raised;
+      document.getElementById('campaign-goal').textContent = campaignData[campaign].goal;
+    } else {
+      document.getElementById('campaign-title').textContent = 'Campaign Not Found';
+      document.getElementById('campaign-description').textContent = '';
+      document.getElementById('campaign-raised').textContent = '';
+      document.getElementById('campaign-goal').textContent = '';
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

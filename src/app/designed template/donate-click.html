@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS for styling -->
+    <style>
+        /* Event banner background */
+        .event-banner {
+            background-image: url('/src/assets/homeless.jpg'); /* Replace with actual path */
+            background-size: cover;
+            background-position: center;
+            padding: 120px 0;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .event-info-card {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            font-size: 0.9rem;
+            height: 100%; /* Ensures equal height for all cards */
+        }
+
+        /* Color backgrounds for event details */
+        .start-bg {
+            background-color: #FF6B6B;
+            color: white;
+        }
+
+        .organizer-bg {
+            background-color: #343A40;
+            color: white;
+        }
+
+        .venue-bg {
+            background-color: #38C9B7;
+            color: white;
+        }
+
+        .event-description,
+        .event-content {
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .event-details {
+            background-image: url('/src/assets/homeless.jpg'); /* Replace with actual path */
+            background-size: cover;
+            background-position: center;
+            padding: 50px 0;
+        }
+
+        /* Lower the event info section */
+        .event-info-section {
+            margin-top: 80px; /* Add margin to move the cards lower */
+        }
+
+        /* Ensure equal size and margin for all cards */
+        .card {
+            height: 100%; /* Ensures all cards have equal height */
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary" href="#">JuanBayan</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="#">Search</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="donate.html">Donate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="fundraise.html">Fundraise</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Event Banner -->
+    <section class="event-banner text-center">
+        <div class="container">
+            <h1 class="display-4 fw-bold">Our Events</h1>
+            <p class="lead">Donation</p>
+        </div>
+    </section>
+
+    <!-- Event Info Section with Image Background -->
+    <div class="container event-details mt-5">
+        <div class="row g-4 text-center event-info-section">
+            <div class="col-md-4">
+                <div class="card event-info-card start-bg">
+                    <div class="card-body">
+                        <h6 class="fw-bold">Start</h6>
+                        <p>10:00 AM - 8:00 PM, Everyday</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card event-info-card organizer-bg">
+                    <div class="card-body">
+                        <h6 class="fw-bold">Organizer</h6>
+                        <p>Miles Mercado</p>
+                        <p>0980-123-4579</p>
+                        <p>miles@samplemail.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card event-info-card venue-bg">
+                    <div class="card-body">
+                        <h6 class="fw-bold">Venue</h6>
+                        <p>University of Cebu</p>
+                        <p>Banilad Campus</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Event Description Section -->
+    <section class="container my-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="event-description">
+                    <h3 class="fw-bold">Event Description</h3>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc commodo magna vel justo vehicula, eget fringilla erat tempor. Suspendisse potenti. Vivamus venenatis feugiat turpis, id fermentum purus tincidunt ut.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Content Section -->
+    <section class="container mb-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="event-content">
+                    <h3 class="fw-bold">Event Content</h3>
+                    <p>
+                        Nulla facilisi. Nam sodales ligula eget odio fermentum, eget commodo odio condimentum. Mauris fringilla ac lacus sed accumsan. Vivamus auctor, tortor at ultrices accumsan, nulla quam lobortis urna, vitae tristique orci justo nec dui.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-dark text-light pt-5 pb-4 mt-5">
+        <div class="container text-md-left">
+            <div class="row text-md-left">
+                <!-- Logo and Description -->
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold text-info">JuanBayan</h5>
+                    <p>Care about people to transforming their lives and exudes a positives Impressiono belive. fundraising NGO organizations.</p>
+                    <div>
+                        <a href="#"><img src="https://via.placeholder.com/24" alt="Instagram" class="me-2"></a>
+                        <a href="#"><img src="https://via.placeholder.com/24" alt="Facebook" class="me-2"></a>
+                        <a href="#"><img src="https://via.placeholder.com/24" alt="Twitter" class="me-2"></a>
+                        <a href="#"><img src="https://via.placeholder.com/24" alt="Pinterest"></a>
+                    </div>
+                </div>
+
+                <!-- Get Involved -->
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold">Get Involved</h5>
+                    <p><a href="#" class="text-light" style="text-decoration: none;">About Us</a></p>
+                    <p><a href="#" class="text-light" style="text-decoration: none;">Contact Us</a></p>
+                    <p><a href="#" class="text-light" style="text-decoration: none;">Volunteer</a></p>
+                    <p><a href="#" class="text-light" style="text-decoration: none;">Causes</a></p>
+                    <p><a href="#" class="text-light" style="text-decoration: none;">Team</a></p>
+                </div>
+
+                <!-- Utility -->
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold">Utility</h5>
+                    <p><a href="#" class="text-light" style="text-decoration: none;">Style Guide</a></p>
+                    <p><a href="#" class="text-light" style="text-decoration: none;">Licences</a></p>
+                    <p><a href="#" class="text-light" style="text-decoration: none;">Password</a></p>
+                    <p><a href="#" class="text-light" style="text-decoration: none;">404 Page</a></p>
+                    <p><a href="#" class="text-light" style="text-decoration: none;">Changelog</a></p>
+                </div>
+
+                <!-- Contact -->
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 font-weight-bold">Contact</h5>
+                    <p><i class="fas fa-home mr-3"></i> 6000 Cebu City, Philippines</p>
+                    <p><i class="fas fa-envelope mr-3"></i> help.juanbayan@gmail.com</p>
+                    <p><i class="fas fa-phone mr-3"></i> + 01 234 567 88</p>
+                    <p><i class="fas fa-print mr-3"></i> + 01 234 567 89</p>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

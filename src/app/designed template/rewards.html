@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .profile-header {
+      position: relative;
+      text-align: center;
+      background-color: #fff;
+      padding: 2rem 1rem;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .profile-header img {
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      margin-bottom: 15px;
+      border: 5px solid #fff;
+      cursor: pointer;
+    }
+
+    .profile-header h3 {
+      margin-bottom: 0;
+    }
+
+    .profile-header p {
+      margin-top: 5px;
+      color: #666;
+    }
+
+    .card {
+      margin-top: -30px;
+    }
+
+    .nav-button.active {
+      background-color: #0d6efd;
+      color: #fff;
+    }
+
+    .nav-button.active h5 {
+      color: #fff;
+    }
+
+    .campaign-section img {
+      border-radius: 5px;
+    }
+  </style>
+</head>
+
+<body class="bg-light">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <img src="/src/assets/jblogo.png" alt="Logo" height="30">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Search</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Donate</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Fundraise</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="bi bi-bell"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="details.component.html">
+              <img src="https://via.placeholder.com/150" alt="User Avatar" class="rounded-circle" width="30" height="30">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Profile Header -->
+  <div class="container mt-5">
+    <div class="card shadow-sm">
+      <div class="card-body text-center">
+        <!-- Profile Picture -->
+        <img src="https://via.placeholder.com/150" alt="Profile Picture" class="rounded-circle mb-3" width="100"
+          height="100" data-bs-toggle="modal" data-bs-target="#profileModal">
+        <!-- Profile Name and Role -->
+        <h3 class="card-title">Prince Wifie</h3>
+        <p class="text-muted">Volunteer</p>
+        <!-- Contact Information -->
+        <p>Email: princewifie@gmail.com</p>
+        <p>Phone number: 07123456789</p>
+      </div>
+
+      <!-- Stats and Activities -->
+      <div class="card-body border-top text-center">
+        <div class="row">
+          <div class="col-md-3 mb-3">
+            <a href="details.component.html" id="activitiesButton" class="nav-button btn btn-outline-primary w-100">Your Activities</a>
+          </div>
+          <div class="col-md-3 mb-3">
+            <a href="accomplishedevents.html" id="eventsButton" class="nav-button btn btn-outline-primary w-100">Accomplished Events</a>
+          </div>
+          <div class="col-md-3 mb-3">
+            <a href="accomplishedcamp.html" id="campaignsButton" class="nav-button btn btn-outline-primary w-100">Accomplished Campaigns</a>
+          </div>
+          <div class="col-md-3 mb-3">
+            <a href="rewards.html" id="rewardsButton" class="nav-button btn btn-outline-primary w-100">Redeem Rewards</a>
+          </div>
+        </div>
+        <div class="p-3 bg-light rounded">
+          <h5 class="mb-0">Earned Points</h5>
+          <h3 class="fw-bold">1,879</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Redeem Rewards Section -->
+  <div class="container mt-5">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Redeem Rewards</h5>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Reward</th>
+                <th scope="col">Description</th>
+                <th scope="col">Points Required</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Free T-shirt</td>
+                <td>A stylish volunteer t-shirt.</td>
+                <td>500</td>
+                <td><button class="btn btn-primary">Redeem</button></td>
+              </tr>
+              <tr>
+                <td>Gift Card</td>
+                <td>₱1000 Gift card for various stores.</td>
+                <td>1000</td>
+                <td><button class="btn btn-primary">Redeem</button></td>
+              </tr>
+              <tr>
+                <td>Meal Voucher</td>
+                <td>₱500 Meal voucher for selected restaurants.</td>
+                <td>750</td>
+                <td><button class="btn btn-primary">Redeem</button></td>
+              </tr>
+              <tr>
+                <td>Volunteer Kit</td>
+                <td>A complete volunteer kit including a cap, badge, and notebook.</td>
+                <td>1200</td>
+                <td><button class="btn btn-primary">Redeem</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Modal for Changing Password -->
+  <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="profileModalLabel">Profile Details and Change Password</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <!-- User Profile Information -->
+          <img src="https://via.placeholder.com/150" alt="Profile Picture" class="rounded-circle mb-3" width="120" height="120">
+          <h3>Prince Wifie</h3>
+          <p>Email: princewifie@gmail.com</p>
+          <p>Phone number: 07123456789</p>
+          <p>Earned Points: 1,879</p>
+
+          <!-- Change Password Form -->
+          <form id="changePasswordForm">
+            <div class="mb-3 text-start">
+              <label for="currentPassword" class="form-label">Current Password</label>
+              <input type="password" class="form-control" id="currentPassword" placeholder="Enter current password" required>
+            </div>
+            <div class="mb-3 text-start">
+              <label for="newPassword" class="form-label">New Password</label>
+              <input type="password" class="form-control" id="newPassword" placeholder="Enter new password" required>
+            </div>
+            <div class="mb-3 text-start">
+              <label for="confirmPassword" class="form-label">Confirm New Password</label>
+              <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm new password" required>
+            </div>
+            <div id="passwordError" class="text-danger d-none">Passwords do not match!</div>
+            <button type="submit" class="btn btn-primary w-100">Change Password</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+  <script>
+    document.getElementById('changePasswordForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (newPassword !== confirmPassword) {
+        document.getElementById('passwordError').classList.remove('d-none');
+      } else {
+        document.getElementById('passwordError').classList.add('d-none');
+        // Handle password change logic here (e.g., send to server)
+        alert('Password changed successfully!');
+        // Close the modal
+        const modal = bootstrap.Modal.getInstance(document.getElementById('profileModal'));
+        modal.hide();
+      }
+    });
+  </script>
+</body>
+
+</html>

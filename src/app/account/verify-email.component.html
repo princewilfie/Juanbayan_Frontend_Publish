@@ -1,9 +1,52 @@
-<h3 class="card-header">Verify Email</h3>
-<div class="card-body">
+<div class="verify-email-container">
+    <h1>Verify Email</h1>
+
     <div *ngIf="emailStatus == EmailStatus.Verifying">
-        Verifying...
+        <p>Verifying...</p>
     </div>
+
     <div *ngIf="emailStatus == EmailStatus.Failed">
-        Verification failed, you can also verify your account using the <a routerLink="forgot-password">forgot password</a> page.
+        <p>Verification failed. You can also verify your account using the <a routerLink="forgot-password">forgot password</a> page.</p>
     </div>
 </div>
+
+<style>
+    /* Main container for centering the content */
+    .verify-email-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+        padding: 50px;
+        width: 400px;
+        margin: 50px auto;
+    }
+
+    /* Header */
+    .verify-email-container h1 {
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    /* Description */
+    .verify-email-container p {
+        font-size: 14px;
+        font-weight: 100;
+        line-height: 20px;
+        margin-bottom: 30px;
+    }
+
+    /* Link styling */
+    a {
+        color: #FF4B2B;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #FF416C;
+    }
+</style>
