@@ -1,32 +1,213 @@
-<h1>Accounts</h1>
-<p>All accounts from secure (admin only) api end point:</p>
-<a routerLink="add" class="btn btn-sm btn-success mb-2">Create Account</a>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th style="width:30%">Name</th>
-            <th style="width:30%">Email</th>
-            <th style="width:30%">Role</th>
-            <th style="width:10%">Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let account of accounts">
-            <td> {{account.acc_firstname}} {{account.acc_lastname}}</td>
-            <td>{{account.acc_email}}</td>
-            <td>{{account.acc_role}}</td>
-            <td style="white-space: nowrap">
-                <a routerLink="edit/{{account.id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
-                <button (click)="deleteAccount(account.id)" class="btn btn-sm btn-danger btn-delete-account" [disabled]="account.isDeleting">
-                    <span *ngIf="account.isDeleting" class="spinner-border spinner-border-sm"></span>
-                    <span *ngIf="!account.isDeleting">Delete</span>
-                </button>
+<div class="accounts-container">
+    <h1>User Accounts</h1>
+  
+    <a routerLink="add" class="btn add-account-btn">
+      Add Account
+    </a>
+  
+    <div class="table-wrapper">
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th><input type="checkbox"></th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let account of accounts"
+            [ngClass]="{
+              'highlight-admin': account.acc_role === 'Admin',
+              'highlight-donor': account.acc_role === 'Donor',
+              'highlight-beneficiary': account.acc_role === 'Beneficiary'
+            }"
+          >
+            <td><input type="checkbox"></td>
+            <td>{{ account.acc_firstname }} {{ account.acc_lastname }}</td>
+            <td>{{ account.acc_email }}</td>
+            <td>{{ account.acc_address }}</td>
+            <td class="role-column">{{ account.acc_role }}</td>
+            <td>
+              <span [ngClass]="account.acc_status === 'Active' ? 'status-active' : 'status-deactivated'">
+                {{ account.acc_status }}
+              </span>
             </td>
-        </tr>
-        <tr *ngIf="!accounts">
-            <td colspan="4" class="text-center">
-                <span class="spinner-border spinner-border-lg align-center"></span>
+            <td class="action-column">
+              <a
+                routerLink="edit/{{ account.id }}"
+                class="action-btn edit-btn"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="Edit Account"
+              >
+                <i class="fas fa-edit"></i>
+              </a>
+              <button
+                (click)="deleteAccount(account.id)"
+                class="action-btn delete-btn"
+                [disabled]="account.isDeleting"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top"
+                title="Delete Account"
+              >
+                <span *ngIf="account.isDeleting" class="spinner-border spinner-border-sm"></span>
+                <i *ngIf="!account.isDeleting" class="fas fa-trash"></i>
+              </button>
             </td>
-        </tr>
-    </tbody>
-</table>
+          </tr>
+          <tr *ngIf="!accounts || accounts.length === 0">
+            <td colspan="7" class="no-accounts">
+              <span>No accounts available.</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  
+  <style>
+    /* Container styles */
+.accounts-container {
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fff;
+}
+
+/* Title */
+h1 {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Add account button */
+.add-account-btn {
+  background-color: #0061f2;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 20px;
+  float: right;
+  display: inline-block;
+  border: none;
+  cursor: pointer;
+}
+
+.add-account-btn:hover {
+  background-color: #004bb5;
+}
+
+/* Table styles */
+.table-wrapper {
+  overflow-x: auto;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.custom-table thead tr {
+  background-color: #212529;
+  color: white;
+}
+
+.custom-table thead th {
+  text-align: left;
+  padding: 12px 15px;
+  font-size: 14px;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.custom-table tbody tr {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.custom-table tbody tr:nth-child(even) {
+  background-color: #e9ecef;
+}
+
+.custom-table tbody td {
+  padding: 12px 15px;
+  font-size: 14px;
+}
+
+/* Role and Status columns */
+.role-column {
+  font-weight: bold;
+  color: #007bff;
+}
+
+/* Status styles */
+.status-active {
+  color: #28a745;
+}
+
+.status-deactivated {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+/* Action buttons */
+.action-column {
+  text-align: center;
+}
+
+.action-btn {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 10px;
+  transition: color 0.3s ease;
+}
+
+.edit-btn {
+  color: #007bff;
+}
+
+.delete-btn {
+  color: #dc3545;
+}
+
+.action-btn:hover {
+  opacity: 0.8;
+}
+
+/* Empty state */
+.no-accounts {
+  text-align: center;
+  padding: 20px;
+  font-size: 16px;
+  color: #777;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .add-account-btn {
+    float: none;
+    margin-bottom: 10px;
+  }
+
+  .custom-table thead th, .custom-table tbody td {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+}
+
+  </style>
