@@ -14,24 +14,19 @@ export class AuthGuard implements CanActivate {
 
         // Check if user is logged in
         if (account) {
+
             // Check if route is restricted by role
             if (route.data.roles && !route.data.roles.includes(account.acc_role)) {
                 // Role not authorized so redirect to the home page
-                this.router.navigate(['/home']);
+                this.router.navigate(['/landing-page']);
                 return false;
             }
-
+            
             // Authorized so return true
             return true;
         }
 
-        // If the user is not logged in and trying to access a protected route
-        if (state.url !== '/') {
-            this.router.navigate(['/account/login-register'], { queryParams: { returnUrl: state.url }});
-            return false;
-        }
-
-        // Allow access to the landing page if not logged in
-        return true;
+        this.router.navigate(['/account/login-register'], { queryParams: { returnUrl: state.url }});
+        return false;
     }
 }

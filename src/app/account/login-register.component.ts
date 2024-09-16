@@ -74,7 +74,7 @@ export class LoginRegisterComponent implements OnInit {
       .pipe(first())
       .subscribe({
         next: () => {
-          this.router.navigate(['/']);
+          //this.router.navigate(['/']);
         },
         error: error => {
           this.alertService.error(error);

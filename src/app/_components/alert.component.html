@@ -1,8 +1,87 @@
-<div *ngIf="alerts.length" class="container">
-    <div class="m-3">
-        <div *ngFor="let alert of alerts" class="{{cssClasses(alert)}}">
-            <a class="close" (click)="removeAlert(alert)">&times;</a>
-            <span [innerHTML]="alert.message"></span>
+<div *ngIf="alerts.length" class="alert-container">
+    <div class="alert-wrapper">
+        <div *ngFor="let alert of alerts" [ngClass]="cssClasses(alert)" class="alert-box">
+            <span class="close-btn" (click)="removeAlert(alert)">&times;</span>
+            <span class="alert-message" [innerHTML]="alert.message"></span>
         </div>
     </div>
 </div>
+
+
+<style>
+    /* Main alert container */
+.alert-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+/* Wrapper for the alerts to manage spacing */
+.alert-wrapper {
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Styling for the individual alert boxes */
+.alert-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Different alert types using dynamic classes */
+.alert-box.alert-success {
+    background-color: #e6f7f1;
+    border-left: 4px solid #28a745;
+}
+
+.alert-box.alert-danger {
+    background-color: #fcebea;
+    border-left: 4px solid #dc3545;
+}
+
+.alert-box.alert-warning {
+    background-color: #fff4e5;
+    border-left: 4px solid #ffc107;
+}
+
+.alert-box.alert-info {
+    background-color: #e7f3ff;
+    border-left: 4px solid #17a2b8;
+}
+
+/* Styling for the close button */
+.close-btn {
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+}
+
+.close-btn:hover {
+    color: #333;
+}
+
+/* Alert message */
+.alert-message {
+    font-size: 1rem;
+    margin: 0;
+    padding-right: 2rem; /* Space for the close button */
+}
+
+</style>

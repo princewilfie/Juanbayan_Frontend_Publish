@@ -36,24 +36,24 @@ export class AccountService {
     
                 // Redirect based on role
                 if (account.acc_role === 'Admin') {
-                    this.router.navigate(['/admin']);
+                    this.router.navigate(['/admin/dashboard']);  // Update route to '/admin/dashboard'
                 } else {
-                    this.router.navigate(['/']);
+                    this.router.navigate(['/home']);  // Redirect regular users to home
                 }
     
                 return account;
             }));
     }
-    
+
     logout() {
-        return this.http.post<any>(`${baseUrl}/revoke-token`, {}, { withCredentials: true })
-            .pipe(finalize(() => {
-                this.stopRefreshTokenTimer();
-                localStorage.removeItem('account');
-                this.accountSubject.next(null);
-                this.router.navigate(['/account/login-register']);
-            })).subscribe();
+        this.http.post<any>(`${baseUrl}/revoke-token`, {}, { withCredentials: true }).subscribe();
+        this.stopRefreshTokenTimer();
+        this.accountSubject.next(null);
+        this.router.navigate(['/account/login-register']);
     }
+    
+    
+    
     
 
 

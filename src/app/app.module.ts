@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { AlertComponent } from './_components';
 import { HomeComponent } from './home';
 import { LandingPageComponent } from './landing-page'; // Correct path
+import { TeamMemberComponent } from './team-member/about-us.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { LandingPageComponent } from './landing-page'; // Correct path
         AppComponent,
         AlertComponent,
         HomeComponent,
-        LandingPageComponent  
+        LandingPageComponent,
+        TeamMemberComponent
     ],
     providers: [
         { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AccountService] },

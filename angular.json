@@ -86,10 +86,15 @@
               "src/assets"
             ],
             "styles": [
+              "src/styles.css",  
+              "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap",
+              "https://cdnjs.cloudflare.com/ajax/libs/ionicons/5.5.2/collection/components/icon/icon.min.css"
             ],
             "scripts": [
-              
+              "https://cdn.jsdelivr.net/npm/ionicons@5.5.2/dist/ionicons/ionicons.esm.js",
+              "https://cdn.jsdelivr.net/npm/ionicons@5.5.2/dist/ionicons/ionicons.js"
             ]
+
           }
         }
       }

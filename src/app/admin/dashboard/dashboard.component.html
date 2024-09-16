@@ -5,7 +5,7 @@
             <ul class="navbar-items flexbox-col">
                 <li class="navbar-logo flexbox-left">
                     <a class="navbar-item-inner flexbox">
-                        <img src="/src/assets/jb-symbol-logo.png" style="height: 50px; width: 50px;">
+                        <img src="assets/jb-symbol-logo.png" style="height: 50px; width: 50px;">
                     </a>
                 </li>
                 <li class="navbar-item flexbox-left">
@@ -197,39 +197,9 @@
 
 <!-- FOOTER -->
 <footer class="footer">
-    <!--
-    <div class="waves">
-      <div class="wave" id="wave1"></div>
-      <div class="wave" id="wave2"></div>
-      <div class="wave" id="wave3"></div>
-      <div class="wave" id="wave4"></div>
-    </div>
-    
-    <ul class="social-icon">
-      <li class="social-icon__item"><a class="social-icon__link" href="#">
-          <ion-icon name="logo-facebook"></ion-icon>
-        </a></li>
-      <li class="social-icon__item"><a class="social-icon__link" href="#">
-          <ion-icon name="logo-twitter"></ion-icon>
-        </a></li>
-      <li class="social-icon__item"><a class="social-icon__link" href="#">
-          <ion-icon name="logo-linkedin"></ion-icon>
-        </a></li>
-      <li class="social-icon__item"><a class="social-icon__link" href="#">
-          <ion-icon name="logo-instagram"></ion-icon>
-        </a></li>
-    </ul>
-    <ul class="menu">
-      <li class="menu__item"><a class="menu__link" href="#">Home</a></li>
-      <li class="menu__item"><a class="menu__link" href="#">About</a></li>
-      <li class="menu__item"><a class="menu__link" href="#">Services</a></li>
-      <li class="menu__item"><a class="menu__link" href="#">Team</a></li>
-      <li class="menu__item"><a class="menu__link" href="#">Contact</a></li>
-
-    </ul>
-    -->
     <p>&copy;2024 JUANBAYAN | All Rights Reserved</p>
-  </footer>
+</footer>
+
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     
@@ -516,14 +486,18 @@
     #navbar {
         top: 0;
         padding: 0;
-        width: 5em;
+        width: 5em; /* Default width */
         height: 100vh;
         position: fixed;
         background-color: hsl(var(--background-secondary));
-        transition: width .35s cubic-bezier(var(--transition-main), 1);
+        transition: width 0.35s cubic-bezier(var(--transition-main), 1); /* Smooth transition */
         overflow-y: auto;
         overflow-x: hidden;
         z-index: 10;
+        display: flex;
+        flex-direction: column; /* Align items vertically */
+        justify-content: flex-start;
+        align-items: flex-start;
     }
     #navbar:hover {
         width: 16em;
@@ -539,10 +513,13 @@
         background-color: hsl(var(--primary));
     }
     .navbar-items {
-        margin: 0;
-        padding: 0;
         list-style-type: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
     }
+
+    
     /* Navbar Logo */
     .navbar-logo {
         margin: 0 0 2em 0;
@@ -567,38 +544,42 @@
         cursor: pointer;
     }
     .navbar-item-inner {
-        padding: 1em 0;
+        padding: 1em;
         width: 100%;
-        position: relative;
+        display: flex;
+        align-items: center;
         color: hsl(var(--quite-gray));
-        border-radius: .25em;
         text-decoration: none;
-        transition: all .2s cubic-bezier(var(--transition-main), 1);
+        transition: all 0.2s cubic-bezier(var(--transition-main), 1);
     }
     .navbar-item-inner:hover {
         color: hsl(var(--white));
         background: hsl(var(--background-secondary-light));
-        box-shadow: 0 17px 30px -10px hsla(var(--black), .25);
+        box-shadow: 0 17px 30px -10px hsla(var(--black), 0.25);
     }
     .navbar-item-inner-icon-wrapper {
-        width: calc(5rem - 1em - 8px);
-        position: relative;
+        width: 2.4em; /* Fixed size for icons */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 1em; /* Space between icon and text */
     }
     .navbar-item-inner-icon-wrapper ion-icon {
         position: absolute;
-        font-size: calc(var(--navbar-buttons) - 1rem);
+        font-size: 1.8rem; /* Icon size */
     }
     .link-text {
         margin: 0;
-        width: 0;
+        width: 0; /* Hidden by default */
         text-overflow: ellipsis;
         white-space: nowrap;
-        transition: all .35s cubic-bezier(var(--transition-main), 1);
+        transition: all 0.35s cubic-bezier(var(--transition-main), 1);
         overflow: hidden;
         opacity: 0;
+        color: hsl(var(--quite-gray)); /* Text color */
     }
     #navbar:hover .link-text {
-        width: calc(100% - calc(5rem - 8px));
+        width: auto; /* Expand width on hover */
         opacity: 1;
     }
 
@@ -607,8 +588,8 @@
     ====== */
 
     #main {
-        margin: 0 0 0 5em;
-        min-height: 150vh;
+        margin-left: 5em; /* Default when sidebar is collapsed */
+        transition: margin-left 0.35s cubic-bezier(var(--transition-main), 1);
     }
     #main > h2 {
         width: 80%;
@@ -617,6 +598,10 @@
     #main > p {
         width: 80%;
         max-width: 80%;
+    }
+
+    #navbar:hover ~ #main {
+        margin-left: 16em; /* Adjust margin when sidebar expands */
     }
 
     /* =============
@@ -716,10 +701,6 @@
     margin: 0 auto;
     }
 
-
-    body {
-    background-color: #ffffff;
-    }
     .ag-courses_box {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -1041,20 +1022,6 @@
     }
   </style>
 
-  <!-- JavaScript -->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Example dynamic value, you can update it based on your logic
-        let totalDonation = 5203201.97;
-        let goal = 10000000; // Example goal amount
-        let progressPercentage = (totalDonation / goal) * 100;
-
-        // Set progress bar width
-        document.getElementById('progress-bar').style.width = progressPercentage + '%';
-    });
-  </script>
-  
-  
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/5.5.2/collection/components/icon/icon.min.css" rel="stylesheet">
