@@ -12,7 +12,7 @@
                     <ul>
                         <li><a routerLink="/landing-page">JUANBAYAN</a></li>
                         <li><a href="#">SEARCH</a></li>
-                        <li><a href="#">DONATE</a></li>
+                        <li><a routerLink="/campaign">DONATE</a></li> <!-- Route to the campaign page -->
                         <li><a routerLink="/team-member">ABOUT</a></li>
                         <li *ngIf="!account"><a routerLink="/account/login-register">SIGN IN</a></li>
 
@@ -48,7 +48,7 @@
 
     <!-- main router outlet for other components -->
     <router-outlet></router-outlet>
-
+    
     <!--Footer-->
     <footer class="footer" *ngIf="showNavbar">
         <div class="footer-container">

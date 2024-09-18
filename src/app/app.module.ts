@@ -16,6 +16,7 @@ import { AlertComponent } from './_components';
 import { HomeComponent } from './home';
 import { LandingPageComponent } from './landing-page'; // Correct path
 import { TeamMemberComponent } from './team-member/about-us.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';  // Import NgbModule for Bootstrap components
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { TeamMemberComponent } from './team-member/about-us.component';
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
-        AppRoutingModule
+        AppRoutingModule,
+        NgbModule
     ],
     declarations: [
         AppComponent,

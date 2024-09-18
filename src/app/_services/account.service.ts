@@ -29,6 +29,10 @@ export class AccountService {
     login(acc_email: string, acc_passwordHash: string) {
         return this.http.post<any>(`${baseUrl}/authenticate`, { acc_email, acc_passwordHash }, { withCredentials: true })
             .pipe(map(account => {
+
+                if (!account.acc_verified) {
+                    throw new Error('Your account has not been verified. Please verify your email before logging in')
+                }
                 // store account details in local storage to keep user logged in between page refreshes
                 localStorage.setItem('account', JSON.stringify(account));
                 this.accountSubject.next(account);

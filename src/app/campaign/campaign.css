@@ -1,0 +1,44 @@
+/* Custom styles for the campaign component */
+.greeting-section {
+  padding: 20px;
+  background-color: #f8f9fa;
+  text-align: center;
+}
+
+.campaign-section {
+  padding: 20px;
+}
+
+.campaign-card {
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.campaign-card:hover {
+  transform: scale(1.05);
+}
+
+.card-img-top {
+  max-height: 200px;
+  object-fit: cover;
+}
+
+.footer {
+  padding: 40px;
+  background-color: #343a40;
+  color: white;
+}
+
+.social-icons img {
+  margin: 0 10px;
+}
+
+.upload-button {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.receipt-preview {
+  max-width: 100%;
+  height: auto;
+}

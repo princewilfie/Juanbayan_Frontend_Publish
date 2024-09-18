@@ -16,11 +16,15 @@ import {
 } from "./chunk-2J7VHZNX.js";
 import {
   iosTransitionAnimation
-} from "./chunk-NL7CPSYB.js";
+} from "./chunk-2QWRM6MR.js";
 import {
   mdTransitionAnimation
-} from "./chunk-OJOS5RBB.js";
+} from "./chunk-7LKW4V7L.js";
 import {
+  __awaiter,
+  __decorate,
+  __generator,
+  __spreadArray,
   bootstrapLazy,
   componentOnReady as componentOnReady2,
   createAnimation as createAnimation2,
@@ -31,13 +35,7 @@ import {
   initialize,
   isPlatform as isPlatform2,
   printIonWarning as printIonWarning2
-} from "./chunk-6JV5726G.js";
-import {
-  __awaiter,
-  __decorate,
-  __generator,
-  __spreadArray
-} from "./chunk-AOF462FV.js";
+} from "./chunk-NR554Z3W.js";
 import {
   MaxValidator,
   MinValidator,

@@ -1,0 +1,161 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">
+        <img src="/src/assets/jblogo.png" alt="JuanBayan Logo">
+      </a>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="#">Search</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="donate.html">Donate</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="fundraise.html">Fundraise</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  
+  <!-- Greeting Section -->
+  <div class="greeting-section">
+    <div class="container">
+      <h1>Welcome to Our Campaigns!</h1>
+      <p>See the ongoing donation campaigns below and contribute to the cause.</p>
+    </div>
+  </div>
+  
+  <!-- Campaign Section -->
+  <div class="campaign-section">
+    <div class="container">
+      <div class="row">
+        <!-- Campaign 1 -->
+        <div class="col-md-4">
+          <div class="card campaign-card" (click)="openCampaignDetail('Campaign Title 1', 'Help us provide relief to families affected by recent floods in the region.', 'https://via.placeholder.com/350x200')">
+            <img src="https://via.placeholder.com/350x200" class="card-img-top" alt="Campaign Image">
+            <div class="card-body">
+              <h5 class="card-title">Campaign Title 1</h5>
+              <p class="card-text">Help us provide relief to families affected by recent floods in the region.</p>
+            </div>
+          </div>
+        </div>
+        <!-- More campaign cards can go here -->
+      </div>
+    </div>
+  </div>
+  
+  <!-- Footer Section -->
+  <footer class="footer">
+    <div class="container text-center">
+      <div class="row">
+        <div class="col-md-3">
+          <h5 class="text-uppercase text-info mb-4">JuanBayan</h5>
+          <p>Care about people to transform their lives and exude a positive impression. A fundraising NGO organization.</p>
+          <div class="social-icons">
+            <a href="#"><img src="https://via.placeholder.com/24" alt="Instagram"></a>
+            <a href="#"><img src="https://via.placeholder.com/24" alt="Facebook"></a>
+            <a href="#"><img src="https://via.placeholder.com/24" alt="Twitter"></a>
+            <a href="#"><img src="https://via.placeholder.com/24" alt="Pinterest"></a>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <h5 class="text-uppercase mb-4">Contact</h5>
+          <p><i class="fas fa-home me-2"></i> 6000 Cebu City, Philippines</p>
+          <p><i class="fas fa-envelope me-2"></i> help.juanbayan@gmail.com</p>
+          <p><i class="fas fa-phone me-2"></i> 0923 705 8623</p>
+        </div>
+      </div>
+      <div class="row mt-4 text-center">
+        <div class="col-md-12">
+          <p>© 2024 JuanBayan | A PLATFORM FOR DONATION CROWDFUNDING AND COMMUNITY EMPOWERMENT IN CEBU CITY</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- Modal: Campaign Details Modal -->
+  <div class="modal fade" id="campaignDetailModal" tabindex="-1" aria-labelledby="campaignDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="campaignDetailModalLabel">{{selectedCampaignTitle}}</h5>
+          <button type="button" class="btn-close" (click)="closeModal('campaignDetailModal')" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img [src]="selectedCampaignImage" alt="Campaign Image">
+          <p>{{selectedCampaignDescription}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="openDonateModal()">Donate</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal 1: Enter Donation Amount -->
+  <div class="modal fade" id="donateModal" tabindex="-1" aria-labelledby="donateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="donateModalLabel">Enter Your Donation Amount</h5>
+          <button type="button" class="btn-close" (click)="closeModal('donateModal')" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="input-group mb-3">
+            <span class="input-group-text">₱</span>
+            <input type="number" class="form-control" [(ngModel)]="donationAmount" placeholder="Enter donation amount">
+          </div>
+          <p *ngIf="showDonationAlert" class="text-danger">Please enter a valid amount.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="showQRCode()">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal 2: QR Code -->
+  <div class="modal fade" id="qrCodeModal" tabindex="-1" aria-labelledby="qrCodeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="qrCodeModalLabel">Scan QR Code to Donate</h5>
+          <button type="button" class="btn-close" (click)="closeModal('qrCodeModal')" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="/mnt/data/image.png" alt="QR Code for GCash" style="max-width: 100%; height: auto;">
+          <p>Scan this QR code using GCash to complete your donation of ₱{{donationAmount}}.</p>
+        </div>
+        <div class="modal-footer">
+          <p>After donating, click proceed to upload your receipt.</p>
+          <button type="button" class="btn btn-primary" (click)="openUploadModal()">Proceed</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal 3: Upload Receipt -->
+  <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="uploadModalLabel">Thank You for Your Donation!</h5>
+          <button type="button" class="btn-close" (click)="closeModal('uploadModal')" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="upload-section">
+            <img src="https://via.placeholder.com/100" alt="Heart Icon">
+            <p>Thank you for your generous donation! Please upload your GCash receipt to confirm your donation.</p>
+            <label for="receiptUpload" class="upload-button">
+              <i class="fas fa-plus"></i> Upload your receipt here.
+              <input type="file" id="receiptUpload" (change)="previewReceipt($event)" style="display: none;">
+            </label>
+            <img [src]="receiptPreview" class="receipt-preview" alt="Receipt Preview">
+            <button type="button" class="confirm-button" (click)="confirmReceipt()">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

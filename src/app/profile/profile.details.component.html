@@ -73,138 +73,58 @@
     </div>
   
     <!-- Stats and Activities -->
-    <div class="card shadow-sm">
-      <div class="card-body text-center">
-        <div class="row">
-          <div class="col-md-3 mb-3">
-            <a href="/details" id="activitiesButton" class="nav-button btn btn-outline-primary w-100">Your Activities</a>
-          </div>
-          <div class="col-md-3 mb-3">
-            <a href="/accomplishedevents" id="eventsButton" class="nav-button btn btn-outline-primary w-100">Accomplished Events</a>
-          </div>
-          <div class="col-md-3 mb-3">
-            <a href="/accomplishedcamp" id="campaignsButton" class="nav-button btn btn-outline-primary w-100">Accomplished Campaigns</a>
-          </div>
-          <div class="col-md-3 mb-3">
-            <a href="/rewards" id="rewardsButton" class="nav-button btn btn-outline-primary w-100">Redeem Rewards</a>
-          </div>
+  <div class="card shadow-sm">
+    <div class="card-body text-center">
+      <div class="row">
+        <div class="col-md-3 mb-3">
+          <button (click)="showSection('activities')" class="nav-button btn btn-outline-primary w-100" [ngClass]="{'active': currentSection === 'activities'}">Your Activities</button>
         </div>
-        <div class="p-3 bg-light rounded mt-4">
-          <h5 class="mb-0">Earned Points</h5>
-          <h3 class="fw-bold">{{ account.acc_totalpoints }}</h3>
+        <div class="col-md-3 mb-3">
+          <button (click)="showSection('events')" class="nav-button btn btn-outline-primary w-100" [ngClass]="{'active': currentSection === 'events'}">Accomplished Events</button>
         </div>
+        <div class="col-md-3 mb-3">
+          <button (click)="showSection('campaigns')" class="nav-button btn btn-outline-primary w-100" [ngClass]="{'active': currentSection === 'campaigns'}">Accomplished Campaigns</button>
+        </div>
+        <div class="col-md-3 mb-3">
+          <button (click)="showSection('rewards')" class="nav-button btn btn-outline-primary w-100" [ngClass]="{'active': currentSection === 'rewards'}">Redeem Rewards</button>
+        </div>
+      </div>
+      <div class="p-3 bg-light rounded mt-4">
+        <h5 class="mb-0">Earned Points</h5>
+        <h3 class="fw-bold">{{ account.acc_totalpoints }}</h3>
       </div>
     </div>
   </div>
   
-  <!-- Campaigns Section -->
-  <div class="container mt-5 campaign-section">
+  <!-- Activities Section -->
+  <div *ngIf="currentSection === 'activities'" class="container mt-5">
+    <h3>Your Activities</h3>
+    <!-- Add content for "Your Activities" section here -->
+    <p>Activity 1, Activity 2, Activity 3...</p>
+  </div>
+
+  <!-- Accomplished Events Section -->
+  <div *ngIf="currentSection === 'events'" class="container mt-5">
+    <h3>Accomplished Events</h3>
+    <!-- Add content for "Accomplished Events" section here -->
+    <p>Event 1, Event 2, Event 3...</p>
+  </div>
+
+  <!-- Accomplished Campaigns Section -->
+  <div *ngIf="currentSection === 'campaigns'" class="container mt-5 campaign-section">
+    <h3>Accomplished Campaigns</h3>
     <div *ngFor="let campaign of campaigns" class="card shadow-sm">
       <div class="card-body">
         <h4 class="text-danger">{{ campaign.Campaign_Category === 1 ? 'Medical' : 'Other' }}</h4>
         <h3 class="card-title">{{ campaign.Campaign_Name }}</h3>
         <p>{{ campaign.Campaign_Description }}</p>
         <button class="btn btn-primary" id="requestCollectBtn">Request To Collect</button>
-  
-        <div class="mt-4">
-          <h5>Total Donation</h5>
-          <div class="progress">
-            <div class="progress-bar bg-success" role="progressbar" [style.width]="(campaign.Campaign_CurrentRaised / campaign.Campaign_TargetFund * 100) + '%'" aria-valuenow="25"
-              aria-valuemin="0" aria-valuemax="100">₱{{ campaign.Campaign_CurrentRaised }}</div>
-          </div>
-          <p class="mt-2">Goal: ₱{{ campaign.Campaign_TargetFund }}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- Campaigns Section accomplished-->
-  <div class="container mt-5">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <!-- Campaign 1 -->
-        <div class="row mb-4">
-          <div class="col-md-3">
-            <img src="https://via.placeholder.com/100" alt="Campaign Image" class="img-fluid rounded">
-          </div>
-          <div class="col-md-9">
-            <h5 class="card-title text-primary">MEDICAL</h5>
-            <p class="card-text">Make A Difference Today By Donating To Support Sick Children In Cebu</p>
-            <a class="btn btn-primary" href="accomplished.html">Accomplished</a>
-          </div>
-        </div>
-        <!-- Campaign 2 -->
-        <div class="row mb-4">
-          <div class="col-md-3">
-            <img src="https://via.placeholder.com/100" alt="Campaign Image" class="img-fluid rounded">
-          </div>
-          <div class="col-md-9">
-            <h5 class="card-title text-primary">FINANCIAL</h5>
-            <p class="card-text">Extend A Helping Hand By Donating To Support Individuals Struggling With Financial
-              Hardships</p>
-              <a class="btn btn-primary" href="accomplished.html">Accomplished</a>
-          </div>
-        </div>
-        <!-- Campaign 3 -->
-        <div class="row">
-          <div class="col-md-3">
-            <img src="https://via.placeholder.com/100" alt="Campaign Image" class="img-fluid rounded">
-          </div>
-          <div class="col-md-9">
-            <h5 class="card-title text-primary">EDUCATIONAL</h5>
-            <p class="card-text">Empower The Future By Donating To Support Underprivileged Filipino Students</p>
-            <a class="btn btn-primary" href="accomplished.html">Accomplished</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Campaigns Section -->
-  <div class="container mt-5">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <!-- Campaign 1 -->
-        <div class="row mb-4">
-          <div class="col-md-3">
-            <img src="https://via.placeholder.com/100" alt="Campaign Image" class="img-fluid rounded">
-          </div>
-          <div class="col-md-9">
-            <h5 class="card-title text-primary">MEDICAL</h5>
-            <p class="card-text">Make A Difference Today By Donating To Support Sick Children In Cebu</p>
-            <a class="btn btn-primary" href="accomplished.html">Accomplished</a>
-          </div>
-        </div>
-        <!-- Campaign 2 -->
-        <div class="row mb-4">
-          <div class="col-md-3">
-            <img src="https://via.placeholder.com/100" alt="Campaign Image" class="img-fluid rounded">
-          </div>
-          <div class="col-md-9">
-            <h5 class="card-title text-primary">FINANCIAL</h5>
-            <p class="card-text">Extend A Helping Hand By Donating To Support Individuals Struggling With Financial
-              Hardships</p>
-              <a class="btn btn-primary" href="accomplished.html">Accomplished</a>
-          </div>
-        </div>
-        <!-- Campaign 3 -->
-        <div class="row">
-          <div class="col-md-3">
-            <img src="https://via.placeholder.com/100" alt="Campaign Image" class="img-fluid rounded">
-          </div>
-          <div class="col-md-9">
-            <h5 class="card-title text-primary">EDUCATIONAL</h5>
-            <p class="card-text">Empower The Future By Donating To Support Underprivileged Filipino Students</p>
-            <a class="btn btn-primary" href="accomplished.html">Accomplished</a>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 
   <!-- Redeem Rewards Section -->
-  <div class="container mt-5">
+  <div *ngIf="currentSection === 'rewards'" class="container mt-5">
     <div class="card shadow-sm">
       <div class="card-body">
         <h5 class="card-title">Redeem Rewards</h5>

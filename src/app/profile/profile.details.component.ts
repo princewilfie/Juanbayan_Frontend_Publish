@@ -11,6 +11,7 @@ import { Campaign } from '@app/_models/campaign';
 export class DetailsComponent implements OnInit {
   account: Account;
   campaigns: Campaign[];
+  currentSection: string = 'activities'; // Default section
 
   constructor(
     private accountService: AccountService,
@@ -27,8 +28,11 @@ export class DetailsComponent implements OnInit {
     });
   }
 
+  showSection(section: string): void {
+    this.currentSection = section; // Set the current section based on the button clicked
+  }
+
   openProfileModal() {
     // Logic to open profile modal, if necessary
-    // Can trigger modal open here or use Bootstrap modal data-bs-toggle as done in the HTML
   }
 }
