@@ -6,6 +6,7 @@ declare var bootstrap: any;
   templateUrl: './campaign.component.html',
   styleUrls: ['./campaign.component.css']
 })
+
 export class CampaignComponent {
   selectedCampaignTitle: string = '';
   selectedCampaignDescription: string = '';
