@@ -65,10 +65,13 @@ export class LandingPageComponent implements OnInit {
 
   // Logout
   logout() {
-    this.accountService.logout();
-    this.router.navigate(['/account/login-register']);
+    const token = localStorage.getItem('token'); // Get the token from local storage
+    if (token) {
+      this.accountService.logout(token); // Pass the token to the logout method
+    } 
+
+    this.router.navigate(['/account/login-register']); // Redirect to login-register after logout
   }
-  
   
   
 }

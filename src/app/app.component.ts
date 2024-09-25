@@ -68,9 +68,19 @@ export class AppComponent implements OnInit, OnDestroy {
   }
   
   logout() {
-    this.accountService.logout();
+    const token = localStorage.getItem('token'); // Get the token from local storage
+    if (token) {
+      this.accountService.logout(token); // Pass the token to the logout method
+    } else {
+      this.accountService.logout1(); // If no token found, just call logout without token
+    }
+
     this.router.navigate(['/account/login-register']); // Redirect to login-register after logout
+    this.showNavbar = false; // Hide the navbar immediately after logging out
   }
+  
+
+  
 
   // Toggles the dropdown visibility on clicking the user name
   toggleDropdown() {

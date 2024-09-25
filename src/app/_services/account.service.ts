@@ -49,14 +49,22 @@ export class AccountService {
             }));
     }
 
-    logout() {
+
+    logout(token: string) {
+        return this.http.post(`${baseUrl}/logout`, { token }).toPromise();
+      }
+    
+      clearStorage() {
+        localStorage.removeItem('token'); // Clear the token from storage
+        // Clear any other user-related data if necessary
+      }
+
+      logout1() {
         this.http.post<any>(`${baseUrl}/revoke-token`, {}, { withCredentials: true }).subscribe();
         this.stopRefreshTokenTimer();
         this.accountSubject.next(null);
         this.router.navigate(['/account/login-register']);
     }
-    
-    
     
     
 
@@ -122,7 +130,7 @@ export class AccountService {
             .pipe(finalize(() => {
                 // auto logout if the logged in account was deleted
                 if (id === this.accountValue.id)
-                    this.logout();
+                    this.logout1();
             }));
     }
 
@@ -140,4 +148,11 @@ export class AccountService {
     private stopRefreshTokenTimer() {
         clearTimeout(this.refreshTokenTimeout);
     }
+
+    updateProfileImage(formData: FormData): Observable<any> {
+        return this.http.post(`${baseUrl}/update-profile-image`, formData, {
+          withCredentials: true
+        });
+      }
+      
 }

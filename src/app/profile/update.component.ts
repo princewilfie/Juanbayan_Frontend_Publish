@@ -20,14 +20,14 @@ export class UpdateComponent implements OnInit {
         private router: Router,
         private accountService: AccountService,
         private alertService: AlertService
-    ) { }
+    ) {}
 
     ngOnInit() {
+        console.log('Account ID:', this.account.id); // Check if the ID is set correctly
         this.form = this.formBuilder.group({
             acc_firstname: [this.account.acc_firstname, Validators.required],
             acc_lastname: [this.account.acc_lastname, Validators.required],
-            acc_pnumber: ['', [Validators.required, Validators.pattern('^[0-9]{10,12}$')]],
-            acc_email: [this.account.acc_email, [Validators.required, Validators.email]],
+            acc_pnumber: [this.account.acc_pnumber, [Validators.pattern('^[0-9]{10,12}$')]],
             acc_passwordHash: ['', [Validators.minLength(6)]],
             confirmPassword: ['']
         }, {
@@ -35,17 +35,22 @@ export class UpdateComponent implements OnInit {
         });
     }
 
-    // convenience getter for easy access to form fields
+    // Convenience getter for easy access to form fields
     get f() { return this.form.controls; }
 
     onSubmit() {
         this.submitted = true;
 
-        // reset alerts on submit
         this.alertService.clear();
 
-        // stop here if form is invalid
         if (this.form.invalid) {
+            return;
+        }
+
+        if (!this.account.id) {
+            console.error('Account ID is missing');
+            this.alertService.error('Account ID is missing');
+            this.loading = false;
             return;
         }
 
