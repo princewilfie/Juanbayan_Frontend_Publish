@@ -11,13 +11,16 @@ import { fakeBackendProvider } from './_helpers';
 import { AppRoutingModule } from './app-routing.module';
 import { JwtInterceptor, ErrorInterceptor, appInitializer } from './_helpers';
 import { AccountService } from './_services';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';  // Import NgbModule for Bootstrap components
+
+
 import { AppComponent } from './app.component';
 import { AlertComponent } from './_components';
 import { HomeComponent } from './home';
 import { LandingPageComponent } from './landing-page'; // Correct path
 import { TeamMemberComponent } from './team-member/about-us.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';  // Import NgbModule for Bootstrap components
-
+import { CampaignComponent } from './campaign/campaign.component';
 
 @NgModule({
     imports: [
@@ -33,7 +36,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';  // Import NgbModule for
         AlertComponent,
         HomeComponent,
         LandingPageComponent,
-        TeamMemberComponent
+        TeamMemberComponent,
+        CampaignComponent
     ],
     providers: [
         { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AccountService] },

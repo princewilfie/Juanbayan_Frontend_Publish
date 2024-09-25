@@ -6,7 +6,6 @@ import { LayoutComponent } from './layout.component';
 import { OverviewComponent } from './overview.component';
 
 const accountsModule = () => import('./accounts/accounts.module').then(x => x.AccountsModule);
-import { DashboardComponent } from './dashboard/dashboard.component'; // Import the dashboard component
 
 
 const routes: Routes = [
@@ -15,7 +14,7 @@ const routes: Routes = [
         path: '', component: LayoutComponent,
         children: [
             { path: '', component: OverviewComponent },
-            { path: 'dashboard', component: DashboardComponent }, // Admin dashboard route
+            { path: 'dashboard', component: OverviewComponent }, // Admin dashboard route
             { path: 'accounts', loadChildren: accountsModule }
         ]
     }

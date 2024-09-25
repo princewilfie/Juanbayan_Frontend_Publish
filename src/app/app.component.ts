@@ -7,26 +7,25 @@ import { Account, Role } from './_models';
 @Component({
   selector: 'app',
   templateUrl: 'app.component.html',
-  styleUrls: ['app.component.css']
+  // styleUrls: ['app.component.css'] // Uncomment if using external CSS
 })
 export class AppComponent implements OnInit, OnDestroy {
   Role = Role;
   account: Account | null = null; // Default to null for logged out state
-  showNavbar: boolean = true; // Controls navbar visibility
-  dropdownVisible: boolean = false; // Control dropdown visibility
-  accountSubscription: Subscription | undefined;
+  showNavbar = true; // Controls navbar visibility
+  dropdownVisible = false; // Control dropdown visibility
+  private accountSubscription: Subscription | undefined;
 
   constructor(private accountService: AccountService, private router: Router) {}
 
   ngOnInit() {
     // Subscribe to the account observable to detect login/logout
     this.accountSubscription = this.accountService.account.subscribe(account => {
-      console.log(account);
       this.account = account;
       this.updateNavbarVisibility(this.router.url); // Update navbar visibility when account changes
     });
 
-    // Check visibility initially
+    // Initial visibility check
     this.updateNavbarVisibility(this.router.url);
 
     // Update visibility on route changes
@@ -39,20 +38,26 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // Unsubscribe from account observable to avoid memory leaks
-    if (this.accountSubscription) {
-      this.accountSubscription.unsubscribe();
-    }
+    this.accountSubscription?.unsubscribe();
   }
 
-  updateNavbarVisibility(url: string) {
-    const accountRoutes = ['/account/login-register', '/account/forgot-password', '/account/verify-email', '/account/reset-password'];
-    const adminRoutes = ['/admin', '/admin/dashboard', '/admin/accounts']; // Add your admin routes here
-    
-    // Check if the current route is an account-related route
+  private updateNavbarVisibility(url: string) {
+    const accountRoutes = [
+      '/account/login-register',
+      '/account/forgot-password',
+      '/account/verify-email',
+      '/account/reset-password'
+    ];
+    const adminRoutes = [
+      '/admin',
+      '/admin/dashboard',
+      '/admin/accounts' // Add your admin routes here
+    ];
+
+    // Determine visibility based on the current URL
     const isAccountRoute = accountRoutes.some(route => url.includes(route));
     const isAdminRoute = adminRoutes.some(route => url.includes(route));
 
-    // Show navbar and footer on landing page and homepage when logged in, hide on account and admin routes
     if (isAccountRoute || isAdminRoute) {
       this.showNavbar = false;
     } else if (url.includes('/landing-page') || url.includes('/home')) {
@@ -64,7 +69,7 @@ export class AppComponent implements OnInit, OnDestroy {
   
   logout() {
     this.accountService.logout();
-    this.router.navigate(['/account/login-register']); // Ensure routing to login-register after logout
+    this.router.navigate(['/account/login-register']); // Redirect to login-register after logout
   }
 
   // Toggles the dropdown visibility on clicking the user name
@@ -84,9 +89,8 @@ export class AppComponent implements OnInit, OnDestroy {
   // Handle back button navigation if user is logged out
   @HostListener('window:popstate', ['$event'])
   onPopState(event: Event) {
-      if (!this.accountService.accountValue) {
-          this.router.navigate(['/account/login-register']);  // Redirect to login if no account
-      }
+    if (!this.accountService.accountValue) {
+      this.router.navigate(['/account/login-register']);  // Redirect to login if no account
+    }
   }
-
 }

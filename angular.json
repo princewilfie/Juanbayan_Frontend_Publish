@@ -86,7 +86,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/app/campaign/campaign.css",
+              "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [

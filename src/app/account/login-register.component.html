@@ -5,7 +5,7 @@
 	<div class="sudlanan">
 		<!-- Centered Logo -->
 		<div class="logo-container">
-			<img src="assets/juanbayan-logo.png" alt="Logo" class="center-logo">
+			<img src="assets/jb-symbol-logo.png" alt="Logo" class="center-logo">
 		</div>
 
 		<div class="container" id="container" [ngClass]="{ 'right-panel-active': isRightPanelActive }">
@@ -17,7 +17,7 @@
 					<h1>Create Account</h1>
 					<div class="social-container">
 						<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-						<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+						<a href="http://localhost:4000/auth/google" class="social"><i class="fab fa-google-plus-g"></i></a>
 					</div>
 					<span>or use your email for registration</span>
 
@@ -83,7 +83,7 @@
 					<h1>Sign In</h1>
 					<div class="social-container">
 						<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-						<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+						<a href="http://localhost:4000/auth/google" class="social"><i class="fab fa-google-plus-g"></i></a>
 					</div>
 					<span>or use your account</span>
 
@@ -100,8 +100,6 @@
 						<small>Password is required</small>
 					</div>
 
-				
-					
 
 					<a routerLink="/account/forgot-password">Forgot your password?</a>
 					<button type="submit">Sign In</button>

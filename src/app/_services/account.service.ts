@@ -34,7 +34,7 @@ export class AccountService {
                     throw new Error('Your account has not been verified. Please verify your email before logging in')
                 }
                 // store account details in local storage to keep user logged in between page refreshes
-                localStorage.setItem('account', JSON.stringify(account));
+                //localStorage.setItem('account', JSON.stringify(account));
                 this.accountSubject.next(account);
                 this.startRefreshTokenTimer();
     

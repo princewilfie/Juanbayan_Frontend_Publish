@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AccountService, AlertService } from '@app/_services';
 import { MustMatch } from '@app/_helpers'; // Custom Validator to ensure passwords match
@@ -16,14 +16,27 @@ export class LoginRegisterComponent implements OnInit {
   isRightPanelActive = false; // For toggling between SignIn and SignUp
   loading = false;
 
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
+    private route: ActivatedRoute,
     private accountService: AccountService,
     private alertService: AlertService
   ) {}
 
   ngOnInit(): void {
+
+    // Handle Google OAuth redirect token
+    this.route.queryParams.subscribe(params => {
+      const token = params['token'];
+      if (token) {
+        // Save the token in local storage
+        localStorage.setItem('authToken', token);
+        // Redirect to the home page or another appropriate page
+        this.router.navigate(['/']);
+      }
+    });
     // Login form
     this.loginForm = this.formBuilder.group({
       acc_email: ['', [Validators.required, Validators.email]],
