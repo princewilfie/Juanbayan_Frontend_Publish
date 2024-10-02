@@ -1,0 +1,53 @@
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaigns List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .table td, .table th {
+            border-bottom: 1px solid #dee2e6;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+<div class="container mt-5">
+    <h2 class="mb-4">Campaigns List</h2>
+  
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Campaign Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Target Fund</th>
+          <th scope="col">Current Raised</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">End Date</th>
+          <th scope="col">Status</th>
+          <th scope="col">Approval Status</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let campaign of campaigns">
+          <td><input type="checkbox"></td>
+          <td>{{ campaign.Campaign_Name }}</td>
+          <td>{{ campaign.Campaign_Description }}</td>
+          <td>{{ campaign.Campaign_TargetFund | currency }}</td>
+          <td>{{ campaign.Campaign_CurrentRaised | currency }}</td>
+          <td>{{ campaign.Campaign_Start | date:'MM/dd/yyyy' }}</td>
+          <td>{{ campaign.Campaign_End | date:'MM/dd/yyyy' }}</td>
+          <td>{{ getCampaignStatus(campaign.Campaign_Status) }}</td>
+          <td>{{ campaign.Campaign_ApprovalStatus }}</td>
+          <td>
+            <div class="actions">
+              <button class="btn btn-success btn-sm" (click)="approveCampaign(campaign.Campaign_ID)">Approve</button>
+              <button class="btn btn-danger btn-sm" (click)="rejectCampaign(campaign.Campaign_ID)">Reject</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

@@ -19,12 +19,18 @@
                     <ul  class="nav-links" *ngIf="account?.acc_role === 'User'">
                         <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
                         <li><a routerLink="/home">Home</a></li>
-                        <li><a routerLink="/campaign">Campaign</a></li>
+                        <li>
+                          <a href="#" class="desktop-item" (click)="toggleDropdown()">Campaign</a>
+                          <ul class="drop-menu" [ngClass]="{'show': showDrop}">
+                              <li><a routerLink="/create-campaign" routerLinkActive="active" (click)="showDrop = false">Create</a></li>
+                              <li><a routerLink="/campaign" routerLinkActive="active" (click)="showDrop = false">List</a></li>
+                          </ul>
+                      </li>                      
                         <li><a routerLink="/event">Event</a></li>
                         <li><a href="/team-member">About us</a></li>
                         <li *ngIf="!account"><a routerLink="/account/login-register">Sign in</a></li>
-                        <li>
-                            <a href="#" class="desktop-item">{{ account.acc_firstname || 'User' }}</a>
+                        <li>  
+                            <a routerLink="/profile" class="desktop-item">{{ account.acc_firstname || 'User' }}</a>
                             <input type="checkbox" id="showDrop">
                             <ul class="drop-menu">
                                 <li><a routerLink="/profile">Profile</a></li>
@@ -79,8 +85,9 @@
                     <ul *ngIf="account?.acc_role === 'Admin'" class="nav-links">
                         <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
                         <li><a routerLink="/admin">Admin Home</a></li>
-                        <li><a routerLink="/admin/campaign">Campaign List</a></li>
-                        <li><a routerLink="/admin/event">Event List</a></li>
+                        <li><a routerLink="/admin/campaigns">Campaign</a></li>
+                        <li><a routerLink="/admin/events">Event</a></li>
+                        <li><a routerLink="/admin/rewards">Reward</a></li>
                         <li *ngIf="!account"><a routerLink="/account/login-register">Sign in</a></li>
                         <li>
                             <a href="#" class="desktop-item">{{ account.acc_firstname || 'Admin' }}</a>
@@ -100,57 +107,55 @@
         </header>
     </ng-container>
 
-    <!-- global alert -->
-    <alert></alert>
+    <alert style="z-index: 1000000;"></alert>
 
-    <!-- main router outlet for other components -->
     <router-outlet></router-outlet>
-    
-    <!--Footer-->
-    <footer class="footer" *ngIf="showNavbar">
-        <div class="footer-container">
-            <div class="footer-left">
-                <img src="assets/jb-symbol-logo.png" alt="JuanBayan Logo" class="footer-logo">
-                <p>Care about people to transforming their lives and exudes a positive impression. Fundraising NGO organizations.</p>
-                <div class="social-icons">
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                </div>
-            </div>
 
-            <div class="footer-center">
-                <h3>Get Involved</h3>
-                <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Volunteer</a></li>
-                    <li><a href="#">Causes</a></li>
-                    <li><a href="#">Team</a></li>
-                </ul>
-            </div>
+     <!--Footer-->
+     <footer class="footer" *ngIf="showNavbar">
+      <div class="footer-container">
+          <div class="footer-left">
+              <img src="assets/jb-symbol-logo.png" alt="JuanBayan Logo" class="footer-logo">
+              <p>Care about people to transforming their lives and exudes a positive impression. Fundraising NGO organizations.</p>
+              <div class="social-icons">
+                  <a href="#"><i class="fab fa-instagram"></i></a>
+                  <a href="#"><i class="fab fa-facebook-f"></i></a>
+                  <a href="#"><i class="fab fa-twitter"></i></a>
+              </div>
+          </div>
 
-            <div class="footer-right">
-                <h3>Utility</h3>
-                <ul>
-                    <li><a href="#">Style Guide</a></li>
-                    <li><a href="#">Licenses</a></li>
-                    <li><a href="#">Password</a></li>
-                    <li><a href="#">404 Page</a></li>
-                    <li><a href="#">Changelog</a></li>
-                </ul>
+          <div class="footer-center">
+              <h3>Get Involved</h3>
+              <ul>
+                  <li><a routerLink="/team-member">About Us</a></li>
+                  <li><a href="/contact">Contact Us</a></li>
+                  <li><a href="/volunteer">Volunteer</a></li>
+                  <li><a href="#">Causes</a></li>
+                  <li><a href="#">Team</a></li>
+              </ul>
+          </div>
 
-                <h3>Contact</h3>
-                <p>6000 Cebu City, Philippines</p>
-                <p>help.juanbayan&#64;gmail.com</p>
-                <p>0923 705 8623</p>
-            </div>
-        </div>
+          <div class="footer-right">
+              <h3>Utility</h3>
+              <ul>
+                  <li><a href="#">Style Guide</a></li>
+                  <li><a href="#">Licenses</a></li>
+                  <li><a href="#">Password</a></li>
+                  <li><a href="#">404 Page</a></li>
+                  <li><a href="#">Changelog</a></li>
+              </ul>
 
-        <div class="footer-bottom">
-            <p>&copy; 2024 JuanBayan | A PLATFORM FOR DONATION CROWDFUNDING AND COMMUNITY EMPOWERMENT IN CEBU CITY</p>
-        </div>
-    </footer>
+              <h3>Contact</h3>
+              <p>6000 Cebu City, Philippines</p>
+              <p>juanbayan.team&#64;gmail.com</p>
+              <p>0923 705 8623</p>
+          </div>
+      </div>
+
+      <div class="footer-bottom">
+          <p>&copy; 2024 JuanBayan | A PLATFORM FOR DONATION CROWDFUNDING AND COMMUNITY EMPOWERMENT IN CEBU CITY</p>
+      </div>
+  </footer>
 </div>
 
 
@@ -246,8 +251,9 @@ nav .wrapper {
   width: 100%;
   display: block;
   padding: 0 15px;
-  font-weight: 400;
+  font-weight: 400; /* Default weight for other items */
   border-radius: 0px;
+  color: #d9d9d9;
 }
 
 .mega-box {
@@ -593,11 +599,3 @@ nav input {
 }
 
 </style>
-
-
-
-
-
-
-
-

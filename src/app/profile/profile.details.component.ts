@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from '@app/_services';
-import { CampaignService } from '@app/_services/campaign.service';
+import { AccountService, CampaignService } from '@app/_services';
 import { Account } from '@app/_models/account';
 import { Campaign } from '@app/_models/campaign';
 
@@ -23,19 +22,23 @@ export class DetailsComponent implements OnInit {
   ngOnInit(): void {
     // Fetch account data
     this.account = this.accountService.accountValue;
-
-    // Load profile image
-    this.loadProfileImage();
-
+  
+    // Ensure account.id is a number
+    const accountId = Number(this.account.id);
+  
     // Fetch campaigns data
-    this.campaignService.getCampaignsByAccountId(this.account.id).subscribe(
-      (campaigns) => {
-        this.campaigns = campaigns;
-      },
-      (error) => {
-        console.error('Error fetching campaigns', error);
-      }
-    );
+    if (!isNaN(accountId)) {
+      this.campaignService.getCampaignsByAccountId(accountId).subscribe(
+        (campaigns) => {
+          this.campaigns = campaigns;
+        },
+        (error) => {
+          console.error('Error fetching campaigns', error);
+        }
+      );
+    } else {
+      console.error('Invalid account ID:', this.account.id);
+    }
   }
 
   loadProfileImage(): void {

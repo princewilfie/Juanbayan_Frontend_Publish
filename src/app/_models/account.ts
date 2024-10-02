@@ -12,5 +12,7 @@ export class Account {
     acc_role: Role;
     acc_acceptTerms: string;
     acc_resetToken?: string;
+    acc_status: string;
     jwtToken?: string;
+    refreshToken?: string;
 }

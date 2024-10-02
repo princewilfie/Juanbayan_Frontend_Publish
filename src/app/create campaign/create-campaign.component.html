@@ -1,0 +1,104 @@
+<div class="container">
+    <br><br><br><br>
+    <h1 class="text-center mb-4">Create and Donate to Campaigns</h1>
+
+    <div class="text-center mb-4">
+        <button class="btn btn-primary" (click)="openCreateCampaignModal(createCampaignModal)">Create Campaign</button>
+    </div>
+
+    <h2 class="my-4">Your Campaigns</h2>
+    <div class="row">
+        <div class="col-md-4 mb-4" *ngFor="let campaign of campaigns">
+            <div class="card campaign-card">
+                <img [src]="getImagePath(campaign.Campaign_Image)" alt="{{ campaign.Campaign_Name }} Image" class="campaign-image">
+                <div class="card-body">
+                    <h5 class="card-title">{{ campaign.Campaign_Name }}</h5>
+                    <p class="card-text">{{ campaign.Campaign_Description }}</p>
+                    <p><strong>Goal: ${{ campaign.Campaign_TargetFund }}</strong></p>
+                    <span class="category-label" [ngClass]="formatCategory(campaign.Campaign_Category)">{{ campaign.Campaign_Category }}</span>
+
+                    <div *ngIf="campaign.Campaign_ApprovalStatus === 'Waiting For Approval'" class="text-warning">
+                        <strong>Pending for Approval</strong>
+                    </div>
+                    <div *ngIf="campaign.Campaign_ApprovalStatus === 'Approved'" class="text-success">
+                        <strong>Approved</strong>
+                    </div>
+                    <div *ngIf="campaign.Campaign_ApprovalStatus === 'Rejected'" class="text-danger">
+                        <strong>Rejected</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Campaign Modal -->
+    <ng-template #createCampaignModal>
+        <div class="modal-header">
+            <h5 class="modal-title">Create a Campaign</h5>
+            <button type="button" class="btn-close" (click)="closeCreateCampaignModal()"></button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="createCampaignForm" (ngSubmit)="createCampaign()">
+                <div class="mb-3">
+                    <label for="campaignName" class="form-label">Campaign Name</label>
+                    <input type="text" class="form-control" id="campaignName" formControlName="Campaign_Name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="campaignDescription" class="form-label">Campaign Description</label>
+                    <textarea class="form-control" id="campaignDescription" formControlName="Campaign_Description" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="campaignGoal" class="form-label">Campaign Goal ($)</label>
+                    <input type="number" class="form-control" id="campaignGoal" formControlName="Campaign_TargetFund" required>
+                </div>
+                <div class="mb-3">
+                    <label for="campaignCategory" class="form-label">Category</label>
+                    <select class="form-select" id="campaignCategory" formControlName="Campaign_Category" required>
+                        <option value="">Select a category</option>
+                        <option [value]="1">Financial</option>
+                        <option [value]="2">Education</option>
+                        <option [value]="3">Hospital Bills</option>
+                        <option [value]="4">Others</option>
+                    </select>
+                    <input type="text" class="form-control mt-2" formControlName="Other_Category" placeholder="Specify other category" *ngIf="createCampaignForm.get('Campaign_Category')?.value === 4">
+                </div>
+                <div class="mb-3">
+                    <label for="campaignStartDate" class="form-label">Start Date</label>
+                    <input type="date" class="form-control" id="campaignStartDate" formControlName="Campaign_Start" required>
+                </div>
+                <div class="mb-3">
+                    <label for="campaignEndDate" class="form-label">End Date</label>
+                    <input type="date" class="form-control" id="campaignEndDate" formControlName="Campaign_End" required>
+                </div>
+                <div class="mb-3">
+                    <label for="campaignImage" class="form-label">Upload Campaign Image</label>
+                    <input type="file" class="form-control" id="campaignImage" (change)="onFileSelected($event)">
+                </div>
+                <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+                <button type="submit" class="btn btn-primary" [disabled]="loading">{{ loading ? 'Creating...' : 'Create Campaign' }}</button>
+            </form>
+        </div>
+    </ng-template>
+
+    <!-- Campaign Details Modal -->
+    <!--
+    <ng-template #campaignDetailsModal>
+      <div class="modal-header">
+        <h5 class="modal-title">{{ selectedCampaign?.Campaign_Name }} Details</h5>
+        <button type="button" class="btn-close" (click)="closeCampaignDetailsModal()"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Description:</strong> {{ selectedCampaign?.Campaign_Description }}</p>
+        <p><strong>Goal:</strong> ${{ selectedCampaign?.Campaign_TargetFund }}</p>
+        <p><strong>Current Raised:</strong> ${{ selectedCampaign?.Campaign_CurrentRaised }}</p>
+        <p><strong>Category:</strong> {{ selectedCampaign?.Campaign_Category }}</p>
+        <img [src]="getImagePath(selectedCampaign?.Campaign_Image)" alt="{{ selectedCampaign?.Campaign_Name }} Image" class="img-fluid">
+        <div class="mt-4">
+          <h5>Donate</h5>
+          <input type="number" [(ngModel)]="donationAmount" placeholder="Enter donation amount" class="form-control" />
+          <button class="btn btn-success" (click)="donate()">Donate</button>
+        </div>
+      </div>
+    </ng-template>
+    -->
+</div>

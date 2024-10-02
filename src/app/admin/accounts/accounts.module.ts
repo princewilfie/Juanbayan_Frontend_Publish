@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { AccountsRoutingModule } from './accounts-routing.module';
 import { ListComponent } from './list.component';
+import { EditComponent } from './edit.component';
 
 @NgModule({
     imports: [
@@ -13,7 +14,8 @@ import { ListComponent } from './list.component';
         FormsModule
     ],
     declarations: [
-        ListComponent
+        ListComponent, 
+        EditComponent,
     ], 
 })
 export class AccountsModule { }

@@ -48,17 +48,11 @@ export class AppComponent implements OnInit, OnDestroy {
       '/account/verify-email',
       '/account/reset-password'
     ];
-    const adminRoutes = [
-      '/admin',
-      '/admin/dashboard',
-      '/admin/accounts' // Add your admin routes here
-    ];
 
     // Determine visibility based on the current URL
     const isAccountRoute = accountRoutes.some(route => url.includes(route));
-    const isAdminRoute = adminRoutes.some(route => url.includes(route));
 
-    if (isAccountRoute || isAdminRoute) {
+    if (isAccountRoute) {
       this.showNavbar = false;
     } else if (url.includes('/landing-page') || url.includes('/home')) {
       this.showNavbar = true;
@@ -67,17 +61,10 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
   
-  logout() {
-    const token = localStorage.getItem('token'); // Get the token from local storage
-    if (token) {
-      this.accountService.logout(token); // Pass the token to the logout method
-    } else {
-      this.accountService.logout1(); // If no token found, just call logout without token
+    logout() {
+        this.accountService.logout();
+        this.router.navigate(['account/login-register']); // Redirect to home on logout
     }
-
-    this.router.navigate(['/account/login-register']); // Redirect to login-register after logout
-    this.showNavbar = false; // Hide the navbar immediately after logging out
-  }
   
 
   

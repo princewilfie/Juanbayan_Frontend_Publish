@@ -1,60 +1,58 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Campaign } from '../_models';
+import { Campaign } from '../_models/campaign'; // Replace with your actual model path
+import { environment } from '../../environments/environment'; // Import environment for API baseUrl
 
 @Injectable({
   providedIn: 'root'
 })
 export class CampaignService {
-  private apiUrl = '/api/campaigns';  // Adjust the API URL as needed
+  private baseUrl = `${environment.apiUrl}/campaigns`; // Use the environment variable for the base API URL
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
+  // Create a new campaign with form data (including image)
+  create(formData: FormData): Observable<Campaign> {
+    return this.http.post<Campaign>(`${this.baseUrl}`, formData);
+  }
+
+  updateCampaign(id: string, formData: FormData): Observable<Campaign> {
+    return this.http.put<Campaign>(`${this.baseUrl}/${id}`, formData);
+  }
+
+  // Get all campaigns
   getAll(): Observable<Campaign[]> {
-    return this.http.get<Campaign[]>(`${this.apiUrl}`);
+    return this.http.get<Campaign[]>(`${this.baseUrl}`);
   }
 
+  // Get a campaign by ID
   getById(id: number): Observable<Campaign> {
-    return this.http.get<Campaign>(`${this.apiUrl}/${id}`);
+    return this.http.get<Campaign>(`${this.baseUrl}/${id}`);
   }
 
-  create(campaign: Campaign, file: File): Observable<Campaign> {
-    const formData = new FormData();
-    Object.keys(campaign).forEach(key => {
-      formData.append(key, (campaign as any)[key]);
-    });
-    if (file) {
-      formData.append('Campaign_Image', file, file.name);
-    }
-    return this.http.post<Campaign>(`${this.apiUrl}`, formData);
-  }
-
-  update(id: number, campaign: Campaign, file?: File): Observable<Campaign> {
-    const formData = new FormData();
-    Object.keys(campaign).forEach(key => {
-      formData.append(key, (campaign as any)[key]);
-    });
-    if (file) {
-      formData.append('Campaign_Image', file, file.name);
-    }
-    return this.http.put<Campaign>(`${this.apiUrl}/${id}`, formData);
-  }
-
+  // Delete a campaign
   delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
+  // Approve a campaign (Admin only)
   approve(id: number): Observable<Campaign> {
-    return this.http.put<Campaign>(`${this.apiUrl}/${id}/approve`, null);
+    return this.http.put<Campaign>(`${this.baseUrl}/${id}/approve`, {});
   }
 
+  // Reject a campaign (Admin only)
   reject(id: number): Observable<Campaign> {
-    return this.http.put<Campaign>(`${this.apiUrl}/${id}/reject`, null);
+    return this.http.put<Campaign>(`${this.baseUrl}/${id}/reject`, {});
   }
 
-  getCampaignsByAccountId(accountId: string | number): Observable<Campaign[]> {
-    return this.http.get<Campaign[]>(`${this.apiUrl}?Acc_ID=${accountId}`);
-  }  
-  
+  // Update Campaign Status (Generic function for both approval and rejection)
+  updateCampaignStatus(campaignId: number, status: number): Observable<Campaign> {
+    return this.http.put<Campaign>(`${this.baseUrl}/${campaignId}/status`, { Campaign_Status: status });
+  }
+
+  // Get campaigns by account ID
+  getCampaignsByAccountId(accountId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/account/${accountId}`);
+  }
 }

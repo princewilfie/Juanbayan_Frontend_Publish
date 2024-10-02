@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import { PaymentService } from '../_services/payment.service'; // Import the payment service
-import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-campaign',

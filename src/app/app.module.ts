@@ -21,6 +21,9 @@ import { HomeComponent } from './home';
 import { LandingPageComponent } from './landing-page'; // Correct path
 import { TeamMemberComponent } from './team-member/about-us.component';
 import { CampaignComponent } from './campaign/campaign.component';
+import { AdminModule } from './admin/admin.module';
+import { CreateCampaignComponent } from './create campaign';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
     imports: [
@@ -29,7 +32,9 @@ import { CampaignComponent } from './campaign/campaign.component';
         ReactiveFormsModule,
         HttpClientModule,
         AppRoutingModule,
-        NgbModule
+        NgbModule, 
+        AdminModule,
+        RouterModule
     ],
     declarations: [
         AppComponent,
@@ -37,7 +42,8 @@ import { CampaignComponent } from './campaign/campaign.component';
         HomeComponent,
         LandingPageComponent,
         TeamMemberComponent,
-        CampaignComponent
+        CampaignComponent, 
+        CreateCampaignComponent
     ],
     providers: [
         { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AccountService] },

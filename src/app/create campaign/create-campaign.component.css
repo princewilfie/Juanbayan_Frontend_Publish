@@ -1,0 +1,84 @@
+.campaign-card {
+    transition: transform 0.2s;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.campaign-card:hover {
+    transform: scale(1.05);
+}
+
+.modal-content {
+    border-radius: 0.5rem;
+}
+
+.modal-header {
+    background-color: #007bff;
+    color: white;
+}
+
+.modal-body {
+    background-color: #ffffff;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+.category-label {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+}
+
+.category-financial { background-color: #007bff; }
+.category-education { background-color: #28a745; }
+.category-hospital { background-color: #dc3545; }
+.category-others { background-color: #6f42c1; }
+
+/* Ensure campaign images are consistent */
+.campaign-image {
+    width: 100%;
+    height: 200px; /* Set a fixed height */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+    border-bottom: 1px solid #e9ecef;
+}
+
+.full-size-image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+.card-body {
+    min-height: 250px; /* Set a minimum height for the body to ensure consistency */
+}
+
+/* For responsive layout */
+@media (max-width: 767px) {
+    .campaign-image {
+        height: 150px; /* Smaller height on mobile */
+    }
+}
+
+.text-warning {
+    color: orange; /* Change this to whatever color you prefer */
+  }
+  

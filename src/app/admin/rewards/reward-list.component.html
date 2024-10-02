@@ -1,0 +1,36 @@
+<div class="container mt-5">
+    <h2 class="mb-4">Reward List</h2>
+    <div class="d-flex justify-content-end mb-3">
+        <a routerLink="add" class="btn btn-sm btn-success mb-2">Add Reward</a>
+    </div>
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Point Cost</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Status</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let reward of rewards">
+                <td>{{ reward.reward_Name }}</td>
+                <td>{{ reward.reward_Description }}</td>
+                <td>{{ reward.reward_PointCost }}</td>
+                <td>{{ reward.reward_Quantity }}</td>
+                <td>{{ reward.reward_Status }}</td>
+                <td>
+                    <a routerLink="edit/{{reward.reward_ID}}" class="btn btn-sm btn-primary mr-1">
+                        Edit
+                    </a>
+                    &nbsp;
+                    <button (click)="deleteReward(reward.reward_ID)" class="btn btn-danger btn-sm">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

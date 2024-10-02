@@ -76,26 +76,27 @@ export class LoginRegisterComponent implements OnInit {
   // Login form submission
   onLoginSubmit() {
     this.submitted = true;
-    this.alertService.clear();
+    this.alertService.clear(); // Clear any existing alerts
 
+    // If the form is invalid, stop here
     if (this.loginForm.invalid) {
         return;
     }
 
-    this.loading = true;
+    this.loading = true; // Start the loading spinner or state
+
+    // Call the login function from accountService
     this.accountService.login(this.lf.acc_email.value, this.lf.acc_passwordHash.value)
         .pipe(first())
         .subscribe({
             next: () => {
+                // Navigate to the default route (home) on successful login
                 this.router.navigate(['/']);
             },
             error: error => {
-              console.error('Login error:', error); // Log the error to the console for debugging
-              const errorMessage = error?.error?.message || 'Login failed. Please check your credentials.';
-              this.alertService.error(errorMessage);
+              this.alertService.error(error);
               this.loading = false;
           }
-          
         });
 }
 

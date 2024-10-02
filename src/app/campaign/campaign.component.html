@@ -1,187 +1,187 @@
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JuanBayan - Campaigns</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <style>
-    * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JuanBayan - Campaigns</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<style>
+  * {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
 }
 
 body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
+font-family: 'Arial', sans-serif;
+background-color: #f9f9f9;
+color: #333;
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+max-width: 1200px;
+margin: 0 auto;
+padding: 20px;
 }
 
 .header-content {
-  background-image: url('/src/assets/jblogo.png'); /* Replace with actual background image */
-  background-size: cover;
-  background-position: center;
-  text-align: center;
-  padding: 150px 20px;
-  color: white;
-  position: relative;
+background-image: url('/src/assets/jblogo.png'); /* Replace with actual background image */
+background-size: cover;
+background-position: center;
+text-align: center;
+padding: 150px 20px;
+color: white;
+position: relative;
 }
 
 .header-content::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 1;
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.4);
+z-index: 1;
 }
 
 .header-content h1 {
-  z-index: 2;
-  position: relative;
-  font-size: 3rem;
+z-index: 2;
+position: relative;
+font-size: 3rem;
 }
 
 .header-content p {
-  z-index: 2;
-  position: relative;
-  font-size: 1.3rem;
+z-index: 2;
+position: relative;
+font-size: 1.3rem;
 }
 
 /* Campaign Section */
 .campaign-section {
-  padding: 60px 0;
-  text-align: center;
+padding: 60px 0;
+text-align: center;
 }
 
 .campaign-section h2 {
-  font-size: 2.5rem;
-  margin-bottom: 40px;
-  color: #007bff;
+font-size: 2.5rem;
+margin-bottom: 40px;
+color: #007bff;
 }
 
 .campaign-card {
-  cursor: pointer;
-  transition: transform 0.3s ease-in-out;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border: none;
-  margin-bottom: 30px;
+cursor: pointer;
+transition: transform 0.3s ease-in-out;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+border: none;
+margin-bottom: 30px;
 }
 
 .campaign-card:hover {
-  transform: scale(1.05);
+transform: scale(1.05);
 }
 
 .campaign-card img {
-  height: 200px;
-  object-fit: cover;
-  border-radius: 8px;
+height: 200px;
+object-fit: cover;
+border-radius: 8px;
 }
 
 .campaign-card h5 {
-  font-size: 1.5rem;
-  color: #007bff;
+font-size: 1.5rem;
+color: #007bff;
 }
 
 .campaign-card p {
-  font-size: 1rem;
-  color: #555;
+font-size: 1rem;
+color: #555;
 }
 
-  </style>
+</style>
 
 
 <!-- Header Section -->
 <header class="header-content">
-  <h1>JuanBayan Campaigns</h1>
-  <p>Join us in making a positive impact through our ongoing campaigns.</p>
+<h1>JuanBayan Campaigns</h1>
+<p>Join us in making a positive impact through our ongoing campaigns.</p>
 </header>
 
 <!-- Campaign Section -->
 <section class="campaign-section container">
-  <h2>Our Campaigns</h2>
-  <div class="container">
-    <!-- Campaigns Section -->
-    <div class="row">
-      <div class="col-md-4" *ngFor="let campaign of campaigns">
-        <div class="card campaign-card" (click)="openCampaignDetails(campaign)">
-          <img [src]="campaign.image" class="card-img-top" alt="Campaign Image">
-          <div class="card-body">
-            <h5 class="card-title">{{ campaign.title }}</h5>
-            <p class="card-text">{{ campaign.description }}</p>
-          </div>
+<h2>Our Campaigns</h2>
+<div class="container">
+  <!-- Campaigns Section -->
+  <div class="row">
+    <div class="col-md-4" *ngFor="let campaign of campaigns">
+      <div class="card campaign-card" (click)="openCampaignDetails(campaign)">
+        <img [src]="campaign.image" class="card-img-top" alt="Campaign Image">
+        <div class="card-body">
+          <h5 class="card-title">{{ campaign.title }}</h5>
+          <p class="card-text">{{ campaign.description }}</p>
         </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Modal for Campaign Details -->
-  <div #campaignDetailModal class="modal fade" tabindex="-1" aria-labelledby="campaignDetailModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">{{ selectedCampaign?.title }}</h5>
-          <button type="button" class="btn-close" aria-label="Close" (click)="closeModal(campaignDetailModal)"></button>
-        </div>
-        <div class="modal-body">
-          <img [src]="selectedCampaign?.image" alt="Campaign Image" class="img-fluid">
-          <p>{{ selectedCampaign?.description }}</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="openDonateModal()">Donate</button>
-          <button type="button" class="btn btn-secondary" (click)="closeModal(campaignDetailModal)">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Modal for Donation via GCash -->
-<div #donateModal class="modal fade" tabindex="-1" aria-labelledby="donateModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Donate via GCash</h5>
-        <button type="button" class="btn-close" aria-label="Close" (click)="closeModal(donateModal)"></button>
-      </div>
-      <div class="modal-body text-center">
-        <img [src]="qrCodeUrl" alt="GCash QR Code" class="img-fluid">
-        <p>Scan the QR code to donate via GCash.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="initiateDonation()">Proceed</button>
       </div>
     </div>
   </div>
 </div>
 
-
-  <!-- Modal for Uploading Receipt -->
-  <div #uploadModal class="modal fade" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Upload Receipt</h5>
-          <button type="button" class="btn-close" aria-label="Close" (click)="closeModal(uploadModal)"></button>
-        </div>
-        <div class="modal-body">
-          <label for="receiptUpload" class="btn btn-primary">Upload Receipt</label>
-          <input type="file" id="receiptUpload" (change)="onFileChange($event)" style="display: none;">
-          <img *ngIf="receiptPreview" [src]="receiptPreview" class="img-fluid mt-3" alt="Receipt Preview">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="confirmUpload()">Confirm</button>
-        </div>
+<!-- Modal for Campaign Details -->
+<div #campaignDetailModal class="modal fade" tabindex="-1" aria-labelledby="campaignDetailModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ selectedCampaign?.title }}</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeModal(campaignDetailModal)"></button>
+      </div>
+      <div class="modal-body">
+        <img [src]="selectedCampaign?.image" alt="Campaign Image" class="img-fluid">
+        <p>{{ selectedCampaign?.description }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="openDonateModal()">Donate</button>
+        <button type="button" class="btn btn-secondary" (click)="closeModal(campaignDetailModal)">Close</button>
       </div>
     </div>
   </div>
-   
+</div>
+
+<!-- Modal for Donation via GCash -->
+<div #donateModal class="modal fade" tabindex="-1" aria-labelledby="donateModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Donate via GCash</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="closeModal(donateModal)"></button>
+    </div>
+    <div class="modal-body text-center">
+      <img [src]="qrCodeUrl" alt="GCash QR Code" class="img-fluid">
+      <p>Scan the QR code to donate via GCash.</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" (click)="initiateDonation()">Proceed</button>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- Modal for Uploading Receipt -->
+<div #uploadModal class="modal fade" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Upload Receipt</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeModal(uploadModal)"></button>
+      </div>
+      <div class="modal-body">
+        <label for="receiptUpload" class="btn btn-primary">Upload Receipt</label>
+        <input type="file" id="receiptUpload" (change)="onFileChange($event)" style="display: none;">
+        <img *ngIf="receiptPreview" [src]="receiptPreview" class="img-fluid mt-3" alt="Receipt Preview">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="confirmUpload()">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+ 
 </section>
 
 

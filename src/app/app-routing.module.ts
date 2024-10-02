@@ -8,7 +8,9 @@ import { Role } from './_models';
 // router
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { TeamMemberComponent } from './team-member/about-us.component';
-import { CampaignComponent } from './campaign/campaign.component'
+import { CampaignComponent } from './campaign/campaign.component';
+import { CreateCampaignComponent } from './create campaign/create-campaign.component'
+import { NotFoundComponent } from './lost-page/404.page.component';
 
 const accountModule = () => import('./account/account.module').then(x => x.AccountModule);
 const adminModule = () => import('./admin/admin.module').then(x => x.AdminModule);
@@ -18,7 +20,8 @@ const routes: Routes = [
     { path: '', redirectTo: '/landing-page', pathMatch: 'full' }, // Redirect root to landing-page
     { path: 'landing-page', component: LandingPageComponent },  // Public route
     { path: 'team-member', component: TeamMemberComponent },  // Add route for About Us
-    {path: 'campaign', component: CampaignComponent},
+    { path: 'campaign', component: CampaignComponent},
+    { path: 'create-campaign', component: CreateCampaignComponent }, // Route for creating a campaign
 
     // Protected route with AuthGuard for home
     { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
@@ -33,7 +36,8 @@ const routes: Routes = [
     { path: 'admin', loadChildren: adminModule, canActivate: [AuthGuard], data: { roles: [Role.Admin] } },
 
     // Catch-all redirect for invalid routes
-    { path: '**', redirectTo: '/landing-page', pathMatch: 'full' }
+    { path: '**', redirectTo: '/landing-page', pathMatch: 'full' },
+    { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({

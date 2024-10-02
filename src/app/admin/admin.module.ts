@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms'; // Add FormsModule here
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router'; // Import RouterModule
+import { RouterModule } from '@angular/router'; 
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { LayoutComponent } from './layout.component';
@@ -11,6 +11,7 @@ import { IonicModule } from '@ionic/angular';
 @NgModule({
     imports: [
         CommonModule,
+        FormsModule,  // Add FormsModule here
         ReactiveFormsModule,
         AdminRoutingModule,
         RouterModule, 
