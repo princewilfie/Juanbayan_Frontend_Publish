@@ -1,5 +1,6 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule } from '@angular/forms'; // Import FormsModule
+import { CommonModule } from '@angular/common';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -28,6 +29,7 @@ import { CampaignDetailsComponent } from './campaign/campaign-details.component'
 import { EventDetailsComponent } from './event-list/event-details.component';
 import { TermsAndConditionsModalComponent } from './event-list/event-terms-condition.component';
 import { EventListComponent } from './event-list/event-list.component';
+import { CreateEventComponent } from './events/create-event.component';
 
 
 @NgModule({
@@ -39,7 +41,8 @@ import { EventListComponent } from './event-list/event-list.component';
         AppRoutingModule,
         NgbModule, 
         AdminModule,
-        RouterModule
+        RouterModule,
+        CommonModule
     ],
     declarations: [
         AppComponent,
@@ -50,6 +53,7 @@ import { EventListComponent } from './event-list/event-list.component';
         CampaignComponent, 
         CreateCampaignComponent,
         CampaignDetailsComponent,
+        CreateEventComponent,
         EventListComponent,
         EventDetailsComponent,
         TermsAndConditionsModalComponent
