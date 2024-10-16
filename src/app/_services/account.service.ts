@@ -31,12 +31,32 @@ export class AccountService {
 
     login(acc_email: string, acc_passwordHash: string) {
         return this.http.post<any>(`${baseUrl}/authenticate`, { acc_email, acc_passwordHash }, { withCredentials: true })
-            .pipe(map(account => {
-                this.accountSubject.next(account);
-                this.startRefreshTokenTimer();
-                return account; // Account info will now be used for managing state.
-            }));
+            .pipe(
+                map(account => {
+                    // Check if the refresh token is present in the response
+                    if (account && account.refreshToken) {
+                        // Save the refresh token to localStorage
+                        localStorage.setItem('refreshToken', account.refreshToken);
+    
+                        // Optional: Save access token or other account info if needed
+                        localStorage.setItem('accessToken', account.accessToken);
+    
+                        // Set account info in the observable subject
+                        this.accountSubject.next(account);
+    
+                        // Start refresh token timer for automatic token refresh
+                        this.startRefreshTokenTimer();
+    
+                        return account; // Return account for further usage
+                    } else {
+                        console.error('Login failed: No refresh token provided.');
+                        return null; // Return null or handle as needed if no token is found
+                    }
+                })
+            );
     }
+    
+    
 
     logout() {
         const refreshToken = localStorage.getItem('refreshToken'); // Example retrieval from local storage
@@ -44,13 +64,13 @@ export class AccountService {
             console.error('No refresh token found.');
             return;
         }
-        
         return this.http.post<any>(`${baseUrl}/revoke-token`, { token: refreshToken }, { withCredentials: true })
             .subscribe({
                 next: () => {
                     this.stopRefreshTokenTimer();
                     this.accountSubject.next(null);
                     this.router.navigate(['/account/login-register']);
+                    console.log("token", refreshToken)
                 },
                 error: (error) => {
                     console.error('Logout error:', error);
