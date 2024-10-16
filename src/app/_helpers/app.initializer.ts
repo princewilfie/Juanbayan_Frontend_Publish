@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 export function appInitializer(accountService: AccountService) {
     return () => new Promise<void>(resolve => {  // Specify <void> as the type argument
         // attempt to refresh token on app startup to auto authenticate
-        accountService.refreshToken()
+        accountService.refreshAccessToken()
             .pipe(
                 catchError(error => {
                     console.error('Error refreshing token:', error); // Log the error

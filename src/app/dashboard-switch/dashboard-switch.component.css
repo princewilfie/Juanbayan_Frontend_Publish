@@ -1,0 +1,45 @@
+.card-equal {
+    min-height: 300px; /* Ensures equal height */
+    transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for hover effect */
+}
+.card-equal:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+}
+.logo {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+.card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+.card-text {
+    flex-grow: 1; /* Pushes content to the top */
+    text-align: center;
+}
+/* Button Hover Effect */
+.btn-interactive {
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker blue for Beneficiary button */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add subtle shadow */
+    transform: translateY(-3px); /* Slightly raise button */
+}
+.btn-success:hover {
+    background-color: #218838; /* Darker green for Donor button */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+}
+/* Volunteer Button Hover */
+.btn-outline-secondary:hover {
+    background-color: #6c757d; /* Change to a darker gray */
+    color: #fff; /* Change text to white */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
+    transform: translateY(-3px);
+}

@@ -50,6 +50,15 @@
         </div>
     </div>
 
+    <!-- Image Upload Section -->
+    <div class="form-group">
+        <label for="imageUpload">Reward Image</label>
+        <input type="file" id="imageUpload" (change)="onImageSelected($event)" class="form-control" accept="image/*" />
+        <div *ngIf="imagePreview" class="mt-2">
+            <img [src]="imagePreview" alt="Reward Image" class="img-thumbnail" style="max-width: 200px; max-height: 200px;" />
+        </div>
+    </div>
+
     <div class="form-group">
         <button [disabled]="loading" class="btn btn-primary">
             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>

@@ -1,0 +1,51 @@
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaigns List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .table td, .table th {
+            border-bottom: 1px solid #dee2e6;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+<div class="container mt-5">
+    <h2 class="mb-4">Events List</h2>
+  
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Event Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">End Date</th>
+          <th scope="col">Location</th>
+          <th scope="col">Status</th>
+          <th scope="col">Approval Status</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of events">
+          <td><input type="checkbox"></td>
+          <td>{{ event.Event_Name }}</td>
+          <td>{{ event.Event_Description }}</td>
+          <td>{{ event.Event_Start_Date | date:'MM/dd/yyyy' }}</td>
+          <td>{{ event.Event_End_Date| date:'MM/dd/yyyy' }}</td>
+          <td>{{ event.Event_Location }}</td>
+          <td>{{ getEventStatus(event.Event_Status) }}</td>
+          <td>{{ event.Event_ApprovalStatus }}</td>
+          <td>
+            <div class="actions">
+              <button class="btn btn-success btn-sm" (click)="approveEvent(event.Event_ID)">Approve</button>
+              <button class="btn btn-danger btn-sm" (click)="rejectEvent(event.Event_ID)">Reject</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

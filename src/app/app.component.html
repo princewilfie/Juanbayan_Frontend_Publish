@@ -26,7 +26,12 @@
                               <li><a routerLink="/campaign" routerLinkActive="active" (click)="showDrop = false">List</a></li>
                           </ul>
                       </li>                      
-                        <li><a routerLink="/event">Event</a></li>
+                      <li><a routerLink="/events">Event</a>
+                        <ul class="drop-menu" [ngClass]="{'show': showDrop}">
+                          <li><a routerLink="/events" routerLinkActive="active" (click)="showDrop = false">Create</a></li>
+                          <li><a routerLink="/event-list" routerLinkActive="active" (click)="showDrop = false">List</a></li>
+                      </ul>
+                    </li>
                         <li><a href="/team-member">About us</a></li>
                         <li *ngIf="!account"><a routerLink="/account/login-register">Sign in</a></li>
                         <li>  

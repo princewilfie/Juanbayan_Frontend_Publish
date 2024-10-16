@@ -19,15 +19,17 @@ export class RewardListComponent implements OnInit {
   }
 
   loadRewards(): void {
-    this.rewardService.getAllRewards().subscribe( // Use the correct method name
-      (data: Reward[]) => {
-        this.rewards = data; // Assuming data is of type Reward[]
-      },
-      (error) => {
-        this.alertService.error('Failed to load rewards'); // Error handling
-      }
+    this.rewardService.getAllRewards().subscribe(
+        (data: Reward[]) => {
+            console.log('Rewards loaded:', data); // Log the data for verification
+            this.rewards = data;
+        },
+        (error) => {
+            console.error('Error loading rewards:', error); // Log the error if any
+            this.alertService.error('Failed to load rewards');
+        }
     );
-  }
+}
 
   deleteReward(id: string): void {  // Accept id as a string
     const numericId = +id; // Convert id to a number

@@ -14,11 +14,9 @@ export class RewardService {
 
   constructor(private http: HttpClient) {}
 
-  // Create a new reward (POST)
-  createReward(reward: Reward): Observable<Reward> {
-    return this.http.post<Reward>(`${baseUrl}`, reward);
+  createReward(formData: FormData): Observable<Reward> {
+    return this.http.post<Reward>(`${baseUrl}`, formData);
   }
-
   // Get all rewards (GET)
   getAllRewards(): Observable<Reward[]> {
     return this.http.get<Reward[]>(baseUrl); // Change this line
@@ -29,11 +27,9 @@ export class RewardService {
     return this.http.get<Reward>(`${baseUrl}/${id}`);
   }
 
-  // Update a reward by ID (PUT)
-  updateReward(id: number, reward: Partial<Reward>): Observable<Reward> {
-    return this.http.put<Reward>(`${baseUrl}/${id}`, reward);
-  }
-
+  updateReward(id: number, formData: FormData): Observable<Reward> {
+    return this.http.put<Reward>(`${baseUrl}/${id}`, formData);
+}
   // Delete a reward by ID (DELETE)
   deleteReward(id: number): Observable<any> {
     return this.http.delete(`${baseUrl}/${id}`);
@@ -42,5 +38,10 @@ export class RewardService {
   // Consume a reward by ID (POST)
   consumeReward(id: number): Observable<any> {
     return this.http.post(`${baseUrl}/${id}/consume`, null);
+  }
+
+  redeemReward(reward_id: number, address: string, acc_id: number): Observable<any> {
+    const url = `${baseUrl}/redeem`;
+    return this.http.post(url, { reward_id, address, acc_id });
   }
 }

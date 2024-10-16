@@ -1,0 +1,33 @@
+<br>
+<br>
+<br>
+<br>
+<div style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+  <h2 style="text-align: center; margin: 20px 0; font-family: Arial, sans-serif; color: #333;">Approved Active Events</h2>
+
+  <!-- Display events if available -->
+  <div *ngIf="activeApprovedEvents.length > 0; else noEvents" class="events-grid">
+    <div *ngFor="let event of activeApprovedEvents" class="event-card" (click)="viewEventDetails(event.Event_ID)">
+      
+      <div class="event-badge">
+        <h3>{{ event.Event_Start_Date | date: 'd' }}</h3>
+        <p>{{ event.Event_Start_Date | date: 'MMMM' }}</p>
+      </div>
+
+      <div class="event-image">
+        <img [src]="getImagePath(event.Event_Image)" alt="{{ event.Event_Name }}" 
+             (error)="this.src='assets/jb-symbol-logo.png'" />
+      </div>
+
+      <strong>{{ event.Event_Name }}</strong>
+      <p>{{ event.Event_Description }}</p>
+      <p><strong>Location:</strong> {{ event.Event_Location }}</p>
+      <!--<span class="event-status">Approved</span>-->
+    </div>
+  </div>
+
+  <!-- Message if no events available -->
+  <ng-template #noEvents>
+    <div class="alert alert-info">No active, approved events available at this time.</div>
+  </ng-template>
+</div>

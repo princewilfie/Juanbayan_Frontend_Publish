@@ -6,6 +6,7 @@
     <table class="table table-bordered">
         <thead class="table-dark">
             <tr>
+                <th scope="col">Image</th>
                 <th scope="col">Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Point Cost</th>
@@ -16,13 +17,16 @@
         </thead>
         <tbody>
             <tr *ngFor="let reward of rewards">
+                <td>
+                    <img [src]="'http://localhost:4000/assets/' + reward.reward_Image" alt="{{ reward.reward_Name }}" width="100">
+                </td>
                 <td>{{ reward.reward_Name }}</td>
                 <td>{{ reward.reward_Description }}</td>
                 <td>{{ reward.reward_PointCost }}</td>
                 <td>{{ reward.reward_Quantity }}</td>
                 <td>{{ reward.reward_Status }}</td>
                 <td>
-                    <a routerLink="edit/{{reward.reward_ID}}" class="btn btn-sm btn-primary mr-1">
+                    <a routerLink="edit/{{reward.id}}" class="btn btn-sm btn-primary mr-1">
                         Edit
                     </a>
                     &nbsp;

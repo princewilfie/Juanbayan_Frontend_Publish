@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { AccountService, CampaignService } from '@app/_services';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { AccountService, CampaignService, RewardService } from '@app/_services'; // Import RedeemRewardService
 import { Account } from '@app/_models/account';
 import { Campaign } from '@app/_models/campaign';
+import { Reward } from '@app/_models/reward';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-details',
@@ -13,32 +15,66 @@ export class DetailsComponent implements OnInit {
   currentSection: string = 'activities'; // Default section
   selectedImage: File | null = null;
   imagePreview: string | null = null; // For showing a preview of the selected image
+  rewards: Reward[] = [];
+  deliveryInfo = { name: '', address: '', phone: '' }; // Info for delivery
+  selectedItem: Reward | null = null; // Hold the selected reward item
 
   constructor(
     private accountService: AccountService,
-    private campaignService: CampaignService
+    private campaignService: CampaignService,
+    private rewardService: RewardService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit(): void {
     // Fetch account data
     this.account = this.accountService.accountValue;
   
+    // Debug log the account value
+    console.log('Account Data:', this.account);
+  
+    // Ensure account is defined
+    if (!this.account) {
+      console.error('Account is not defined');
+      alert('Account information is not available. Please log in again.');
+      return;
+    }
+  
     // Ensure account.id is a number
     const accountId = Number(this.account.id);
+    if (isNaN(accountId)) {
+      console.error('Invalid account ID:', this.account.id);
+      return;
+    }
   
     // Fetch campaigns data
-    if (!isNaN(accountId)) {
-      this.campaignService.getCampaignsByAccountId(accountId).subscribe(
-        (campaigns) => {
-          this.campaigns = campaigns;
-        },
-        (error) => {
-          console.error('Error fetching campaigns', error);
-        }
-      );
-    } else {
-      console.error('Invalid account ID:', this.account.id);
-    }
+    this.campaignService.getCampaignsByAccountId(accountId).subscribe(
+      (campaigns) => {
+        this.campaigns = campaigns;
+      },
+      (error) => {
+        console.error('Error fetching campaigns', error);
+      }
+    );
+  
+    this.rewardService.getAllRewards().subscribe(
+      (rewards) => {
+        this.rewards = rewards;
+      },
+      (error) => {
+        console.error('Error fetching rewards', error);
+      }
+    );
+  }
+  
+  getImagePath(image: string): string {
+    return image ? `http://localhost:4000/${image}` : 'assets/'; 
+  }
+
+  // accomplished campaigns
+  getAccomplishedCampaigns() {
+    const today = new Date();
+    return this.campaigns.filter(campaign => new Date(campaign.Campaign_End) <= today);
   }
 
   loadProfileImage(): void {
@@ -113,7 +149,7 @@ export class DetailsComponent implements OnInit {
       document.getElementById('passwordError').style.display = 'block';
       return;
     }
-    document.getElementById('passwordError').style.display = 'none';
+      document.getElementById('passwordError').style.display = 'none';
 
     // Call the service to reset password
     const token = this.accountService.accountValue?.acc_resetToken; // Access the token correctly
@@ -133,4 +169,40 @@ export class DetailsComponent implements OnInit {
       }
     );
   }
+
+  openRewardModal(content: TemplateRef<any>, reward: Reward) {
+    // Assign the selected reward to selectedItem
+    this.selectedItem = reward;
+    // Open the modal
+    this.modalService.open(content, { size: 'lg' });
+  }
+
+  redeem(rewardId: number, address: string) {
+    // Ensure address is provided
+    if (!address || address.trim() === '') {
+        console.error('Address is required.');
+        alert('Please provide a delivery address.');
+        return;
+    }
+
+    const accountId = Number(this.account.id);
+
+    // Call the redeemReward method with the correct types and order
+    this.rewardService.redeemReward(rewardId, address, accountId).subscribe({
+        next: (response) => {
+            console.log('Reward redeemed successfully:', response);
+            alert('Reward redeemed successfully!'); // Notify user
+            this.selectedItem = null; // Reset selected item
+            this.modalService.dismissAll(); // Close the modal if needed
+            // Additional handling like updating the UI or state
+        },
+        error: (error) => {
+            console.error('Error redeeming reward:', error);
+            alert('Error redeeming reward. Please try again.'); // Notify user
+            // You could show more detailed error messages based on the error response
+        },
+    });
+}
+
+  
 }

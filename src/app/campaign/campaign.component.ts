@@ -1,85 +1,69 @@
-import { Component, ElementRef, ViewChild, Renderer2 } from '@angular/core';
-import { PaymentService } from '../_services/payment.service'; // Import the payment service
-
+import { Component, OnInit } from '@angular/core';
+import { CampaignService } from '../_services/campaign.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Campaign } from '../_models/campaign';
 
 @Component({
   selector: 'app-campaign',
   templateUrl: './campaign.component.html',
 })
-export class CampaignComponent {
-  campaigns = [
-    {
-      title: 'Campaign Title 1',
-      description: 'Help us provide relief to families affected by recent floods in the region.',
-      image: 'https://via.placeholder.com/350x200',
-    },
-    // Add more campaigns
-  ];
+export class CampaignComponent implements OnInit {
+  campaigns: Campaign[] = [];
+  selectedCampaign?: Campaign;
+  qrCodeUrl: string = 'assets/gcash_qr.png'; // Static QR code URL for GCash
+  receiptPreview?: string; // To hold the receipt preview for the upload modal
 
-  selectedCampaign: any = null;
-  qrCodeUrl = 'https://via.placeholder.com/300'; // Replace with your actual QR code URL
-  receiptPreview: string | ArrayBuffer | null = null;
+  constructor(private campaignService: CampaignService, private modalService: NgbModal) {}
 
-  @ViewChild('campaignDetailModal') campaignDetailModal!: ElementRef;
-  @ViewChild('donateModal') donateModal!: ElementRef;
-  @ViewChild('uploadModal') uploadModal!: ElementRef;
+  ngOnInit(): void {
+    this.fetchApprovedCampaigns();
+  }
 
-  constructor(private renderer: Renderer2, private paymentService: PaymentService) {}
+  // Fetch only approved campaigns (Campaign_Status = 1)
+  fetchApprovedCampaigns(): void {
+    this.campaignService.getAllCampaigns().subscribe((campaigns: Campaign[]) => {
+      this.campaigns = campaigns.filter(campaign => campaign.Campaign_Status === 1);
+    });
+  }
 
-  openCampaignDetails(campaign: any) {
+  // Open campaign details modal
+  openCampaignDetails(campaign: Campaign, content: any): void {
     this.selectedCampaign = campaign;
-    this.openModal(this.campaignDetailModal);
+    this.modalService.open(content, { centered: true });
   }
 
-  openDonateModal() {
-    this.closeModal(this.campaignDetailModal);
-    this.openModal(this.donateModal);
+  // Open donation modal
+  openDonateModal(content: any): void {
+    this.modalService.open(content, { centered: true });
   }
 
-  openUploadModal() {
-    this.closeModal(this.donateModal);
-    this.openModal(this.uploadModal);
+  // Close modal
+  closeModal(modalRef: any): void {
+    modalRef.dismiss();
   }
 
-  onFileChange(event: any) {
+  // Handle receipt file change and display a preview
+  onFileChange(event: any): void {
     const file = event.target.files[0];
     const reader = new FileReader();
-    reader.onload = () => {
-      this.receiptPreview = reader.result;
-    };
+    reader.onload = (e: any) => this.receiptPreview = e.target.result;
     reader.readAsDataURL(file);
   }
 
-  confirmUpload() {
-    if (this.receiptPreview) {
-      alert('Receipt uploaded successfully!');
-      this.closeModal(this.uploadModal);
-    }
+  // Placeholder for donation initiation
+  initiateDonation(): void {
+    alert('Donation initiated!');
   }
 
-  openModal(modal: ElementRef) {
-    const modalElement = modal.nativeElement;
-    this.renderer.addClass(modalElement, 'show');
-    this.renderer.setStyle(modalElement, 'display', 'block');
-    this.renderer.setStyle(modalElement, 'opacity', '1');
+  // Placeholder for receipt upload confirmation
+  confirmUpload(): void {
+    alert('Receipt uploaded successfully!');
   }
 
-  closeModal(modal: ElementRef) {
-    const modalElement = modal.nativeElement;
-    this.renderer.removeClass(modalElement, 'show');
-    this.renderer.setStyle(modalElement, 'display', 'none');
+
+  getImagePath(image: string): string {
+    return image ? `http://localhost:4000/${image}` : 'assets/'; 
   }
 
-  // Method to handle the donation and call the payment API
-  initiateDonation() {
-    const amount = 1000; // Example amount, you can get this dynamically
-    this.paymentService.createPaymentIntent(amount).subscribe(
-      (response: any) => {
-        window.location.href = response.paymentUrl; // Redirect user to PayMongo GCash payment page
-      },
-      (error) => {
-        console.error('Error initiating payment', error);
-      }
-    );
-  }
+  
 }

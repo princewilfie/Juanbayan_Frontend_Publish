@@ -1,0 +1,17 @@
+<br><br><br><br><br>
+<div *ngIf="event" class="event-details-container">
+  <div class="event-image">
+    <img [src]="event.Event_Image ? getImagePath(event.Event_Image) : 'assets/default-image.png'" alt="{{ event.Event_Name }}" />
+  </div>
+  
+  <div class="event-info">
+    <h2>{{ event.Event_Name }}</h2>
+    <p class="event-price">${{ event.Price }}</p>
+    <p>{{ event.Event_Description }}</p>
+    <div class="button-group">
+      <button class="join-button" (click)="openTermsAndConditionsModal()">Join Volunteer</button>
+      <button class="share-button">Share</button>
+    </div>
+  </div>
+</div>
+<br><br><br><br><br>

@@ -11,6 +11,13 @@ import { TeamMemberComponent } from './team-member/about-us.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { CreateCampaignComponent } from './create campaign/create-campaign.component'
 import { NotFoundComponent } from './lost-page/404.page.component';
+import { CreateEventComponent } from './events/create-event.component';
+import { CampaignDetailsComponent } from './campaign/campaign-details.component'; 
+
+// home
+// beneficiary side
+import { DashboardSwitchComponent } from './dashboard-switch/dashboard-switch.component';
+import { EventListComponent } from './event-list/event-list.component';
 
 const accountModule = () => import('./account/account.module').then(x => x.AccountModule);
 const adminModule = () => import('./admin/admin.module').then(x => x.AdminModule);
@@ -29,11 +36,19 @@ const routes: Routes = [
     // Lazy-loaded account module, login-register doesn't need AuthGuard
     { path: 'account', loadChildren: accountModule },
 
+    { path: 'events', component: CreateEventComponent },
+
     // Protected profile routes, only for authenticated users
     { path: 'profile', loadChildren: profileModule, canActivate: [AuthGuard] },
 
     // Admin routes, restricted by role using the data property
     { path: 'admin', loadChildren: adminModule, canActivate: [AuthGuard], data: { roles: [Role.Admin] } },
+
+    { path: 'campaign-details/:id', component: CampaignDetailsComponent },
+
+    { path: 'event-list', component: EventListComponent},
+
+    { path: 'dashboard-switch', component: DashboardSwitchComponent, canActivate: [AuthGuard] }, 
 
     // Catch-all redirect for invalid routes
     { path: '**', redirectTo: '/landing-page', pathMatch: 'full' },

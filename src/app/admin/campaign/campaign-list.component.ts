@@ -12,6 +12,11 @@ export class CampaignListComponent implements OnInit {
   constructor(private campaignService: CampaignService) {}
 
   ngOnInit(): void {
+    this.loadCampaigns(); // Initial load
+  }
+
+  // Method to load all campaigns from the backend
+  loadCampaigns(): void {
     this.campaignService.getAll().subscribe(
       (data: Campaign[]) => {
         this.campaigns = data;
@@ -22,38 +27,30 @@ export class CampaignListComponent implements OnInit {
     );
   }
 
+  // Approve a campaign and reload the list after
   approveCampaign(id: number): void {
     this.campaignService.approve(id).subscribe(
       (response: Campaign) => {
-        this.updateCampaignStatus(id, 'Approved');
+        console.log('Campaign approved:', response);  // Log the approved campaign
+        this.loadCampaigns();  // Reload the campaign list after approval
       },
       error => {
         console.error('Error approving campaign:', error);
       }
     );
   }
+  
 
+  // Reject a campaign and reload the list after
   rejectCampaign(id: number): void {
     this.campaignService.reject(id).subscribe(
       (response: Campaign) => {
-        this.updateCampaignStatus(id, 'Rejected');
+        this.loadCampaigns(); // Reload campaign list after rejection
       },
       error => {
         console.error('Error rejecting campaign:', error);
       }
     );
-  }
-
-  private updateCampaignStatus(id: number, approvalStatus: string): void {
-    const campaign = this.campaigns.find(c => c.Campaign_ID === id);
-    if (campaign) {
-      campaign.Campaign_ApprovalStatus = approvalStatus; // For approval status
-      if (approvalStatus === 'Approved') {
-        campaign.Campaign_Status = 1; // Active if approved
-      } else if (approvalStatus === 'Rejected') {
-        campaign.Campaign_Status = 0; // Remains inactive if rejected
-      }
-    }
   }
 
   // Optionally add this method if you need better campaign status handling

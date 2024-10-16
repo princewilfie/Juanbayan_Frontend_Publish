@@ -1,0 +1,198 @@
+/* General Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal.active {
+    display: flex;
+  }
+  
+  .enhanced-modal {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 450px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.3s ease;
+    position: relative;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* Close button */
+  .close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+    font-size: 28px;
+    transition: color 0.3s;
+  }
+  
+  .close:hover {
+    color: #ff0000; /* Change color on hover */
+  }
+  
+  /* Input and Label Styling */
+  label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+    color: #333;
+  }
+  
+  input[type="text"],
+  input[type="date"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+  }
+  
+  input:focus,
+  textarea:focus,
+  select:focus {
+    border-color: #28a745;
+    box-shadow: 0px 0px 8px rgba(40, 167, 69, 0.3);
+  }
+  
+  /* Add hover effect to input fields */
+  input[type="text"]:hover,
+  input[type="date"]:hover,
+  textarea:hover,
+  select:hover {
+    border-color: #28a745; /* Change border color on hover */
+  }
+  
+  /* Submit Button */
+  .submit-button {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 15px;
+    transition: background-color 0.3s ease, transform 0.2s; /* Added transform */
+  }
+  
+  .submit-button:hover {
+    background-color: #218838;
+    transform: translateY(-2px); /* Lift effect on hover */
+  }
+  
+  /* Image Preview Section */
+  .image-preview {
+    margin-top: 20px;
+  }
+  
+  .image-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .image-card {
+    width: 100px; /* Adjust as needed */
+    height: 100px; /* Adjust as needed */
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Ensure the image takes full width and height */
+  .preview-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s; /* Added transition */
+  }
+  
+  .preview-img:hover {
+    transform: scale(1.05); /* Scale effect on hover */
+  }
+  
+  /* Event List Styling */
+  .event-list {
+    display: grid; /* Use grid for better layout */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive columns */
+    gap: 20px; /* Space between cards */
+    list-style: none;
+    padding: 0;
+    max-width: 1200px; /* Maximum width for the event list */
+    margin: 0 auto; /* Center the event list */
+  }
+  
+  /* Event Card Hover Effects */
+  .event-card {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+  }
+  
+  .event-card:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Enhance shadow on hover */
+    transform: translateY(-5px); /* Slight lift on hover */
+  }
+  
+  /* Button */
+  .open-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s; /* Added transform */
+  }
+  
+  .open-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Lift effect on hover */
+  }
+  
+  /* Responsive Layout for Cards */
+  @media (max-width: 768px) {
+    .event-list {
+      flex-direction: row; /* Keep cards in a row on medium screens */
+    }
+  
+    .event-list li {
+      width: 150px; /* Adjust width for smaller screens */
+      height: 150px; /* Adjust height for smaller screens */
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .event-list li {
+      width: 100%; /* Make cards full-width on small screens */
+      height: auto; /* Adjust height accordingly */
+    }
+  }

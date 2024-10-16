@@ -1,0 +1,28 @@
+.modal-header, .modal-body, .modal-footer {
+    padding: 1.5rem;
+  }
+  
+  .modal-header h5 {
+    font-size: 1.25rem;
+  }
+  
+  .btn-primary {
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+  
+  .btn-primary:hover {
+    background-color: #218838;
+    border-color: #218838;
+  }
+  
+  .btn-secondary {
+    background-color: #dc3545;
+    border-color: #dc3545;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #c82333;
+    border-color: #c82333;
+  }
+  

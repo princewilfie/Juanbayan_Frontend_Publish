@@ -1,0 +1,123 @@
+<br><br><br><br><br><br><br><br>
+<div class="campaign-details-container">
+  
+  <!-- Campaign Image -->
+  <div class="campaign-image">
+    <img [src]="getImagePath('assets/' + campaign?.Campaign_Image)" alt="{{ campaign?.Campaign_Name }} Image" class="campaign-image">
+  </div>
+  
+  <!-- Campaign Information -->
+  <div class="campaign-info">
+    <h2 class="campaign-title">{{ campaign?.Campaign_Name }}</h2>
+    <p class="campaign-target">Target Fund: ${{ campaign?.Campaign_TargetFund | number:'1.2-2' }}</p>
+    <p class="campaign-raised">Currently Raised: ${{ campaign?.Campaign_CurrentRaised | number:'1.2-2' }}</p>
+    <p class="campaign-start-end">Campaign Period: {{ campaign?.Campaign_Start | date: 'longDate' }} - {{ campaign?.Campaign_End | date: 'longDate' }}</p>
+    <p class="campaign-description">{{ campaign?.Campaign_Description }}</p>
+    
+    <!-- Button Container for Donate and Back Buttons -->
+    <div class="button-container">
+      <button class="donate-button">Donate Now</button>
+      <button class="back-button" (click)="goBack()">Back</button>
+    </div>
+  </div>
+</div>
+<br><br><br><br>
+
+<style>
+  /* Button container styling */
+  .button-container {
+    display: flex;
+    gap: 20px; /* Space between buttons */
+    margin-top: 20px; /* Add space above the buttons */
+  }
+
+  /* Back button styling */
+  .back-button {
+    background-color: #007bff;
+    color: white;
+    font-size: 1.2em;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .back-button:hover {
+    background-color: #0056b3;
+  }
+
+  /* Existing styles remain unchanged */
+  .campaign-details-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    max-width: 1200px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+
+  .campaign-image img {
+    width: 350px;
+    height: auto;
+    border-radius: 10px;
+    margin-right: 50px;
+  }
+
+  .campaign-info {
+    max-width: 600px;
+  }
+
+  .campaign-title {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .campaign-target, 
+  .campaign-raised, 
+  .campaign-start-end {
+    font-size: 1.5em;
+    color: #28a745;
+    margin-bottom: 10px;
+  }
+
+  .campaign-description {
+    font-size: 1.2em;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 30px;
+  }
+
+  .donate-button {
+    background-color: #28a745;
+    color: white;
+    font-size: 1.2em;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .donate-button:hover {
+    background-color: #218838;
+  }
+
+  .credits {
+    text-align: center;
+    font-size: 0.9em;
+    color: #999;
+    margin-top: 50px;
+  }
+
+  .credits a {
+    color: #007bff;
+    text-decoration: none;
+  }
+</style>

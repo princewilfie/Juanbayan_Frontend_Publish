@@ -24,6 +24,11 @@ import { CampaignComponent } from './campaign/campaign.component';
 import { AdminModule } from './admin/admin.module';
 import { CreateCampaignComponent } from './create campaign';
 import { RouterModule } from '@angular/router';
+import { CampaignDetailsComponent } from './campaign/campaign-details.component';
+import { EventDetailsComponent } from './event-list/event-details.component';
+import { TermsAndConditionsModalComponent } from './event-list/event-terms-condition.component';
+import { EventListComponent } from './event-list/event-list.component';
+
 
 @NgModule({
     imports: [
@@ -43,7 +48,11 @@ import { RouterModule } from '@angular/router';
         LandingPageComponent,
         TeamMemberComponent,
         CampaignComponent, 
-        CreateCampaignComponent
+        CreateCampaignComponent,
+        CampaignDetailsComponent,
+        EventListComponent,
+        EventDetailsComponent,
+        TermsAndConditionsModalComponent
     ],
     providers: [
         { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AccountService] },

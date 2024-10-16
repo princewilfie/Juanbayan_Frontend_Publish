@@ -1,3 +1,98 @@
-<h1>
-    THIS IS FOR USERS
-</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card-equal {
+            min-height: 300px; /* Ensures equal height */
+            transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for hover effect */
+        }
+        .card-equal:hover {
+            transform: scale(1.05); /* Slightly enlarge on hover */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+        }
+        .logo {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+        }
+        .card-text {
+            flex-grow: 1; /* Pushes content to the top */
+            text-align: center;
+        }
+        /* Button Hover Effect */
+        .btn-interactive {
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3; /* Darker blue for Beneficiary button */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add subtle shadow */
+            transform: translateY(-3px); /* Slightly raise button */
+        }
+        .btn-success:hover {
+            background-color: #218838; /* Darker green for Donor button */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+        }
+        /* Volunteer Button Hover */
+        .btn-outline-secondary:hover {
+            background-color: #6c757d; /* Change to a darker gray */
+            color: #fff; /* Change text to white */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body class="d-flex flex-column justify-content-center align-items-center vh-100">
+    <div class="container text-center">
+        <!-- Welcome Message -->
+        <h1 class="mb-4">WELCOME TO JUANBAYAN</h1>
+        <p class="lead">Select your role to get started:</p>
+
+        <!-- Role Selection Cards -->
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-4">
+                <div class="card shadow-sm mb-3 card-equal">
+                    <div class="card-body">
+                        <!-- Beneficiary Logo -->
+                        <img src="https://cbx-prod.b-cdn.net/COLOURBOX58774045.jpg?width=800&height=800&quality=70" alt="Beneficiary Logo" class="logo">
+                        <h5 class="card-title">Beneficiary</h5>
+                        <p class="card-text">If you are seeking assistance, please select this option.</p>
+                        <a href="beneficiary.html" class="btn btn-primary w-100 btn-interactive">Choose Beneficiary</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm mb-3 card-equal">
+                    <div class="card-body">
+                        <!-- Donor Logo -->
+                        <img src="https://img.freepik.com/premium-vector/icon-hand-holding-drop-blood-world-blood-donor-day-blood-donation-donor-logo-blood-donor_235461-84.jpg?w=996" alt="Donor Logo" class="logo">
+                        <h5 class="card-title">Donor</h5>
+                        <p class="card-text">If you want to provide assistance, please select this option.</p>
+                        <a href="donor.html" class="btn btn-success w-100 btn-interactive">Choose Donor</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Volunteer Section -->
+        <div class="mt-5 pt-3 border-top">
+            <h3 class="mt-3">Want to Volunteer?</h3>
+            <p>Join us as a volunteer to make a difference in our community. Your efforts can help us reach more people in need.</p>
+            <a href="volunteer.html" class="btn btn-outline-secondary btn-interactive">Become a Volunteer</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

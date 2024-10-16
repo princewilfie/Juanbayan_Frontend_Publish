@@ -20,8 +20,20 @@
     margin-bottom: 15px;
     border: 5px solid #fff;
   }
+
   .card {
+    border-radius: 10px;
+    overflow: hidden;
     margin-top: -30px;
+  }
+
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .card-body {
+    text-align: center;
   }
   .nav-button.active {
     background-color: #0d6efd;
@@ -36,15 +48,14 @@
 </style>
 
 <div class="container mt-5">
-  <div class="profile-header" >
-    <img [src]="imagePreview || account.acc_image || 'assets/default-profile/27.png'" alt="Profile Picture"(click)="openFileSelector()">
+  <div class="profile-header">
+    <img [src]="imagePreview || account.acc_image || 'assets/default-profile/27.png'" alt="Profile Picture" (click)="openFileSelector()">
     <h3>{{ account.acc_firstname }} {{ account.acc_lastname }}</h3>
     <p>Email: {{ account.acc_email }}</p>
     <p>Phone number: {{ account.acc_pnumber }}</p>
     <p><a [routerLink]="['update']" [queryParams]="{ id: account.id }">Profile</a></p>
   </div>
   
-
   <div class="card shadow-sm">
     <div class="card-body text-center">
       <div class="row">
@@ -68,19 +79,45 @@
     </div>
   </div>
 
-  <div *ngIf="currentSection === 'activities'" class="container mt-5">
+   <!-- Your Activities Section -->
+   <div *ngIf="currentSection === 'activities'" class="container mt-5 section-padding">
     <h3>Your Activities</h3>
-    <p>Activity 1, Activity 2, Activity 3...</p>
+
+    <div *ngIf="campaigns.length > 0">
+      <div *ngFor="let campaign of campaigns" class="card mb-3 shadow-sm">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" alt="{{ campaign.Campaign_Name }} Image" class="campaign-image" (error)="this.src='assets/jb-symbol-logo.png'">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{ campaign.Campaign_Name }}</h5>
+              <p class="card-text">{{ campaign.Campaign_Description }}</p>
+              <p class="card-text"><small class="text-muted">Category: {{ campaign.Campaign_Category === 1 ? 'Medical' : 'Other' }}</small></p>
+              <p class="card-text"><small class="text-muted">Status: {{ campaign.Campaign_Status === 0 ? 'Pending' : campaign.Campaign_Status === 1 ? 'Approved' : 'Rejected' }}</small></p>
+              <p class="card-text"><small class="text-muted">Approval Status: {{ campaign.Campaign_ApprovalStatus }}</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="campaigns.length === 0">
+      <p>You have not created any campaigns yet.</p>
+    </div>
   </div>
 
-  <div *ngIf="currentSection === 'events'" class="container mt-5">
+  <!-- Accomplished Events Section -->
+  <div *ngIf="currentSection === 'events'" class="container mt-5 section-padding">
     <h3>Accomplished Events</h3>
     <p>Event 1, Event 2, Event 3...</p>
   </div>
 
-  <div *ngIf="currentSection === 'campaigns'" class="container mt-5 campaign-section">
-    <h3>Accomplished Campaigns</h3>
-    <div *ngFor="let campaign of campaigns" class="card shadow-sm">
+  <!-- Accomplished Campaigns Section -->
+<div *ngIf="currentSection === 'campaigns'" class="container mt-5 campaign-section">
+  <h3>Accomplished Campaigns</h3>
+  <div *ngIf="getAccomplishedCampaigns().length > 0">
+    <div *ngFor="let campaign of getAccomplishedCampaigns()" class="card shadow-sm mb-3">
       <div class="card-body">
         <h4 class="text-danger">{{ campaign.Campaign_Category === 1 ? 'Medical' : 'Other' }}</h4>
         <h3 class="card-title">{{ campaign.Campaign_Name }}</h3>
@@ -89,96 +126,50 @@
       </div>
     </div>
   </div>
+  <div *ngIf="getAccomplishedCampaigns().length === 0">
+    <p>No campaigns have been accomplished yet.</p>
+  </div>
+</div>
 
   <div *ngIf="currentSection === 'rewards'" class="container mt-5">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h5 class="card-title">Redeem Rewards</h5>
-        <div class="table-responsive">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">Reward</th>
-                <th scope="col">Description</th>
-                <th scope="col">Points Required</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Free T-shirt</td>
-                <td>A stylish volunteer t-shirt.</td>
-                <td>500</td>
-                <td><button class="btn btn-primary">Redeem</button></td>
-              </tr>
-              <tr>
-                <td>Gift Card</td>
-                <td>₱1000 Gift card for various stores.</td>
-                <td>1000</td>
-                <td><button class="btn btn-primary">Redeem</button></td>
-              </tr>
-              <tr>
-                <td>Meal Voucher</td>
-                <td>₱500 Meal voucher for selected restaurants.</td>
-                <td>750</td>
-                <td><button class="btn btn-primary">Redeem</button></td>
-              </tr>
-              <tr>
-                <td>Volunteer Kit</td>
-                <td>A complete volunteer kit including a cap, badge, and notebook.</td>
-                <td>1200</td>
-                <td><button class="btn btn-primary">Redeem</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal for Profile Details and Change Password -->
-  <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="profileModalLabel">Profile Details and Change Password</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center">
-          <img [src]="account.acc_image ? account.acc_image : 'assets/default-profile/27.png'" alt="Profile Picture" class="rounded-circle mb-3" width="120" height="120">
-          <h3>{{ account.acc_firstname }} {{ account.acc_lastname }}</h3>
-          <p>Email: {{ account.acc_email }}</p>
-          <p>Phone number: {{ account.acc_pnumber }}</p>
-          <p>Earned Points: {{ account.acc_totalpoints }}</p>
-
-          <!-- Image Upload Section -->
-          <div class="mb-3">
-            <input type="file" (change)="onImageSelected($event)" accept="image/*" />
-            <button (click)="uploadImage()" class="btn btn-primary">Upload Image</button>
+    <div class="row">
+      <div *ngFor="let reward of rewards" class="col-md-4 mb-4">
+        <div class="card shadow-sm">
+          <img [src]="'http://localhost:4000/assets/' + reward.reward_Image" class="card-img-top" alt="{{ reward.reward_Name }}" style="height: 200px; object-fit: cover;">
+          <div class="card-body">
+            <h5 class="card-title">{{ reward.reward_Name }}</h5>
+            <p class="card-text">{{ reward.reward_Description }}</p>
+            <p class="text-muted">Points Required: {{ reward.reward_PointCost }}</p>
+            <button class="btn btn-primary" (click)="openRewardModal(deliveryModal, reward)">Redeem</button>
           </div>
-
-          <form (ngSubmit)="submitChangePassword(currentPassword.value, newPassword.value, confirmPassword.value)">
-            <div class="mb-3 text-start">
-              <label for="currentPassword" class="form-label">Current Password</label>
-              <input type="password" #currentPassword class="form-control" placeholder="Enter current password" required>
-            </div>
-            <div class="mb-3 text-start">
-              <label for="newPassword" class="form-label">New Password</label>
-              <input type="password" #newPassword class="form-control" placeholder="Enter new password" required>
-            </div>
-            <div class="mb-3 text-start">
-              <label for="confirmPassword" class="form-label">Confirm New Password</label>
-              <input type="password" #confirmPassword class="form-control" placeholder="Confirm new password" required>
-            </div>
-            <div id="passwordError" class="text-danger" style="display: none;">Passwords do not match!</div>
-            <button type="submit" class="btn btn-primary w-100">Change Password</button>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
   </div>
+
+ <!-- Delivery Modal -->
+<ng-template #deliveryModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">{{ selectedItem?.reward_Name }} - Delivery Information</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <label for="address" class="form-label">Delivery Address</label>
+        <input type="text" class="form-control" id="address" [(ngModel)]="deliveryInfo.address" name="address" required>
+      </div>
+      <!-- Display Reward Details -->
+      <div *ngIf="selectedItem">
+        <p><strong>Description:</strong> {{ selectedItem.reward_Description }}</p>
+        <p><strong>Points Required:</strong> {{ selectedItem.reward_PointCost }}</p>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="redeem(selectedItem.id, deliveryInfo.address)">Redeem</button>
+  </div>
+</ng-template>
 
 </div>

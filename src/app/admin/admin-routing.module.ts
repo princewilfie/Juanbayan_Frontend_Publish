@@ -7,6 +7,7 @@ import { OverviewComponent } from './overview.component';
 const accountsModule = () => import('./accounts/accounts.module').then(x => x.AccountsModule);
 const campaignsModule = () => import('./campaign/campaign.module').then(x => x.CampaignModule);
 const rewardsModule = ()  => import('./rewards/rewards.module').then(x => x.RewardModule);
+const eventsModule = ()  => import('./events/event.module').then(x => x.EventModule);
 const routes: Routes = [
     {
         path: '', component: LayoutComponent,
@@ -14,7 +15,8 @@ const routes: Routes = [
             { path: '', component: OverviewComponent },
             { path: 'accounts', loadChildren: accountsModule },
             { path: 'campaigns', loadChildren: campaignsModule }, 
-            { path: 'rewards', loadChildren: rewardsModule }  
+            { path: 'rewards', loadChildren: rewardsModule },
+            { path: 'events', loadChildren: eventsModule }, 
 
         ]
     }

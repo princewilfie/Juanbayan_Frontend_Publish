@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AccountService, AlertService } from '@app/_services';
 import { MustMatch } from '@app/_helpers'; // Custom Validator to ensure passwords match
+import { Role } from '../_models';
 
 @Component({
   selector: 'app-login-register',
@@ -34,7 +35,7 @@ export class LoginRegisterComponent implements OnInit {
         // Save the token in local storage
         localStorage.setItem('authToken', token);
         // Redirect to the home page or another appropriate page
-        this.router.navigate(['/']);
+        this.router.navigate(['/dashboard-switch']);
       }
     });
     // Login form
@@ -77,29 +78,42 @@ export class LoginRegisterComponent implements OnInit {
   onLoginSubmit() {
     this.submitted = true;
     this.alertService.clear(); // Clear any existing alerts
-
+  
     // If the form is invalid, stop here
     if (this.loginForm.invalid) {
         return;
     }
+  
 
     this.loading = true; // Start the loading spinner or state
-
+  
     // Call the login function from accountService
     this.accountService.login(this.lf.acc_email.value, this.lf.acc_passwordHash.value)
         .pipe(first())
         .subscribe({
-            next: () => {
-                // Navigate to the default route (home) on successful login
-                this.router.navigate(['/']);
+            next: (user: any) => {
+                const account = this.accountService.accountValue.acc_role;
+                const userRole = user?.acc_role || account; // Assuming 'role' is the key for roles in the API response
+                
+                if (userRole === Role.User) {
+                    // Navigate to the user dashboard-switcher
+                    this.router.navigate(['/dashboard-switch']);
+                } else if (userRole === Role.Admin) {
+                    // For admins or other roles, route accordingly
+                    this.router.navigate(['/admin-dashboard']); // Example for admins
+                } else {
+                    this.alertService.error('Invalid account credentials');
+                    this.loading = false;
+                    this.submitted = false; // Allow resubmission on error
+
+                }
             },
             error: error => {
               this.alertService.error(error);
               this.loading = false;
           }
         });
-}
-
+  }
 
   // Register form submission
   onRegisterSubmit() {
@@ -126,6 +140,7 @@ export class LoginRegisterComponent implements OnInit {
         error: error => {
           this.alertService.error(error);
           this.loading = false;
+          this.submitted = false;
         }
       });
   }

@@ -12,6 +12,9 @@ export class CampaignService {
 
   constructor(private http: HttpClient) { }
 
+  getAllCampaigns(): Observable<Campaign[]> {
+    return this.http.get<Campaign[]>(`${this.baseUrl}`);
+  }
   // Create a new campaign with form data (including image)
   create(formData: FormData): Observable<Campaign> {
     return this.http.post<Campaign>(`${this.baseUrl}`, formData);
@@ -19,6 +22,11 @@ export class CampaignService {
 
   updateCampaign(id: string, formData: FormData): Observable<Campaign> {
     return this.http.put<Campaign>(`${this.baseUrl}/${id}`, formData);
+  }
+
+  // Add delete campaign method
+  deleteCampaign(campaignId: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${campaignId}`);
   }
 
   // Get all campaigns
@@ -36,10 +44,11 @@ export class CampaignService {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
-  // Approve a campaign (Admin only)
-  approve(id: number): Observable<Campaign> {
-    return this.http.put<Campaign>(`${this.baseUrl}/${id}/approve`, {});
-  }
+// Approve a campaign (Admin only)
+approve(id: number): Observable<Campaign> {
+  const statusUpdate = { Campaign_Status: 1 };  // Indicating status as Active
+  return this.http.put<Campaign>(`${this.baseUrl}/${id}/approve`, statusUpdate);
+}
 
   // Reject a campaign (Admin only)
   reject(id: number): Observable<Campaign> {
@@ -54,5 +63,24 @@ export class CampaignService {
   // Get campaigns by account ID
   getCampaignsByAccountId(accountId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/account/${accountId}`);
+  }
+
+  getCampaignById(id: string): Observable<Campaign> {
+    return this.http.get<Campaign>(`${this.baseUrl}/${id}`);
+  }
+
+  // Add a method to get approved campaigns
+  getApprovedCampaigns(): Observable<Campaign[]> {
+    return this.http.get<Campaign[]>(`${this.baseUrl}?status=approved`);
+  }
+
+
+
+  // Helper to create headers with the token
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token'); // Ensure the token is stored correctly
+    return new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
   }
 }

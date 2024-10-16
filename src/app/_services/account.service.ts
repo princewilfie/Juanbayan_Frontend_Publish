@@ -13,6 +13,7 @@ const baseUrl = `${environment.apiUrl}/accounts`;
 export class AccountService {
     private accountSubject: BehaviorSubject<Account>;
     public account: Observable<Account>;
+    private refreshTokenKey = 'refreshToken'; // Key for local storage
 
     constructor(
         private router: Router,
@@ -22,6 +23,8 @@ export class AccountService {
         this.account = this.accountSubject.asObservable();
     }
 
+    public refreshTokenn: string; // Declare refreshToken variable
+
     public get accountValue(): Account {
         return this.accountSubject.value;
     }
@@ -29,56 +32,42 @@ export class AccountService {
     login(acc_email: string, acc_passwordHash: string) {
         return this.http.post<any>(`${baseUrl}/authenticate`, { acc_email, acc_passwordHash }, { withCredentials: true })
             .pipe(map(account => {
-                console.log("Login response:", account); // Log the account object
                 this.accountSubject.next(account);
                 this.startRefreshTokenTimer();
-                
-                // Store the refresh token in local storage
-                if (account.refreshToken) {
-                    localStorage.setItem('refreshToken', account.refreshToken);
-                } else {
-                    console.error("No refresh token in login response");
-                }
-                
-                return account;
+                return account; // Account info will now be used for managing state.
             }));
     }
-    
 
     logout() {
-        console.log("Account before logout:", this.accountValue);
-        
-        // Retrieve the refresh token from local storage
-        const token = localStorage.getItem('refreshToken');
-        if (!token) {
-            console.error("No refresh token found for logout.");
-            return; // Exit if no token is found
+        const refreshToken = localStorage.getItem('refreshToken'); // Example retrieval from local storage
+        if (!refreshToken) {
+            console.error('No refresh token found.');
+            return;
         }
         
-        this.http.post<any>(`${baseUrl}/revoke-token`, { token }, { withCredentials: true }).subscribe(() => {
-            localStorage.removeItem('refreshToken'); // Clear the token
-            this.stopRefreshTokenTimer();
-            this.accountSubject.next(null);
-            this.router.navigate(['account/login-register']);
-        });
-    }
-    
-
-    refreshToken() {
-        const token = localStorage.getItem('refreshToken'); // Get the token from local storage
-        return this.http.post<any>(`${baseUrl}/refresh-token`, { token }, { withCredentials: true })
-            .pipe(map((account) => {
-                this.accountSubject.next(account);
-                this.startRefreshTokenTimer();
-                
-                // Update the local storage with the new refresh token
-                if (account.refreshToken) {
-                    localStorage.setItem('refreshToken', account.refreshToken);
+        return this.http.post<any>(`${baseUrl}/revoke-token`, { token: refreshToken }, { withCredentials: true })
+            .subscribe({
+                next: () => {
+                    this.stopRefreshTokenTimer();
+                    this.accountSubject.next(null);
+                    this.router.navigate(['/account/login-register']);
+                },
+                error: (error) => {
+                    console.error('Logout error:', error);
+                    console.log("token", refreshToken)
+                    // Handle error as needed
                 }
-                
+            });
+    }
+    refreshAccessToken(): Observable<any> {
+        return this.http.post<any>(`${baseUrl}/refresh-token`, {}, { withCredentials: true })
+            .pipe(map(account => {
+                this.accountSubject.next(account);
+                this.startRefreshTokenTimer(); // Start timer for the new token
                 return account;
             }));
     }
+    
     register(account: Account) {
         return this.http.post(`${baseUrl}/register`, account);
     }
@@ -135,16 +124,16 @@ export class AccountService {
 
     // helper methods
 
-    private refreshTokenTimeout;
+
+
+    private refreshTokenTimeout: any;
 
     private startRefreshTokenTimer() {
-        // parse json object from base64 encoded jwt token
         const jwtToken = JSON.parse(atob(this.accountValue.jwtToken.split('.')[1]));
-
-        // set a timeout to refresh the token a minute before it expires
         const expires = new Date(jwtToken.exp * 1000);
-        const timeout = expires.getTime() - Date.now() - (60 * 1000);
-        this.refreshTokenTimeout = setTimeout(() => this.refreshToken().subscribe(), timeout);
+        const timeout = expires.getTime() - Date.now() - (60 * 1000); // 1 minute before expiration
+
+        this.refreshTokenTimeout = setTimeout(() => this.refreshAccessToken().subscribe(), timeout);
     }
 
     private stopRefreshTokenTimer() {
@@ -155,6 +144,5 @@ export class AccountService {
         return this.http.post(`${baseUrl}/update-profile-image`, formData, {
           withCredentials: true
         });
-      }
-      
+    }
 }

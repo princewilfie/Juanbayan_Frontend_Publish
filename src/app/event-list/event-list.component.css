@@ -1,0 +1,81 @@
+/* Main container for the event grid */
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  /* Individual event card styling */
+  .event-card {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .event-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Badge for event date */
+  .event-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    background-color: #4CAF50;
+    border-radius: 5%;
+    width: 300px;
+    height: 60px;
+    margin: 0 auto 15px;
+    padding: 10px;
+  }
+  
+  .event-badge h3 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .event-badge p {
+    margin: 0;
+    font-size: 14px;
+  }
+  
+  /* Event image styling */
+  .event-image img {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  
+  /* Event status label */
+  .event-status {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    color: #fff;
+    background-color: #28a745;
+    border-radius: 20px;
+    font-size: 0.9em;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .events-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .alert-info {
+    text-align: center;
+    padding: 15px;
+    font-size: 1.2em;
+    color: #333;
+  }

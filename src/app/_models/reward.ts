@@ -4,5 +4,6 @@ export class Reward {
     reward_Description: string;
     reward_PointCost: number;
     reward_Quantity: number;
-    reward_Status: string; 
+    reward_Status: string;
+    reward_Image: string; 
   }
