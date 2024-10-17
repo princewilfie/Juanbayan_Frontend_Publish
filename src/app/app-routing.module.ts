@@ -18,6 +18,7 @@ import { CampaignDetailsComponent } from './campaign/campaign-details.component'
 // beneficiary side
 import { DashboardSwitchComponent } from './dashboard-switch/dashboard-switch.component';
 import { EventListComponent } from './event-list/event-list.component';
+import { EventDetailsComponent } from './event-list/event-details.component';
 
 const accountModule = () => import('./account/account.module').then(x => x.AccountModule);
 const adminModule = () => import('./admin/admin.module').then(x => x.AdminModule);
@@ -29,6 +30,7 @@ const routes: Routes = [
     { path: 'team-member', component: TeamMemberComponent },  // Add route for About Us
     { path: 'campaign', component: CampaignComponent},
     { path: 'create-campaign', component: CreateCampaignComponent }, // Route for creating a campaign
+    { path: 'event-details/:id', component: EventDetailsComponent},
 
     // Protected route with AuthGuard for home
     { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
