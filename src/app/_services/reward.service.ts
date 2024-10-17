@@ -44,4 +44,9 @@ export class RewardService {
     const url = `${baseUrl}/redeem`;
     return this.http.post(url, { reward_id, address, acc_id });
   }
+
+  getAllAdmin(): Observable<Reward[]> {
+    const adminUrl = `${baseUrl}/admin`; // Append '/admin' to the base URL
+    return this.http.get<Reward[]>(adminUrl); // Make the GET request to '/admin'
+}
 }

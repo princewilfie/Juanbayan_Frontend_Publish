@@ -42,6 +42,22 @@
                 </div>
             </div>
         </div>
+
+
+        <!-- Profile Picture Upload Section -->
+        <div class="form-group">
+            <label for="profilePicture">Profile Picture</label>
+            <input type="file" id="profilePicture" (change)="onFileChange($event)" class="form-control" accept="image/*" />
+            <div *ngIf="submitted && f.acc_image.errors" class="invalid-feedback">
+                <div *ngIf="f.acc_image.errors.required">Profile picture is required</div>
+            </div>
+        </div>
+
+        <!-- Preview uploaded image -->
+        <div *ngIf="previewUrl">
+            <img [src]="previewUrl" alt="Profile Preview" class="img-thumbnail mt-3" width="150" height="150" />
+        </div>
+        
         <div class="form-group">
             <button type="submit" [disabled]="loading" class="btn btn-primary mr-2">
                 <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>

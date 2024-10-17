@@ -97,15 +97,6 @@ export class DetailsComponent implements OnInit {
     this.currentSection = section; // Set the current section based on the button clicked
   }
 
-  // Triggered when the user clicks on the profile picture
-  openFileSelector(): void {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.onchange = (event) => this.onImageSelected(event);
-    input.click();
-  }
-
   onImageSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {

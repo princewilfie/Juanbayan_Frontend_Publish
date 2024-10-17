@@ -36,18 +36,6 @@
                 <div *ngIf="f.reward_Quantity.errors.min">Quantity must be greater than zero</div>
             </div>
         </div>
-
-        <div class="form-group col">
-            <label>Status</label>
-            <select formControlName="reward_Status" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.reward_Status.errors }">
-                <option value=""></option>
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-            </select>
-            <div *ngIf="submitted && f.reward_Status.errors" class="invalid-feedback">
-                <div *ngIf="f.reward_Status.errors.required">Status is required</div>
-            </div>
-        </div>
     </div>
 
     <!-- Image Upload Section -->

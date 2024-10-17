@@ -49,7 +49,7 @@
 
 <div class="container mt-5">
   <div class="profile-header">
-    <img [src]="imagePreview || account.acc_image || 'assets/default-profile/27.png'" alt="Profile Picture" (click)="openFileSelector()">
+    <img [src]=" 'http://localhost:4000/assets/' + account.acc_image" alt="Profile Picture">
     <h3>{{ account.acc_firstname }} {{ account.acc_lastname }}</h3>
     <p>Email: {{ account.acc_email }}</p>
     <p>Phone number: {{ account.acc_pnumber }}</p>

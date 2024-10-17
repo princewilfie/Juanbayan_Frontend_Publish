@@ -19,7 +19,7 @@ export class RewardListComponent implements OnInit {
   }
 
   loadRewards(): void {
-    this.rewardService.getAllRewards().subscribe(
+    this.rewardService.getAllAdmin().subscribe(
         (data: Reward[]) => {
             console.log('Rewards loaded:', data); // Log the data for verification
             this.rewards = data;
@@ -31,18 +31,20 @@ export class RewardListComponent implements OnInit {
     );
 }
 
-  deleteReward(id: string): void {  // Accept id as a string
-    const numericId = +id; // Convert id to a number
-    if (confirm('Are you sure you want to delete this reward?')) {
-      this.rewardService.deleteReward(numericId).subscribe( // Pass the numeric ID
-        () => {
-          this.alertService.success('Reward deleted successfully'); // Success message
-          this.loadRewards(); // Refresh the list after deletion
-        },
-        (error) => {
-          this.alertService.error('Error deleting reward'); // Error message
-        }
-      );
-    }
+deleteReward(id: number): void {
+  if (confirm('Are you sure you want to delete this reward?')) {
+      this.rewardService.deleteReward(id) // Send the ID as a string
+          .subscribe({
+              next: () => {
+                  this.alertService.success('Reward deleted successfully'); // Success message
+                  this.loadRewards(); // Refresh the list after deletion
+              },
+              error: (error) => {
+                  console.error(error); // Log the error for debugging
+                  this.alertService.error('Error deleting reward'); // Error message
+              }
+          });
   }
+}
+
 }
