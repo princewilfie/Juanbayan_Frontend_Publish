@@ -3,13 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RewardRoutingModule } from './rewards-routing.module';
 import { RewardListComponent } from './reward-list.component';
-import { RewardsAddEditComponent } from './reward-addedit.component';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    RewardListComponent,
-    RewardsAddEditComponent,
+    RewardListComponent
   ],
   imports: [
     CommonModule,

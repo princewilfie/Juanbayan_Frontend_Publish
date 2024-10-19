@@ -18,6 +18,7 @@ export class DetailsComponent implements OnInit {
   rewards: Reward[] = [];
   deliveryInfo = { name: '', address: '', phone: '' }; // Info for delivery
   selectedItem: Reward | null = null; // Hold the selected reward item
+  //banks: string[] = ['Bank of Philippin Islands', 'GCash', 'Paypal', 'Banco De Oro',]
 
   constructor(
     private accountService: AccountService,

@@ -1,7 +1,7 @@
 <div class="container mt-5">
     <h2 class="mb-4">Reward List</h2>
     <div class="d-flex justify-content-end mb-3">
-        <a routerLink="add" class="btn btn-sm btn-success mb-2">Add Reward</a>
+        <button class="btn btn-sm btn-success mb-2" (click)="openAddModal()">Add Reward</button>
     </div>
     <table class="table table-bordered">
         <thead class="table-dark">
@@ -26,15 +26,50 @@
                 <td>{{ reward.reward_Quantity }}</td>
                 <td>{{ reward.reward_Status }}</td>
                 <td>
-                    <a routerLink="edit/{{reward.id}}" class="btn btn-sm btn-primary mr-1">
-                        Edit
-                    </a>
-                    &nbsp;
-                    <button (click)="deleteReward(reward.id)" class="btn btn-danger btn-sm">
-                        Delete
-                    </button>
+                    <button (click)="openEditModal(reward)" class="btn btn-sm btn-primary mr-1">Edit</button>
+                    <button (click)="deleteReward(reward.id)" class="btn btn-danger btn-sm">Delete</button>
                 </td>
             </tr>
         </tbody>
     </table>
+</div>
+
+<!-- Add/Edit Modal -->
+<div class="modal fade" id="rewardModal" tabindex="-1" aria-labelledby="rewardModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="rewardModalLabel">{{ isEditing ? 'Edit Reward' : 'Add Reward' }}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="rewardForm">
+          <div class="mb-3">
+            <label for="rewardName" class="form-label">Reward Name</label>
+            <input type="text" id="rewardName" formControlName="reward_Name" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="rewardDescription" class="form-label">Reward Description</label>
+            <textarea id="rewardDescription" formControlName="reward_Description" class="form-control"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="rewardPointCost" class="form-label">Point Cost</label>
+            <input type="number" id="rewardPointCost" formControlName="reward_PointCost" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="rewardQuantity" class="form-label">Quantity</label>
+            <input type="number" id="rewardQuantity" formControlName="reward_Quantity" class="form-control">
+          </div>
+          <div class="mb-3">
+            <label for="rewardImage" class="form-label">Reward Image</label>
+            <input type="file" class="form-control" id="rewardImage" (change)="onFileChange($event)">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="saveReward()">{{ isEditing ? 'Save Changes' : 'Add Reward' }}</button>
+      </div>
+    </div>
+  </div>
 </div>

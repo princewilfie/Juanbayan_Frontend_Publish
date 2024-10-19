@@ -1,5 +1,5 @@
 export class Reward {
-    reward_ID?: number;
+    id: number;
     reward_Name: string;
     reward_Description: string;
     reward_PointCost: number;

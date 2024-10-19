@@ -5,3 +5,4 @@ export * from './campaign';
 export * from './reward';
 export * from './donation';
 export * from './communityevent';
+export * from './withdraw';

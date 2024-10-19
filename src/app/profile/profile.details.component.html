@@ -114,6 +114,7 @@
   </div>
 
   <!-- Accomplished Campaigns Section -->
+<!-- Accomplished Campaigns Section -->
 <div *ngIf="currentSection === 'campaigns'" class="container mt-5 campaign-section">
   <h3>Accomplished Campaigns</h3>
   <div *ngIf="getAccomplishedCampaigns().length > 0">
@@ -122,7 +123,7 @@
         <h4 class="text-danger">{{ campaign.Campaign_Category === 1 ? 'Medical' : 'Other' }}</h4>
         <h3 class="card-title">{{ campaign.Campaign_Name }}</h3>
         <p>{{ campaign.Campaign_Description }}</p>
-        <button class="btn btn-primary" id="requestCollectBtn">Request To Collect</button>
+        <button class="btn btn-primary" (click)="openFundRequestModal(fundRequestModal, campaign)">Request To Collect</button>
       </div>
     </div>
   </div>
@@ -130,6 +131,33 @@
     <p>No campaigns have been accomplished yet.</p>
   </div>
 </div>
+
+<!-- Fund Request Modal -->
+<ng-template #fundRequestModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Request Fund Collection</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="mb-3">
+        <label for="bank" class="form-label">Select Bank</label>
+        <select class="form-select" id="bank" [(ngModel)]="selectedBank" name="bank" required>
+          <option value="" disabled>Select a bank</option>
+          <option *ngFor="let bank of banks" [value]="bank">{{ bank }}</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="accountNumber" class="form-label">Account Number</label>
+        <input type="text" class="form-control" id="accountNumber" [(ngModel)]="accountNumber" name="accountNumber" required>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="requestFundCollection(selectedBank, accountNumber)">Request Collection</button>
+  </div>
+</ng-template>
 
   <div *ngIf="currentSection === 'rewards'" class="container mt-5">
     <div class="row">
