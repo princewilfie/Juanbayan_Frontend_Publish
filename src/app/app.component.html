@@ -89,7 +89,8 @@
                     <!-- Admin link is shown only if the user is an admin -->
                     <ul *ngIf="account?.acc_role === 'Admin'" class="nav-links">
                         <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
-                        <li><a routerLink="/admin">Admin Home</a></li>
+                        <li><a routerLink="/admin">Home</a></li>
+                        <li><a routerLink="/admin/accounts">Accounts</a></li>
                         <li><a routerLink="/admin/campaigns">Campaign</a></li>
                         <li><a routerLink="/admin/events">Event</a></li>
                         <li><a routerLink="/admin/rewards">Reward</a></li>

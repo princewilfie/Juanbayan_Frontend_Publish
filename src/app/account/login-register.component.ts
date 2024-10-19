@@ -100,7 +100,7 @@ export class LoginRegisterComponent implements OnInit {
                     this.router.navigate(['/dashboard-switch']);
                 } else if (userRole === Role.Admin) {
                     // For admins or other roles, route accordingly
-                    this.router.navigate(['/admin-dashboard']); // Example for admins
+                    this.router.navigate(['/admin']); // Example for admins
                 } else {
                     this.alertService.error('Invalid account credentials');
                     this.loading = false;

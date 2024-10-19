@@ -14,6 +14,7 @@ import { JwtInterceptor, ErrorInterceptor, appInitializer } from './_helpers';
 import { AccountService } from './_services';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';  // Import NgbModule for Bootstrap components
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 
 import { AppComponent } from './app.component';
@@ -42,7 +43,8 @@ import { CreateEventComponent } from './events/create-event.component';
         NgbModule, 
         AdminModule,
         RouterModule,
-        CommonModule
+        CommonModule,
+        FullCalendarModule
     ],
     declarations: [
         AppComponent,

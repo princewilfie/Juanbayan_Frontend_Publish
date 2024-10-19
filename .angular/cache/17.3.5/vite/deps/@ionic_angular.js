@@ -1,19 +1,3 @@
-import "./chunk-ZIOPFT3C.js";
-import "./chunk-WVHHQ2AY.js";
-import {
-  LIFECYCLE_DID_ENTER,
-  LIFECYCLE_DID_LEAVE,
-  LIFECYCLE_WILL_ENTER,
-  LIFECYCLE_WILL_LEAVE,
-  LIFECYCLE_WILL_UNLOAD,
-  componentOnReady,
-  createAnimation,
-  doc,
-  getIonMode,
-  getPlatforms,
-  isPlatform,
-  printIonWarning
-} from "./chunk-2J7VHZNX.js";
 import {
   iosTransitionAnimation
 } from "./chunk-2QWRM6MR.js";
@@ -36,6 +20,22 @@ import {
   isPlatform as isPlatform2,
   printIonWarning as printIonWarning2
 } from "./chunk-NR554Z3W.js";
+import "./chunk-ZIOPFT3C.js";
+import "./chunk-WVHHQ2AY.js";
+import {
+  LIFECYCLE_DID_ENTER,
+  LIFECYCLE_DID_LEAVE,
+  LIFECYCLE_WILL_ENTER,
+  LIFECYCLE_WILL_LEAVE,
+  LIFECYCLE_WILL_UNLOAD,
+  componentOnReady,
+  createAnimation,
+  doc,
+  getIonMode,
+  getPlatforms,
+  isPlatform,
+  printIonWarning
+} from "./chunk-2J7VHZNX.js";
 import {
   MaxValidator,
   MinValidator,
@@ -51,7 +51,7 @@ import {
   Router,
   RouterLink,
   UrlSerializer
-} from "./chunk-T2TDYA6W.js";
+} from "./chunk-YEVTI2VF.js";
 import "./chunk-E5STV6AS.js";
 import "./chunk-3ET75EXS.js";
 import {
@@ -128,12 +128,12 @@ import {
   ɵɵviewQuery
 } from "./chunk-2WR6TMOB.js";
 import {
-  fromEvent
-} from "./chunk-UMOB4LYC.js";
-import {
   distinctUntilChanged,
   switchMap
 } from "./chunk-GK724PJ5.js";
+import {
+  fromEvent
+} from "./chunk-UMOB4LYC.js";
 import {
   BehaviorSubject,
   Subject,

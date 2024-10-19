@@ -7,6 +7,8 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { LayoutComponent } from './layout.component';
 import { OverviewComponent } from './overview.component';
 import { IonicModule } from '@ionic/angular';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
     imports: [
@@ -15,11 +17,13 @@ import { IonicModule } from '@ionic/angular';
         ReactiveFormsModule,
         AdminRoutingModule,
         RouterModule, 
-        IonicModule.forRoot()
+        IonicModule.forRoot(),
+        FullCalendarModule
     ],
     declarations: [
         LayoutComponent,
         OverviewComponent
-    ]
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AdminModule { }
