@@ -1,0 +1,66 @@
+<br>
+<br>
+<br>
+<!-- Reports Page -->
+<div class="reports-section">
+    <h2>Admin Reports</h2>
+
+    <!-- Year Dropdown -->
+    <div class="year-dropdown">
+        <label for="yearSelect">Select Year:</label>
+        <select id="yearSelect">
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+            <option value="2021">2021</option>
+            <!-- Add more years as needed -->
+        </select>
+    </div>
+
+    <!-- Download Reports Button -->
+    <div class="download-button">
+      <button id="downloadReportsBtn" (click)="downloadReports()">Download All Reports</button>
+    </div>
+
+    <div class="chart-row">
+        <!-- Donations Chart -->
+        <div class="chart-container">
+            <h3>Total Donations</h3>
+            <canvas id="donationsChart"></canvas>
+        </div>
+
+        <!-- Users Chart -->
+        <div class="chart-container">
+            <h3>Total Users</h3>
+            <canvas id="usersChart"></canvas>
+        </div>
+    </div>
+<br>
+    <div class="chart-row">
+        <!-- Campaigns Chart -->
+        <div class="chart-container">
+            <h3>Total Campaigns</h3>
+            <canvas id="campaignsChart"></canvas>
+        </div>
+
+        <!-- Volunteers Chart -->
+        <div class="chart-container">
+            <h3>Total Volunteers</h3>
+            <canvas id="volunteersChart"></canvas>
+        </div>
+    </div>
+<br>
+    <div class="chart-row">
+        <!-- Withdrawals Chart -->
+        <div class="chart-container">
+            <h3>Total Withdrawals</h3>
+            <canvas id="withdrawalsChart"></canvas>
+        </div>
+
+        <!-- Events Chart -->
+        <div class="chart-container">
+            <h3>Total Events</h3>
+            <canvas id="eventsChart"></canvas>
+        </div>
+    </div>
+</div>

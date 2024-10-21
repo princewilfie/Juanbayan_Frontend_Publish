@@ -8,6 +8,9 @@ const accountsModule = () => import('./accounts/accounts.module').then(x => x.Ac
 const campaignsModule = () => import('./campaign/campaign.module').then(x => x.CampaignModule);
 const rewardsModule = ()  => import('./rewards/rewards.module').then(x => x.RewardModule);
 const eventsModule = ()  => import('./events/event.module').then(x => x.EventModule);
+const withdrawModule = ()  => import('./withdraw/withdraw.module').then(x  => x.WithdrawModule);
+const reportModule = ()  => import('./reports/reports.module').then(x  => x.ReportsModule);
+
 const routes: Routes = [
     {
         path: '', component: LayoutComponent,
@@ -17,6 +20,8 @@ const routes: Routes = [
             { path: 'campaigns', loadChildren: campaignsModule }, 
             { path: 'rewards', loadChildren: rewardsModule },
             { path: 'events', loadChildren: eventsModule }, 
+            { path: 'withdraw', loadChildren: withdrawModule }, 
+            { path: 'reports', loadChildren: reportModule }, 
 
         ]
     }

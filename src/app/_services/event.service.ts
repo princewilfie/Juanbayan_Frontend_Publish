@@ -117,6 +117,15 @@ export class EventService {
   joinEvent(Acc_ID: number, Event_ID: number): Observable<any> {
     return this.http.post(`${this.baseUrl}/join`, { Acc_ID, Event_ID });
   }
-  
+
+  getEventParticipants(Event_ID: number): Observable<any[]> {
+    return this.http.post<any[]>(`${this.baseUrl}/participants`, { Event_ID })
+      .pipe(
+        catchError(error => {
+          console.error('Error fetching participants:', error); // Log error for debugging
+          return throwError(error); // Throw error for further handling
+        })
+      );
+  }
 
 }

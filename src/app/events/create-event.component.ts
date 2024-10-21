@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { EventService } from '../_services/event.service';
 import { AccountService } from '../_services/account.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ParticipantService } from '../_services/participant.service';
+import { Participant } from '../_models';
 
 @Component({
   selector: 'app-create-event',
@@ -23,6 +25,9 @@ export class CreateEventComponent implements OnInit {
   showUpdateModal = false; 
   selectedEvent: any = null;
   isUpdateFormVisible = false; 
+  participants: Participant[] = [];
+  eventId: number;
+  showParticipantsModal: boolean = false;
 
   // Define properties for different event statuses
   approveEvents: any[] = [];
@@ -32,7 +37,8 @@ export class CreateEventComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private eventService: EventService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private participantService: ParticipantService
   ) {
     this.createEventForm = this.formBuilder.group({
       Event_Name: ['', Validators.required],
@@ -82,6 +88,24 @@ export class CreateEventComponent implements OnInit {
       console.error('Account not found.');
       this.errorMessage = 'No account information found.';
     }
+  }
+
+  viewParticipants(eventId): void {
+    // Clear participants before fetching new ones
+    this.participants = [];
+    this.showParticipantsModal = true;
+
+    this.participantService.getEventParticipants(eventId).toPromise()
+      .then((data: Participant[]) => {
+        this.participants = data;  // Assign the fetched data to participants array
+      })
+      .catch((error) => {
+        console.error('Error fetching participants', error);
+      });
+  }
+
+  closeParticipantsModal(): void {
+    this.showParticipantsModal = false;
   }
 
   openModal() {
@@ -162,13 +186,17 @@ export class CreateEventComponent implements OnInit {
     this.selectedEvent = event; 
     this.updateEventForm.patchValue(event); 
     this.updateImagePreviews = []; 
-    this.isUpdateFormVisible = true; 
-    this.showUpdateModal = true; 
+    this.isUpdateFormVisible = true;
   }
 
+  
+
   openUpdateModal() {
-    this.isUpdateFormVisible = true; 
-    this.showUpdateModal = true; 
+    this.showUpdateModal = true;
+    // Initialize form with selectedEvent data if needed
+    if (this.selectedEvent) {
+      this.updateEventForm.patchValue(this.selectedEvent);
+    }
   }
 
   handleUpdateFileInput(event: any) {

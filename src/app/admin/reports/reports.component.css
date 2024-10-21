@@ -1,0 +1,42 @@
+.reports-section {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.year-dropdown {
+  margin-bottom: 20px;
+}
+
+.download-button {
+  margin-bottom: 20px;
+}
+
+.chart-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.chart-container {
+  width: 48%; /* Adjust to fit two per row */
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.download-button button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.download-button button:hover {
+  background-color: #45a049;
+}

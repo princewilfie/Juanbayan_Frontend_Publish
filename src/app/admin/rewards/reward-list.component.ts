@@ -101,7 +101,7 @@ export class RewardListComponent implements OnInit {
           error: () => {
             this.alertService.error('Error adding reward');
           }
-        });
+        }); 
       }
   
       // Close modal

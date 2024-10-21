@@ -1,9 +1,10 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { AccountService, CampaignService, RewardService } from '@app/_services'; // Import RedeemRewardService
+import { AccountService, CampaignService, RewardService, WithdrawService, AlertService } from '@app/_services'; // Import RedeemRewardService
 import { Account } from '@app/_models/account';
 import { Campaign } from '@app/_models/campaign';
 import { Reward } from '@app/_models/reward';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Withdraw } from '@app/_models/withdraw';
 
 @Component({
   selector: 'app-details',
@@ -18,14 +19,52 @@ export class DetailsComponent implements OnInit {
   rewards: Reward[] = [];
   deliveryInfo = { name: '', address: '', phone: '' }; // Info for delivery
   selectedItem: Reward | null = null; // Hold the selected reward item
-  //banks: string[] = ['Bank of Philippin Islands', 'GCash', 'Paypal', 'Banco De Oro',]
+  selectedBank: string = '';
+  accountNumber: string = '';
+  banks: string[] = ['Bank of the Philippine Islands', 'GCash', 'PayPal', 'Banco De Oro', 'UnionBank', 'ChinaBank'];
+  amount: number = 0; 
+  selectedRequest: Campaign | null = null;
 
   constructor(
     private accountService: AccountService,
     private campaignService: CampaignService,
     private rewardService: RewardService,
+    private withdrawService: WithdrawService,
+    private alertService: AlertService,
     private modalService: NgbModal
   ) {}
+
+  openFundRequestModal(modal: TemplateRef<any>, campaign: Campaign) {
+    this.selectedRequest = campaign;
+    this.modalService.open(modal);
+  }
+
+  submitFundRequest(modal: any): void {
+    if (!this.selectedBank || !this.accountNumber) {
+      this.alertService.error('Please select a bank and enter an account number.'); // Use your alert service
+      return;
+    } 
+  
+    const fundRequestData: Omit<Withdraw, "Withdraw_ID" | "Request_Date" | "Status"> = {
+      Bank_account: this.selectedBank,
+      Acc_number: Number(this.accountNumber),
+      Campaign_ID: this.selectedRequest? this.selectedRequest.Campaign_ID : null,
+      acc_id: this.account.id, // Replace with the actual account ID
+      Withdraw_Amount: this.amount, // Replace with the actual amount to withdraw
+    };
+  
+    this.withdrawService.requestWithdrawal(fundRequestData).subscribe(
+      response => {
+        console.log('Withdrawal request successful:', response);
+        modal.dismiss(); // Close the modal on success
+        this.alertService.success('Withdrawal request submitted successfully!'); // Use your alert service for success
+      },
+      error => {
+        console.error('Error requesting withdrawal:', error);
+        this.alertService.error('There was an error processing your request. Please try again.'); // Use your alert service
+      }
+    );
+  }
 
   ngOnInit(): void {
     // Fetch account data
@@ -179,21 +218,26 @@ export class DetailsComponent implements OnInit {
 
     const accountId = Number(this.account.id);
 
-    // Call the redeemReward method with the correct types and order
     this.rewardService.redeemReward(rewardId, address, accountId).subscribe({
-        next: (response) => {
-            console.log('Reward redeemed successfully:', response);
-            alert('Reward redeemed successfully!'); // Notify user
-            this.selectedItem = null; // Reset selected item
-            this.modalService.dismissAll(); // Close the modal if needed
-            // Additional handling like updating the UI or state
-        },
-        error: (error) => {
-            console.error('Error redeeming reward:', error);
-            alert('Error redeeming reward. Please try again.'); // Notify user
-            // You could show more detailed error messages based on the error response
-        },
-    });
+      next: (response) => {
+          console.log('Reward redeemed successfully:', response);
+          alert('Reward redeemed successfully!'); // Notify user
+          this.selectedItem = null; // Reset selected item
+          this.modalService.dismissAll(); // Close the modal if needed
+          // Additional handling like updating the UI or state
+      },
+      error: (error) => {
+          console.error('Error redeeming reward:', error);
+  
+          // Check if the error message is "Insufficient points to redeem the reward"
+          if (error === 'Insufficient points to redeem the reward') {
+              alert('Insufficient points to redeem the reward'); // Specific alert for insufficient points
+          } else {
+              this.alertService.error(error); // Log the error
+              alert('An error occurred while redeeming the reward. Please try again.'); // General error alert
+          }
+      },
+  });
 }
 
   

@@ -113,7 +113,6 @@
     <p>Event 1, Event 2, Event 3...</p>
   </div>
 
-  <!-- Accomplished Campaigns Section -->
 <!-- Accomplished Campaigns Section -->
 <div *ngIf="currentSection === 'campaigns'" class="container mt-5 campaign-section">
   <h3>Accomplished Campaigns</h3>
@@ -135,14 +134,14 @@
 <!-- Fund Request Modal -->
 <ng-template #fundRequestModal let-modal>
   <div class="modal-header">
-    <h5 class="modal-title">Request Fund Collection</h5>
+    <h5 class="modal-title">Request Funds</h5>
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
     <form>
       <div class="mb-3">
         <label for="bank" class="form-label">Select Bank</label>
-        <select class="form-select" id="bank" [(ngModel)]="selectedBank" name="bank" required>
+        <select class="form-select" [(ngModel)]="selectedBank" name="bank" required>
           <option value="" disabled>Select a bank</option>
           <option *ngFor="let bank of banks" [value]="bank">{{ bank }}</option>
         </select>
@@ -155,7 +154,7 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Close click')">Close</button>
-    <button type="button" class="btn btn-primary" (click)="requestFundCollection(selectedBank, accountNumber)">Request Collection</button>
+    <button type="button" class="btn btn-primary" (click)="submitFundRequest(modal)">Request Funds</button>
   </div>
 </ng-template>
 

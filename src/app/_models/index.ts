@@ -6,3 +6,4 @@ export * from './reward';
 export * from './donation';
 export * from './communityevent';
 export * from './withdraw';
+export * from './participant';
