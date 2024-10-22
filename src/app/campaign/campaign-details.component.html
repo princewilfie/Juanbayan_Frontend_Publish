@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+
 <br><br><br><br><br><br><br><br>
 <div class="campaign-details-container">
   
@@ -19,6 +22,24 @@
       <button class="donate-button">Donate Now</button>
       <button class="back-button" (click)="goBack()">Back</button>
     </div>
+
+    <div class="button-container">
+      <!-- Facebook Icon as a Button -->
+      <button class="icon-button" (click)="shareToFacebook(getCampaignUrl())">
+        <i class="fab fa-facebook-f"></i>
+      </button>
+    
+      <!-- Twitter Icon as a Button -->
+      <button class="icon-button" (click)="shareToTwitter(getCampaignUrl())">
+        <i class="fab fa-twitter"></i>
+      </button>
+    
+      <!-- Instagram Icon as a Button -->
+      <button class="icon-button" (click)="shareToInstagram(getCampaignUrl())">
+        <i class="fab fa-instagram"></i>
+      </button>
+    </div>
+
   </div>
 </div>
 <br><br><br><br>
@@ -42,6 +63,50 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
+
+  button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button.share-facebook {
+  background-color: #3b5998;
+}
+
+button.share-twitter {
+  background-color: #55acee;
+}
+
+button.share-instagram {
+  background-color: #e4405f;
+}
+
+.icon-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 2em;
+  color: #555;
+}
+
+.icon-button:hover {
+  color: #000;
+}
+
+.fab {
+  margin-right: 10px;
+}
+
+
 
   .back-button:hover {
     background-color: #0056b3;

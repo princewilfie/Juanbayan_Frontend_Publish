@@ -37,6 +37,34 @@ export class CampaignDetailsComponent implements OnInit {
     );
   }
 
+// Generate dynamic campaign URL
+getCampaignUrl(): string {
+  return `http://juanbayan.com.ph/campaign/${this.campaign?.Campaign_ID}`;  // Replace with your actual base URL
+}
+
+shareToFacebook(url: string): void {
+  const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+  window.open(facebookUrl, '_blank');
+}
+
+shareToTwitter(url: string): void {
+  const twitterUrl = `https://twitter.com/share?url=${encodeURIComponent(url)}&text=Check+out+this+campaign!`;
+  window.open(twitterUrl, '_blank');
+}
+
+shareToInstagram(url: string): void {
+  alert('Instagram doesn\'t allow direct sharing from the web. Link copied to clipboard.');
+  this.copyToClipboard(url);
+}
+
+copyToClipboard(text: string): void {
+  const tempInput = document.createElement('input');
+  tempInput.value = text;
+  document.body.appendChild(tempInput);
+  tempInput.select();
+  document.execCommand('copy');
+  document.body.removeChild(tempInput);
+}
   getImagePath(image: string): string {
     return image ? `http://localhost:4000/${image}` : 'assets/'; 
   }

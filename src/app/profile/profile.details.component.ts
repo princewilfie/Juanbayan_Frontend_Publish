@@ -112,11 +112,14 @@ export class DetailsComponent implements OnInit {
   }
 
   // accomplished campaigns
-  getAccomplishedCampaigns() {
-    const today = new Date();
-    return this.campaigns.filter(campaign => new Date(campaign.Campaign_End) <= today);
-  }
-
+getAccomplishedCampaigns(): Campaign[] {
+  const today = new Date();
+  return this.campaigns.filter((campaign: Campaign) => {
+    const isEndDatePassed = new Date(campaign.Campaign_End) <= today;
+    const isAmountReached = campaign.Campaign_CurrentRaised >= campaign.Campaign_TargetFund;
+    return isEndDatePassed || isAmountReached;
+  });
+}
   loadProfileImage(): void {
     const savedImage = localStorage.getItem(`profileImage_${this.account.id}`);
     if (savedImage) {
