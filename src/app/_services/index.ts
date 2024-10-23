@@ -7,3 +7,5 @@ export * from './donation.service';
 export * from './event.service';
 export * from './withdraw.service';
 export * from './participant.service';
+export * from './comment.service';
+export * from './like.service';

@@ -1,9 +1,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-
-<br><br><br><br><br><br><br><br>
 <div class="campaign-details-container">
-  
   <!-- Campaign Image -->
   <div class="campaign-image">
     <img [src]="getImagePath('assets/' + campaign?.Campaign_Image)" alt="{{ campaign?.Campaign_Name }} Image" class="campaign-image">
@@ -16,7 +13,31 @@
     <p class="campaign-raised">Currently Raised: ${{ campaign?.Campaign_CurrentRaised | number:'1.2-2' }}</p>
     <p class="campaign-start-end">Campaign Period: {{ campaign?.Campaign_Start | date: 'longDate' }} - {{ campaign?.Campaign_End | date: 'longDate' }}</p>
     <p class="campaign-description">{{ campaign?.Campaign_Description }}</p>
+
+   <!-- Like/Reaction Button -->
+    <div class="like-section">
+      <button class="like-button" (click)="toggleLike()">
+        <i [class]="hasLiked ? 'fas fa-thumbs-up' : 'far fa-thumbs-up'"></i>
+        {{ likeCount }} {{ likeCount === 1 ? 'Like' : 'Likes' }}
+      </button>
+    </div>
     
+     <!-- Comment Section -->
+     <div class="comment-section">
+      <h3>Comments</h3>
+    
+      <!-- Display Comments -->
+      <div class="comment" *ngFor="let comment of comments">
+        <p><img [src]=" 'http://localhost:4000/assets/' + comment.userimage" alt="{{ comment.acc_firstname }}" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;"><strong>{{ comment.userfname }} {{ comment.userlname }}</strong>: {{ comment.Comment_Text }}</p>
+      </div>
+    
+      <!-- Add New Comment -->
+      <div class="add-comment">
+        <input type="text" [(ngModel)]="newComment.Comment_Text" placeholder="Add a comment..." />
+        <button (click)="addComment()">Submit</button>
+      </div>
+    </div>
+
     <!-- Button Container for Donate and Back Buttons -->
     <div class="button-container">
       <button class="donate-button">Donate Now</button>
@@ -28,21 +49,19 @@
       <button class="icon-button" (click)="shareToFacebook(getCampaignUrl())">
         <i class="fab fa-facebook-f"></i>
       </button>
-    
+
       <!-- Twitter Icon as a Button -->
       <button class="icon-button" (click)="shareToTwitter(getCampaignUrl())">
         <i class="fab fa-twitter"></i>
       </button>
-    
+
       <!-- Instagram Icon as a Button -->
       <button class="icon-button" (click)="shareToInstagram(getCampaignUrl())">
         <i class="fab fa-instagram"></i>
       </button>
     </div>
-
   </div>
 </div>
-<br><br><br><br>
 
 <style>
   /* Button container styling */
@@ -52,7 +71,6 @@
     margin-top: 20px; /* Add space above the buttons */
   }
 
-  /* Back button styling */
   .back-button {
     background-color: #007bff;
     color: white;
@@ -65,54 +83,48 @@
   }
 
   button {
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 5px;
-}
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
 
-button.share-facebook {
-  background-color: #3b5998;
-}
+  button.share-facebook {
+    background-color: #3b5998;
+  }
 
-button.share-twitter {
-  background-color: #55acee;
-}
+  button.share-twitter {
+    background-color: #55acee;
+  }
 
-button.share-instagram {
-  background-color: #e4405f;
-}
+  button.share-instagram {
+    background-color: #e4405f;
+  }
 
-.icon-button {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 2em;
-  color: #555;
-}
+  .icon-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 2em;
+    color: #555;
+  }
 
-.icon-button:hover {
-  color: #000;
-}
+  .icon-button:hover {
+    color: #000;
+  }
 
-.fab {
-  margin-right: 10px;
-}
-
-
+  .fab {
+    margin-right: 10px;
+  }
 
   .back-button:hover {
     background-color: #0056b3;
   }
 
-  /* Existing styles remain unchanged */
   .campaign-details-container {
     display: flex;
     align-items: center;
@@ -174,15 +186,66 @@ button.share-instagram {
     background-color: #218838;
   }
 
-  .credits {
-    text-align: center;
-    font-size: 0.9em;
-    color: #999;
-    margin-top: 50px;
+  .like-section {
+    margin-top: 20px;
   }
 
-  .credits a {
-    color: #007bff;
-    text-decoration: none;
+  .like-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .like-button i {
+    font-size: 1.5em;
+  }
+
+  .comment-section {
+    margin-top: 40px;
+  }
+
+  .comment-section h3 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+  }
+
+  .comment {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+
+  .add-comment {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .add-comment input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .add-comment button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .add-comment button:hover {
+    background-color: #218838;
   }
 </style>
