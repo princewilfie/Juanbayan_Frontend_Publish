@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class DonationService {
-  private baseUrl = `${environment.apiUrl}/donations`; // Base URL for donation API
+  private baseUrl = `${environment.apiUrl}/donation`; // Base URL for donation API
 
   constructor(private http: HttpClient) {}
 
@@ -25,5 +25,20 @@ export class DonationService {
   // Create a new donation
   createDonation(donationData: Donation): Observable<Donation> {
     return this.http.post<Donation>(`${this.baseUrl}/create`, donationData);
+  }
+
+
+  createGcashPayment(paymentData: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/create-gcash-payment`, paymentData);
+  }
+
+  saveDonation(donation: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/create`, donation);
+  }
+ 
+
+  // Get campaign details by ID
+  getCampaignById(campaignId: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/campaign/${campaignId}`);
   }
 }

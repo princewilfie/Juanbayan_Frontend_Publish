@@ -1,5 +1,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 <style>
   body {
     background-color: #f8f9fa;
@@ -79,31 +81,82 @@
     </div>
   </div>
 
-   <!-- Your Activities Section -->
-   <div *ngIf="currentSection === 'activities'" class="container mt-5 section-padding">
+  <!-- Your Activities Section -->
+  <div *ngIf="currentSection === 'activities'" class="container mt-5 section-padding">
     <h3>Your Activities</h3>
 
+    <!-- Campaigns Section -->
     <div *ngIf="campaigns.length > 0">
-      <div *ngFor="let campaign of campaigns" class="card mb-3 shadow-sm">
-        <div class="row g-0">
-          <div class="col-md-4">
-            <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" alt="{{ campaign.Campaign_Name }} Image" class="campaign-image" (error)="this.src='assets/jb-symbol-logo.png'">
-          </div>
-          <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title">{{ campaign.Campaign_Name }}</h5>
-              <p class="card-text">{{ campaign.Campaign_Description }}</p>
-              <p class="card-text"><small class="text-muted">Category: {{ campaign.Campaign_Category === 1 ? 'Medical' : 'Other' }}</small></p>
-              <p class="card-text"><small class="text-muted">Status: {{ campaign.Campaign_Status === 0 ? 'Pending' : campaign.Campaign_Status === 1 ? 'Approved' : 'Rejected' }}</small></p>
-              <p class="card-text"><small class="text-muted">Approval Status: {{ campaign.Campaign_ApprovalStatus }}</small></p>
+        <div *ngFor="let campaign of campaigns" class="card mb-3 shadow-sm">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" 
+                         alt="{{ campaign.Campaign_Name }} Image" 
+                         class="campaign-image" 
+                         (error)="this.src='assets/jb-symbol-logo.png'">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ campaign.Campaign_Name }}</h5>
+                        <p class="card-text">{{ campaign.Campaign_Description }}</p>
+                        <p class="card-text"><small class="text-muted">Category: {{ campaign.Campaign_Category === 1 ? 'Medical' : 'Other' }}</small></p>
+                        <p class="card-text"><small class="text-muted">Status: {{ campaign.Campaign_Status === 0 ? 'Pending' : campaign.Campaign_Status === 1 ? 'Approved' : 'Rejected' }}</small></p>
+                        <p class="card-text"><small class="text-muted">Approval Status: {{ campaign.Campaign_ApprovalStatus }}</small></p>
+                    </div>
+                </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Events Section -->
+    <div *ngIf="events.length > 0">
+        <div *ngFor="let event of events" class="card mb-3 shadow-sm">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img [src]="getImagePath('assets/' + event.Event_Image)" 
+                         alt="{{ event.Event_Name }} Image" 
+                         class="event-image" 
+                         (error)="this.src='assets/jb-symbol-logo.png'">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ event.Event_Name }}</h5>
+                        <p class="card-text">{{ event.Event_Description }}</p>
+                        <p class="card-text"><small class="text-muted">Location: {{ event.Event_Location }}</small></p>
+                        <p class="card-text"><small class="text-muted">Status: {{ event.Event_Status === 0 ? 'Pending' : event.Event_Status === 1 ? 'Approved' : 'Rejected' }}</small></p>
+                        <p class="card-text"><small class="text-muted">Approval Status: {{ event.Event_ApprovalStatus }}</small></p>
+                        <p class="card-text"><small class="text-muted">Start Date: {{ event.Event_Start_Date | date:'shortDate' }}</small></p>
+                        <p class="card-text"><small class="text-muted">End Date: {{ event.Event_End_Date | date:'shortDate' }}</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Participants Section -->
+  <div *ngIf="joinedEvents.length > 0">
+    <h4>Event's You Volunteered</h4>
+    <div *ngFor="let participant of joinedEvents" class="card mb-3 shadow-sm">
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img [src]="getImagePath('assets/' + participant.acc_image)" 
+               alt="{{ participant.acc_firstname }} {{ participant.acc_lastname }} Image" 
+               class="participant-image" 
+               (error)="this.src='assets/jb-symbol-logo.png'">
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">Thank you for volunteering this event!</h5>
+            <p class="card-text">Joined At: {{ participant.joinedAt | date:'short' }}</p>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <div *ngIf="campaigns.length === 0">
-      <p>You have not created any campaigns yet.</p>
+    <!-- No Activities Message -->
+    <div *ngIf="campaigns.length === 0 && events.length === 0">
+        <p>You don't have any activity.</p>
     </div>
   </div>
 
@@ -113,50 +166,54 @@
     <p>Event 1, Event 2, Event 3...</p>
   </div>
 
-<!-- Accomplished Campaigns Section -->
-<div *ngIf="currentSection === 'campaigns'" class="container mt-5 campaign-section">
-  <h3>Accomplished Campaigns</h3>
-  <div *ngIf="getAccomplishedCampaigns().length > 0">
-    <div *ngFor="let campaign of getAccomplishedCampaigns()" class="card shadow-sm mb-3">
-      <div class="card-body">
-        <h4 class="text-danger">{{ campaign.Campaign_Category === 1 ? 'Medical' : 'Other' }}</h4>
-        <h3 class="card-title">{{ campaign.Campaign_Name }}</h3>
-        <p>{{ campaign.Campaign_Description }}</p>
-        <button class="btn btn-primary" (click)="openFundRequestModal(fundRequestModal, campaign)">Request To Collect</button>
+  <!-- Accomplished Campaigns Section -->
+  <div *ngIf="currentSection === 'campaigns'" class="container mt-5 campaign-section">
+    <h3>Accomplished Campaigns</h3>
+    <div *ngIf="getAccomplishedCampaigns().length > 0">
+      <div *ngFor="let campaign of getAccomplishedCampaigns()" class="card shadow-sm mb-3">
+        <div class="card-body">
+          <h4 class="text-danger">{{ campaign.Campaign_Category === 1 ? 'Medical' : 'Other' }}</h4>
+          <h3 class="card-title">{{ campaign.Campaign_Name }}</h3>
+          <p>{{ campaign.Campaign_Description }}</p>
+          <button class="btn btn-primary" (click)="openFundRequestModal(fundRequestModal, campaign)">Request To Collect</button>
+        </div>
       </div>
     </div>
+    <div *ngIf="getAccomplishedCampaigns().length === 0">
+      <p>No campaigns have been accomplished yet.</p>
+    </div>
   </div>
-  <div *ngIf="getAccomplishedCampaigns().length === 0">
-    <p>No campaigns have been accomplished yet.</p>
-  </div>
-</div>
 
-<!-- Fund Request Modal -->
-<ng-template #fundRequestModal let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title">Request Funds</h5>
-    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-  </div>
-  <div class="modal-body">
-    <form>
-      <div class="mb-3">
-        <label for="bank" class="form-label">Select Bank</label>
-        <select class="form-select" [(ngModel)]="selectedBank" name="bank" required>
-          <option value="" disabled>Select a bank</option>
-          <option *ngFor="let bank of banks" [value]="bank">{{ bank }}</option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="accountNumber" class="form-label">Account Number</label>
-        <input type="text" class="form-control" id="accountNumber" [(ngModel)]="accountNumber" name="accountNumber" required>
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Close click')">Close</button>
-    <button type="button" class="btn btn-primary" (click)="submitFundRequest(modal)">Request Funds</button>
-  </div>
-</ng-template>
+  <!-- Fund Request Modal -->
+  <ng-template #fundRequestModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Request Funds</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form>
+        <div class="mb-3">
+          <label for="bank" class="form-label">Select Bank</label>
+          <select class="form-select" [(ngModel)]="selectedBank" name="bank" required>
+            <option value="" disabled>Select a bank</option>
+            <option *ngFor="let bank of banks" [value]="bank">{{ bank }}</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="accountNumber" class="form-label">Account Number</label>
+          <input type="text" class="form-control" id="accountNumber" [(ngModel)]="accountNumber" name="accountNumber" required>
+        </div>
+        <div id="passwordError" class="text-danger">Please enter a valid password.</div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Enter Your Password</label>
+          <input type="password" class="form-control" id="password" [(ngModel)]="password" name="password" required>
+        </div>
+        <div class="mb-3">
+          <button type="button" class="btn btn-success" (click)="submitRequest()">Submit Request</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
 
   <div *ngIf="currentSection === 'rewards'" class="container mt-5">
     <div class="row">

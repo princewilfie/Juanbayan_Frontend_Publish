@@ -32,8 +32,15 @@ import { TermsAndConditionsModalComponent } from './event-list/event-terms-condi
 import { EventListComponent } from './event-list/event-list.component';
 import { CreateEventComponent } from './events/create-event.component';
 
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     imports: [
         BrowserModule,
         FormsModule,
@@ -44,7 +51,10 @@ import { CreateEventComponent } from './events/create-event.component';
         AdminModule,
         RouterModule,
         CommonModule,
-        FullCalendarModule
+        FullCalendarModule,
+        BrowserAnimationsModule,
+        MatDialogModule,
+        MatButtonModule,
     ],
     declarations: [
         AppComponent,

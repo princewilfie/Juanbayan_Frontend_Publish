@@ -1,10 +1,12 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { AccountService, CampaignService, RewardService, WithdrawService, AlertService } from '@app/_services'; // Import RedeemRewardService
+import { AccountService, CampaignService, RewardService, WithdrawService, AlertService, EventService, ParticipantService } from '@app/_services'; // Import RedeemRewardService
 import { Account } from '@app/_models/account';
 import { Campaign } from '@app/_models/campaign';
 import { Reward } from '@app/_models/reward';
+import { Participant } from '../_models';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Withdraw } from '@app/_models/withdraw';
+import Swal from 'sweetalert2'; // Import SweetAlert
 
 @Component({
   selector: 'app-details',
@@ -24,6 +26,8 @@ export class DetailsComponent implements OnInit {
   banks: string[] = ['Bank of the Philippine Islands', 'GCash', 'PayPal', 'Banco De Oro', 'UnionBank', 'ChinaBank'];
   amount: number = 0; 
   selectedRequest: Campaign | null = null;
+  events: any[] = [];
+  joinedEvents: Participant[];
 
   constructor(
     private accountService: AccountService,
@@ -31,7 +35,9 @@ export class DetailsComponent implements OnInit {
     private rewardService: RewardService,
     private withdrawService: WithdrawService,
     private alertService: AlertService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private eventService: EventService,
+    private participantService : ParticipantService
   ) {}
 
   openFundRequestModal(modal: TemplateRef<any>, campaign: Campaign) {
@@ -105,6 +111,29 @@ export class DetailsComponent implements OnInit {
         console.error('Error fetching rewards', error);
       }
     );
+
+    // Fetch events data
+  this.eventService.getEventsByAccountId(accountId).subscribe(
+    (events) => {
+      this.events = events;  // Store events data
+      console.log('Fetching events for account ID:', accountId);
+    },
+    (error) => {
+      console.error('Error fetching events:', error);
+    }
+  );
+
+  // Fetch joined events data
+  this.participantService.getJoinedEvents(accountId).subscribe(
+    (joinedEvents: Participant[]) => {
+      this.joinedEvents = joinedEvents;  // Store joined events data
+      console.log('Joined Events:', this.joinedEvents);  // Debug log for joined events
+    },
+    (error) => {
+      console.error('Error fetching joined events:', error);
+    }
+  );
+
   }
   
   getImagePath(image: string): string {
@@ -112,14 +141,11 @@ export class DetailsComponent implements OnInit {
   }
 
   // accomplished campaigns
-getAccomplishedCampaigns(): Campaign[] {
-  const today = new Date();
-  return this.campaigns.filter((campaign: Campaign) => {
-    const isEndDatePassed = new Date(campaign.Campaign_End) <= today;
-    const isAmountReached = campaign.Campaign_CurrentRaised >= campaign.Campaign_TargetFund;
-    return isEndDatePassed || isAmountReached;
-  });
-}
+  getAccomplishedCampaigns() {
+    const today = new Date();
+    return this.campaigns.filter(campaign => new Date(campaign.Campaign_End) <= today);
+  }
+
   loadProfileImage(): void {
     const savedImage = localStorage.getItem(`profileImage_${this.account.id}`);
     if (savedImage) {
@@ -214,33 +240,53 @@ getAccomplishedCampaigns(): Campaign[] {
   redeem(rewardId: number, address: string) {
     // Ensure address is provided
     if (!address || address.trim() === '') {
-        console.error('Address is required.');
-        alert('Please provide a delivery address.');
+        Swal.fire({
+            icon: 'warning',
+            title: 'Address Required',
+            text: 'Please provide a delivery address to redeem the reward.',
+        });
         return;
     }
 
     const accountId = Number(this.account.id);
 
     this.rewardService.redeemReward(rewardId, address, accountId).subscribe({
-      next: (response) => {
-          console.log('Reward redeemed successfully:', response);
-          alert('Reward redeemed successfully!'); // Notify user
-          this.selectedItem = null; // Reset selected item
-          this.modalService.dismissAll(); // Close the modal if needed
-          // Additional handling like updating the UI or state
-      },
-      error: (error) => {
-          console.error('Error redeeming reward:', error);
-  
-          // Check if the error message is "Insufficient points to redeem the reward"
-          if (error === 'Insufficient points to redeem the reward') {
-              alert('Insufficient points to redeem the reward'); // Specific alert for insufficient points
-          } else {
-              this.alertService.error(error); // Log the error
-              alert('An error occurred while redeeming the reward. Please try again.'); // General error alert
-          }
-      },
-  });
+        next: (response) => {
+            // Show success SweetAlert
+            Swal.fire({
+                icon: 'success',
+                title: 'Reward Redeemed',
+                text: 'You have successfully redeemed the reward!',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                this.selectedItem = null; // Reset selected item
+                this.modalService.dismissAll(); // Close the modal if needed
+                // Additional handling like updating the UI or state
+            });
+        },
+        error: (error) => {
+            console.error('Error redeeming reward:', error);
+            
+            // Check if the error message is "Insufficient points to redeem the reward"
+            if (error === 'Insufficient points to redeem the reward') {
+                // Show SweetAlert for insufficient points
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Insufficient Points',
+                    text: 'You do not have enough points to redeem this reward.',
+                    confirmButtonText: 'OK'
+                });
+            } else {
+                // Show general error SweetAlert
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Redemption Failed',
+                    text: 'An error occurred while redeeming the reward. Please try again later.',
+                    confirmButtonText: 'OK'
+                });
+            }
+        }
+    });
 }
 
   

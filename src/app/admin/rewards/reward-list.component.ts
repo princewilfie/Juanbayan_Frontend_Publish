@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RewardService, AlertService } from '@app/_services';
 import { Reward } from '@app/_models';
-
+import Swal from 'sweetalert2'; // Import SweetAlert2
 declare var bootstrap: any; // To use Bootstrap modal functionality
 
 @Component({
@@ -40,7 +40,7 @@ export class RewardListComponent implements OnInit {
         this.rewards = data;
       },
       (error) => {
-        this.alertService.error('Failed to load rewards');
+        Swal.fire('Error', 'Failed to load rewards', 'error');
       }
     );
   }
@@ -65,46 +65,37 @@ export class RewardListComponent implements OnInit {
 
   saveReward(): void {
     if (this.rewardForm.valid) {
-      // Create a FormData object
       const formData = new FormData();
-  
-      // Append the form fields to the FormData object
       Object.keys(this.rewardForm.controls).forEach((key) => {
         if (key === 'reward_Image') {
-          // Append image file directly
           formData.append(key, this.rewardForm.get(key)?.value);
         } else {
-          // Append other form data as strings
           formData.append(key, this.rewardForm.get(key)?.value);
         }
       });
-  
-      // Distinguish between add and edit mode
+
       if (this.isEditing && this.currentRewardId !== null) {
-        // Edit reward
         this.rewardService.updateReward(this.currentRewardId, formData).subscribe({
           next: () => {
-            this.alertService.success('Reward updated successfully');
+            Swal.fire('Success', 'Reward updated successfully', 'success');
             this.loadRewards();
           },
           error: () => {
-            this.alertService.error('Error updating reward');
+            Swal.fire('Error', 'Error updating reward', 'error');
           }
         });
       } else {
-        // Add new reward
         this.rewardService.createReward(formData).subscribe({
           next: () => {
-            this.alertService.success('Reward added successfully');
+            Swal.fire('Success', 'Reward added successfully', 'success');
             this.loadRewards();
           },
           error: () => {
-            this.alertService.error('Error adding reward');
+            Swal.fire('Error', 'Error adding reward', 'error');
           }
-        }); 
+        });
       }
-  
-      // Close modal
+
       const modal = bootstrap.Modal.getInstance(document.getElementById('rewardModal'));
       modal.hide();
     }
@@ -120,16 +111,25 @@ export class RewardListComponent implements OnInit {
   }
 
   deleteReward(id: number): void {
-    if (confirm('Are you sure you want to delete this reward?')) {
-      this.rewardService.deleteReward(id).subscribe({
-        next: () => {
-          this.alertService.success('Reward deleted successfully');
-          this.loadRewards();
-        },
-        error: () => {
-          this.alertService.error('Error deleting reward');
-        }
-      });
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this reward!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.rewardService.deleteReward(id).subscribe({
+          next: () => {
+            Swal.fire('Deleted!', 'Your reward has been deleted.', 'success');
+            this.loadRewards();
+          },
+          error: () => {
+            Swal.fire('Error', 'Error deleting reward', 'error');
+          }
+        });
+      }
+    });
   }
 }

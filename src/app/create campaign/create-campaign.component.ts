@@ -5,6 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Campaign } from '../_models';
 import { AccountService } from '../_services/account.service';
+import Swal from 'sweetalert2'; // Import SweetAlert
+
 @Component({
   selector: 'app-create-campaign',
   templateUrl: './create-campaign.component.html',
@@ -67,15 +69,59 @@ export class CreateCampaignComponent implements OnInit {
     const account = this.accountService.accountValue;
     this.campaignService.getCampaignsByAccountId(Number(account.id)).subscribe(
       (data: any[]) => {
-        this.approvedCampaigns = data.filter(campaign => campaign.Campaign_Status === 1); // Approved campaigns
-        this.pendingCampaigns = data.filter(campaign => campaign.Campaign_Status === 0); // Pending campaigns
-        this.rejectedCampaigns = data.filter(campaign => campaign.Campaign_Status === 2); // Rejected campaigns
+        this.approvedCampaigns = data.filter(campaign => campaign.Campaign_ApprovalStatus === 'Approved'); // Approved campaigns
+        this.pendingCampaigns = data.filter(campaign => campaign.Campaign_ApprovalStatus === 'Waiting For Approval'); // Pending campaigns
+        this.rejectedCampaigns = data.filter(campaign => campaign.Campaign_ApprovalStatus === 'Rejected'); // Rejected campaigns
+
+        // Check if campaigns were approved or rejected
+        this.checkCampaignStatus();
       },
       (error) => {
         console.error('Error fetching campaigns', error);
         this.errorMessage = 'Error fetching campaigns: ' + error.message;
       }
     );
+  }
+
+  checkCampaignStatus() {
+    // Use session storage to prevent showing alerts multiple times
+    const alertsShown = sessionStorage.getItem('alertsShown');
+
+    // If alerts have already been shown, do not show them again
+    if (alertsShown) {
+      return;
+    }
+
+    let delay = 0;
+
+    // Notify for each approved campaign with a delay
+    this.approvedCampaigns.forEach(campaign => {
+      setTimeout(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Campaign Approved',
+          text: `Your campaign "${campaign.Campaign_Name}" has been approved.`,
+          confirmButtonText: 'OK'
+        });
+      }, delay);
+      delay += 1000; // Delay increases by 1 second (1000 milliseconds) for each campaign
+    });
+
+    // Notify for each rejected campaign with a delay
+    this.rejectedCampaigns.forEach(campaign => {
+      setTimeout(() => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Campaign Not Approved',
+          text: `Your campaign "${campaign.Campaign_Name}" was not approved.`,
+          confirmButtonText: 'OK'
+        });
+      }, delay);
+      delay += 1000; // Delay increases by 1 second for each campaign
+    });
+
+    // Set the flag in session storage to prevent showing the alerts again
+    sessionStorage.setItem('alertsShown', 'true');
   }
 
   openCreateCampaignModal(content: TemplateRef<any>) {
@@ -103,6 +149,7 @@ export class CreateCampaignComponent implements OnInit {
 
   createCampaign() {
     this.submitted = true;
+
     if (this.createCampaignForm.invalid) {
       return; 
     }
@@ -128,11 +175,26 @@ export class CreateCampaignComponent implements OnInit {
         this.submitted = false;
         this.closeCreateCampaignModal();
         this.loadCampaigns(); 
-        alert('Campaign created successfully!');
+        
+        // SweetAlert success for creating a campaign
+        Swal.fire({
+          icon: 'success',
+          title: 'Campaign Created',
+          text: 'Your campaign has been created successfully!',
+          confirmButtonText: 'OK'
+        });
       },
       error => {
         this.loading = false;
-        this.errorMessage = error.message; 
+        this.errorMessage = error.message;
+
+        // SweetAlert failure for creating a campaign
+        Swal.fire({
+          icon: 'error',
+          title: 'Campaign Creation Failed',
+          text: `Failed to create campaign: ${error.message}`,
+          confirmButtonText: 'OK'
+        });
       }
     );
   }
@@ -173,13 +235,9 @@ export class CreateCampaignComponent implements OnInit {
     }
   
     const formData = new FormData();
-  
-
     Object.keys(this.editCampaignForm.controls).forEach(key => {
       formData.append(key, this.editCampaignForm.get(key)?.value);
     });
-
-
   
     // If a new image is selected, append it to the form data
     if (this.selectedFile) {
@@ -188,31 +246,47 @@ export class CreateCampaignComponent implements OnInit {
   
     const campaignId = this.selectedCampaign?.Campaign_ID?.toString();
     if (campaignId) {
-      // Check if the campaign was previously approved (Campaign_Status = 1)
       if (this.selectedCampaign?.Campaign_Status === 1 || this.selectedCampaign?.Campaign_Status === 2) {
-        // Reset the status to "Waiting For Approval" (Campaign_Status = 0)
         formData.append('Campaign_Status', '0');  // Explicitly convert the number to a string
       }
   
-      // Call the service to update the campaign
       this.campaignService.updateCampaign(campaignId, formData).subscribe(
         response => {
-          console.log('Campaign updated successfully', response);
-          this.loadCampaigns(); // Reload campaigns to reflect the changes
-          this.closeEditModal(); // Close the edit modal
-          alert('Campaign updated successfully and is now pending approval.');
+          this.loadCampaigns(); 
+          this.closeEditModal(); 
+
+          // SweetAlert success for updating a campaign
+          Swal.fire({
+            icon: 'success',
+            title: 'Campaign Updated',
+            text: 'Your campaign has been updated successfully and is now pending approval.',
+            confirmButtonText: 'OK'
+          });
         },
         error => {
-          console.error('Error updating campaign:', error);
-          this.errorMessage = error.error?.message || 'Failed to update campaign. Unknown error occurred.';
+          this.errorMessage = error.error?.message || 'Failed to update campaign.';
+
+          // SweetAlert failure for updating a campaign
+          Swal.fire({
+            icon: 'error',
+            title: 'Campaign Update Failed',
+            text: `Failed to update campaign: ${this.errorMessage}`,
+            confirmButtonText: 'OK'
+          });
         }
       );
     } else {
-      console.error('No campaign ID found for updating the campaign.');
       this.errorMessage = 'No campaign ID found. Cannot update the campaign.';
+
+      // SweetAlert for missing campaign ID
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: this.errorMessage,
+        confirmButtonText: 'OK'
+      });
     }
   }
-  
 
   openConfirmationModal(campaign: Campaign, content: TemplateRef<any>) {
     this.selectedCampaign = campaign; 
@@ -222,14 +296,27 @@ export class CreateCampaignComponent implements OnInit {
   deleteCampaign(campaignId: number) {
     this.campaignService.deleteCampaign(campaignId).subscribe(
       response => {
-        console.log('Campaign deleted successfully', response);
         this.loadCampaigns();  
         this.closeModal();  
-        alert('Campaign deleted successfully!');
+
+        // SweetAlert success for deleting a campaign
+        Swal.fire({
+          icon: 'success',
+          title: 'Campaign Deleted',
+          text: 'Your campaign has been deleted successfully!',
+          confirmButtonText: 'OK'
+        });
       },
       error => {
-        console.error('Error deleting campaign:', error);
         this.errorMessage = error.message || 'Failed to delete campaign.';
+
+        // SweetAlert failure for deleting a campaign
+        Swal.fire({
+          icon: 'error',
+          title: 'Campaign Deletion Failed',
+          text: `Failed to delete campaign: ${this.errorMessage}`,
+          confirmButtonText: 'OK'
+        });
       }
     );
   }  

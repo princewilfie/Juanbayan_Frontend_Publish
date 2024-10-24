@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { AccountService, AlertService } from '@app/_services';
+import Swal from 'sweetalert2'; // Import SweetAlert
 
 @Component({ templateUrl: 'edit.component.html' })
 export class EditComponent implements OnInit {
@@ -10,6 +11,7 @@ export class EditComponent implements OnInit {
     id: string;
     loading = false;
     submitted = false;
+    originalFormValues: any; // Store original form values for comparison
 
     constructor(
         private formBuilder: UntypedFormBuilder,
@@ -31,9 +33,10 @@ export class EditComponent implements OnInit {
             acc_status: ['', Validators.required]
         });
 
-        // If you want to populate the form with existing data, you can fetch it here
+        // Fetch existing account data to populate the form
         this.accountService.getById(this.id).pipe(first()).subscribe(account => {
             this.form.patchValue(account);
+            this.originalFormValues = this.form.getRawValue(); // Save original form values
         });
     }
 
@@ -43,16 +46,28 @@ export class EditComponent implements OnInit {
     onSubmit() {
         this.submitted = true;
 
-        // reset alerts on submit
+        // Clear any existing alerts
         this.alertService.clear();
 
-        // stop here if form is invalid
+        // Stop here if form is invalid
         if (this.form.invalid) {
             return;
         }
 
-        this.loading = true;
-        this.updateAccount();
+        // Check if the form values have changed
+        if (this.hasChanges()) {
+            this.loading = true;
+            this.updateAccount(); // Call the update method if changes are detected
+        } else {
+            // No changes detected, redirect to the list without showing an alert
+            this.router.navigate(['../../'], { relativeTo: this.route });
+        }
+    }
+
+    // Check if form values have changed compared to the original values
+    private hasChanges(): boolean {
+        const currentFormValues = this.form.getRawValue();
+        return JSON.stringify(currentFormValues) !== JSON.stringify(this.originalFormValues);
     }
 
     private updateAccount() {
@@ -60,16 +75,31 @@ export class EditComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('Update successful', { keepAfterRouteChange: true });
-                    this.router.navigate(['../../'], { relativeTo: this.route });
+                    // SweetAlert for success if changes are made and update is successful
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Update Successful',
+                        text: 'The account has been updated successfully!',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        // After the alert is dismissed, navigate back to the previous page
+                        this.router.navigate(['../../'], { relativeTo: this.route });
+                    });
                 },
                 error: error => {
-                    this.alertService.error(error);
-                    this.loading = false;
+                    // SweetAlert for error if there is an issue with updating
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Update Failed',
+                        text: `There was an error updating the account: ${error}`,
+                        confirmButtonText: 'OK'
+                    });
+                    this.loading = false; // Stop the loading spinner
                 }
             });
     }
 
+    // Method to handle back navigation
     goBack() {
         this.router.navigate(['./'], { relativeTo: this.route });
     }

@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 
 import { AccountService, AlertService } from '@app/_services';
 import { MustMatch } from '@app/_helpers';
+import Swal from 'sweetalert2'; // Import SweetAlert
 
 @Component({ templateUrl: 'update.component.html' })
 export class UpdateComponent implements OnInit {
@@ -15,6 +16,7 @@ export class UpdateComponent implements OnInit {
     deleting = false;
     selectedFile: File | null = null;
     previewUrl: string | ArrayBuffer | null = null;
+    originalFormValues: any; // To store the initial form values for comparison
 
     constructor(
         private formBuilder: FormBuilder,
@@ -36,9 +38,18 @@ export class UpdateComponent implements OnInit {
         }, {
             validator: MustMatch('acc_passwordHash', 'confirmPassword')
         });
+
+        // Save the initial form values
+        this.originalFormValues = this.form.getRawValue();
     }
 
     get f() { return this.form.controls; }
+
+    // Compare current form values with the original form values to detect changes
+    formHasChanged(): boolean {
+        const currentFormValues = this.form.getRawValue();
+        return JSON.stringify(currentFormValues) !== JSON.stringify(this.originalFormValues) || this.selectedFile !== null;
+    }
 
     onFileChange(event: any) {
         const file = event.target.files[0];
@@ -70,6 +81,13 @@ export class UpdateComponent implements OnInit {
             return;
         }
 
+        // Check if any changes were made
+        if (!this.formHasChanged()) {
+            // No changes were made, just navigate without showing any alert
+            this.router.navigate(['../'], { relativeTo: this.route });
+            return;
+        }
+
         this.loading = true;
 
         // Create a FormData object to hold form values and the image file
@@ -87,24 +105,56 @@ export class UpdateComponent implements OnInit {
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.alertService.success('Update successful', { keepAfterRouteChange: true });
-                    this.router.navigate(['../'], { relativeTo: this.route });
+                    // Show success SweetAlert for successful update
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Update Successful',
+                        text: 'The account has been updated successfully!',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        // After the alert is dismissed, navigate back to the previous page
+                        this.router.navigate(['../'], { relativeTo: this.route });
+                    });
                 },
                 error: error => {
-                    this.alertService.error(error);
+                    // Show error SweetAlert for failed update
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Update Failed',
+                        text: `There was an error updating the account: ${error}`,
+                        confirmButtonText: 'OK'
+                    });
                     this.loading = false;
                 }
             });
     }
 
     onDelete() {
-        if (confirm('Are you sure?')) {
-            this.deleting = true;
-            this.accountService.delete(this.account.id)
-                .pipe(first())
-                .subscribe(() => {
-                    this.alertService.success('Account deleted successfully', { keepAfterRouteChange: true });
-                });
-        }
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you really want to delete your account? This action cannot be undone!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.deleting = true;
+                this.accountService.delete(this.account.id)
+                    .pipe(first())
+                    .subscribe(() => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Account Deleted',
+                            text: 'Your account has been deleted successfully!',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            // Navigate or perform other actions after deletion
+                        });
+                    });
+            }
+        });
     }
 }

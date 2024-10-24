@@ -5,6 +5,7 @@ import { first } from 'rxjs/operators';
 import { AccountService, AlertService } from '@app/_services';
 import { MustMatch } from '@app/_helpers'; // Custom Validator to ensure passwords match
 import { Role } from '../_models';
+import Swal from 'sweetalert2'; // Import SweetAlert
 
 @Component({
   selector: 'app-login-register',
@@ -17,7 +18,6 @@ export class LoginRegisterComponent implements OnInit {
   isRightPanelActive = false; // For toggling between SignIn and SignUp
   loading = false;
 
-
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -27,7 +27,6 @@ export class LoginRegisterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     // Handle Google OAuth redirect token
     this.route.queryParams.subscribe(params => {
       const token = params['token'];
@@ -38,6 +37,7 @@ export class LoginRegisterComponent implements OnInit {
         this.router.navigate(['/dashboard-switch']);
       }
     });
+
     // Login form
     this.loginForm = this.formBuilder.group({
       acc_email: ['', [Validators.required, Validators.email]],
@@ -78,15 +78,14 @@ export class LoginRegisterComponent implements OnInit {
   onLoginSubmit() {
     this.submitted = true;
     this.alertService.clear(); // Clear any existing alerts
-  
+
     // If the form is invalid, stop here
     if (this.loginForm.invalid) {
         return;
     }
-  
 
     this.loading = true; // Start the loading spinner or state
-  
+
     // Call the login function from accountService
     this.accountService.login(this.lf.acc_email.value, this.lf.acc_passwordHash.value)
         .pipe(first())
@@ -94,7 +93,7 @@ export class LoginRegisterComponent implements OnInit {
             next: (user: any) => {
                 const account = this.accountService.accountValue.acc_role;
                 const userRole = user?.acc_role || account; // Assuming 'role' is the key for roles in the API response
-                
+
                 if (userRole === Role.User) {
                     // Navigate to the user dashboard-switcher
                     this.router.navigate(['/dashboard-switch']);
@@ -102,16 +101,27 @@ export class LoginRegisterComponent implements OnInit {
                     // For admins or other roles, route accordingly
                     this.router.navigate(['/admin']); // Example for admins
                 } else {
-                    this.alertService.error('Invalid account credentials');
+                    // Show SweetAlert error for invalid credentials
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'Login Failed',
+                      text: 'Invalid account credentials. Please try again.',
+                      confirmButtonText: 'OK'
+                    });
                     this.loading = false;
                     this.submitted = false; // Allow resubmission on error
-
                 }
             },
             error: error => {
-              this.alertService.error(error);
+              // SweetAlert error for incorrect login attempt
+              Swal.fire({
+                icon: 'error',
+                title: 'Login Failed',
+                text: 'Incorrect email or password. Please try again.',
+                confirmButtonText: 'OK'
+              });
               this.loading = false;
-          }
+            }
         });
   }
 
@@ -134,11 +144,23 @@ export class LoginRegisterComponent implements OnInit {
       .pipe(first())
       .subscribe({
         next: () => {
-          this.alertService.success('Registration successful, please check your email for verification instructions', { keepAfterRouteChange: true });
+          // SweetAlert for successful registration
+          Swal.fire({
+            icon: 'success',
+            title: 'Registration Successful',
+            text: 'Registration successful! Please check your email for verification instructions.',
+            confirmButtonText: 'OK'
+          });
           this.router.navigate(['/login-register']);
         },
         error: error => {
-          this.alertService.error(error);
+          // SweetAlert for registration error
+          Swal.fire({
+            icon: 'error',
+            title: 'Registration Failed',
+            text: `Error: ${error}. Please try again.`,
+            confirmButtonText: 'OK'
+          });
           this.loading = false;
           this.submitted = false;
         }

@@ -4,6 +4,7 @@ import { AccountService } from '../_services/account.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ParticipantService } from '../_services/participant.service';
 import { Participant } from '../_models';
+import Swal from 'sweetalert2'; // Import SweetAlert
 
 @Component({
   selector: 'app-create-event',
@@ -73,11 +74,9 @@ export class CreateEventComponent implements OnInit {
           this.pendingEvents = data.filter(event => event.Event_ApprovalStatus === 'Pending');
           this.rejectEvents = data.filter(event => event.Event_ApprovalStatus === 'Rejected');
 
-
           console.log('Approved Events:', this.approveEvents);
           console.log('Pending Events:', this.pendingEvents);
           console.log('Rejected Events:', this.rejectEvents);
-
         },
         (error) => {
           console.error('Error fetching events', error);
@@ -174,10 +173,26 @@ export class CreateEventComponent implements OnInit {
         this.submitted = false;
         this.closeModal();
         this.loadEvents(); // Reload events to reflect changes
+
+        // SweetAlert for successful event creation
+        Swal.fire({
+          icon: 'success',
+          title: 'Event Created',
+          text: 'Your event has been created successfully!',
+          confirmButtonText: 'OK'
+        });
       },
       error => {
         this.loading = false;
         this.errorMessage = error.message;
+
+        // SweetAlert for failed event creation
+        Swal.fire({
+          icon: 'error',
+          title: 'Event Creation Failed',
+          text: `Failed to create event: ${error.message}`,
+          confirmButtonText: 'OK'
+        });
       }
     );
   }
@@ -189,11 +204,8 @@ export class CreateEventComponent implements OnInit {
     this.isUpdateFormVisible = true;
   }
 
-  
-
   openUpdateModal() {
     this.showUpdateModal = true;
-    // Initialize form with selectedEvent data if needed
     if (this.selectedEvent) {
       this.updateEventForm.patchValue(this.selectedEvent);
     }
@@ -246,11 +258,26 @@ export class CreateEventComponent implements OnInit {
             this.events[index] = { ...this.events[index], ...response }; 
           }
           this.closeUpdateModal(); 
-          alert('Event updated successfully.');
+
+          // SweetAlert for successful event update
+          Swal.fire({
+            icon: 'success',
+            title: 'Event Updated',
+            text: 'Your event has been updated successfully!',
+            confirmButtonText: 'OK'
+          });
         },
         error => {
           console.error('Error updating event:', error);
           this.errorMessage = error.error?.message || 'Failed to update event. Unknown error occurred.';
+
+          // SweetAlert for failed event update
+          Swal.fire({
+            icon: 'error',
+            title: 'Event Update Failed',
+            text: `Failed to update event: ${this.errorMessage}`,
+            confirmButtonText: 'OK'
+          });
         }
       );
     } else {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WithdrawService } from '@app/_services';
 import { Withdraw } from '@app/_models';
+import Swal from 'sweetalert2';  // Import SweetAlert2
 
 @Component({
   selector: 'app-withdrawal-list',
@@ -22,33 +23,56 @@ export class WithdrawalListComponent implements OnInit {
         this.withdrawals = data;
       },
       error => {
-        console.error('Error fetching withdrawals:', error);
+        Swal.fire('Error', 'Error fetching withdrawals', 'error');
       }
     );
   }
 
-  // Approve a withdrawal request
+  // Approve a withdrawal request with SweetAlert confirmation
   approveWithdrawal(id: number): void {
-    this.withdrawService.approveWithdrawal(id).subscribe(
-      response => {
-        console.log('Withdrawal approved:', response);  // Log the approved withdrawal
-        this.loadWithdrawals();  // Reload the withdrawal list after approval
-      },
-      error => {
-        console.error('Error approving withdrawal:', error);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to approve this withdrawal request?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, approve it!',
+      cancelButtonText: 'No, cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.withdrawService.approveWithdrawal(id).subscribe(
+          response => {
+            Swal.fire('Approved!', 'The withdrawal has been approved.', 'success');
+            this.loadWithdrawals();  // Reload the withdrawal list after approval
+          },
+          error => {
+            Swal.fire('Error', 'Error approving withdrawal', 'error');
+          }
+        );
       }
-    );
+    });
   }
 
-  // Reject a withdrawal request
+  // Reject a withdrawal request with SweetAlert confirmation
   rejectWithdrawal(id: number): void {
-    this.withdrawService.rejectWithdrawal(id).subscribe(
-      response => {
-        this.loadWithdrawals(); // Reload withdrawal list after rejection
-      },
-      error => {
-        console.error('Error rejecting withdrawal:', error);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to reject this withdrawal request?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, reject it!',
+      cancelButtonText: 'No, cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.withdrawService.rejectWithdrawal(id).subscribe(
+          response => {
+            Swal.fire('Rejected!', 'The withdrawal has been rejected.', 'success');
+            this.loadWithdrawals();  // Reload the withdrawal list after rejection
+          },
+          error => {
+            Swal.fire('Error', 'Error rejecting withdrawal', 'error');
+          }
+        );
       }
-    );
+    });
   }
 }
