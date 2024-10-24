@@ -160,11 +160,20 @@
     </div>
   </div>
 
-  <!-- Accomplished Events Section -->
-  <div *ngIf="currentSection === 'events'" class="container mt-5 section-padding">
-    <h3>Accomplished Events</h3>
-    <p>Event 1, Event 2, Event 3...</p>
-  </div>
+ <!-- Accomplished Events Section -->
+<div *ngIf="currentSection === 'events'" class="container mt-5 section-padding">
+  <h3>Accomplished Events</h3>
+  <ng-container *ngIf="accomplishedEvents.length; else noEvents">
+    <ul>
+      <li *ngFor="let event of accomplishedEvents">
+        {{ event.Event_Name }} (ended on {{ event.Event_End_Date | date }})  <!-- Adjust as needed based on your event properties -->
+      </li>
+    </ul>
+  </ng-container>
+  <ng-template #noEvents>
+    <p>No accomplished events available.</p>
+  </ng-template>
+</div>
 
   <!-- Accomplished Campaigns Section -->
   <div *ngIf="currentSection === 'campaigns'" class="container mt-5 campaign-section">

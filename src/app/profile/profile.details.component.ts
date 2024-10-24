@@ -4,6 +4,7 @@ import { Account } from '@app/_models/account';
 import { Campaign } from '@app/_models/campaign';
 import { Reward } from '@app/_models/reward';
 import { Participant } from '../_models';
+import { CommunityEvent } from '../_models';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Withdraw } from '@app/_models/withdraw';
 import Swal from 'sweetalert2'; // Import SweetAlert
@@ -26,8 +27,9 @@ export class DetailsComponent implements OnInit {
   banks: string[] = ['Bank of the Philippine Islands', 'GCash', 'PayPal', 'Banco De Oro', 'UnionBank', 'ChinaBank'];
   amount: number = 0; 
   selectedRequest: Campaign | null = null;
-  events: any[] = [];
+  events: CommunityEvent[];
   joinedEvents: Participant[];
+  accomplishedEvents: any[] = [];
 
   constructor(
     private accountService: AccountService,
@@ -112,16 +114,16 @@ export class DetailsComponent implements OnInit {
       }
     );
 
-    // Fetch events data
-  this.eventService.getEventsByAccountId(accountId).subscribe(
-    (events) => {
-      this.events = events;  // Store events data
-      console.log('Fetching events for account ID:', accountId);
-    },
-    (error) => {
-      console.error('Error fetching events:', error);
-    }
-  );
+    this.eventService.getEventsByAccountId(accountId).subscribe(
+      (events) => {
+        this.events = events; // Store events data
+        this.filterAccomplishedEvents(); // Filter accomplished events
+        console.log('Fetched events:', this.events);
+      },
+      (error) => {
+        console.error('Error fetching events:', error);
+      }
+    );
 
   // Fetch joined events data
   this.participantService.getJoinedEvents(accountId).subscribe(
@@ -134,6 +136,11 @@ export class DetailsComponent implements OnInit {
     }
   );
 
+  }
+
+  filterAccomplishedEvents() {
+    const today = new Date(); // Current date
+    this.accomplishedEvents = this.events.filter(event => new Date(event.Event_End_Date) < today);
   }
   
   getImagePath(image: string): string {
