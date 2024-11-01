@@ -84,7 +84,7 @@
   <!-- Your Activities Section -->
   <div *ngIf="currentSection === 'activities'" class="container mt-5 section-padding">
     <h3>Your Activities</h3>
-
+    <br><br><br><br>
     <!-- Campaigns Section -->
     <div *ngIf="campaigns.length > 0">
         <div *ngFor="let campaign of campaigns" class="card mb-3 shadow-sm">
@@ -93,7 +93,7 @@
                     <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" 
                          alt="{{ campaign.Campaign_Name }} Image" 
                          class="campaign-image" 
-                         (error)="this.src='assets/jb-symbol-logo.png'">
+                         (error)="this.src='assets/jb-symbol-logo.png'" style="height: 400px; width: 400px;">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
@@ -121,6 +121,7 @@
                 <div class="col-md-8">
                     <div class="card-body">
                         <h5 class="card-title">{{ event.Event_Name }}</h5>
+                        <br><br><br><br>
                         <p class="card-text">{{ event.Event_Description }}</p>
                         <p class="card-text"><small class="text-muted">Location: {{ event.Event_Location }}</small></p>
                         <p class="card-text"><small class="text-muted">Status: {{ event.Event_Status === 0 ? 'Pending' : event.Event_Status === 1 ? 'Approved' : 'Rejected' }}</small></p>
@@ -134,19 +135,19 @@
     </div>
 
     <!-- Participants Section -->
-  <div *ngIf="joinedEvents.length > 0">
-    <h4>Event's You Volunteered</h4>
+  <div *ngIf="joinedEvents.length > 0" class="mt-5">
     <div *ngFor="let participant of joinedEvents" class="card mb-3 shadow-sm">
       <div class="row g-0">
         <div class="col-md-4">
-          <img [src]="getImagePath('assets/' + participant.acc_image)" 
+          <img [src]="getImagePath('assets/' + participant.Event_Image)" 
                alt="{{ participant.acc_firstname }} {{ participant.acc_lastname }} Image" 
                class="participant-image" 
                (error)="this.src='assets/jb-symbol-logo.png'">
         </div>
         <div class="col-md-8">
           <div class="card-body">
-            <h5 class="card-title">Thank you for volunteering this event!</h5>
+            <h5 class="card-title">Thank you for volunteering!</h5>
+            <p class="card-text">{{ participant.Event_Name }}</p>
             <p class="card-text">Joined At: {{ participant.joinedAt | date:'short' }}</p>
           </div>
         </div>
@@ -163,6 +164,7 @@
  <!-- Accomplished Events Section -->
 <div *ngIf="currentSection === 'events'" class="container mt-5 section-padding">
   <h3>Accomplished Events</h3>
+  <br><br><br><br>
   <ng-container *ngIf="accomplishedEvents.length; else noEvents">
     <ul>
       <li *ngFor="let event of accomplishedEvents">
@@ -178,6 +180,7 @@
   <!-- Accomplished Campaigns Section -->
   <div *ngIf="currentSection === 'campaigns'" class="container mt-5 campaign-section">
     <h3>Accomplished Campaigns</h3>
+    <br><br><br><br>
     <div *ngIf="getAccomplishedCampaigns().length > 0">
       <div *ngFor="let campaign of getAccomplishedCampaigns()" class="card shadow-sm mb-3">
         <div class="card-body">

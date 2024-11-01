@@ -8,4 +8,6 @@ export class Participant {
     joinedAt: Date; 
     acc_pnumber: number;
     acc_email: string;
+    Event_Name: string;
+    Event_Image: string;
   }
