@@ -1,9 +1,9 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-<div class="">
-    <!-- Conditionally display the navbar -->
-    <ng-container *ngIf="showNavbar">
+  <div class="">
+      <!-- Conditionally display the navbar -->
+      <ng-container *ngIf="showNavbar">
         <header>
             <nav>
                 <div class="wrapper">
@@ -14,28 +14,28 @@
                     </div>
                     <input type="radio" name="slider" id="menu-btn">
                     <input type="radio" name="slider" id="close-btn">
-
+    
                     <!-- User links are shown only if the user is logged in -->
-                    <ul  class="nav-links" *ngIf="account?.acc_role === 'User'">
+                    <ul class="nav-links" *ngIf="account?.acc_role === 'User'">
                         <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
                         <li><a routerLink="/home">Home</a></li>
                         <li>
-                          <a href="#" class="desktop-item" (click)="toggleDropdown()">Campaign</a>
-                          <ul class="drop-menu" [ngClass]="{'show': showDrop}">
-                              <li><a routerLink="/create-campaign" routerLinkActive="active" (click)="showDrop = false">Create</a></li>
-                              <li><a routerLink="/campaign" routerLinkActive="active" (click)="showDrop = false">List</a></li>
-                          </ul>
-                      </li>                      
-                      <li><a routerLink="/events">Event</a>
-                        <ul class="drop-menu" [ngClass]="{'show': showDrop}">
-                          <li><a routerLink="/events" routerLinkActive="active" (click)="showDrop = false">Create</a></li>
-                          <li><a routerLink="/event-list" routerLinkActive="active" (click)="showDrop = false">List</a></li>
-                      </ul>
-                    </li>
+                            <a href="#" class="desktop-item" (click)="toggleDropdown()">Campaign</a>
+                            <ul class="drop-menu" [ngClass]="{'show': showDrop}">
+                                <li><a routerLink="/create-campaign" routerLinkActive="active" (click)="showDrop = false">Create</a></li>
+                                <li><a routerLink="/campaign" routerLinkActive="active" (click)="showDrop = false">List</a></li>
+                            </ul>
+                        </li>
+                        <li><a routerLink="/events">Event</a>
+                            <ul class="drop-menu" [ngClass]="{'show': showDrop}">
+                                <li><a routerLink="/events" routerLinkActive="active" (click)="showDrop = false">Create</a></li>
+                                <li><a routerLink="/event-list" routerLinkActive="active" (click)="showDrop = false">List</a></li>
+                            </ul>
+                        </li>
                         <li><a href="/team-member">About us</a></li>
                         <li *ngIf="!account"><a routerLink="/account/login-register">Sign in</a></li>
-                        <li>  
-                            <a routerLink="/profile" class="desktop-item">{{ account.acc_firstname || 'User' }}</a>
+                        <li>
+                            <a routerLink="/profile" class="desktop-item">{{ account?.acc_firstname || 'User' }}</a>
                             <input type="checkbox" id="showDrop">
                             <ul class="drop-menu">
                                 <li><a routerLink="/profile">Profile</a></li>
@@ -44,48 +44,9 @@
                                 <li><a (click)="logout()">Logout</a></li>
                             </ul>
                         </li>
-                        <li>
-                            <a href="#" class="desktop-item">Mega Menu</a>
-                            <input type="checkbox" id="showMega">
-                            <label for="showMega" class="mobile-item">Mega Menu</label>
-                            <div class="mega-box">
-                                <div class="content">
-                                <div class="row">
-                                    <img src="https://fadzrinmadu.github.io/hosted-assets/responsive-mega-menu-and-dropdown-menu-using-only-html-and-css/img.jpg" alt="">
-                                </div>
-                                <div class="row">
-                                    <header>Design Services</header>
-                                    <ul class="mega-links">
-                                    <li><a href="#">Graphics</a></li>
-                                    <li><a href="#">Vectors</a></li>
-                                    <li><a href="#">Business cards</a></li>
-                                    <li><a href="#">Custom logo</a></li>
-                                    </ul>
-                                </div>
-                                <div class="row">
-                                    <header>Email Services</header>
-                                    <ul class="mega-links">
-                                    <li><a href="#">Personal Email</a></li>
-                                    <li><a href="#">Business Email</a></li>
-                                    <li><a href="#">Mobile Email</a></li>
-                                    <li><a href="#">Web Marketing</a></li>
-                                    </ul>
-                                </div>
-                                <div class="row">
-                                    <header>Security services</header>
-                                    <ul class="mega-links">
-                                    <li><a href="#">Site Seal</a></li>
-                                    <li><a href="#">VPS Hosting</a></li>
-                                    <li><a href="#">Privacy Seal</a></li>
-                                    <li><a href="#">Website design</a></li>
-                                    </ul>
-                                </div>
-                                </div>
-                            </div>
-                            </li>
-                        <li><a href="#">Feedback</a></li>
+                        <!-- Other nav items -->
                     </ul>
-
+    
                     <!-- Admin link is shown only if the user is an admin -->
                     <ul *ngIf="account?.acc_role === 'Admin'" class="nav-links">
                         <label for="close-btn" class="btn close-btn"><i class="fas fa-times"></i></label>
@@ -95,515 +56,544 @@
                         <li><a routerLink="/admin/events">Event</a></li>
                         <li><a routerLink="/admin/rewards">Reward</a></li>
                         <li><a routerLink="/admin/withdraw">Withdraw</a></li>
-                        <li><a routerLink="/admin/reports">Reports</a></li>
-                        <li *ngIf="!account"><a routerLink="/account/login-register">Sign in</a></li>
+                        <li><a href="#" class="desktop-item" (click)="toggleDropdown()">Reports</a>
+                          <ul class="drop-menu" [ngClass]="{'show': showDrop}">
+                            <li><a routerLink="/admin/reports/reports-campaign" routerLinkActive="active" (click)="showDrop = false">Campaign</a></li>
+                        </ul>
+                        </li>
+                        <li><a routerLink="/admin/donations">Donations</a></li>
                         <li>
-                            <a href="#" class="desktop-item">{{ account.acc_firstname || 'Admin' }}</a>
+                            <a href="#" class="desktop-item">{{ account?.acc_firstname || 'Admin' }}</a>
                             <input type="checkbox" id="showDropAdmin">
                             <ul class="drop-menu">
                                 <li><a routerLink="/profile">Profile</a></li>
                                 <li><a routerLink="/settings">Settings</a></li>
                                 <li><a (click)="logout()">Logout</a></li>
                             </ul>
-                          </li>
+                        </li>
                     </ul>
+                    
                     <label for="menu-btn" class="btn menu-btn"><i class="fas fa-bars"></i></label>
-                    </div>
-                </nav>
-            <!-- Navbar admin -->
-             
+                </div>
+            </nav>
         </header>
     </ng-container>
+    
 
-    <alert style="z-index: 1000000;"></alert>
+      <alert style="z-index: 1000000;"></alert>
 
-    <router-outlet></router-outlet>
+      <router-outlet></router-outlet>
 
-     <!--Footer-->
-     <footer class="footer" *ngIf="showNavbar">
-      <div class="footer-container">
-          <div class="footer-left">
-              <img src="assets/jb-symbol-logo.png" alt="JuanBayan Logo" class="footer-logo">
-              <p>Care about people to transforming their lives and exudes a positive impression. Fundraising NGO organizations.</p>
-              <div class="social-icons">
-                  <a href="#"><i class="fab fa-instagram"></i></a>
-                  <a href="#"><i class="fab fa-facebook-f"></i></a>
-                  <a href="#"><i class="fab fa-twitter"></i></a>
-              </div>
-          </div>
+      <!--Footer-->
+      <footer class="footer" *ngIf="showNavbar">
+        <div class="footer-container">
+            <div class="footer-left">
+                <img src="assets/jb-symbol-logo.png" alt="JuanBayan Logo" class="footer-logo">
+                <p>Care about people to transforming their lives and exudes a positive impression. Fundraising NGO organizations.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
 
-          <div class="footer-center">
-              <h3>Get Involved</h3>
-              <ul>
-                  <li><a routerLink="/team-member">About Us</a></li>
-                  <li><a href="/contact">Contact Us</a></li>
-                  <li><a href="/volunteer">Volunteer</a></li>
-                  <li><a href="#">Causes</a></li>
-                  <li><a href="#">Team</a></li>
-              </ul>
-          </div>
+            <div class="footer-center">
+                <h3>Get Involved</h3>
+                <ul>
+                    <li><a routerLink="/team-member">About Us</a></li>
+                    <li><a href="/contact">Contact Us</a></li>
+                    <li><a href="/volunteer">Volunteer</a></li>
+                    <li><a href="#">Causes</a></li>
+                    <li><a href="#">Team</a></li>
+                </ul>
+            </div>
 
-          <div class="footer-right">
-              <h3>Utility</h3>
-              <ul>
-                  <li><a href="#">Style Guide</a></li>
-                  <li><a href="#">Licenses</a></li>
-                  <li><a href="#">Password</a></li>
-                  <li><a href="#">404 Page</a></li>
-                  <li><a href="#">Changelog</a></li>
-              </ul>
+            <div class="footer-right">
+                <h3>Utility</h3>
+                <ul>
+                    <li><a href="#">Style Guide</a></li>
+                    <li><a href="#">Licenses</a></li>
+                    <li><a href="#">Password</a></li>
+                    <li><a href="#">404 Page</a></li>
+                    <li><a href="#">Changelog</a></li>
+                </ul>
 
-              <h3>Contact</h3>
-              <p>6000 Cebu City, Philippines</p>
-              <p>juanbayan.team&#64;gmail.com</p>
-              <p>0923 705 8623</p>
-          </div>
-      </div>
+                <h3>Contact</h3>
+                <p>6000 Cebu City, Philippines</p>
+                <p>juanbayan.team&#64;gmail.com</p>
+                <p>0923 705 8623</p>
+            </div>
+        </div>
 
-      <div class="footer-bottom">
-          <p>&copy; 2024 JuanBayan | A PLATFORM FOR DONATION CROWDFUNDING AND COMMUNITY EMPOWERMENT IN CEBU CITY</p>
-      </div>
-  </footer>
-</div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 JuanBayan | A PLATFORM FOR DONATION CROWDFUNDING AND COMMUNITY EMPOWERMENT IN CEBU CITY</p>
+        </div>
+    </footer>
+  </div>
 
 
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-}
+  <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+  *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
 
-nav {
-  position: fixed;
-  z-index: 99;
-  width: 100%;
-  background: #242526;
-}
+  nav {
+    position: fixed;
+    z-index: 99;
+    width: 100%;
+    background: #242526;
+  }
 
-nav .wrapper {
-  position: relative;
-  max-width: 1300px;
-  padding: 0 30px;
-  height: 70px;
-  line-height: 70px;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+  /* Font and reset styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
 
-.wrapper .logo {
-  flex: 1;
-  text-align: center; /* Centers the logo */
-}
+/* Navbar and dropdown styling */
+nav { position: fixed; z-index: 99; width: 100%; background: #242526; }
+.wrapper { max-width: 1300px; margin: auto; display: flex; align-items: center; justify-content: space-between; }
+.wrapper .logo { text-align: center; }
+.wrapper .nav-links { display: inline-flex; justify-content: flex-end; }
+.nav-links li a { color: #f2f2f2; padding: 9px 15px; border-radius: 5px; transition: all 0.3s ease; }
+.nav-links li a:hover { background: #3A3B3C; }
 
-.wrapper .logo a {
-  color: #f2f2f2;
-  font-size: 30px;
-  font-weight: 600;
-  text-decoration: none;
-  display: inline-block;
-}
+/* Footer styles */
+.footer { background-color: #1c1c1e; color: #fff; padding: 50px 0; }
+.footer-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; }
+.footer-left, .footer-center, .footer-right { width: 220px; }
+.footer-left p, .footer-right p { color: #a1a1a1; }
 
-.wrapper .nav-links {
-  display: inline-flex;
-  flex: 2;
-  justify-content: flex-end;
-}
-
-.nav-links li {
-  list-style: none;
-}
-
-.nav-links li a {
-  color: #f2f2f2;
-  text-decoration: none;
-  font-size: 18px;
-  font-weight: 500;
-  padding: 9px 15px;
-  border-radius: 5px;
-  transition: all 0.3s ease;
-}
-
-.nav-links li a:hover {
-  background: #3A3B3C;
-}
-
-.nav-links .mobile-item {
-  display: none;
-}
-
-.nav-links .drop-menu {
-  position: absolute;
-  background: #242526;
-  width: 180px;
-  line-height: 45px;
-  top: 85px;
-  opacity: 0;
-  visibility: hidden;
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-}
-
-.nav-links li:hover .drop-menu,
-.nav-links li:hover .mega-box {
-  transition: all 0.3s ease;
-  top: 70px;
-  opacity: 1;
-  visibility: visible;
-}
-
-.drop-menu li a {
-  width: 100%;
-  display: block;
-  padding: 0 15px;
-  font-weight: 400; /* Default weight for other items */
-  border-radius: 0px;
-  color: #d9d9d9;
-}
-
-.mega-box {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  padding: 0 30px;
-  top: 85px;
-  opacity: 0;
-  visibility: hidden;
-}
-
-.mega-box .content {
-  background: #242526;
-  padding: 25px 20px;
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-}
-
-.mega-box .content .row {
-  width: calc(25% - 30px);
-  line-height: 45px;
-}
-
-.content .row img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.content .row header {
-  color: #f2f2f2;
-  font-size: 20px;
-  font-weight: 500;
-}
-
-.content .row .mega-links {
-  margin-left: -40px;
-  border-left: 1px solid rgba(255, 255, 255, 0.09);
-}
-
-.row .mega-links li {
-  padding: 0 20px;
-}
-
-.row .mega-links li a {
-  padding: 0 20px;
-  color: #d9d9d9;
-  font-size: 17px;
-  display: block;
-}
-
-.row .mega-links li a:hover {
-  color: #f2f2f2;
-}
-
-.wrapper .btn {
-  color: #fff;
-  font-size: 20px;
-  cursor: pointer;
-  display: none;
-}
-
-.wrapper .btn.close-btn {
-  position: absolute;
-  right: 30px;
-  top: 10px;
-}
-
+/* Mobile responsiveness */
 @media screen and (max-width: 970px) {
-  .wrapper .btn {
-    display: block;
+  .wrapper .btn { display: block; }
+  .wrapper .nav-links { position: fixed; width: 100%; max-width: 350px; background: #242526; transition: all 0.3s ease; }
+  .drop-menu { opacity: 1; visibility: visible; padding-left: 20px; width: 100%; }
+}
+
+  nav .wrapper {
+    position: relative;
+    max-width: 1300px;
+    padding: 0 30px;
+    height: 70px;
+    line-height: 70px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .wrapper .logo {
+    flex: 1;
+    text-align: center; /* Centers the logo */
+  }
+
+  .wrapper .logo a {
+    color: #f2f2f2;
+    font-size: 30px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
   }
 
   .wrapper .nav-links {
-    position: fixed;
-    height: 100vh;
-    width: 100%;
-    max-width: 350px;
-    top: 0;
-    left: -100%;
-    background: #242526;
-    display: block;
-    padding: 50px 10px;
-    line-height: 50px;
-    overflow-y: auto;
-    box-shadow: 0px 15px 15px rgba(0, 0, 0, 0.18);
-    transition: all 0.3s ease;
-  }
-
-  ::-webkit-scrollbar {
-    width: 10px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: #242526;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #3A3B3C;
-  }
-
-  #menu-btn:checked ~ .nav-links {
-    left: 0%;
-  }
-
-  #menu-btn:checked ~ .btn.menu-btn {
-    display: none;
-  }
-
-  #close-btn:checked ~ .btn.menu-btn {
-    display: block;
+    display: inline-flex;
+    flex: 2;
+    justify-content: flex-end;
   }
 
   .nav-links li {
-    margin: 15px 10px;
+    list-style: none;
   }
 
   .nav-links li a {
-    padding: 0 20px;
-    display: block;
-    font-size: 20px;
-  }
-
-  .nav-links .drop-menu {
-    position: static;
-    opacity: 1;
-    top: 65px;
-    visibility: visible;
-    padding-left: 20px;
-    width: 100%;
-    max-height: 0px;
-    overflow: hidden;
-    box-shadow: none;
-    transition: all 0.3s ease;
-  }
-
-  #showDrop:checked ~ .drop-menu,
-  #showMega:checked ~ .mega-box {
-    max-height: 100%;
-  }
-
-  .nav-links .desktop-item {
-    display: none;
-  }
-
-  .nav-links .mobile-item {
-    display: block;
     color: #f2f2f2;
-    font-size: 20px;
+    text-decoration: none;
+    font-size: 18px;
     font-weight: 500;
-    padding-left: 20px;
-    cursor: pointer;
+    padding: 9px 15px;
     border-radius: 5px;
     transition: all 0.3s ease;
   }
 
-  .nav-links .mobile-item:hover {
+  .nav-links li a:hover {
     background: #3A3B3C;
   }
 
-  .drop-menu li {
-    margin: 0;
+  .nav-links .mobile-item {
+    display: none;
+  }
+
+  .nav-links .drop-menu {
+    position: absolute;
+    background: #242526;
+    width: 180px;
+    line-height: 45px;
+    top: 85px;
+    opacity: 0;
+    visibility: hidden;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+  }
+
+  .nav-links li:hover .drop-menu,
+  .nav-links li:hover .mega-box {
+    transition: all 0.3s ease;
+    top: 70px;
+    opacity: 1;
+    visibility: visible;
   }
 
   .drop-menu li a {
-    border-radius: 5px;
-    font-size: 18px;
+    width: 100%;
+    display: block;
+    padding: 0 15px;
+    font-weight: 400; /* Default weight for other items */
+    border-radius: 0px;
+    color: #d9d9d9;
   }
 
   .mega-box {
-    position: static;
-    top: 65px;
-    opacity: 1;
-    visibility: visible;
-    padding: 0 20px;
-    max-height: 0px;
-    overflow: hidden;
-    transition: all 0.3s ease;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    padding: 0 30px;
+    top: 85px;
+    opacity: 0;
+    visibility: hidden;
   }
 
   .mega-box .content {
-    box-shadow: none;
-    flex-direction: column;
-    padding: 20px 20px 0 20px;
+    background: #242526;
+    padding: 25px 20px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
   }
 
   .mega-box .content .row {
+    width: calc(25% - 30px);
+    line-height: 45px;
+  }
+
+  .content .row img {
     width: 100%;
-    margin-bottom: 15px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .content .row .mega-links {
-    border-left: 0px;
-    padding-left: 15px;
-  }
-
-  .row .mega-links li {
-    margin: 0;
+    height: 100%;
+    object-fit: cover;
   }
 
   .content .row header {
-    font-size: 19px;
-  }
-}
-
-nav input {
-  display: none;
-}
-
-.body-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  text-align: center;
-  padding: 0 30px;
-}
-
-.body-text div {
-  font-size: 45px;
-  font-weight: 600;
-}
-
-/* Footer styling */
-.footer {
-  background-color: #1c1c1e;
-  color: #fff;
-  padding: 50px 0;
-  font-family: 'Montserrat', sans-serif;
-  line-height: 1.6;
-}
-
-.footer-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 0 15px;
-}
-
-.footer-left {
-  max-width: 400px;
-}
-
-.footer-logo {
-  width: 150px;
-  margin-bottom: 20px;
-}
-
-.footer-left p {
-  font-size: 14px;
-  color: #a1a1a1;
-  margin-bottom: 20px;
-  line-height: 1.8;
-}
-
-.social-icons {
-  display: flex;
-  gap: 10px;
-}
-
-.social-icons a {
-  margin-right: 15px;
-  font-size: 20px;
-  color: #a1a1a1;
-  transition: color 0.3s;
-}
-
-.social-icons a:hover {
-  color: #ff416c;
-}
-
-.footer-center, .footer-right {
-  width: 220px;
-}
-
-.footer-center h3, .footer-right h3 {
-  font-size: 18px;
-  margin-bottom: 20px;
-  color: #ffffff;
-}
-
-.footer-center ul, .footer-right ul {
-  list-style: none;
-  padding: 0;
-}
-
-.footer-center ul li, .footer-right ul li {
-  margin-bottom: 10px;
-}
-
-.footer-center ul li a, .footer-right ul li a {
-  text-decoration: none;
-  font-size: 14px;
-  color: #a1a1a1;
-  transition: color 0.3s;
-}
-
-.footer-center ul li a:hover, .footer-right ul li a:hover {
-  color: #ff416c;
-}
-
-.footer-right p {
-  font-size: 14px;
-  color: #a1a1a1;
-  margin-bottom: 10px;
-}
-
-.footer-bottom {
-  background-color: #121214;
-  padding: 20px 0;
-  text-align: center;
-  font-size: 12px;
-  color: #a1a1a1;
-}
-
-.footer-bottom p {
-  margin: 0;
-}
-
-@media screen and (max-width: 768px) {
-  .footer-container {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+    color: #f2f2f2;
+    font-size: 20px;
+    font-weight: 500;
   }
 
-  .footer-left, .footer-center, .footer-right {
+  .content .row .mega-links {
+    margin-left: -40px;
+    border-left: 1px solid rgba(255, 255, 255, 0.09);
+  }
+
+  .row .mega-links li {
+    padding: 0 20px;
+  }
+
+  .row .mega-links li a {
+    padding: 0 20px;
+    color: #d9d9d9;
+    font-size: 17px;
+    display: block;
+  }
+
+  .row .mega-links li a:hover {
+    color: #f2f2f2;
+  }
+
+  .wrapper .btn {
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    display: none;
+  }
+
+  .wrapper .btn.close-btn {
+    position: absolute;
+    right: 30px;
+    top: 10px;
+  }
+
+  @media screen and (max-width: 970px) {
+    .wrapper .btn {
+      display: block;
+    }
+
+    .wrapper .nav-links {
+      position: fixed;
+      height: 100vh;
+      width: 100%;
+      max-width: 350px;
+      top: 0;
+      left: -100%;
+      background: #242526;
+      display: block;
+      padding: 50px 10px;
+      line-height: 50px;
+      overflow-y: auto;
+      box-shadow: 0px 15px 15px rgba(0, 0, 0, 0.18);
+      transition: all 0.3s ease;
+    }
+
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #242526;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #3A3B3C;
+    }
+
+    #menu-btn:checked ~ .nav-links {
+      left: 0%;
+    }
+
+    #menu-btn:checked ~ .btn.menu-btn {
+      display: none;
+    }
+
+    #close-btn:checked ~ .btn.menu-btn {
+      display: block;
+    }
+
+    .nav-links li {
+      margin: 15px 10px;
+    }
+
+    .nav-links li a {
+      padding: 0 20px;
+      display: block;
+      font-size: 20px;
+    }
+
+    .nav-links .drop-menu {
+      position: static;
+      opacity: 1;
+      top: 65px;
+      visibility: visible;
+      padding-left: 20px;
+      width: 100%;
+      max-height: 0px;
+      overflow: hidden;
+      box-shadow: none;
+      transition: all 0.3s ease;
+    }
+
+    #showDrop:checked ~ .drop-menu,
+    #showMega:checked ~ .mega-box {
+      max-height: 100%;
+    }
+
+    .nav-links .desktop-item {
+      display: none;
+    }
+
+    .nav-links .mobile-item {
+      display: block;
+      color: #f2f2f2;
+      font-size: 20px;
+      font-weight: 500;
+      padding-left: 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links .mobile-item:hover {
+      background: #3A3B3C;
+    }
+
+    .drop-menu li {
+      margin: 0;
+    }
+
+    .drop-menu li a {
+      border-radius: 5px;
+      font-size: 18px;
+    }
+
+    .mega-box {
+      position: static;
+      top: 65px;
+      opacity: 1;
+      visibility: visible;
+      padding: 0 20px;
+      max-height: 0px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .mega-box .content {
+      box-shadow: none;
+      flex-direction: column;
+      padding: 20px 20px 0 20px;
+    }
+
+    .mega-box .content .row {
+      width: 100%;
+      margin-bottom: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .content .row .mega-links {
+      border-left: 0px;
+      padding-left: 15px;
+    }
+
+    .row .mega-links li {
+      margin: 0;
+    }
+
+    .content .row header {
+      font-size: 19px;
+    }
+  }
+
+  nav input {
+    display: none;
+  }
+
+  .body-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 100%;
-    max-width: none;
+    text-align: center;
+    padding: 0 30px;
+  }
+
+  .body-text div {
+    font-size: 45px;
+    font-weight: 600;
+  }
+
+  /* Footer styling */
+  .footer {
+    background-color: #1c1c1e;
+    color: #fff;
+    padding: 50px 0;
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+  }
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0 15px;
+  }
+
+  .footer-left {
+    max-width: 400px;
+  }
+
+  .footer-logo {
+    width: 150px;
     margin-bottom: 20px;
   }
 
-  .social-icons {
-    justify-content: center;
+  .footer-left p {
+    font-size: 14px;
+    color: #a1a1a1;
+    margin-bottom: 20px;
+    line-height: 1.8;
   }
-}
 
-</style>
+  .social-icons {
+    display: flex;
+    gap: 10px;
+  }
+
+  .social-icons a {
+    margin-right: 15px;
+    font-size: 20px;
+    color: #a1a1a1;
+    transition: color 0.3s;
+  }
+
+  .social-icons a:hover {
+    color: #ff416c;
+  }
+
+  .footer-center, .footer-right {
+    width: 220px;
+  }
+
+  .footer-center h3, .footer-right h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #ffffff;
+  }
+
+  .footer-center ul, .footer-right ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .footer-center ul li, .footer-right ul li {
+    margin-bottom: 10px;
+  }
+
+  .footer-center ul li a, .footer-right ul li a {
+    text-decoration: none;
+    font-size: 14px;
+    color: #a1a1a1;
+    transition: color 0.3s;
+  }
+
+  .footer-center ul li a:hover, .footer-right ul li a:hover {
+    color: #ff416c;
+  }
+
+  .footer-right p {
+    font-size: 14px;
+    color: #a1a1a1;
+    margin-bottom: 10px;
+  }
+
+  .footer-bottom {
+    background-color: #121214;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 12px;
+    color: #a1a1a1;
+  }
+
+  .footer-bottom p {
+    margin: 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    .footer-container {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .footer-left, .footer-center, .footer-right {
+      width: 100%;
+      max-width: none;
+      margin-bottom: 20px;
+    }
+
+    .social-icons {
+      justify-content: center;
+    }
+  }
+
+  </style>

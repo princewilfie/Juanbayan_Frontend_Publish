@@ -41,4 +41,9 @@ export class DonationService {
   getCampaignById(campaignId: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/campaign/${campaignId}`);
   }
+
+  getDonationsByCampaignId(campaignId: number): Observable<Donation[]> {
+    return this.http.get<Donation[]>(`${this.baseUrl}/campaign/${campaignId}`);
+  }
+
 }

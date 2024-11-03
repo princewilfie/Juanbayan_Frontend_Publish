@@ -12,4 +12,6 @@ export class Campaign {
     Campaign_Feedback?: number | null;
     Campaign_Image?: string;
     Campaign_ApprovalStatus: string;
+    acc_firstname? : string;
+    acc_lastname? : string;
 }

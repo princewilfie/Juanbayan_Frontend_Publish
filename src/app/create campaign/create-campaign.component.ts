@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { Campaign } from '../_models';
 import { AccountService } from '../_services/account.service';
 import Swal from 'sweetalert2'; // Import SweetAlert
+import { DonationService } from '../_services';
+import { Donation } from '../_models';
 
 @Component({
   selector: 'app-create-campaign',
@@ -15,6 +17,7 @@ import Swal from 'sweetalert2'; // Import SweetAlert
 export class CreateCampaignComponent implements OnInit {
 
   @ViewChild('campaignDetailModal') campaignDetailModal!: TemplateRef<any>;
+  @ViewChild('donorsModal') donorsModal: any;
 
   createCampaignForm: FormGroup;
   editCampaignForm: FormGroup;
@@ -27,6 +30,9 @@ export class CreateCampaignComponent implements OnInit {
   selectedCampaign?: Campaign;
   modalRef: any; 
   isDetailModalOpen = false;
+  donor: Donation[] = [];
+  showDonorsModal: boolean = false;
+  campaignId: number;
 
   // Arrays to store campaigns by their status
   approvedCampaigns: any[] = [];
@@ -38,7 +44,8 @@ export class CreateCampaignComponent implements OnInit {
     private campaignService: CampaignService,
     private modalService: NgbModal,
     private router: Router,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private donationService: DonationService
   ) {
     this.createCampaignForm = this.formBuilder.group({
       Campaign_Name: ['', Validators.required],
@@ -288,6 +295,33 @@ export class CreateCampaignComponent implements OnInit {
     }
   }
 
+  
+  viewDonors(campaignId: number): void {
+    this.donor = []; // Clear donors before fetching new ones
+    this.showDonorsModal = true; // Show the modal
+  
+    this.donationService.getDonationsByCampaignId(campaignId).subscribe(
+      (donors: Donation[]) => {
+        this.donor = donors; // Store donors in the component
+        this.modalService.open(this.donorsModal);
+      },
+      (error) => {
+        console.error('Error fetching donors', error);
+  
+        // Show an error message with SweetAlert
+        Swal.fire({
+          icon: 'error',
+          title: 'Error Fetching Donors',
+          text: error.message,
+          confirmButtonText: 'OK'
+        });
+      }
+    );
+  }
+  
+  closeDonorsModal(): void {
+    this.modalService.dismissAll();
+  }
   openConfirmationModal(campaign: Campaign, content: TemplateRef<any>) {
     this.selectedCampaign = campaign; 
     this.modalRef = this.modalService.open(content, { centered: true });

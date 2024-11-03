@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2} from '@angular/core';
 import { AccountService, CampaignService, EventService } from '../_services';
 import { CalendarOptions } from '@fullcalendar/core'; // FullCalendar types
 import dayGridPlugin from '@fullcalendar/daygrid'; // DayGrid plugin
 import Chart from 'chart.js/auto';
+import { Campaign } from '../_models';
 
 @Component({
   selector: 'app-overview',
@@ -10,10 +11,11 @@ import Chart from 'chart.js/auto';
 })
 export class OverviewComponent implements OnInit {
   accounts: [];
-  
+  campaigns: Campaign[] = [];
   totalUsers: number;
-  totalDonations: number = 5000000; // Example value; replace with actual data
-  donationGoal: number = 10000000.00;
+  totalGoal: number = 0;
+  totalCollection: number = 0;
+  progressPercentage: number = 0;
   totalCampaigns: number;
   totalEvents: number;
   totalVolunteers: number;
@@ -29,11 +31,14 @@ export class OverviewComponent implements OnInit {
     private accountService: AccountService,
     private campaignService: CampaignService,
     private eventService: EventService,
+    private renderer: Renderer2,
   ) {}
 
   ngOnInit(): void {
     this.loadData();
     this.initCharts();
+    this.updateProgressBar();
+    this.loadApprovedCampaigns();
   }
 
   loadData(): void {
@@ -57,13 +62,39 @@ export class OverviewComponent implements OnInit {
         date: event.Event_End_Date
       }));
     });
+
   }
 
-  // Function to get donation progress
-  getDonationProgress(): string {
-    const progress = (this.totalDonations / this.donationGoal) * 100;
-    return `${progress.toFixed(2)}%`;
+  loadApprovedCampaigns(): void {
+    this.campaignService.getApprovedCampaigns().subscribe({
+      next: (data) => {
+        this.campaigns = data;
+        this.calculateTotals();
+      },
+      error: (err) => {
+        console.error('Error loading campaigns:', err);
+      }
+    });
   }
+
+  updateProgressBar(): void {
+    const progress = this.totalGoal ? (this.totalCollection / this.totalGoal) * 100 : 0;
+    this.progressPercentage = progress;
+    const progressBarElement = document.getElementById('progress') as HTMLElement;
+    if (progressBarElement) {
+      this.renderer.setStyle(progressBarElement, 'width', `${this.progressPercentage}%`);
+    }
+  }
+
+  calculateTotals(): void {
+    this.totalGoal = this.campaigns.reduce((sum, campaign) => sum + campaign.Campaign_TargetFund, 0);
+    this.totalCollection = this.campaigns.reduce((sum, campaign) => sum + (campaign.Campaign_CurrentRaised || 0), 0);
+    
+    // Calculate progress percentage, making sure to avoid division by zero
+    this.progressPercentage = this.totalGoal ? (this.totalCollection / this.totalGoal) * 100 : 0;
+    this.updateProgressBar();
+  }
+
 
   // Initialize the charts for donations and user progress
   initCharts(): void {

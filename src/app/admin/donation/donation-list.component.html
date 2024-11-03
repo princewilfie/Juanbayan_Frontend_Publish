@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donations List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .table td, .table th {
+            border-bottom: 1px solid #dee2e6;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4">Donations List</h2>
+    
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Account ID</th>
+          <th scope="col">Campaign ID</th>
+          <th scope="col">Donation Amount</th>
+          <th scope="col">Donation Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let donation of donations">
+          <td><input type="checkbox"></td>
+          <td>{{ donation.acc_id }}</td>
+          <td>{{ donation.campaign_id }}</td>
+          <td>{{ donation.donation_amount | currency }}</td>
+          <td>{{ donation.donation_date | date:'MM/dd/yyyy' }}</td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

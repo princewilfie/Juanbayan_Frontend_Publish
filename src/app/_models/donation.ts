@@ -4,4 +4,7 @@ export interface Donation {
   campaign_id: number;
   donation_amount: number;
   donation_date?: Date;
+  acc_firstname?: string;
+  acc_lastname?: string;
+
 }

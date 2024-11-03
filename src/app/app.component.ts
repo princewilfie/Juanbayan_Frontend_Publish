@@ -11,10 +11,11 @@ import { Account, Role } from './_models';
 })
 export class AppComponent implements OnInit, OnDestroy {
   Role = Role;
-  account: Account | null = null; // Default to null for logged out state
-  showNavbar = true; // Controls navbar visibility
+  account: Account | null = null; // Set to null initially, representing no user logged in
+  showNavbar = false; // Initialize as false to hide by default
   dropdownVisible = false; // Control dropdown visibility
   private accountSubscription: Subscription | undefined;
+  isSidebarOpen = false;
 
   constructor(private accountService: AccountService, private router: Router) {}
 
@@ -22,18 +23,23 @@ export class AppComponent implements OnInit, OnDestroy {
     // Subscribe to the account observable to detect login/logout
     this.accountSubscription = this.accountService.account.subscribe(account => {
       this.account = account;
-      this.updateNavbarVisibility(this.router.url); // Update navbar visibility when account changes
+      this.updateNavbarVisibility(this.router.url); // Update navbar visibility on login/logout
+      this.isSidebarOpen = false;
     });
 
     // Initial visibility check
     this.updateNavbarVisibility(this.router.url);
 
-    // Update visibility on route changes
+    // Update navbar visibility on route changes
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.updateNavbarVisibility(event.url);
       }
     });
+  }
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
   }
 
   ngOnDestroy() {
@@ -49,25 +55,20 @@ export class AppComponent implements OnInit, OnDestroy {
       '/account/reset-password'
     ];
 
-    // Determine visibility based on the current URL
+    // Check if the current route is an account-related route
     const isAccountRoute = accountRoutes.some(route => url.includes(route));
 
     if (isAccountRoute) {
-      this.showNavbar = false;
-    } else if (url.includes('/landing-page') || url.includes('/home')) {
-      this.showNavbar = true;
+      this.showNavbar = false; // Hide navbar on account-related routes
     } else {
-      this.showNavbar = this.account !== null; // Show navbar if logged in on other pages
+      this.showNavbar = this.account !== null; // Show navbar only if account is not null (user is logged in)
     }
   }
-  
-    logout() {
-        this.accountService.logout();
-        this.router.navigate(['account/login-register']); // Redirect to home on logout
-    }
-  
 
-  
+  logout() {
+    this.accountService.logout();
+    this.router.navigate(['account/login-register']); // Redirect to login on logout
+  }
 
   // Toggles the dropdown visibility on clicking the user name
   toggleDropdown() {

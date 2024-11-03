@@ -1,0 +1,24 @@
+/* reports.component.css */
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .chart-row {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .chart-container {
+    width: 80%;
+    max-width: 600px;
+  }
+  
+  .filter-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  

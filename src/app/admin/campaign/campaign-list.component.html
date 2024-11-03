@@ -24,6 +24,7 @@
       <thead class="thead-dark">
         <tr>
           <th scope="col"></th>
+          <th scope="col">Campaign Creator</th>
           <th scope="col">Campaign Name</th>
           <th scope="col">Description</th>
           <th scope="col">Target Fund</th>
@@ -38,6 +39,7 @@
       <tbody>
         <tr *ngFor="let campaign of campaigns">
           <td><input type="checkbox"></td>
+          <td>{{ campaign.acc_firstname }}{{ campaign.acc_lastname }}</td>
           <td>{{ campaign.Campaign_Name }}</td>
           <td>{{ campaign.Campaign_Description }}</td>
           <td>{{ campaign.Campaign_TargetFund | currency }}</td>

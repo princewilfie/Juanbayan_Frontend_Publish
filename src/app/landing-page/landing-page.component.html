@@ -6,12 +6,11 @@
 <main>
   <section class="hero">
       <div class="hero-content">
-          <h1>Being Life Saver <br>For Someone</h1>
+          <h1>Being a Lifesaver <br>For Someone</h1>
           <p class="hero-subtext">DISADVANTAGE INDIVIDUAL</p>
           <div class="hero-buttons">
               <!-- Donate Button: If not logged in, navigate to login-register page -->
               <button class="btn btn-donate" (click)="onDonate()">GET STARTED</button>
-              <button class="btn btn-discover">Discover</button>
           </div>
       </div>
   </section>
@@ -24,70 +23,41 @@
               <p>JuanBayan is a crowdfunding platform dedicated to amplifying the voices and stories of disadvantaged individuals. We bridge the gap between those in need and a global community of generous supporters.</p>
               <p>Here, you can create campaigns to raise funds for critical expenses, life-changing opportunities, or simply a helping hand during difficult times.</p>
               <p>Whether it's supporting medical bills, educational aspirations, or basic necessities, every contribution makes a real difference. Join us in fostering a more compassionate world, one story at a time.</p>
-              <button class="btn more-about">More About</button>
+              <button class="btn more-about" (click)="about()">More About</button>
           </div>
 
           <div class="donation-goal">
-              <h4>Total Donation</h4>
-              <ul class="donation-list">
-                  <li>Food Donation</li>
-                  <li>Money Donation</li>
-                  <li>Dress Donation</li>
-                  <li>Water Supply</li>
-                  <li>Education Donation</li>
-                  <li>Toys Donation</li>
-              </ul>
-              <div class="progress-bar">
-                  <div id="progress" class="progress"></div>
-              </div>
-              <p>Collection - $5M | Goal - $10M</p>
-              <button class="btn more-about">Donate Now</button>
+            <h4>Total Donation</h4>
+            <div class="progress-bar">
+                <div 
+                  id="progress" 
+                  class="progress" 
+                  [style.width.%]="progressPercentage">
+                </div>
+            </div>
+            <p>Collection - ${{ totalCollection | number }} | Goal - ${{ totalGoal | number }}</p> 
+            <button class="btn more-about" (click)="onDonate()">Donate Now</button>
           </div>
       </div>
   </section>
 
-  <!-- Popular Causes Section -->
   <section class="popular-causes">
     <div class="causes-header">
-        <h2>Find The Popular Cause And Donate Them</h2>
+      <h2>Find the Popular Causes and Donate</h2>
     </div>
     <div class="causes-carousel">
-        <div class="cause-card">
-            <img src="assets/background.png" alt="Medical Cause">
-            <div class="cause-info">
-                <h4>Medical</h4>
-                <p>Donate For Jenny's Treatment And Medicine.</p>
-                <button class="btn btn-primary">Donate Now</button>
-            </div>
-        </div>
-        <div class="cause-card">
-            <img src="assets/background.png" alt="Homeless Cause">
-            <div class="cause-info">
-                <h4>Homeless</h4>
-                <p>Children We Work With.</p>
-                <button class="btn btn-primary">Donate Now</button>
-            </div>
-        </div>
-        <div class="cause-card">
-            <img src="assets/background.png" alt="Education Cause">
-            <div class="cause-info">
-                <h4>Education</h4>
-                <p>Help For Education.</p>
-                <button class="btn btn-primary">Donate Now</button>
-            </div>
-        </div>
-        <div class="cause-card">
-            <img src="assets/background.png" alt="Education Cause">
-            <div class="cause-info">
-                <h4>Education</h4>
-                <p>Help For Education.</p>
-                <button class="btn btn-primary">Donate Now</button>
-            </div>
+      <div *ngFor="let campaign of campaigns" class="cause-card">
+        <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" alt="{{ campaign.Campaign_Name }}">
+        <div class="cause-info">
+          <h4>{{ campaign.Campaign_Name }}</h4>
+          <p>{{ campaign.Campaign_Description }}</p>
+          <button class="btn btn-primary" (click)="onDonate()">Donate Now</button>
         </div>
       </div>
+    </div>
     <div class="carousel-controls">
-        <button class="carousel-btn left">&lt;</button>
-        <button class="carousel-btn right">&gt;</button>
+      <button class="carousel-btn left">&lt;</button>
+      <button class="carousel-btn right">&gt;</button>
     </div>
   </section>
 

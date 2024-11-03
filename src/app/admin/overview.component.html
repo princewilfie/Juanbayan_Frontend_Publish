@@ -46,10 +46,14 @@
               <ion-icon name="cash-outline"></ion-icon>
             </div>
             <div class="ag-courses-item_title">Total Donations</div>
-            <div class="ag-courses-item_date-box">All over: <span class="ag-courses-item_date">₱5,203,201.97</span></div>
-            <div class="goal-text">Goal: ₱10,000,000.00</div>
+            <div class="ag-courses-item_date-box">All over: <span class="ag-courses-item_date">₱{{ totalCollection | number }}</span></div>
+            <div class="goal-text">Goal: ₱{{ totalGoal | number }}</div>
             <div class="progress-container">
-              <div class="progress-bar" id="progress-bar"></div>
+              <div 
+                  id="progress" 
+                  class="progress-bar" 
+                  [style.width.%]="progressPercentage">
+                </div>
             </div>
           </a>
         </div>
@@ -223,7 +227,7 @@
 }
 
 .progress-container {
-  background-color: #e0e0e0;
+  background-color: #bab6b6;
   border-radius: 5px;
   height: 12px;
   width: 100%;
