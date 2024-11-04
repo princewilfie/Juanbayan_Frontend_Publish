@@ -207,7 +207,7 @@ export class CreateCampaignComponent implements OnInit {
   }
 
   getImagePath(image: string): string {
-    return image ? `http://localhost:4000/${image}` : 'assets/'; 
+    return image = `http://localhost:4000/${image}` || 'assets/'; 
   }
 
   viewCampaignDetails(campaignId: number): void {
@@ -304,6 +304,7 @@ export class CreateCampaignComponent implements OnInit {
       (donors: Donation[]) => {
         this.donor = donors; // Store donors in the component
         this.modalService.open(this.donorsModal);
+        console.log(this.donor);
       },
       (error) => {
         console.error('Error fetching donors', error);

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { CampaignService } from '../../_services';
 import { Campaign } from '../../_models';
 import { Chart } from 'chart.js/auto';
@@ -7,10 +7,12 @@ import { Chart } from 'chart.js/auto';
   templateUrl: './reports-campaign.component.html',
   styleUrls: ['./reports-campaign.component.css']
 })
-export class ReportsCampaignComponent implements OnInit {
+export class ReportsCampaignComponent implements OnInit, AfterViewInit {
   campaigns: Campaign[] = [];
   filteredCampaigns: Campaign[] = [];
-  chart: any;
+  chart: Chart | undefined;
+
+  // Filter options
   filter = {
     id: null as number | null,
     event: '',
@@ -18,10 +20,17 @@ export class ReportsCampaignComponent implements OnInit {
     endDate: null as Date | null,
   };
 
+  // Access the canvas element using ViewChild
+  @ViewChild('campaignsChart') campaignsChart!: ElementRef<HTMLCanvasElement>;
+
   constructor(private campaignService: CampaignService) {}
 
   ngOnInit(): void {
     this.loadCampaigns();
+  }
+
+  ngAfterViewInit() {
+    this.createChart(); // Initialize the chart after the view is fully loaded
   }
 
   loadCampaigns(): void {
@@ -42,21 +51,21 @@ export class ReportsCampaignComponent implements OnInit {
     this.updateChart();
   }
 
-  updateChart(): void {
-    if (this.chart) this.chart.destroy();
-    
-    const categories = [...new Set(this.filteredCampaigns.map(c => c.Campaign_Category))];
-    const data = categories.map(category =>
-      this.filteredCampaigns.filter(c => c.Campaign_Category === category).length
-    );
+  createChart(): void {
+    const ctx = this.campaignsChart?.nativeElement.getContext('2d');
 
-    this.chart = new Chart('campaignsChart', {
+    if (!ctx) {
+      console.error('Failed to acquire context for chart');
+      return;
+    }
+
+    this.chart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: categories,
+        labels: [],
         datasets: [{
           label: 'Campaign Count',
-          data: data,
+          data: [],
           backgroundColor: 'rgba(54, 162, 235, 0.6)',
           borderColor: 'rgba(54, 162, 235, 1)',
           borderWidth: 1
@@ -69,5 +78,18 @@ export class ReportsCampaignComponent implements OnInit {
         }
       }
     });
+  }
+
+  updateChart(): void {
+    if (this.chart) {
+      const categories = [...new Set(this.filteredCampaigns.map(c => c.Campaign_Category))];
+      const data = categories.map(category =>
+        this.filteredCampaigns.filter(c => c.Campaign_Category === category).length
+      );
+
+      this.chart.data.labels = categories;
+      this.chart.data.datasets[0].data = data;
+      this.chart.update();
+    }
   }
 }

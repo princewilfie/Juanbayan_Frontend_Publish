@@ -1,0 +1,47 @@
+<div class="container">
+    <h2>Campaign Reports</h2>
+
+    <br>
+    <!-- Filter Controls -->
+    <div class="filter-controls">
+        <input type="number" [(ngModel)]="filter.id" (input)="filterCampaigns()" placeholder="Filter by Campaign ID">
+        <input type="text" [(ngModel)]="filter.event" (input)="filterCampaigns()" placeholder="Filter by Event Name">
+        <input type="date" [(ngModel)]="filter.startDate" (input)="filterCampaigns()" placeholder="Start Date">
+        <input type="date" [(ngModel)]="filter.endDate" (input)="filterCampaigns()" placeholder="End Date">
+    </div>
+
+    <!-- Chart Section -->
+    <div class="chart-container">
+        <h3>Total Campaigns</h3>
+        <canvas #campaignsChart id="campaignsChart"></canvas>
+      </div>
+
+    <!-- Data Table -->
+    <table class="table table-bordered mt-4">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Target Fund</th>
+                <th>Current Raised</th>
+                <th>Category</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let campaign of filteredCampaigns">
+                <td>{{ campaign.Campaign_ID }}</td>
+                <td>{{ campaign.Campaign_Name }}</td>
+                <td>{{ campaign.Campaign_Description }}</td>
+                <td>{{ campaign.Campaign_TargetFund | currency }}</td>
+                <td>{{ campaign.Campaign_CurrentRaised | currency }}</td>
+                <td>{{ campaign.Campaign_Category }}</td>
+                <td>{{ campaign.Campaign_Start | date }}</td>
+                <td>{{ campaign.Campaign_End | date }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
