@@ -1,0 +1,56 @@
+<!-- src/app/admin/category-admin/category-admin.component.html -->
+<div class="category-admin">
+    <!-- Form to add or update category -->
+    <h2>{{ isEditing ? 'Edit Category' : 'Add New Category' }}</h2>
+    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="Category_Name">Category Name:</label>
+        <input
+          id="Category_Name"
+          formControlName="Category_Name"
+          type="text"
+          class="form-control"
+          placeholder="Enter category name"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-primary">
+        {{ isEditing ? 'Update Category' : 'Add Category' }}
+      </button>
+      <button
+        type="button"
+        *ngIf="isEditing"
+        class="btn btn-secondary"
+        (click)="resetForm()"
+      >
+        Cancel
+      </button>
+    </form>
+  
+    <!-- Table to display, edit, and delete categories -->
+    <h3>Category List</h3>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Category Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of categories">
+          <td>{{ category.Category_ID }}</td>
+          <td>{{ category.Category_Name }}</td>
+          <td>
+            <button class="btn btn-info" (click)="editCategory(category)">
+              Edit
+            </button>
+            <button class="btn btn-danger" (click)="deleteCategory(category.Category_ID)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

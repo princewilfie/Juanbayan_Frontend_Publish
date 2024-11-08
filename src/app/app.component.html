@@ -56,9 +56,14 @@
                         <li><a routerLink="/admin/events">Event</a></li>
                         <li><a routerLink="/admin/rewards">Reward</a></li>
                         <li><a routerLink="/admin/withdraw">Withdraw</a></li>
+                        <li><a routerLink="/admin/categories">Category</a></li>
                         <li><a href="#" class="desktop-item" (click)="toggleDropdown()">Reports</a>
                           <ul class="drop-menu" [ngClass]="{'show': showDrop}">
                             <li><a routerLink="/admin/reports/reports-campaign" routerLinkActive="active" (click)="showDrop = false">Campaign</a></li>
+                            <li><a routerLink="/admin/reports/reports-event" routerLinkActive="active" (click)="showDrop = false">Events</a></li>
+                            <li><a routerLink="/admin/reports/reports-account" routerLinkActive="active" (click)="showDrop = false">Accounts</a></li>
+                            <li><a routerLink="/admin/reports/reports-participant" routerLinkActive="active" (click)="showDrop = false">Volunteer</a></li>
+                            <li><a routerLink="/admin/reports/reports-donation" routerLinkActive="active" (click)="showDrop = false">Donation</a></li>
                         </ul>
                         </li>
                         <li><a routerLink="/admin/donations">Donations</a></li>

@@ -1,0 +1,38 @@
+<div class="container">
+    <h2>Monthly Volunteer Participation</h2>
+  
+    <div class="chart-container">
+      <h3>Volunteers Joined by Month</h3>
+
+      <!-- Download Reports Button -->
+    <div class="download-button">
+        <button id="downloadReportsBtn" (click)="download()">Download</button>
+      </div>
+
+      
+      <canvas #volunteerChart id="volunteerChart"></canvas>
+    </div>
+  
+    <!-- Optional: Add a data table or filters -->
+    <table class="table table-bordered mt-4">
+      <thead>
+        <tr>
+          <th>Participant ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Event Name</th>
+          <th>Joined Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let participant of filteredParticipants">
+          <td>{{ participant.Participant_ID }}</td>
+          <td>{{ participant.acc_firstname }}</td>
+          <td>{{ participant.acc_lastname }}</td>
+          <td>{{ participant.Event_Name }}</td>
+          <td>{{ participant.joinedAt | date: 'longDate' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

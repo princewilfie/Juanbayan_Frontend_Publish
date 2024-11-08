@@ -1,0 +1,43 @@
+<div class="container">
+    <h2>Accounts Report</h2>
+    <br>
+    
+    <!-- Chart Section -->
+    <div class="chart-container">
+        <h3>Reports - Accounts</h3>
+
+         <!-- Download Reports Button -->
+    <div class="download-button">
+        <button id="downloadReportsBtn" (click)="download()">Download</button>
+      </div>
+
+
+        <canvas #accountsChart id="accountsChart"></canvas>
+    </div>
+
+    <!-- Data Table -->
+    <table class="table table-bordered mt-4">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Total Points</th>
+                <th>Role</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let account of filteredAccounts">
+                <td>{{ account.id }}</td>
+                <td>{{ account.acc_firstname }}</td>
+                <td>{{ account.acc_lastname }}</td>
+                <td>{{ account.acc_email }}</td>
+                <td>{{ account.acc_totalpoints }}</td>
+                <td>{{ account.acc_role.name }}</td>
+                <td>{{ account.acc_status }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

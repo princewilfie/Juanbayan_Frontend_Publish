@@ -1,0 +1,36 @@
+<div class="container">
+    <h2>Monthly Donation Totals</h2>
+  
+    <div class="chart-container">
+      <h3>Donations by Month</h3>
+      <canvas #donationChart id="donationChart"></canvas>
+    </div>
+  
+    <!-- Download Reports Button -->
+    <div class="download-button">
+        <button id="downloadReportsBtn" (click)="download()">Download</button>
+      </div>
+      
+    <!-- Optional: Display donation details in a table -->
+    <table class="table table-bordered mt-4">
+      <thead>
+        <tr>
+          <th>Donation ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Amount</th>
+          <th>Donation Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let donation of donations">
+          <td>{{ donation.donation_id }}</td>
+          <td>{{ donation.acc_firstname }}</td>
+          <td>{{ donation.acc_lastname }}</td>
+          <td>{{ donation.donation_amount | currency }}</td>
+          <td>{{ donation.donation_date | date: 'longDate' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

@@ -82,14 +82,33 @@ export class ReportsCampaignComponent implements OnInit, AfterViewInit {
 
   updateChart(): void {
     if (this.chart) {
-      const categories = [...new Set(this.filteredCampaigns.map(c => c.Campaign_Category))];
+      const categories = [...new Set(this.filteredCampaigns.map(c => c.Category_ID))];
       const data = categories.map(category =>
-        this.filteredCampaigns.filter(c => c.Campaign_Category === category).length
+        this.filteredCampaigns.filter(c => c.Category_ID === category).length
       );
 
       this.chart.data.labels = categories;
       this.chart.data.datasets[0].data = data;
       this.chart.update();
     }
+  }
+
+  // Convert data to CSV and trigger download
+  private downloadCSV(data: any[], fileName: string): void {
+    const csvContent = data.map(row => Object.values(row).join(",")).join("\n");
+    const blob = new Blob([csvContent], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    a.click();
+    window.URL.revokeObjectURL(url);
+  }
+
+  // Download Campaigns Report
+  download(): void {
+    this.campaignService.getAllCampaigns().subscribe(data => {
+      this.downloadCSV(data, 'JuanBayan-Campaigns.csv');
+    });
   }
 }

@@ -1,0 +1,18 @@
+.category-admin {
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  table {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  button {
+    margin-right: 5px;
+  }
+  

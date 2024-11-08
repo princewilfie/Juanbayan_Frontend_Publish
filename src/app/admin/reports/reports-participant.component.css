@@ -1,27 +1,19 @@
-/* reports.component.css */
-
 .container {
     max-width: 1200px;
     margin: 0 auto;
   }
   
-  .chart-row {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
   .chart-container {
     width: 80%;
     max-width: 600px;
+    margin-top: 20px;
   }
   
-  .filter-controls {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+  .table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
   }
- 
   .download-button button {
     background-color: #4CAF50;
     color: white;

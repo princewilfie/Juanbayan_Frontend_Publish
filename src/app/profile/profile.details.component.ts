@@ -27,7 +27,7 @@ export class DetailsComponent implements OnInit {
   banks: string[] = ['Bank of the Philippine Islands', 'GCash', 'PayPal', 'Banco De Oro', 'UnionBank', 'ChinaBank'];
   amount: number = 0; 
   selectedRequest: Campaign | null = null;
-  events: CommunityEvent[];
+  events: CommunityEvent[] = [];
   joinedEvents: Participant[];
   accomplishedEvents: any[] = [];
 
@@ -49,14 +49,19 @@ export class DetailsComponent implements OnInit {
 
   submitFundRequest(modal: any): void {
     if (!this.selectedBank || !this.accountNumber) {
-      this.alertService.error('Please select a bank and enter an account number.'); // Use your alert service
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Please select a bank and enter an account number.',
+        confirmButtonText: 'OK'
+      });
       return;
     } 
   
     const fundRequestData: Omit<Withdraw, "Withdraw_ID" | "Request_Date" | "Status"> = {
       Bank_account: this.selectedBank,
       Acc_number: Number(this.accountNumber),
-      Campaign_ID: this.selectedRequest? this.selectedRequest.Campaign_ID : null,
+      Campaign_ID: this.selectedRequest ? this.selectedRequest.Campaign_ID : null,
       acc_id: this.account.id, // Replace with the actual account ID
       Withdraw_Amount: this.amount, // Replace with the actual amount to withdraw
     };
@@ -64,15 +69,31 @@ export class DetailsComponent implements OnInit {
     this.withdrawService.requestWithdrawal(fundRequestData).subscribe(
       response => {
         console.log('Withdrawal request successful:', response);
-        modal.dismiss(); // Close the modal on success
-        this.alertService.success('Withdrawal request submitted successfully!'); // Use your alert service for success
+        console.log('Modal instance:', modal);
+        if (modal) {
+          modal.dismiss();
+        } else {
+          console.error('modal is undefined');
+        }
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Withdrawal request submitted successfully!',
+          confirmButtonText: 'OK'
+        });
       },
       error => {
         console.error('Error requesting withdrawal:', error);
-        this.alertService.error('There was an error processing your request. Please try again.'); // Use your alert service
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'There was an error processing your request. Please try again.',
+          confirmButtonText: 'OK'
+        });
       }
     );
   }
+  
 
   ngOnInit(): void {
     // Fetch account data
@@ -98,7 +119,7 @@ export class DetailsComponent implements OnInit {
     // Fetch campaigns data
     this.campaignService.getCampaignsByAccountId(accountId).subscribe(
       (campaigns) => {
-        this.campaigns = campaigns;
+        this.campaigns = campaigns || [];
       },
       (error) => {
         console.error('Error fetching campaigns', error);
@@ -116,7 +137,7 @@ export class DetailsComponent implements OnInit {
 
     this.eventService.getEventsByAccountId(accountId).subscribe(
       (events) => {
-        this.events = events; // Store events data
+        this.events = events || []; // Store events data
         this.filterAccomplishedEvents(); // Filter accomplished events
         console.log('Fetched events:', this.events);
       },
@@ -139,6 +160,10 @@ export class DetailsComponent implements OnInit {
   }
 
   filterAccomplishedEvents() {
+    if (!this.events || this.events.length === 0) {
+      console.warn('No events available to filter');
+      return; // Exit early if events is undefined or empty
+    }
     const today = new Date(); // Current date
     this.accomplishedEvents = this.events.filter(event => new Date(event.Event_End_Date) < today);
   }

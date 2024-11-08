@@ -124,5 +124,92 @@
   .join-button:hover {
     background-color: #e0a800;
   }
+
+  .social-icons img {
+    margin: 0 10px;
+  }
+  
+  .upload-button {
+    display: inline-block;
+    cursor: pointer;
+  }
+
+  .like-section {
+    margin-top: 20px;
+  }
+  .like-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .like-button i {
+    font-size: 1.5em;
+  }
+  .comment-section {
+    margin-top: 20px;
+  }
+  .comment-section h3 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+  }
+  .comment {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+  .comment-user-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  .add-comment {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  .add-comment input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  .add-comment button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .add-comment button:hover {
+    background-color: #218838;
+  }
+  .icon-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 2em;
+    color: #555;
+  }
+  .icon-button:hover {
+    color: #000;
+  }
+  .button-container {
+    display: flex;
+    gap: 20px; /* Space between buttons */
+    margin-top: 20px; /* Add space above the buttons */
+  }
+  .fab {
+    margin-right: 10px;
+  }
   
   

@@ -10,6 +10,11 @@
         <input type="date" [(ngModel)]="filter.endDate" (input)="filterCampaigns()" placeholder="End Date">
     </div>
 
+    <!-- Download Reports Button -->
+    <div class="download-button">
+        <button id="downloadReportsBtn" (click)="download()">Download</button>
+      </div>
+
     <!-- Chart Section -->
     <div class="chart-container">
         <h3>Total Campaigns</h3>

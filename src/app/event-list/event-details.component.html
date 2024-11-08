@@ -10,8 +10,44 @@
     <p>{{ event.Event_Description }}</p>
     <div class="button-group">
       <button class="join-button" (click)="openTermsAndConditionsModal()">Join Volunteer</button>
-      <button class="share-button">Share</button>
     </div>
+  </div>
+
+  <!-- Like/Reaction Section -->
+  <div class="like-section">
+    <button class="like-button" (click)="toggleLike()">
+      <i [class]="hasLiked ? 'fas fa-thumbs-up' : 'far fa-thumbs-up'"></i>
+      {{ likeCount }} {{ likeCount === 1 ? 'Like' : 'Likes' }}
+    </button>
+  </div>
+
+  <!-- Comment Section -->
+  <div class="comment-section mt-4">
+    <h3>Comments</h3>
+    <div class="comment" *ngFor="let comment of comments">
+      <p>
+        <img [src]=" 'http://localhost:4000/assets/' + comment.acc_image" alt="{{ comment.acc_firstname }}" class="comment-user-image">
+        <strong>{{ comment.acc_firstname }} {{ comment.acc_lastname }}</strong>: {{ comment.Comment_Text }}
+      </p>
+    </div>
+
+    <div class="add-comment">
+      <input type="text" [(ngModel)]="newComment.Comment_Text" placeholder="Add a comment..." />
+      <button (click)="addComment()">Submit</button>
+    </div>
+  </div>
+
+  <!-- Social Share Buttons -->
+  <div class="button-container mt-3">
+    <button class="icon-button" (click)="shareToFacebook(getEventUrl())">
+      <i class="fab fa-facebook-f"></i>
+    </button>
+    <button class="icon-button" (click)="shareToTwitter(getEventUrl())">
+      <i class="fab fa-twitter"></i>
+    </button>
+    <button class="icon-button" (click)="shareToInstagram(getEventUrl())">
+      <i class="fab fa-instagram"></i>
+    </button>
   </div>
 </div>
 <br><br><br><br><br>

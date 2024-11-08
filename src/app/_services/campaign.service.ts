@@ -74,6 +74,9 @@ approve(id: number): Observable<Campaign> {
     return this.http.get<Campaign[]>(`${this.baseUrl}?status=approved`);
   }
 
+  getProofFilesByCampaignId(campaignId: number): Observable<string[]> {
+    return this.http.get<string[]>(`${this.baseUrl}/${campaignId}/proofs`);
+  }
 
 
   // Helper to create headers with the token
@@ -82,5 +85,10 @@ approve(id: number): Observable<Campaign> {
     return new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
+  }
+
+  // Get notes for a specific campaign
+  getCampaignNotes(campaignId: number): Observable<{ noteContent: string }> {
+    return this.http.get<{ noteContent: string }>(`${this.baseUrl}/${campaignId}/notes`);
   }
 }

@@ -23,7 +23,7 @@
                             <h5 class="card-title text-dark">{{ campaign.Campaign_Name }}</h5>
                             <p class="card-text text-muted">{{ campaign.Campaign_Description }}</p>
                             <p><strong>Goal: ${{ campaign.Campaign_TargetFund }}</strong></p>
-                            <span class="badge bg-info">{{ campaign.Campaign_Category }}</span>
+                            <span class="badge bg-info">{{ campaign.Category_ID }}</span>
     
                             <div *ngIf="campaign.Campaign_ApprovalStatus === 'Approved'" class="text-success mt-2">
                                 <strong>Approved</strong>
@@ -73,7 +73,7 @@
                             <h5 class="card-title text-dark">{{ campaign.Campaign_Name }}</h5>
                             <p class="card-text text-muted">{{ campaign.Campaign_Description }}</p>
                             <p><strong>Goal: ${{ campaign.Campaign_TargetFund }}</strong></p>
-                            <span class="badge bg-info">{{ campaign.Campaign_Category }}</span>
+                            <span class="badge bg-info">{{ campaign.Category_ID }}</span>
     
                             <div *ngIf="campaign.Campaign_ApprovalStatus === 'Waiting For Approval'" class="text-warning mt-2">
                                 <strong>Pending for Approval</strong>
@@ -99,7 +99,7 @@
                             <h5 class="card-title text-dark">{{ campaign.Campaign_Name }}</h5>
                             <p class="card-text text-muted">{{ campaign.Campaign_Description }}</p>
                             <p><strong>Goal: ${{ campaign.Campaign_TargetFund }}</strong></p>
-                            <span class="badge bg-info">{{ campaign.Campaign_Category }}</span>
+                            <span class="badge bg-info">{{ campaign.Category_ID }}</span>
     
                             <div *ngIf="campaign.Campaign_ApprovalStatus === 'Rejected'" class="text-danger mt-2">
                                 <strong>Rejected</strong>
@@ -122,7 +122,7 @@
                      class="img-fluid mb-3 rounded">
     
                 <p><strong>Description:</strong> {{ selectedCampaign?.Campaign_Description }}</p>
-                <p><strong>Category:</strong> {{ selectedCampaign?.Campaign_Category }}</p>
+                <p><strong>Category:</strong> {{ selectedCampaign?.Category_ID }}</p>
                 <p><strong>Target Fund:</strong> {{ selectedCampaign?.Campaign_TargetFund | currency }}</p>
                 <p><strong>Current Raised:</strong> {{ selectedCampaign?.Campaign_CurrentRaised | currency }}</p>
                 <p><strong>Start Date:</strong> {{ selectedCampaign?.Campaign_Start | date: 'longDate' }}</p>
@@ -160,14 +160,13 @@
                         </div>
                         <div class="mb-3">
                             <label for="editCampaignCategory" class="form-label">Category</label>
-                            <select class="form-select" id="editCampaignCategory" formControlName="Campaign_Category" required>
+                            <select class="form-select" id="editCampaignCategory" formControlName="Category_ID" required>
                                 <option value="">Select a category</option>
-                                <option [value]="1">Financial</option>
-                                <option [value]="2">Education</option>
-                                <option [value]="3">Hospital Bills</option>
-                                <option [value]="4">Others</option>
-                            </select>
-                            <input type="text" class="form-control mt-2" formControlName="Other_Category" placeholder="Specify other category" *ngIf="editCampaignForm.get('Campaign_Category')?.value === 4">
+                                <option *ngFor="let category of categories" [value]="category.Category_ID">
+                                  {{ category.Category_Name }}
+                                </option>
+                              </select>
+                            <input type="text" class="form-control mt-2" formControlName="Other_Category" placeholder="Specify other category" *ngIf="editCampaignForm.get('Category_ID')?.value === 4">
                         </div>
                         <div class="mb-3">
                             <label for="editCampaignStartDate" class="form-label">Start Date</label>
@@ -181,14 +180,22 @@
                             <label for="editCampaignImage" class="form-label">Upload Campaign Image</label>
                             <input type="file" class="form-control" id="editCampaignImage" (change)="onFileSelected($event)">
                         </div>
+                        <!-- Proof Files Upload -->
+                        <div class="form-group">
+                            <label for="proofFiles">Proof Files</label>
+                            <p><i>Please upload one (1) valid ID, Certificate of Barangay Indigency, and other proofs.</i></p>
+                            <input type="file" id="proofFiles" (change)="onProofFilesSelected($event)" multiple class="form-control" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="editNoteToAdmin" class="form-label">Note to Admin</label>
+                            <textarea class="form-control" id="editNoteToAdmin" formControlName="Campaign_Notes" rows="3" placeholder="Write a note to the admin (optional)"></textarea>
+                        </div>
                         <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
                         <button type="submit" class="btn btn-primary" [disabled]="loading">{{ loading ? 'Updating...' : 'Update Campaign' }}</button>
                     </form>
                 </div>
             </ng-template>
         
-    
-    
             <!-- Create Campaign Modal -->
             <ng-template #createCampaignModal>
                 <div class="modal-header">
@@ -210,15 +217,14 @@
                             <input type="number" class="form-control" id="campaignGoal" formControlName="Campaign_TargetFund" required>
                         </div>
                         <div class="mb-3">
-                            <label for="campaignCategory" class="form-label">Category</label>
-                            <select class="form-select" id="campaignCategory" formControlName="Campaign_Category" required>
+                            <label for="categoryID" class="form-label">Category</label>
+                            <select class="form-select" id="editCampaignCategory" formControlName="Category_ID" required>
                                 <option value="">Select a category</option>
-                                <option [value]="1">Financial</option>
-                                <option [value]="2">Education</option>
-                                <option [value]="3">Hospital Bills</option>
-                                <option [value]="4">Others</option>
-                            </select>
-                            <input type="text" class="form-control mt-2" formControlName="Other_Category" placeholder="Specify other category" *ngIf="createCampaignForm.get('Campaign_Category')?.value === 4">
+                                <option *ngFor="let category of categories" [value]="category.Category_ID">
+                                  {{ category.Category_Name }}
+                                </option>
+                              </select>
+                            <input type="text" class="form-control mt-2" formControlName="Other_Category" placeholder="Specify other category" *ngIf="createCampaignForm.get('Category_ID')?.value === 4">
                         </div>
                         <div class="mb-3">
                             <label for="campaignStartDate" class="form-label">Start Date</label>
@@ -232,8 +238,23 @@
                             <label for="campaignImage" class="form-label">Upload Campaign Image</label>
                             <input type="file" class="form-control" id="campaignImage" (change)="onFileSelected($event)">
                         </div>
+                        <!-- Proof Files Upload -->
+                        <div class="form-group">
+                            <label for="proofFiles">Proof Files</label>
+                            <p><i>Please upload one (1) valid ID, Certificate of Barangay Indigency, and other proofs.</i></p>
+                            <input type="file" id="proofFiles" (change)="onProofFilesSelected($event)" multiple class="form-control" />
+                        </div>
+
+                         <!-- New Notes to Admin Field -->
+                        <div class="mb-3">
+                            <label for="editNoteToAdmin" class="form-label">Note to Admin</label>
+                            <textarea class="form-control" id="editNoteToAdmin" formControlName="Campaign_Notes" rows="3" placeholder="Write a note to the admin (optional)"></textarea>
+                        </div>
                         <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
                         <button type="submit" class="btn btn-primary" [disabled]="loading">{{ loading ? 'Creating...' : 'Create Campaign' }}</button>
+                    </form>
+                    <form [formGroup]="">
+
                     </form>
                 </div>
             </ng-template>

@@ -1,0 +1,51 @@
+<div class="container">
+    <h2>Event Reports</h2>
+    <br>
+
+    <!-- Download Reports Button -->
+    <div class="download-button">
+        <button id="downloadReportsBtn" (click)="download()">Download</button>
+      </div>
+
+    <!-- Filter Controls -->
+    <div class="filter-controls">
+        <input type="number" [(ngModel)]="filter.id" (input)="filterEvents()" placeholder="Filter by Event ID">
+        <input type="text" [(ngModel)]="filter.eventName" (input)="filterEvents()" placeholder="Filter by Event Name">
+        <input type="date" [(ngModel)]="filter.startDate" (input)="filterEvents()" placeholder="Start Date">
+        <input type="date" [(ngModel)]="filter.endDate" (input)="filterEvents()" placeholder="End Date">
+    </div>
+
+    <!-- Chart Section -->
+    <div class="chart-container">
+        <h3>Total Events by Year</h3>
+        <canvas #eventsChart id="eventsChart"></canvas>
+    </div>
+
+    <!-- Data Table -->
+    <table class="table table-bordered mt-4">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Location</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+                <th>Approval Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let event of filteredEvents">
+                <td>{{ event.Event_ID }}</td>
+                <td>{{ event.Event_Name }}</td>
+                <td>{{ event.Event_Description }}</td>
+                <td>{{ event.Event_Location }}</td>
+                <td>{{ event.Event_Start_Date | date }}</td>
+                <td>{{ event.Event_End_Date | date }}</td>
+                <td>{{ event.Event_Status }}</td>
+                <td>{{ event.Event_ApprovalStatus }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

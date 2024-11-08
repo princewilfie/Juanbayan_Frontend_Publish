@@ -13,7 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { JwtInterceptor, ErrorInterceptor, appInitializer } from './_helpers';
 import { AccountService } from './_services';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';  // Import NgbModule for Bootstrap components
+import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';  // Import NgbModule for Bootstrap components
 import { FullCalendarModule } from '@fullcalendar/angular';
 
 
@@ -55,6 +55,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         BrowserAnimationsModule,
         MatDialogModule,
         MatButtonModule,
+        NgbModalModule
     ],
     declarations: [
         AppComponent,

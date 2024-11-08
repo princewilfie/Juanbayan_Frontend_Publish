@@ -38,4 +38,8 @@ export class ParticipantService {
   updateParticipant(participantId: number, participantData: Participant): Observable<Participant> {
     return this.http.put<Participant>(`${baseUrl}/${participantId}`, participantData);
   }
+
+  getAllParticipants(): Observable<Participant[]> {
+    return this.http.get<Participant[]>(`${baseUrl}/participants`);
+  }
 }
