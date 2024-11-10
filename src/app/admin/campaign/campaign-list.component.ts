@@ -1,7 +1,8 @@
 import { Component, OnInit,  ViewChild, TemplateRef } from '@angular/core';
-import { CampaignService } from '@app/_services';
-import { Campaign } from '@app/_models';
+import { CampaignService } from '../../_services';
+import { Campaign } from '../../_models';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -12,11 +13,14 @@ export class CampaignListComponent implements OnInit {
 
   @ViewChild('notesModal') notesModal: TemplateRef<any> | undefined;
   @ViewChild('detailsModal') detailsModal: TemplateRef<any> | undefined;
+  @ViewChild('rejectionModal') rejectionModal: TemplateRef<any> | undefined;
 
   campaigns: Campaign[] = [];
   campaign: any;
   selectedCampaignImages: string[] = [];
   selectedNote: string | null = null;
+  rejectionNote: string = '';
+  selectedCampaignId: number | null = null;
 
   
 
@@ -83,26 +87,74 @@ export class CampaignListComponent implements OnInit {
       (response: Campaign) => {
         console.log('Campaign approved:', response);  // Log the approved campaign
         this.loadCampaigns();  // Reload the campaign list after approval
-      },
-      error => {
-        console.error('Error approving campaign:', error);
-      }
+       // Show SweetAlert success message for approval
+       Swal.fire({
+        icon: 'success',
+        title: 'Campaign Approved!',
+        text: 'The campaign has been approved successfully.',
+        showConfirmButton: false,
+        timer: 1500
+      });
+    },
+    error => {
+      console.error('Error approving campaign:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Something went wrong while approving the campaign. Please try again.',
+      });
+    }
     );
+  }
+
+  openRejectionModal(campaignId: number): void {
+    this.selectedCampaignId = campaignId;
+    if (this.rejectionModal) {
+      this.modalService.open(this.rejectionModal, { centered: true });
+    } else {
+      console.error('Rejection modal is undefined.');
+    }
+  }
+
+  // Method to confirm the rejection with a note
+confirmRejectCampaign(campaignId: number, modal: any): void {
+  if (!this.rejectionNote.trim()) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Empty Field!',
+      text: 'Please add reason for rejection.',
+      showConfirmButton: false,
+      timer: 1500
+    });
+    return;
   }
   
-
-  // Reject a campaign and reload the list after
-  rejectCampaign(id: number): void {
-    this.campaignService.reject(id).subscribe(
-      (response: Campaign) => {
-        this.loadCampaigns(); // Reload campaign list after rejection
-      },
-      error => {
-        console.error('Error rejecting campaign:', error);
-      }
-    );
-  }
-
+  // Call the reject API with the note
+  this.campaignService.reject(campaignId, this.rejectionNote).subscribe(
+    (response: Campaign) => {
+      this.rejectionNote = ''; // Clear the note after submission
+      this.loadCampaigns(); // Reload campaign list after rejection
+      modal.close(); // Close the modal
+            // Show SweetAlert success message for rejection
+            Swal.fire({
+              icon: 'success',
+              title: 'Campaign Rejected!',
+              text: 'The campaign has been rejected successfully.',
+              showConfirmButton: false,
+              timer: 1500
+            });
+          },
+          error => {
+            console.error('Error rejecting campaign:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error!',
+              text: 'Something went wrong while rejecting the campaign. Please try again.',
+            });
+          }
+  );
+}
+  
   // Optionally add this method if you need better campaign status handling
   getCampaignStatus(status: number): string {
     return status === 1 ? 'Active' : 'Inactive';

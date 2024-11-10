@@ -14,9 +14,9 @@ export class EventService {
   constructor(private http: HttpClient) {}
 
 
-  reject(id: number): Observable<CommunityEvent> {
-    return this.http.put<CommunityEvent>(`${this.baseUrl}/${id}/reject`, {});
-  }
+  reject(id: number, adminNotes: string): Observable<CommunityEvent> {
+    return this.http.put<CommunityEvent>(`${this.baseUrl}/${id}/reject`, { adminNotes });
+}
 
   // Create a new event with form data (including image)
   create(formData: FormData): Observable<CommunityEvent> {

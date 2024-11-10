@@ -36,14 +36,30 @@
         <td><button class="btn btn-primary btn-sm mt-2" (click)="openNotesModal(campaign.Campaign_ID); $event.stopPropagation()">View Notes</button></td>
         <td>
           <div class="actions">
-            <button class="btn btn-success btn-sm" (click)="approveCampaign(campaign.Campaign_ID)">Approve</button>
-            <button class="btn btn-danger btn-sm" (click)="rejectCampaign(campaign.Campaign_ID)">Reject</button>
+            <button [disabled]="loading" class="btn btn-success btn-sm" (click)="approveCampaign(campaign.Campaign_ID); $event.stopPropagation()"><span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              Approve</button>
+            <button [disabled]="loading" class="btn btn-danger btn-sm" (click)="openRejectionModal(campaign.Campaign_ID, rejectionModal); $event.stopPropagation()"><span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              Reject</button>
           </div>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
+
+<ng-template #rejectionModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Reject Campaign</h5>
+    <button type="button" class="btn-close" (click)="modal.close()"></button>
+  </div>
+  <div class="modal-body">
+    <textarea [(ngModel)]="rejectionNote" class="form-control" rows="3" placeholder="Enter the reason for rejection"></textarea>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="confirmRejectCampaign(selectedCampaignId, modal)">Reject</button>
+  </div>
+</ng-template>
 
 <ng-template #imageModal let-modal>
   <div class="modal-header">

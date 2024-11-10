@@ -51,8 +51,8 @@ approve(id: number): Observable<Campaign> {
 }
 
   // Reject a campaign (Admin only)
-  reject(id: number): Observable<Campaign> {
-    return this.http.put<Campaign>(`${this.baseUrl}/${id}/reject`, {});
+  reject(id: number, adminNote: string): Observable<Campaign> {
+    return this.http.put<Campaign>(`${this.baseUrl}/${id}/reject`, { Admin_Notes: adminNote });
   }
 
   // Update Campaign Status (Generic function for both approval and rejection)

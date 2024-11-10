@@ -1,16 +1,3 @@
-<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campaigns List</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        .table td, .table th {
-            border-bottom: 1px solid #dee2e6;
-        }
-        .actions {
-            display: flex;
-            gap: 10px;
-        }
-    </style>
 <div class="container mt-5">
     <h2 class="mb-4">Events List</h2>
   
@@ -34,18 +21,31 @@
           <td>{{ event.Event_Name }}</td>
           <td>{{ event.Event_Description }}</td>
           <td>{{ event.Event_Start_Date | date:'MM/dd/yyyy' }}</td>
-          <td>{{ event.Event_End_Date| date:'MM/dd/yyyy' }}</td>
+          <td>{{ event.Event_End_Date | date:'MM/dd/yyyy' }}</td>
           <td>{{ event.Event_Location }}</td>
           <td>{{ getEventStatus(event.Event_Status) }}</td>
           <td>{{ event.Event_ApprovalStatus }}</td>
           <td>
             <div class="actions">
-              <button class="btn btn-success btn-sm" (click)="approveEvent(event.Event_ID)">Approve</button>
-              <button class="btn btn-danger btn-sm" (click)="rejectEvent(event.Event_ID)">Reject</button>
+              <button class="btn btn-success btn-sm" (click)="approveEvent(event.Event_ID); $event.stopPropagation()">Approve</button> &nbsp;
+              <button class="btn btn-danger btn-sm" (click)="openRejectionModal(event.Event_ID, rejectionModal); $event.stopPropagation()">Reject</button>
             </div>
           </td>
         </tr>
       </tbody>
     </table>
+</div>
+
+<ng-template #rejectionModal let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">Reject Event</h5>
+    <button type="button" class="btn-close" (click)="modal.close()"></button>
   </div>
-  
+  <div class="modal-body">
+    <textarea [(ngModel)]="rejectionNote" class="form-control" rows="3" placeholder="Enter the reason for rejection"></textarea>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close()">Cancel</button>
+    <button type="button" class="btn btn-danger" (click)="rejectEventWithNote(selectedEventId, modal)">Reject</button>
+  </div>
+</ng-template>

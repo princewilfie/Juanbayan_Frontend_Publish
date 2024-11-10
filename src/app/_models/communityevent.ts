@@ -10,4 +10,5 @@ export interface CommunityEvent {
     Event_Status: number;
     Event_Image?: string; // Optional for fetching events
     Event_ApprovalStatus: string;
+    Admin_Notes?: string;
 }

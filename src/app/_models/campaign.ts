@@ -16,4 +16,5 @@ export class Campaign {
     acc_lastname? : string;
     Proof_Files? : string;
     Campaign_Notes? : string;
+    Admin_Notes? : string;
 }
