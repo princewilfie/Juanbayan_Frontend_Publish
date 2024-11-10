@@ -75,6 +75,24 @@
             </div>
           </div>
 
+        <!-- Donation List -->
+        <div class="donation-list mt-4">
+          <h4>Recent Donors</h4>
+          <div *ngIf="donors.length > 0; else noDonors">
+            <div class="donor" *ngFor="let donor of donors">
+              <p>
+                <img [src]="'http://localhost:4000/assets/' + donor.acc_image" alt="{{ donor.acc_firstname }}" class="comment-user-image">
+                <strong>{{ donor.acc_firstname }} {{ donor.acc_lastname }}</strong> donated {{ donor.donation_amount | currency: 'PHP':'symbol':'1.2-2' }}
+              </p>
+            </div>
+          </div>
+          <ng-template #noDonors>
+            <p>No donations yet.</p>
+          </ng-template>
+        </div>
+
+
+
           <!-- Social Share Buttons -->
           <div class="button-container mt-3">
             <button class="icon-button" (click)="shareToFacebook(getCampaignUrl())">

@@ -27,6 +27,7 @@ export class CampaignDetailsComponent implements OnInit {
   likeCount: number = 0;
   donationForm: FormGroup;
   progressPercentage = 0;
+  donors: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -47,7 +48,8 @@ export class CampaignDetailsComponent implements OnInit {
     if (campaignId) {
       this.loadCampaignDetails(campaignId);
       this.loadComments(+campaignId);
-      this.loadLikes(+campaignId); // Ensure to pass the campaign ID for likes
+      this.loadLikes(+campaignId);
+      this.loadDonors(+campaignId);
     }
 
     // Initialize the donation form
@@ -57,6 +59,17 @@ export class CampaignDetailsComponent implements OnInit {
 
   }
 
+  loadDonors(campaignId: number): void {
+    this.donationService.getDonationsByCampaignId(campaignId).subscribe(
+      (data: any[]) => {
+        this.donors = data;
+      },
+      (error) => {
+        console.error('Error loading donors:', error);
+        this.errorMessage = 'Error loading donors: ' + error.message;
+      }
+    );
+  }
 
   // Load campaign details by ID
   loadCampaignDetails(campaignId: string): void {
