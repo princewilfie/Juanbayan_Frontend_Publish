@@ -1,38 +1,121 @@
-<div class="container text-center">
-    <!-- Welcome Message -->
-    <h1 class="mb-4">WELCOME TO JUANBAYAN</h1>
-    <p class="lead">Select your role to get started:</p>
-
-    <!-- Role Selection Cards -->
-    <div class="row justify-content-center mt-5">
-        <div class="col-md-4">
-            <div class="card shadow-sm mb-3 card-equal">
-                <div class="card-body">
-                    <!-- Beneficiary Logo -->
-                    <img src="https://cbx-prod.b-cdn.net/COLOURBOX58774045.jpg?width=800&height=800&quality=70" alt="Beneficiary Logo" class="logo">
-                    <h5 class="card-title">Beneficiary</h5>
-                    <p class="card-text">If you are seeking assistance, please select this option.</p>
-                    <a routerLink="/beneficiary" class="btn btn-primary w-100 btn-interactive">Choose Beneficiary</a>
+<!--? Hero Start -->
+<div class="slider-area2">
+    <div class="slider-height2 d-flex align-items-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="hero-cap hero-cap2 pt-20 text-center">
+                        <h2 class="text-dark">WELCOME TO JUANBAYAN</h2>
+                        <p class="lead">Select your role to get started:</p>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card shadow-sm mb-3 card-equal">
-                <div class="card-body">
-                    <!-- Donor Logo -->
-                    <img src="https://img.freepik.com/premium-vector/icon-hand-holding-drop-blood-world-blood-donor-day-blood-donation-donor-logo-blood-donor_235461-84.jpg?w=996" alt="Donor Logo" class="logo">
-                    <h5 class="card-title">Donor</h5>
-                    <p class="card-text">If you want to provide assistance, please select this option.</p>
-                    <a routerLink="/donor" class="btn btn-success w-100 btn-interactive">Choose Donor</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Volunteer Section -->
-    <div class="mt-5 pt-3 border-top">
-        <h3 class="mt-3">Want to Volunteer?</h3>
-        <p>Join us as a volunteer to make a difference in our community. Your efforts can help us reach more people in need.</p>
-        <a routerLink="/volunteer" class="btn btn-outline-secondary btn-interactive">Become a Volunteer</a>
     </div>
 </div>
+<div class="container col-12 text-center background-img">
+    <!-- Role Selection Cards -->
+    <div class="row justify-content-center mt-5">
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-lg-4 mt-5">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fa fa-calendar-alt fa-2x text-dark-300"><h3 class="text-dark">Beneficiary</h3></i>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <p class="card-text">If you are seeking assistance, please select this option.</p>
+                    </div>
+                    <br>
+                    <a (click)="beneficiary()" class="btn btn-primary w-100 btn-interactive">Choose Beneficiary</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tasks Card Example -->
+        <div class="col-lg-4 mt-5">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fa fa-hand-holding-heart fa-2x text-dark-300"><h3 class="text-dark">Donor</h3></i>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <p class="card-text">If you want to provide assistance, please select this option.</p>
+                    </div>
+                    <br>
+                    <a (click)="donor()" class="btn btn-success w-100 btn-interactive">Choose Donor</a>
+                </div>
+            </div>
+        </div>
+        <!-- Volunteer Section -->
+        <div class="col-lg-7 mt-5">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fa fa-hands-helping fa-2x text-dark-300"><h3 class="text-dark">Want to Volunteer?</h3></i>
+                </div>
+                <div class="card-body">
+                    <div>
+                        Join us as a volunteer to make a difference in our community. Your efforts can help us reach more people in need.
+                    </div>
+                    <br>
+                    <a (click)="volunteer()" class="btn btn-outline-secondary btn-interactive">Become a Volunteer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Set up the container with background image and parallax effect */
+    .background-img {
+        /* Background image properties */
+        background-image: url('assets/background.png'); /* replace with your image path */
+        background-attachment: fixed; /* For parallax effect */
+        background-position: center; /* Center the image */
+        background-repeat: no-repeat; /* Prevent repetition */
+        background-size: cover; /* Cover the entire container */
+
+        /* Set container height (adjust as needed for parallax intensity) */
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+
+        /* Create a dark overlay */
+        position: relative;
+    }
+
+    .background-img::before {
+        /* Dark overlay effect */
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Adjust opacity to control darkness */
+        z-index: 1;
+    }
+
+    /* Ensure content appears above the overlay */
+    .background-img > * {
+        position: relative;
+        z-index: 2;
+    }
+
+    /* Additional styling for elements within the parallax container */
+    .background-img .card {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 0.5rem;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-interactive {
+        transition: transform 0.3s ease-in-out, background-color 0.3s;
+    }
+
+    .btn-interactive:hover {
+        transform: scale(1.05);
+        background-color: #007bff;
+        color: white;
+    }
+
+</style>

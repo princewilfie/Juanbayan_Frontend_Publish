@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-switch',
@@ -7,10 +8,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardSwitchComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     // Initialization logic if needed
   }
 
+  beneficiary()
+  {
+    this.router.navigate(['/beneficiary']);
+  }
+
+  donor()
+  {
+    this.router.navigate(['/donor']);
+  }
+
+  volunteer()
+  {
+    this.router.navigate(['/event-list']);
+  }
 }

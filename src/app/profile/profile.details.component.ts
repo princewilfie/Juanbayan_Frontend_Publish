@@ -31,6 +31,9 @@ export class DetailsComponent implements OnInit {
   joinedEvents: Participant[];
   accomplishedEvents: any[] = [];
   activities: any[] = []; // To hold the latest activities
+  isFundRequest: boolean = false;
+  fundRequestModal: boolean = false;
+  deliveryModalOpen: boolean = false; 
 
   constructor(
     private accountService: AccountService,
@@ -43,13 +46,16 @@ export class DetailsComponent implements OnInit {
     private participantService : ParticipantService
   ) {}
 
-  openFundRequestModal(modal: TemplateRef<any>, campaign: Campaign) {
-    this.selectedRequest = campaign;
-    this.modalService.open(modal, {backdrop: false });
+  openFundRequestModal() {
+    this.fundRequestModal = true;
   }
 
-  submitFundRequest(modal: any): void {
-    if (!this.selectedBank || !this.accountNumber) {
+  closeFundRequestModal() {
+    this.fundRequestModal = false;
+  }
+  
+  submitFundRequest(selectedBank: string, accountNumber: string): void {
+    if (!selectedBank || !accountNumber) {
       Swal.fire({
         icon: 'error',
         title: 'Error',
@@ -57,11 +63,11 @@ export class DetailsComponent implements OnInit {
         confirmButtonText: 'OK'
       });
       return;
-    } 
+    }
   
     const fundRequestData: Omit<Withdraw, "Withdraw_ID" | "Request_Date" | "Status"> = {
-      Bank_account: this.selectedBank,
-      Acc_number: Number(this.accountNumber),
+      Bank_account: selectedBank,
+      Acc_number: Number(accountNumber),
       Campaign_ID: this.selectedRequest ? this.selectedRequest.Campaign_ID : null,
       acc_id: this.account.id, // Replace with the actual account ID
       Withdraw_Amount: this.amount, // Replace with the actual amount to withdraw
@@ -69,19 +75,15 @@ export class DetailsComponent implements OnInit {
   
     this.withdrawService.requestWithdrawal(fundRequestData).subscribe(
       response => {
+        this.isFundRequest = true;
         console.log('Withdrawal request successful:', response);
-        console.log('Modal instance:', modal);
-        if (modal) {
-          modal.dismiss();
-        } else {
-          console.error('modal is undefined');
-        }
         Swal.fire({
           icon: 'success',
           title: 'Success',
           text: 'Withdrawal request submitted successfully!',
           confirmButtonText: 'OK'
         });
+        this.closeFundRequestModal(); // Close modal after submission
       },
       error => {
         console.error('Error requesting withdrawal:', error);
@@ -93,8 +95,7 @@ export class DetailsComponent implements OnInit {
         });
       }
     );
-  }
-  
+  }  
 
   ngOnInit(): void {
     // Fetch account data
@@ -290,11 +291,18 @@ export class DetailsComponent implements OnInit {
     );
   }
 
-  openRewardModal(content: TemplateRef<any>, reward: Reward) {
-    // Assign the selected reward to selectedItem
-    this.selectedItem = reward;
-    // Open the modal
-    this.modalService.open(content, { size: 'lg', backdrop: false });
+  openRewardModal(reward: Reward) {
+    console.log('Reward passed to openRewardModal:', reward);  // Debugging step
+    if (reward) {
+      this.selectedItem = reward;
+      this.deliveryModalOpen = true;
+    } else {
+      console.error('No reward passed to openRewardModal');
+    }
+  }
+  closeDeliveryModal()
+  {
+    this.deliveryModalOpen = false; 
   }
 
   redeem(rewardId: number, address: string) {
@@ -309,7 +317,7 @@ export class DetailsComponent implements OnInit {
     }
 
     const accountId = Number(this.account.id);
-
+    console.log(`Redeeming reward with ID: ${rewardId} for address: ${address}`);
     this.rewardService.redeemReward(rewardId, address, accountId).subscribe({
         next: (response) => {
             // Show success SweetAlert

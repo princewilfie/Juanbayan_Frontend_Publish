@@ -43,6 +43,7 @@ export class CreateCampaignComponent implements OnInit {
   testimonyModal: boolean = false;
   testimony: string = '';
   selectedWithdrawId: number | null = null;
+  isTestimonySubmitted: boolean = false;
 
   // Arrays to store campaigns by their status
   approvedCampaigns: any[] = [];
@@ -132,7 +133,7 @@ export class CreateCampaignComponent implements OnInit {
     // Fetch withdrawals for the given campaign ID
     this.getWithdrawalsByCampaignId();
   }
-  
+
   getWithdrawalsByCampaignId() {
     this.withdrawService.getWithdrawByCampaignId(this.campaignId).subscribe(
       (withdrawals: Withdraw[]) => {
@@ -159,6 +160,7 @@ export class CreateCampaignComponent implements OnInit {
 
     this.withdrawService.submitTestimony(this.selectedWithdrawId, testimony).subscribe(
       (response) => {
+        this.isTestimonySubmitted = true;
         console.log('Testimony submitted successfully:', response);
         alert('Testimony submitted successfully!');
         this.closeTestimonyModal();

@@ -38,6 +38,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ContactUsComponent } from './contact/contact.component';
+import { BeneficiaryDashboardComponent } from './beneficiary/beneficiary-dashboard.component';
+import { DonorDashboardComponent } from './donor/donor-dashboard.component';
+import { NotFoundComponent } from './lost-page/404.page.component';
 
 @NgModule({
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -69,7 +72,10 @@ import { ContactUsComponent } from './contact/contact.component';
         EventListComponent,
         EventDetailsComponent,
         TermsAndConditionsModalComponent,
-        ContactUsComponent
+        ContactUsComponent,
+        BeneficiaryDashboardComponent,
+        DonorDashboardComponent,
+        NotFoundComponent
     ],
     providers: [
         { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AccountService] },

@@ -1,0 +1,89 @@
+<!-- Welcome Banner -->
+<section class="welcome-banner">
+    <div class="container">
+        <br>
+        <br>
+        <br>
+        <h1>Welcome, {{ user }}</h1>
+        <p class="lead">We're here to support you on your journey. Below are the latest campaigns available for support and participation.</p>
+    </div>
+</section>
+
+<!-- Background Wrapper for About Us to Available Campaigns -->
+<div class="content-background">
+    <!-- About Us Section -->
+    <div class="container about-section">
+        <h2>About Us</h2>
+        <h3>Help People, Our Main Goals</h3>
+        <p>JuanBayan is a crowdfunding platform dedicated to amplifying the voices and stories of disadvantaged individuals...</p>
+        <a href="#" class="btn btn-about">More About</a>
+    </div>
+
+    <!-- Campaign Section -->
+    <div class="container my-5">
+        <h2 class="campaign-list-title">Available Campaigns</h2>
+        <div class="row">
+            <!-- Featured Campaign -->
+            <div class="col-md-6 mb-4">
+                <div class="featured-campaign shadow">
+                    <img [src]="featuredCampaign.imageUrl" alt="Featured Campaign" class="img-fluid">
+                    <div class="campaign-content">
+                        <h6 class="text-muted">{{ featuredCampaign.category }}</h6>
+                        <h5>{{ featuredCampaign.title }}</h5>
+                        <p class="text-muted">{{ featuredCampaign.description }}</p>
+                        <p class="text-muted"><strong>Start Date:</strong> {{ featuredCampaign.startDate }}</p>
+                        <p class="text-muted"><strong>End Date:</strong> {{ featuredCampaign.endDate }}</p>
+                        <a href="donate-details.html" class="btn btn-featured">Donate</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Smaller Campaign Cards -->
+            <div class="col-md-6 mb-4" *ngFor="let campaign of campaigns">
+                <div class="campaign-card shadow">
+                    <img [src]="campaign.imageUrl" alt="Campaign Image" class="img-fluid">
+                    <div class="card-body">
+                        <h6 class="text-muted">{{ campaign.category }}</h6>
+                        <h5>{{ campaign.title }}</h5>
+                        <p class="text-muted">{{ campaign.description }}</p>
+                        <p class="text-muted"><strong>Start Date:</strong> {{ campaign.startDate }}</p>
+                        <p class="text-muted"><strong>End Date:</strong> {{ campaign.endDate }}</p>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" [style.width.%]="campaign.progress"></div>
+                        </div>
+                        <p class="text-muted">Raised: ${{ campaign.raised }} Goal: ${{ campaign.goal }}</p>
+                        <a href="donate-details.html" class="btn btn-campaign">Donate</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Testimonials Section -->
+<div class="background-wrapper">
+    <section class="testimonials-section">
+        <h2>What People Say About Us</h2>
+        <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item" *ngFor="let testimonial of testimonials; let i = index" [class.active]="i === 0">
+                    <div class="testimonial-item d-flex flex-column align-items-center">
+                        <img [src]="testimonial.imageUrl" alt="{{ testimonial.name }}" class="testimonial-image">
+                        <h5>{{ testimonial.name }}</h5>
+                        <p class="text-muted">{{ testimonial.role }}</p>
+                        <p class="testimonial-text">{{ testimonial.message }}</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+</div>

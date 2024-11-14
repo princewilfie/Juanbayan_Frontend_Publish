@@ -1,0 +1,213 @@
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Full Cover Background for .content-background */
+  .content-background {
+      background: url('https://images.pexels.com/photos/6994806/pexels-photo-6994806.jpeg') center center/cover no-repeat;
+      background-attachment: fixed; /* Keeps the image fixed on scroll */
+      padding: 60px 0; /* Adds padding to create space inside */
+      color: #fff; /* Sets text color for contrast, adjust as needed */
+  }
+  
+  
+  /* Welcome Banner */
+  .welcome-banner {
+    background: #0c1e31;
+    color: #fff;
+    padding: 40px 20px;
+    text-align: center;
+  }
+  
+  .welcome-banner h1 {
+      font-family: 'League Spartan', sans-serif; /* Sans-serif font */
+      font-weight: normal; /* Not bold */
+      font-size: 2rem; /* Adjusted size */
+  }
+  
+  .welcome-banner .lead {
+      font-family: 'League Spartan', sans-serif; /* League Spartan font */
+      font-weight: bold; /* Bold weight */
+      font-size: 2em; /* Adjusted size for "Juanbayan" */
+      color: #ffffff; /* Optional: Adjust color */
+      display: inline-block; /* Ensures separate styling */
+  }
+  
+  /* About Us Section */
+  .about-section {
+      background: #f9f9f9;
+      padding: 40px 20px;
+      text-align: center;
+      margin-bottom: 30px;
+      border-radius: 12px; /* Rounded corners */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for a card effect */
+      max-width: 800px; /* Optional: limits the width for a more compact card appearance */
+      margin: 0 auto; /* Centers the card */
+  }
+  
+  .about-section h2 {
+      font-size: 2rem;
+      color: #333;
+  }
+  
+  .about-section h3 {
+      font-size: 1.5rem;
+      color: #9e9e9e;
+      margin-bottom: 20px;
+  }
+  
+  .about-section p {
+      color: #666;
+      margin-bottom: 20px;
+  }
+  
+  .btn-about {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.3s ease; /* Smooth color transition */
+  }
+  
+  .btn-about:hover {
+      background-color: #0056b3;
+  }
+  
+  
+  /* Campaign Section */
+  .campaign-list-title {
+    font-size: 1.8rem;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .featured-campaign,
+  .campaign-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+  
+  .featured-campaign img,
+  .campaign-card img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .featured-campaign h5,
+  .campaign-card h5 {
+    font-size: 1.25rem;
+    color: #007bff;
+    margin-top: 10px;
+  }
+  
+  .featured-campaign p,
+  .campaign-card p {
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .progress {
+    height: 8px;
+    background-color: #e9ecef;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  .progress-bar {
+    background-color: #28a745;
+  }
+  
+  .btn-featured,
+  .btn-campaign {
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    display: inline-block;
+  }
+  
+  .btn-featured:hover,
+  .btn-campaign:hover {
+    background-color: #218838;
+  }
+  
+  
+  /* Full-Width Testimonials Section */
+  /* Full-Cover Background Wrapper */
+  .background-wrapper {
+      background: url('https://images.pexels.com/photos/6994806/pexels-photo-6994806.jpeg') center center/cover no-repeat;
+      background-attachment: fixed;
+      padding: 60px 0;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+  }
+  
+  /* Testimonials Section Styling for Overlay Effect */
+  .testimonials-section {
+      background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+      padding: 60px 20px;
+      text-align: center;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Shadow for emphasis */
+      max-width: 800px;
+      margin: 0 auto;
+      z-index: 2;
+      position: relative;
+  }
+  
+  .testimonials-section h2 {
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 30px;
+  }
+  
+  .carousel-inner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  
+  .carousel-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+  }
+  
+  .carousel-item img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin-bottom: 15px;
+  }
+  
+  .carousel-item h5 {
+      font-size: 1.25rem;
+      color: #007bff;
+  }
+  
+  .carousel-item p {
+      color: #666;
+  }
+  
+  .testimonial-text {
+      color: #555;
+      max-width: 600px;
+      margin: 0 auto;
+  }
+  
+  /* Carousel Control Button Styling */
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+      background-color: #007bff;
+      border-radius: 50%;
+  }

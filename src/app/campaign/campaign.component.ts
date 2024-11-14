@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CampaignService } from '../_services/campaign.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Campaign } from '../_models/campaign';
+import { Withdraw } from '../_models';
+import { WithdrawService } from '../_services';
 
 @Component({
   selector: 'app-campaign',
@@ -12,11 +14,19 @@ export class CampaignComponent implements OnInit {
   selectedCampaign?: Campaign;
   qrCodeUrl: string = 'assets/gcash_qr.png'; // Static QR code URL for GCash
   receiptPreview?: string; // To hold the receipt preview for the upload modal
+  testimonies: Withdraw[] = [];
 
-  constructor(private campaignService: CampaignService, private modalService: NgbModal) {}
+  constructor(
+    private campaignService: CampaignService, 
+    private modalService: NgbModal,
+    private withdrawService: WithdrawService) {}
 
   ngOnInit(): void {
     this.fetchApprovedCampaigns();
+
+    this.withdrawService.getAll().subscribe((data: Withdraw[]) => {
+      this.testimonies = data.filter(withdraw => withdraw.Testimony); // Only include entries with testimony
+    });
   }
 
   // Fetch only approved campaigns (Campaign_Status = 1)

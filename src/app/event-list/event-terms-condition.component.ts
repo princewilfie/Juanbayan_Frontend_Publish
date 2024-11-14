@@ -10,6 +10,7 @@ import { AccountService } from '../_services/account.service';
 })
 export class TermsAndConditionsModalComponent implements OnInit {
   @Input() eventId!: number; // Event ID
+  termsModalOpen: boolean = false;
 
   accountId: number; // The correct Account ID will be stored here
 
@@ -48,6 +49,6 @@ export class TermsAndConditionsModalComponent implements OnInit {
   }
 
   closeModal() {
-    this.activeModal.dismiss();
+    this.termsModalOpen = false;
   }
 }

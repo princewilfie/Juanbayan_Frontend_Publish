@@ -12,6 +12,7 @@ const withdrawModule = ()  => import('./withdraw/withdraw.module').then(x  => x.
 const reportModule = ()  => import('./reports/reports.module').then(x  => x.ReportsModule);
 const donationModule = () => import('./donation/donation.module').then(x => x.DonationModule);
 const categoryModule = () => import('./category/category.module').then(x => x.CategoryAdminModule);
+const participantModule = () => import('./participants/participant.module').then(x => x.ParticipantModule);
 
 const routes: Routes = [
     {
@@ -26,6 +27,7 @@ const routes: Routes = [
             { path: 'reports', loadChildren: reportModule }, 
             {path: 'donations', loadChildren: donationModule},
             {path: 'categories', loadChildren: categoryModule},
+            {path: 'participant', loadChildren: participantModule},
 
         ]
     }

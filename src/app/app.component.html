@@ -44,25 +44,12 @@
                                       <ul id="navigation">                                                                                          
                                           <li><a routerLink="/home">Home</a></li>
                                           <li><a routerLink="/team-member">About</a></li>
-                                          <li><a routerLink="/campaign">latest causes</a></li>
-                                          <li><a href="blog.html">Donate</a>
-                                              <ul class="submenu">
-                                                  <li><a routerLink="/create-campaign">Create Campaign</a></li>
-                                                  <li><a routerLink="/campaign">Browse Campaign</a></li>
-                                              </ul>
-                                          </li>
-                                          <li><a href="blog.html">Community Events</a>
-                                            <ul class="submenu">
-                                              <li><a routerLink="/events">Create Event</a></li>
-                                              <li><a routerLink="/event-list">Browse Events</a></li>
-                                          </ul>
-                                        </li>
+                                          <li><a routerLink="/campaign">Latest Causes</a></li>
+                                          <li><a routerLink="/event-list">Volunteer</a></li>
                                         <li><a routerLink="/contact">Contact</a></li>
                                         <li><a routerLink="/profile"><span>{{ account?.acc_firstname || 'User' }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                                             <ul class="submenu">
                                               <li><a routerLink="/profile">Profile</a></li>
-                                              <li><a routerLink="/settings">Settings</a></li>
-                                              <li><a href="#">Rewards</a></li>
                                               <li><a (click)="logout()">Logout</a></li>
                                             </ul>
                                           </li>

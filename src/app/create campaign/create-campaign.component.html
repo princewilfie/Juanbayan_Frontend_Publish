@@ -1,117 +1,136 @@
-<div class="container">
-    <br><br><br><br>
-    <div class="background-image-section">
-        <h1>Create and Donate to Campaigns</h1>
-        <button class="btn btn-primary" (click)="openCreateCampaignModal()">
-            <i class="bi bi-plus-circle"></i> Create Campaign
-        </button>
-    </div>
-    
-    
+<div class="container mt-4">
+  <!-- Earnings (Monthly) Card Example -->
+  <div class="col-xl-12 col-md-12 mb-4">
+       <div class="card border-left-primary shadow h-100 py-2">
+           <div class="card-body">
+               <div class="row no-gutters align-items-center">
+                   <div class="col mr-2">
+                     <h1>Create Campaigns</h1>
+                     <button class="btn btn-primary" (click)="openCreateCampaignModal()">
+                         <i class="bi bi-plus-circle"></i> Create Campaign
+                     </button>
+                   </div>
+                   <div class="col-auto">
+                       <i class="fas fa-bullhorn fa-2x text-gray-300"></i>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
+
+   <div class="col-lg-12">
+    <div class="card mb-5 shadow h-100">
+      <div class="card-header">
+        Campaigns
+      </div>
+      <div class="card-body">
+  
         <!-- Approved Campaigns Section -->
         <div class="campaign-section">
-            <h2 class="text-primary">Approved Campaigns</h2>
-            <div *ngIf="approvedCampaigns.length === 0" class="alert alert-info">No approved campaigns.</div>
-            <div class="row">
-                <div class="col-md-4 mb-4" *ngFor="let campaign of approvedCampaigns">
-                    <div class="card campaign-card h-100 shadow-sm" (click)="openCampaignDetails(campaign, campaignDetailModal)">
-                        <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" 
-                            alt="{{ campaign.Campaign_Name }} Image" 
-                            class="card-img-top campaign-image img-fluid rounded-top" 
-                            (error)="this.src='assets/jb-symbol-logo.png'">
-                        <div class="card-body">
-                            <h5 class="card-title text-dark">{{ campaign.Campaign_Name }}</h5>
-                            <p class="card-text text-muted">{{ campaign.Campaign_Description }}</p>
-                            <p><strong>Goal: ₱{{ campaign.Campaign_TargetFund }}</strong></p>
-
-    
-                            <div *ngIf="campaign.Campaign_ApprovalStatus === 'Approved'" class="text-success mt-2">
-                                <strong>Approved</strong>
-                            </div>
-			<button (click)="viewDonors(campaign.Campaign_ID); $event.stopPropagation();" class="btn btn-info" style="margin-top: 10px;">
-                            View Donors
-                        </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-        <!-- Pending Campaigns Section -->
-        <div class="campaign-section">
-            <h3 class="text-warning">Pending Campaigns</h3>
-            <div *ngIf="pendingCampaigns.length === 0" class="alert alert-warning">No pending campaigns.</div>
-            <div class="row">
-                <div class="col-md-4 mb-4" *ngFor="let campaign of pendingCampaigns">
-                    <div class="card campaign-card h-100 shadow-sm" (click)="openCampaignDetails(campaign, campaignDetailModal); $event.stopPropagation();">
-                        <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" 
-                            alt="{{ campaign.Campaign_Name }} Image" 
-                            class="card-img-top campaign-image img-fluid rounded-top" 
-                            (error)="this.src='assets/jb-symbol-logo.png'">
-                        <div class="card-body">
-                            <h5 class="card-title text-dark">{{ campaign.Campaign_Name }}</h5>
-                            <p class="card-text text-muted">{{ campaign.Campaign_Description }}</p>
-                            <p><strong>Goal: ₱{{ campaign.Campaign_TargetFund }}</strong></p>
-                            
-                            <div *ngIf="campaign.Campaign_ApprovalStatus === 'Waiting For Approval'" class="text-warning mt-2">
-                                <strong>Pending for Approval</strong>
-                            </div>
-                            <button type="button" class="btn btn-danger" (click)="deleteCampaign(campaign.Campaign_ID)">Delete</button>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-        <!-- Rejected Campaigns Section -->
-        <div class="campaign-section">
-            <h3 class="text-danger">Rejected Campaigns</h3>
-            <div *ngIf="rejectedCampaigns.length === 0" class="alert alert-danger">No rejected campaigns.</div>
-            <div class="row">
-                <div class="col-md-4 mb-4" *ngFor="let campaign of rejectedCampaigns">
-                    <div class="card campaign-card h-100 shadow-sm" (click)="openCampaignDetails(campaign, campaignDetailModal); $event.stopPropagation();">
-                        <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" 
-                            alt="{{ campaign.Campaign_Name }} Image" 
-                            class="card-img-top campaign-image img-fluid rounded-top" 
-                            (error)="this.src='assets/jb-symbol-logo.png'">
-                        <div class="card-body">
-                            <h5 class="card-title text-dark">{{ campaign.Campaign_Name }}</h5>
-                            <p class="card-text text-muted">{{ campaign.Campaign_Description }}</p>
-                            <p><strong>Goal: ${{ campaign.Campaign_TargetFund }}</strong></p>
-    
-                            <button type="button" class="btn btn-danger" (click)="deleteCampaign(campaign.Campaign_ID)">Delete</button>
-                            <div *ngIf="campaign.Campaign_ApprovalStatus === 'Rejected'" class="text-danger mt-2">
-                                <strong>Rejected</strong>
-                            </div>
-                        </div>
-            </div>
-        </div>
-    
-        <!-- Done Campaigns Section -->
-        <div class="campaign-section">
-            <h3 class="text-success">Done Campaigns</h3>
-            <div *ngIf="doneCampaigns.length === 0" class="alert alert-success">No campaigns marked as done.</div>
-            <div class="row">
-                <div class="card campaign-card h-100 shadow-sm" *ngFor="let campaign of doneCampaigns">
-                  <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" 
+          <h2 class="text-primary">Approved Campaigns</h2>
+          <div *ngIf="approvedCampaigns.length === 0" class="alert alert-info">No approved campaigns.</div>
+          <div class="row">
+            <div class="col-md-3 mb-4" *ngFor="let campaign of approvedCampaigns" (click)="openCampaignDetails(campaign); $event.stopPropagation()">
+              <div class="card campaign-card h-100 shadow-sm d-flex flex-column">
+                <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" 
                   alt="{{ campaign.Campaign_Name }} Image" 
                   class="card-img-top campaign-image img-fluid rounded-top" 
                   (error)="this.src='assets/jb-symbol-logo.png'">
-                  <div class="card-body">
-                      <h5 class="card-title text-dark">{{ campaign.Campaign_Name }}</h5>
-                      <p class="card-text text-muted">{{ campaign.Campaign_Description }}</p>
-                      <p><strong>Goal: ${{ campaign.Campaign_TargetFund }}</strong></p>
-
-                      <div *ngIf="campaign.Campaign_ApprovalStatus === 'Done'" class="text-success mt-2">
-                          <strong>Done</strong>
-                      </div>
-                      <!-- Button to submit testimony -->
-                      <button class="btn btn-primary mt-3" (click)="openTestimonyModal(campaign.Campaign_ID)">Submit Testimony</button>
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title text-dark">{{ campaign.Campaign_Name }}</h5>
+                  <p class="card-text text-muted">{{ campaign.Campaign_Description }}</p>
+                  <p><strong>Goal: ₱{{ campaign.Campaign_TargetFund }}</strong></p>
+                  <div *ngIf="campaign.Campaign_ApprovalStatus === 'Approved'" class="text-success mt-2">
+                    <strong>Approved</strong>
+                  </div>
+                  <button (click)="viewDonors(campaign.Campaign_ID); $event.stopPropagation();" class="btn btn-info mt-3">
+                    View Donors
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Pending Campaigns Section -->
+        <div class="campaign-section">
+          <h3 class="text-warning">Pending Campaigns</h3>
+          <div *ngIf="pendingCampaigns.length === 0" class="alert alert-warning">No pending campaigns.</div>
+          <div class="row">
+            <div class="col-md-3 mb-4" *ngFor="let campaign of pendingCampaigns" (click)="openCampaignDetails(campaign); $event.stopPropagation()">
+              <div class="card campaign-card h-100 shadow-sm d-flex flex-column">
+                <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" 
+                  alt="{{ campaign.Campaign_Name }} Image" 
+                  class="card-img-top campaign-image img-fluid rounded-top" 
+                  (error)="this.src='assets/jb-symbol-logo.png'">
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title text-dark">{{ campaign.Campaign_Name }}</h5>
+                  <p class="card-text text-muted">{{ campaign.Campaign_Description }}</p>
+                  <p><strong>Goal: ₱{{ campaign.Campaign_TargetFund }}</strong></p>
+                  <div *ngIf="campaign.Campaign_ApprovalStatus === 'Waiting For Approval'" class="text-warning mt-2">
+                    <strong>Pending for Approval</strong>
+                  </div>
+                  <button type="button" class="genric-btn danger" (click)="deleteCampaign(campaign.Campaign_ID)">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Rejected Campaigns Section -->
+        <div class="campaign-section">
+          <h3 class="text-danger">Rejected Campaigns</h3>
+          <div *ngIf="rejectedCampaigns.length === 0" class="alert alert-danger">No rejected campaigns.</div>
+          <div class="row">
+            <div class="col-md-3 mb-4" *ngFor="let campaign of rejectedCampaigns" (click)="openCampaignDetails(campaign); $event.stopPropagation()">
+              <div class="card campaign-card h-100 shadow-sm d-flex flex-column">
+                <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" 
+                  alt="{{ campaign.Campaign_Name }} Image" 
+                  class="card-img-top campaign-image img-fluid rounded-top" 
+                  (error)="this.src='assets/jb-symbol-logo.png'">
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title text-dark">{{ campaign.Campaign_Name }}</h5>
+                  <p class="card-text text-muted">{{ campaign.Campaign_Description }}</p>
+                  <p><strong>Goal: ₱{{ campaign.Campaign_TargetFund }}</strong></p>
+                  <button type="button" class="btn btn-danger mt-3" (click)="deleteCampaign(campaign.Campaign_ID)">Delete</button>
+                  <div *ngIf="campaign.Campaign_ApprovalStatus === 'Rejected'" class="text-danger mt-2">
+                    <strong>Rejected</strong>
                   </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+  
+        <!-- Done Campaigns Section -->
+        <div class="campaign-section">
+          <h3 class="text-success">Done Campaigns</h3>
+          <div *ngIf="doneCampaigns.length === 0" class="alert alert-success">No campaigns marked as done.</div>
+          <div class="row">
+            <div class="col-md-3 mb-4" *ngFor="let campaign of doneCampaigns">
+              <div class="card campaign-card h-100 shadow-sm d-flex flex-column">
+                <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" 
+                  alt="{{ campaign.Campaign_Name }} Image" 
+                  class="card-img-top campaign-image img-fluid rounded-top" 
+                  (error)="this.src='assets/jb-symbol-logo.png'">
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title text-dark">{{ campaign.Campaign_Name }}</h5>
+                  <p class="card-text text-muted">{{ campaign.Campaign_Description }}</p>
+                  <p><strong>Goal: ₱{{ campaign.Campaign_TargetFund }}</strong></p>
+                  <div *ngIf="campaign.Campaign_ApprovalStatus === 'Done'" class="text-success mt-2">
+                    <strong>Done</strong>
+                  </div>
+                  <button *ngIf="!isTestimonySubmitted" class="btn btn-primary mt-3" (click)="openTestimonyModal(campaign.Campaign_ID)">Submit Testimony</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
   
         <!-- NEW MODALS -->
          <!-- Donors Modal -->
@@ -139,7 +158,7 @@
         </div>
         </div>
     </div>
-  
+  </div>
   <!-- Campaign Details Modal -->
   <div class="modal fade" [ngClass]="{'show': isDetailModalOpen}" tabindex="-1" [style.display]="isDetailModalOpen ? 'block' : 'none'">
     <div class="modal-dialog">
@@ -244,7 +263,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Create a Campaign</h5>
-          <button type="button" class="btn-close" (click)="closeCreateCampaignModal()"></button>
+          <button type="button" class="genric-btn circle info" (click)="closeCreateCampaignModal()">Close</button>
         </div>
         <div class="modal-body">
           <form [formGroup]="createCampaignForm" (ngSubmit)="createCampaign()">
@@ -351,4 +370,3 @@
 </div>
     
   </div>
-</div>

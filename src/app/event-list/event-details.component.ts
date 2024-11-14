@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { TermsAndConditionsModalComponent } from './event-terms-condition.component';
 import { EventService } from '../_services/event.service';
 import { EventCommentService } from '../_services/eventComment.service';
 import { EventLikeService } from '../_services/eventLike.service';
 import { EventComment } from '../_models/eventComment';
 import { EventLike } from '../_models/eventLike';
+import { AccountService } from '../_services/account.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-event-details',
@@ -16,18 +16,21 @@ import { EventLike } from '../_models/eventLike';
 export class EventDetailsComponent implements OnInit {
   event: any;
   comments: EventComment[] = [];
-  newComment: EventComment = { Comment_Text: '', Event_ID: 0, Acc_ID: 0 }; // Initialize as needed
+  newComment: EventComment = { Comment_Text: '', Event_ID: 0, Acc_ID: 0 }; 
   likeCount: number = 0;
   hasLiked: boolean = false;
   userId: number = 1;
-  totalComments: number;
+  totalComments: number = 0;
+  isTermsModalVisible: boolean = false;
+  accountId: number = 0;
+  eventId: number = 0;
 
   constructor(
     private route: ActivatedRoute,
     private eventService: EventService,
-    private modalService: NgbModal, 
     private eventCommentService: EventCommentService,
-    private eventLikeService: EventLikeService
+    private eventLikeService: EventLikeService,
+    private accountService: AccountService
   ) {}
 
   ngOnInit() {
@@ -44,12 +47,16 @@ export class EventDetailsComponent implements OnInit {
         }
       );
     }
+
+    const account = this.accountService.accountValue;
+    if (account && account.id) {
+      this.accountId = Number(account.id);
+    } else {
+      console.error('No account is logged in.');
+    }
   }
 
-  
-
-   // Load comments
-   loadComments() {
+  loadComments() {
     if (this.event) {
       this.eventCommentService.getCommentsByEventId(this.event.Event_ID).subscribe(
         (comments) => {
@@ -63,11 +70,10 @@ export class EventDetailsComponent implements OnInit {
     }
   }
 
-  // Add a new comment
   addComment() {
     if (this.newComment.Comment_Text.trim()) {
       this.newComment.Event_ID = this.event.Event_ID;
-      this.newComment.Acc_ID = this.userId; // Replace with actual user logic
+      this.newComment.Acc_ID = this.accountId;
       this.eventCommentService.createEventComment(this.newComment).subscribe(
         (comment) => {
           this.comments.push(comment);
@@ -80,13 +86,12 @@ export class EventDetailsComponent implements OnInit {
     }
   }
 
-  // Load likes
   loadLikes() {
     if (this.event) {
       this.eventLikeService.getLikesByEventId(this.event.Event_ID).subscribe(
         (likes) => {
           this.likeCount = likes.length;
-          this.hasLiked = likes.some(like => like.Acc_ID === this.userId); // Check if the current user has liked
+          this.hasLiked = likes.some(like => like.Acc_ID === this.userId);
         },
         (error) => {
           console.error('Error loading likes:', error);
@@ -95,10 +100,8 @@ export class EventDetailsComponent implements OnInit {
     }
   }
 
-  // Toggle like
   toggleLike() {
     if (this.hasLiked) {
-      // Unlike logic (assuming you have a like ID to delete)
       this.eventLikeService.deleteEventLike(this.event.Event_ID).subscribe(
         () => {
           this.likeCount--;
@@ -111,7 +114,7 @@ export class EventDetailsComponent implements OnInit {
     } else {
       const newLike: EventLike = {
         Event_ID: this.event.Event_ID,
-        Acc_ID: this.userId // Replace with actual user logic
+        Acc_ID: this.userId
       };
       this.eventLikeService.createEventLike(newLike).subscribe(
         () => {
@@ -125,12 +128,10 @@ export class EventDetailsComponent implements OnInit {
     }
   }
 
-  // Generate dynamic campaign URL
-  getEventUrl():string {
-    return `http://juanbayan.com.ph/event/${this.event?.eventId}`; // Replace with your actual base URL
+  getEventUrl(): string {
+    return `http://juanbayan.com.ph/event/${this.event?.eventId}`;
   }
 
-  // Social media sharing methods
   shareToFacebook(url: string): void {
     const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
     window.open(facebookUrl, '_blank');
@@ -155,28 +156,47 @@ export class EventDetailsComponent implements OnInit {
     document.body.removeChild(tempInput);
   }
 
-  // Define getImagePath method here
   getImagePath(imageName: string): string {
     return imageName ? `http://localhost:4000/assets/${imageName}` : 'assets/';
   }
 
-  openTermsAndConditionsModal() {
-    const modalRef = this.modalService.open(TermsAndConditionsModalComponent, {
-      size: 'lg',
-      backdrop: 'static'
-    });
-    modalRef.componentInstance.accId = 1; // Set account ID here (replace 1 with actual ID)
-    modalRef.componentInstance.eventId = this.event.Event_ID;
-
-    modalRef.result.then(
-      (result) => {
-        if (result) {
-          console.log('User confirmed to join as a volunteer');
-        }
-      },
-      (reason) => {
-        console.log('User dismissed the modal');
-      }
-    );
+  showTermsModal() {
+    this.isTermsModalVisible = true;
   }
+
+  closeTermsModal() {
+    this.isTermsModalVisible = false;
+  }
+
+  confirmVolunteer() {
+    if (this.accountId && this.event?.Event_ID) {
+      this.eventService.joinEvent(this.accountId, this.event.Event_ID).subscribe(
+        () => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'You have successfully joined as a volunteer!'
+          });
+          this.closeTermsModal();
+        },
+        (error) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: error.error.message || 'Error joining event'
+          });
+          this.closeTermsModal();
+        }
+      );
+    } else {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Warning',
+        text: 'Unable to join the event. Account or Event ID is missing.'
+      });
+    }
+  }
+  
+  
+  
 }

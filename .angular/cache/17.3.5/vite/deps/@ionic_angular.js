@@ -37,13 +37,6 @@ import {
   printIonWarning as printIonWarning2
 } from "./chunk-NR554Z3W.js";
 import {
-  MaxValidator,
-  MinValidator,
-  NG_VALIDATORS,
-  NG_VALUE_ACCESSOR,
-  NgControl
-} from "./chunk-RMLFRR66.js";
-import {
   ActivatedRoute,
   ChildrenOutletContexts,
   NavigationStart,
@@ -54,6 +47,13 @@ import {
 } from "./chunk-T2TDYA6W.js";
 import "./chunk-E5STV6AS.js";
 import "./chunk-3ET75EXS.js";
+import {
+  MaxValidator,
+  MinValidator,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+  NgControl
+} from "./chunk-RMLFRR66.js";
 import {
   CommonModule,
   DOCUMENT,
