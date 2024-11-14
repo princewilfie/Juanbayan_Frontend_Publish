@@ -308,7 +308,7 @@ p {
           <h4 class="text-danger">{{ campaign.Campaign_Category === 1 ? 'Medical' : 'Other' }}</h4>
           <h3 class="card-title">{{ campaign.Campaign_Name }}</h3>
           <p>{{ campaign.Campaign_Description }}</p>
-          <button *ngIf="!isFundRequest" class="btn btn-primary" (click)="openFundRequestModal()">Request To Collect</button>
+          <button *ngIf="!isFundRequest" class="btn btn-primary" (click)="openFundRequestModal(campaign)">Request To Collect</button>
         </div>
       </div>
     </div>

@@ -46,57 +46,7 @@ export class DetailsComponent implements OnInit {
     private participantService : ParticipantService
   ) {}
 
-  openFundRequestModal() {
-    this.fundRequestModal = true;
-  }
-
-  closeFundRequestModal() {
-    this.fundRequestModal = false;
-  }
   
-  submitFundRequest(selectedBank: string, accountNumber: string): void {
-    if (!selectedBank || !accountNumber) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Please select a bank and enter an account number.',
-        confirmButtonText: 'OK'
-      });
-      return;
-    }
-  
-    const fundRequestData: Omit<Withdraw, "Withdraw_ID" | "Request_Date" | "Status"> = {
-      Bank_account: selectedBank,
-      Acc_number: Number(accountNumber),
-      Campaign_ID: this.selectedRequest ? this.selectedRequest.Campaign_ID : null,
-      acc_id: this.account.id, // Replace with the actual account ID
-      Withdraw_Amount: this.amount, // Replace with the actual amount to withdraw
-    };
-  
-    this.withdrawService.requestWithdrawal(fundRequestData).subscribe(
-      response => {
-        this.isFundRequest = true;
-        console.log('Withdrawal request successful:', response);
-        Swal.fire({
-          icon: 'success',
-          title: 'Success',
-          text: 'Withdrawal request submitted successfully!',
-          confirmButtonText: 'OK'
-        });
-        this.closeFundRequestModal(); // Close modal after submission
-      },
-      error => {
-        console.error('Error requesting withdrawal:', error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'There was an error processing your request. Please try again.',
-          confirmButtonText: 'OK'
-        });
-      }
-    );
-  }  
-
   ngOnInit(): void {
     // Fetch account data
     this.account = this.accountService.accountValue;
@@ -185,7 +135,66 @@ export class DetailsComponent implements OnInit {
         }
       });
   }
+
+  openFundRequestModal(campaign: any) {
+    this.selectedRequest = campaign; // Set the selected campaign data
+    this.fundRequestModal = true; // Open the modal
+  }
+
+  closeFundRequestModal() {
+    this.fundRequestModal = false;
+  }
   
+  submitFundRequest(selectedBank: string, accountNumber: string): void {
+    // Verify all required fields
+    if (!selectedBank || !accountNumber) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Please ensure all fields are filled out correctly.',
+        confirmButtonText: 'OK'
+      });
+      return;
+    }
+    console.log('Selected bank:', selectedBank);
+    console.log('Account number:', accountNumber);
+    console.log('Selected campaign ID:', this.selectedRequest?.Campaign_ID);
+    console.log('Account ID:', this.account?.id);
+    console.log('Withdrawal amount:', this.amount);
+    
+    const fundRequestData: Omit<Withdraw, "Withdraw_ID" | "Request_Date" | "Status"> = {
+      Bank_account: selectedBank,
+      Acc_number: Number(accountNumber), // Ensure this is a valid number
+      Campaign_ID: this.selectedRequest.Campaign_ID,
+      acc_id: this.account.id, // Ensure this is not undefined or null
+      Withdraw_Amount: this.amount, // Ensure this is defined and valid
+    };
+
+  
+    this.withdrawService.requestWithdrawal(fundRequestData).subscribe(
+      response => {
+        this.isFundRequest = true;
+        console.log('Withdrawal request successful:', response);
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Withdrawal request submitted successfully!',
+          confirmButtonText: 'OK'
+        });
+        this.closeFundRequestModal(); // Close modal after submission
+      },
+      error => {
+        console.error('Error requesting withdrawal:', error);
+        const errorMessage = error?.error?.message || 'There was an error processing your request. Please try again.';
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: errorMessage,
+          confirmButtonText: 'OK'
+        });
+      }
+    );
+  }
   
 
   filterAccomplishedEvents() {

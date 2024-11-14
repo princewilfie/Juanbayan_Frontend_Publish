@@ -49,19 +49,24 @@ export class RewardListComponent implements OnInit {
     this.isEditing = false;
     this.rewardForm.reset({ reward_Status: 'Active' });
     this.currentRewardId = null;
-
-    const modal = new bootstrap.Modal(document.getElementById('rewardModal'));
-    modal.show();
+    this.showModal('rewardModal');
   }
 
   openEditModal(reward: Reward): void {
     this.isEditing = true;
     this.currentRewardId = reward.id;
     this.rewardForm.patchValue(reward);
-
-    const modal = new bootstrap.Modal(document.getElementById('rewardModal'));
-    modal.show();
+    this.showModal('rewardModal');
   }
+
+  closeRewardModal(): void {
+    const modalElement = document.getElementById('rewardModal');
+    if (modalElement) {
+      const modalInstance = new bootstrap.Modal(modalElement);
+      modalInstance.hide(); // Programmatically close the modal
+    }
+  }
+  
 
   saveReward(): void {
     if (this.rewardForm.valid) {
@@ -96,8 +101,7 @@ export class RewardListComponent implements OnInit {
         });
       }
 
-      const modal = bootstrap.Modal.getInstance(document.getElementById('rewardModal'));
-      modal.hide();
+      this.closeRewardModal();
     }
   }
 
@@ -131,5 +135,13 @@ export class RewardListComponent implements OnInit {
         });
       }
     });
+  }
+
+  private showModal(modalId: string): void {
+    const modalElement = document.getElementById(modalId);
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
   }
 }
