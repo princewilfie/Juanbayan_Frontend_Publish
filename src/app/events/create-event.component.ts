@@ -323,4 +323,32 @@ export class CreateEventComponent implements OnInit {
       return false;
     });
   }
+
+  deleteEvent(eventId: number) {
+    this.eventService.delete(eventId).subscribe(
+      response => {
+        this.loadEvents();  
+        this.closeModal();  
+
+        // SweetAlert success for deleting a campaign
+        Swal.fire({
+          icon: 'success',
+          title: 'Campaign Deleted',
+          text: 'Your campaign has been deleted successfully!',
+          confirmButtonText: 'OK'
+        });
+      },
+      error => {
+        this.errorMessage = error.message || 'Failed to delete campaign.';
+
+        // SweetAlert failure for deleting a campaign
+        Swal.fire({
+          icon: 'error',
+          title: 'Campaign Deletion Failed',
+          text: `Failed to delete campaign: ${this.errorMessage}`,
+          confirmButtonText: 'OK'
+        });
+      }
+    );
+  }  
 }

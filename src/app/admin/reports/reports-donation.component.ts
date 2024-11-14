@@ -5,7 +5,7 @@ import { Chart } from 'chart.js/auto';
 
 @Component({
   templateUrl: './reports-donation.component.html',
-  styleUrls: ['./reports-donation.component.css']
+  //styleUrls: ['./reports-donation.component.css']
 })
 export class ReportsDonationComponent implements OnInit, AfterViewInit {
   donations: Donation[] = [];
@@ -105,5 +105,18 @@ export class ReportsDonationComponent implements OnInit, AfterViewInit {
     const monthNames = ["January", "February", "March", "April", "May", "June",
                         "July", "August", "September", "October", "November", "December"];
     return monthNames[month];
+  }
+
+  downloadAnimation() {
+    const downloadButton = document.querySelector('.btn-circle-download') as HTMLElement;
+    downloadButton.classList.add('load');
+
+    setTimeout(() => {
+        downloadButton.classList.add('done');
+    }, 1000);
+
+    setTimeout(() => {
+        downloadButton.classList.remove('load', 'done');
+    }, 5000);
   }
 }

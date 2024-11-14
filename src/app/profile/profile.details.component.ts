@@ -30,6 +30,7 @@ export class DetailsComponent implements OnInit {
   events: CommunityEvent[] = [];
   joinedEvents: Participant[];
   accomplishedEvents: any[] = [];
+  activities: any[] = []; // To hold the latest activities
 
   constructor(
     private accountService: AccountService,
@@ -44,7 +45,7 @@ export class DetailsComponent implements OnInit {
 
   openFundRequestModal(modal: TemplateRef<any>, campaign: Campaign) {
     this.selectedRequest = campaign;
-    this.modalService.open(modal);
+    this.modalService.open(modal, {backdrop: false });
   }
 
   submitFundRequest(modal: any): void {
@@ -109,6 +110,9 @@ export class DetailsComponent implements OnInit {
       return;
     }
   
+
+    this.loadAccountActivities();
+
     // Ensure account.id is a number
     const accountId = Number(this.account.id);
     if (isNaN(accountId)) {
@@ -158,6 +162,30 @@ export class DetailsComponent implements OnInit {
   );
 
   }
+
+  loadAccountActivities(): void {
+    this.accountService.getAccountActivities(this.account.id)
+      .subscribe({
+        next: (response) => {
+          console.log('Fetched Activities:', response);  // Log the entire response object
+          
+          // Ensure response contains a 'data' property and it's an array
+          if (response && Array.isArray(response.data)) {
+            this.activities = response.data;
+          } else {
+            console.error('Activities data is not an array', response);
+            this.activities = [];  // Fallback to empty array in case of unexpected data
+          }
+        },
+        error: (err) => {
+          console.error('Error loading account activities:', err);
+          Swal.fire('Error', 'Failed to load activities', 'error');
+          this.activities = [];  // Fallback in case of an error
+        }
+      });
+  }
+  
+  
 
   filterAccomplishedEvents() {
     if (!this.events || this.events.length === 0) {
@@ -266,7 +294,7 @@ export class DetailsComponent implements OnInit {
     // Assign the selected reward to selectedItem
     this.selectedItem = reward;
     // Open the modal
-    this.modalService.open(content, { size: 'lg' });
+    this.modalService.open(content, { size: 'lg', backdrop: false });
   }
 
   redeem(rewardId: number, address: string) {

@@ -12,37 +12,95 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:application",
+
+
           "options": {
-            "outputPath": "dist/angular-boilerplate",
-            "index": "src/index.html",
-            "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
-            "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/jb-symbol-logo.ico",
-              "src/assets"
-            ],
-            "styles": [
-              
-            ],
-            "scripts": [
-               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-            ]
-          },
+          "outputPath": "dist/angular-boilerplate",
+          "index": "src/index.html",
+          "browser": "src/main.ts",
+          "polyfills": [
+            "zone.js"
+          ],
+          "tsConfig": "tsconfig.app.json",
+          "assets": [
+            "src/jb-symbol-logo.ico",
+            "src/assets"
+          ],
+          "styles": [
+            "src/assets/bootstrap/vendor/fontawesome-free/css/all.min.css",
+            "src/assets/bootstrap/css/sb-admin-2.min.css",
+
+            "src/assets/user-bootstrap/charityworks-master/assets/css/bootstrap.min.css",
+            "src/assets/user-bootstrap/charityworks-master/assets/css/owl.carousel.min.css",
+            "src/assets/user-bootstrap/charityworks-master/assets/css/slicknav.css",
+            "src/assets/user-bootstrap/charityworks-master/assets/css/flaticon.css",
+            "src/assets/user-bootstrap/charityworks-master/assets/css/gijgo.css",
+            "src/assets/user-bootstrap/charityworks-master/assets/css/hamburgers.min.css",
+            "src/assets/user-bootstrap/charityworks-master/assets/css/progressbar_barfiller.css",
+            "src/assets/user-bootstrap/charityworks-master/assets/css/animate.min.css",
+            "src/assets/user-bootstrap/charityworks-master/assets/css/animated-headline.css",
+            "src/assets/user-bootstrap/charityworks-master/assets/css/magnific-popup.css",
+            "src/assets/user-bootstrap/charityworks-master/assets/css/slick.css",
+            "src/assets/user-bootstrap/charityworks-master/assets/css/nice-select.css",
+            "src/assets/user-bootstrap/charityworks-master/assets/css/style.css"
+            
+          ],
+          "scripts": [
+            "src/assets/bootstrap/vendor/jquery/jquery.min.js",
+            "src/assets/bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js",
+            "src/assets/bootstrap/vendor/jquery-easing/jquery.easing.min.js",
+            "src/assets/bootstrap/js/sb-admin-2.min.js",
+            
+            "src/assets/bootstrap/vendor/chart.js/Chart.min.js",
+            "src/assets/bootstrap/js/demo/chart-area-demo.js",
+            "src/assets/bootstrap/js/demo/chart-pie-demo.js",
+            "src/assets/bootstrap/js/demo/chart-bar-demo.js",
+
+            "src/assets/bootstrap/vendor/datatables/jquery.dataTables.min.js",
+            "src/assets/bootstrap/vendor/datatables/dataTables.bootstrap4.min.js",
+            "src/assets/bootstrap/js/demo/datatables-demo.js",
+
+            "src/assets/user-bootstrap/charityworks-master/assets/js/vendor/modernizr-3.5.0.min.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/vendor/jquery-1.12.4.min.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/popper.min.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/bootstrap.min.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/jquery.slicknav.min.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/owl.carousel.min.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/slick.min.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/wow.min.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/animated.headline.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/jquery.magnific-popup.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/gijgo.min.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/jquery.nice-select.min.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/jquery.sticky.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/jquery.barfiller.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/jquery.counterup.min.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/waypoints.min.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/jquery.countdown.min.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/hover-direction-snake.min.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/contact.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/jquery.form.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/jquery.validate.min.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/mail-script.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/jquery.ajaxchimp.min.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/plugins.js",
+            "src/assets/user-bootstrap/charityworks-master/assets/js/main.js"
+ 
+          ]
+        },
+
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "5mb",
+                  "maximumError": "4mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "100kb",
+                  "maximumError": "400kb"
                 }
               ],
               "outputHashing": "all"
@@ -86,13 +144,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ]
-
           }
         }
       }

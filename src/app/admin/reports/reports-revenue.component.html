@@ -1,0 +1,66 @@
+<div class="container-fluid mt-5 mb-5">
+    <h1 class="h3 mb-2 text-gray-800">Revenue Reports</h1>
+    <p class="mb-4">View and download the revenue details and total fee amounts for donations.</p>
+  
+    <!-- Fee Amounts Table -->
+    <div class="row">
+      <div class="col-xl-12 col-lg-5">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3 bg-dark">
+            <h6 class="m-0 font-weight-bold text-light">Fee Amounts Table</h6>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-bordered" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>Donation ID</th>
+                    <th>Fee Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let fee of feeAmounts">
+                    <td>{{ fee.donation_id }}</td>
+                    <td>{{ fee.fee_amount | currency }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Total Revenue Section -->
+    <div class="row">
+      <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3 bg-dark">
+            <h6 class="m-0 font-weight-bold text-light">Total Revenue</h6>
+          </div>
+          <div class="card-body">
+            <h4>Total Fee Amount: {{ totalFeeAmount | currency }}</h4>
+            <div class="download-button mt-4">
+              <button class="btn btn-primary" (click)="downloadReport()">Download Report</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Monthly Revenue Chart (Bar Chart) -->
+    <div class="row">
+      <div class="col-xl-12 col-lg-12">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3 bg-dark">
+            <h6 class="m-0 font-weight-bold text-light">Monthly Total Revenue</h6>
+          </div>
+          <div class="card-body">
+            <!-- Canvas for Bar Chart -->
+            <canvas id="barChartCanvas"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

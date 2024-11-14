@@ -1,4 +1,4 @@
-export interface Withdraw {
+export class Withdraw {
     Withdraw_ID: number;
     Campaign_ID: number;
     acc_id: string; 
@@ -7,4 +7,8 @@ export interface Withdraw {
     Withdraw_Amount: number; 
     Status: string;
     Request_Date: Date;
+    Testimony?: string;
+    acc_firstname?: string;
+    acc_lastname?: string;
+    acc_image?: string;
 }

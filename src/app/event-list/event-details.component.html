@@ -1,53 +1,119 @@
-<br><br><br><br><br>
-<div *ngIf="event" class="event-details-container">
-  <div class="event-image">
-    <img [src]="event.Event_Image ? getImagePath(event.Event_Image) : 'assets/default-image.png'" alt="{{ event.Event_Name }}" />
-  </div>
-  
-  <div class="event-info">
-    <h2>{{ event.Event_Name }}</h2>
-    <p class="event-price">${{ event.Price }}</p>
-    <p>{{ event.Event_Description }}</p>
-    <div class="button-group">
-      <button class="join-button" (click)="openTermsAndConditionsModal()">Join Volunteer</button>
+<!--? Hero Start -->
+<div class="slider-area2">
+  <div class="slider-height2 d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="hero-cap hero-cap2 pt-20 text-center">
+            <h2>Event Details</h2>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <!-- Like/Reaction Section -->
-  <div class="like-section">
-    <button class="like-button" (click)="toggleLike()">
-      <i [class]="hasLiked ? 'fas fa-thumbs-up' : 'far fa-thumbs-up'"></i>
-      {{ likeCount }} {{ likeCount === 1 ? 'Like' : 'Likes' }}
-    </button>
-  </div>
-
-  <!-- Comment Section -->
-  <div class="comment-section mt-4">
-    <h3>Comments</h3>
-    <div class="comment" *ngFor="let comment of comments">
-      <p>
-        <img [src]=" 'http://localhost:4000/assets/' + comment.acc_image" alt="{{ comment.acc_firstname }}" class="comment-user-image">
-        <strong>{{ comment.acc_firstname }} {{ comment.acc_lastname }}</strong>: {{ comment.Comment_Text }}
-      </p>
-    </div>
-
-    <div class="add-comment">
-      <input type="text" [(ngModel)]="newComment.Comment_Text" placeholder="Add a comment..." />
-      <button (click)="addComment()">Submit</button>
-    </div>
-  </div>
-
-  <!-- Social Share Buttons -->
-  <div class="button-container mt-3">
-    <button class="icon-button" (click)="shareToFacebook(getEventUrl())">
-      <i class="fab fa-facebook-f"></i>
-    </button>
-    <button class="icon-button" (click)="shareToTwitter(getEventUrl())">
-      <i class="fab fa-twitter"></i>
-    </button>
-    <button class="icon-button" (click)="shareToInstagram(getEventUrl())">
-      <i class="fab fa-instagram"></i>
-    </button>
   </div>
 </div>
-<br><br><br><br><br>
+
+<!--? Blog Area Start -->
+<section class="blog_area single-post-area section-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 posts-list">
+        <div class="single-post">
+          <div class="feature-img">
+            <img [src]="event.Event_Image ? getImagePath(event.Event_Image) : 'assets/default-image.png'" alt="{{ event.Event_Name }}" />
+          </div>
+          <div class="blog_details">
+            <h1 style="color: #2d2d2d;">{{ event.Event_Name }}</h1>
+            <ul class="blog-info-link mt-3 mb-4">
+              <li><a href="#"><i class="fa fa-user"></i>{{event.acc_firstname}} {{event.acc_lastname}}</a></li>
+              <li><a href="#"><i class="fa fa-comments"></i> {{totalComments}} Comments</a></li>
+            </ul>
+            <p class="excert">{{ event.Event_Description }}</p>
+            <!-- Button Group -->
+            <div class="button-container mt-4">
+              <div class="row">
+                <div class="col-md-12 mb-2">
+                  <button class="genric-btn primary" (click)="openTermsAndConditionsModal()">Join Volunteer</button>
+                </div>
+                <div class="col-md-12 mb-2">
+                  <button class="genric-btn success">Share</button>
+                </div>
+                <div class="col-md-12 mb-2">
+                  <button class="like-button genric-btn default-border circle" (click)="toggleLike()">
+                    <i [class]="hasLiked ? 'fas fa-thumbs-up' : 'far fa-thumbs-up'"></i>
+                    {{ likeCount }} {{ likeCount === 1 ? 'Like' : 'Likes' }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="navigation-top">
+          <div class="d-sm-flex justify-content-between text-center">
+            <p class="like-info"><span class="align-middle"><i class="fa fa-heart"></i></span>{{ likeCount }} people like this</p>
+            <div class="col-sm-4 text-center my-2 my-sm-0">
+              <!-- Placeholder for future content -->
+            </div>
+            <ul class="social-icons">
+              <li><a (click)="shareToFacebook(getEventUrl())"><i class="fab fa-facebook-f"></i></a></li>
+              <li><a (click)="shareToTwitter(getEventUrl())"><i class="fab fa-twitter"></i></a></li>
+              <li><a (click)="shareToInstagram(getEventUrl())"><i class="fab fa-instagram"></i></a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="blog-author">
+          <div class="media align-items-center">
+            <img [src]=" 'http://localhost:4000/assets/' + event.acc_image" alt="{{ event.acc_firstname }}" class="comment-user-image"> 
+            <div class="media-body">
+              <a href="#"><h4>{{event.acc_firstname}} {{event.acc_lastname}}</h4></a>
+              <p>Support this event to lift up our brethren!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="comments-area">
+          <h4>{{totalComments}} Comments</h4>
+
+          <div class="comment-list" *ngFor="let comment of comments">
+            <div class="single-comment justify-content-between d-flex">
+              <div class="user justify-content-between d-flex">
+                <div class="thumb">
+                  <img [src]=" 'http://localhost:4000/assets/' + comment.acc_image" alt="{{ comment.acc_firstname }}" > 
+                </div>
+                <div class="desc">
+                  <p class="comment">
+                    {{ comment.Comment_Text }}
+                  </p>
+                  <div class="d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                      <h5><a>{{ comment.acc_firstname }} {{ comment.acc_lastname }}</a></h5>
+                      <p class="date">{{Created_At}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="comment-form">
+            <h4>Add Comment</h4>
+            <form class="form-contact comment_form" action="#" id="commentForm">
+              <div class="row">
+                <div class="col-12">
+                  <div class="form-group">
+                    <textarea class="form-control w-100" name="comment" id="comment" cols="30" rows="9" placeholder="Write Comment" [(ngModel)]="newComment.Comment_Text"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <button type="submit" (click)="addComment()" class="button button-contactForm btn_1 boxed-btn">Post Comment</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

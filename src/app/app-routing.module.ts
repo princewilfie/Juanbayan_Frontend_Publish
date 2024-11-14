@@ -10,7 +10,6 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { TeamMemberComponent } from './team-member/about-us.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { CreateCampaignComponent } from './create campaign/create-campaign.component'
-import { NotFoundComponent } from './lost-page/404.page.component';
 import { CreateEventComponent } from './events/create-event.component';
 import { CampaignDetailsComponent } from './campaign/campaign-details.component'; 
 
@@ -19,6 +18,7 @@ import { CampaignDetailsComponent } from './campaign/campaign-details.component'
 import { DashboardSwitchComponent } from './dashboard-switch/dashboard-switch.component';
 import { EventListComponent } from './event-list/event-list.component';
 import { EventDetailsComponent } from './event-list/event-details.component';
+import { ContactUsComponent } from './contact/contact.component';
 
 const accountModule = () => import('./account/account.module').then(x => x.AccountModule);
 const adminModule = () => import('./admin/admin.module').then(x => x.AdminModule);
@@ -52,9 +52,9 @@ const routes: Routes = [
 
     { path: 'dashboard-switch', component: DashboardSwitchComponent, canActivate: [AuthGuard] }, 
 
+    { path: 'contact', component: ContactUsComponent},
     // Catch-all redirect for invalid routes
-    { path: '**', redirectTo: '/landing-page', pathMatch: 'full' },
-    { path: '**', component: NotFoundComponent }
+    { path: '**', redirectTo: '/landing-page', pathMatch: 'full' }
 ];
 
 @NgModule({

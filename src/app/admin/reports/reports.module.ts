@@ -8,6 +8,9 @@ import { ReportsEventComponent } from './reports-event.component';
 import { ReportsAccountComponent } from './reports-account.component';
 import { ReportsParticipantComponent } from './reports-participant.component';
 import { ReportsDonationComponent } from './reports-donation.component';
+import { ReportsRevenueComponent } from './reports-revenue.component';
+import { ReportsProfilingComponent } from './reports-profiling.component';
+
 
 @NgModule({
   declarations: [
@@ -16,14 +19,18 @@ import { ReportsDonationComponent } from './reports-donation.component';
     ReportsEventComponent, 
     ReportsAccountComponent,
     ReportsParticipantComponent,
-    ReportsDonationComponent
+    ReportsDonationComponent,
+    ReportsRevenueComponent,
+    ReportsProfilingComponent
+  
     
 
   ],
   imports: [
     CommonModule,
     FormsModule,
-    ReportRoutingModule
+    ReportRoutingModule,
+    
   ]
 })
 export class ReportsModule { }

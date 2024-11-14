@@ -136,22 +136,30 @@
 
   .like-section {
     margin-top: 20px;
+    display: flex;
+    justify-content: flex-start; /* Align the like button to the left */
+    align-items: center;
   }
+  
   .like-button {
     background-color: #007bff;
     color: white;
     border: none;
-    padding: 10px;
+    padding: 10px 20px; /* Add more padding for better spacing */
     font-size: 1em;
     cursor: pointer;
     border-radius: 5px;
-    display: flex;
+    display: inline-flex; /* Ensures elements are aligned in a row */
     align-items: center;
-    gap: 10px;
+    gap: 10px; /* Space between icon and text */
+    transition: background-color 0.3s ease;
   }
+  
   .like-button i {
     font-size: 1.5em;
   }
+  
+
   .comment-section {
     margin-top: 20px;
   }

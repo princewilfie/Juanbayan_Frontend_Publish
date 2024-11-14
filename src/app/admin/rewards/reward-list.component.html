@@ -1,37 +1,64 @@
-<div class="container mt-5">
-    <h2 class="mb-4">Reward List</h2>
-    <div class="d-flex justify-content-end mb-3">
-        <button class="btn btn-sm btn-success mb-2" (click)="openAddModal()">Add Reward</button>
-    </div>
-    <table class="table table-bordered">
-        <thead class="table-dark">
-            <tr>
-                <th scope="col">Image</th>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Point Cost</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Status</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let reward of rewards">
-                <td>
-                    <img [src]="'http://localhost:4000/assets/' + reward.reward_Image" alt="{{ reward.reward_Name }}" width="100">
-                </td>
-                <td>{{ reward.reward_Name }}</td>
-                <td>{{ reward.reward_Description }}</td>
-                <td>{{ reward.reward_PointCost }}</td>
-                <td>{{ reward.reward_Quantity }}</td>
-                <td>{{ reward.reward_Status }}</td>
-                <td>
-                    <button (click)="openEditModal(reward)" class="btn btn-sm btn-primary mr-1">Edit</button>
-                    <button (click)="deleteReward(reward.id)" class="btn btn-danger btn-sm">Delete</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<div id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+      <div id="content-wrapper" class="d-flex flex-column">
+          <div id="content">
+              <div class="container-fluid">
+
+                  <!-- Page Heading -->
+                  <h1 class="h3 mb-2 text-gray-800">Rewards</h1>
+                  <p class="mb-4">This Rewards is designed to streamline the review process.</p>
+
+                  <!-- DataTales Example -->
+                  <div class="card shadow mb-4">
+                      <div class="card-header py-3">
+                          <h6 class="m-0 font-weight-bold text-primary">Reward List</h6>
+                      </div>
+                      <div class="card-body">
+                          <div class="table-responsive">
+                              <table class="table table-striped" id="dataTable" width="100%" cellspacing="10">
+                                  <thead>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Point Cost</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Actions</th>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let reward of rewards">
+                                      <td>
+                                          <img [src]="'http://localhost:4000/assets/' + reward.reward_Image" alt="{{ reward.reward_Name }}" width="100">
+                                      </td>
+                                      <td>{{ reward.reward_Name }}</td>
+                                      <td>{{ reward.reward_Description }}</td>
+                                      <td>{{ reward.reward_PointCost }}</td>
+                                      <td>{{ reward.reward_Quantity }}</td>
+                                      <td>{{ reward.reward_Status }}</td>
+                                      <td>
+                                          <button (click)="openEditModal(reward)" class="btn btn-sm btn-primary mr-1">Edit</button>
+                                          <button (click)="deleteReward(reward.id)" class="btn btn-danger btn-sm">Delete</button>
+                                      </td>
+                                    </tr>                      
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+  </a>
 </div>
 
 <!-- Add/Edit Modal -->

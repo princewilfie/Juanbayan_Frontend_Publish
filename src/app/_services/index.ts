@@ -12,3 +12,4 @@ export * from './like.service';
 export * from './category.service';
 export * from './eventComment.service';
 export * from './eventLike.service';
+export * from './revenue.service';

@@ -1,38 +1,282 @@
-<div class="container">
-    <h2>Monthly Volunteer Participation</h2>
-  
-    <div class="chart-container">
-      <h3>Volunteers Joined by Month</h3>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
 
-      <!-- Download Reports Button -->
-    <div class="download-button">
-        <button id="downloadReportsBtn" (click)="download()">Download</button>
-      </div>
+<title>Volunteer Reports</title>
 
-      
-      <canvas #volunteerChart id="volunteerChart"></canvas>
+
+<div id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid mt-5 mb-5">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Volunteer Reports</h1>
+                    <p class="mb-4">Volunteer Reports where you can see the total number of volunteers and the details.</p>
+
+                    <!-- Content Row -->
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Accordion -->
+                                <a href="#collapseCardExample" class="d-block card-header py-3 bg-dark" data-toggle="collapse"
+                                    role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                                    <h6 class="m-0 font-weight-bold text-light">Filter</h6>
+                                </a>
+                                <!-- Card Content - Collapse -->
+                                <div class="collapse show" id="collapseCardExample">
+                                    <div class="card-body ">
+                                        <form
+                                            class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                                            <div class="input-group">
+                                                <div class="row">
+                                                    
+                                                 </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                     <!-- Table Row -->
+                     <div class="row">
+                      <div class="col-xl-12 col-lg-5">
+                          <!-- Bar Chart -->
+                          <div class="card shadow mb-4">
+                            <div class="card-header py-3 bg-dark">
+                                <h6 class="m-0 font-weight-bold text-light">Table</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                          <tr>
+                                            <th>Participant ID</th>
+                                            <th>First Name</th>
+                                            <th>Last Name</th>
+                                            <th>Event Name</th>
+                                            <th>Joined Date</th>
+                                          </tr>                                 
+                                        </thead>
+                                        <tbody>
+                                          <tr *ngFor="let participant of filteredParticipants">
+                                            <td>{{ participant.Participant_ID }}</td>
+                                            <td>{{ participant.acc_firstname }}</td>
+                                            <td>{{ participant.acc_lastname }}</td>
+                                            <td>{{ participant.Event_Name }}</td>
+                                            <td>{{ participant.joinedAt | date: 'longDate' }}</td>
+                                          </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                  </div>
+                    <div class="row">
+
+                        <div class="col-xl-8 col-lg-7">
+
+                            <!-- Area Chart -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 bg-dark">
+                                    <h6 class="m-0 font-weight-bold text-light">Total Volunteers</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <canvas #volunteerChart id="volunteerChart"></canvas>
+                                    </div>
+                                    <br><br><br><br><br>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Donut Chart -->
+                        <div class="col-xl-4 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div class="card-header py-3 bg-dark">
+                                    <h6 class="m-0 font-weight-bold text-light">Generate Reports</h6>
+                                </div>
+                                
+                                <!-- Card Body -->
+                                <div class="card-body">      
+                                    This genarate the report of the volunteer. The report will be download in the <code>.csv</code> format.
+                                    <hr>
+                                    <div class="btn-circle-download" (click)="downloadAnimation(); download()">
+                                        <svg id="arrow" width="14px" height="20px" viewBox="17 14 14 20">
+                                            <path d="M24,15 L24,32"></path>
+                                            <polyline points="30 27 24 33 18 27"></polyline>
+                                        </svg>
+                                        <svg id="check" width="21px" height="15px" viewBox="13 17 21 15">
+                                            <polyline points="32.5 18.5 20 31 14.5 25.5"></polyline>
+                                        </svg>
+                                        <svg id="border" width="48px" height="48px" viewBox="0 0 48 48">
+                                            <path d="M24,1 L24,1 L24,1 C36.7025492,1 47,11.2974508 47,24 L47,24 L47,24 C47,36.7025492 36.7025492,47 24,47 L24,47 L24,47 C11.2974508,47 1,36.7025492 1,24 L1,24 L1,24 C1,11.2974508 11.2974508,1 24,1 L24,1 Z"></path>
+                                        </svg>
+                                    </div>
+                                                                               
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
     </div>
-  
-    <!-- Optional: Add a data table or filters -->
-    <table class="table table-bordered mt-4">
-      <thead>
-        <tr>
-          <th>Participant ID</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Event Name</th>
-          <th>Joined Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let participant of filteredParticipants">
-          <td>{{ participant.Participant_ID }}</td>
-          <td>{{ participant.acc_firstname }}</td>
-          <td>{{ participant.acc_lastname }}</td>
-          <td>{{ participant.Event_Name }}</td>
-          <td>{{ participant.joinedAt | date: 'longDate' }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+</div>
+
+<style>
+.btn-circle-download {
+  position: relative;
+  height: 48px;
+  width: 48px;
+  margin: auto;
+  border-radius: 100%;
+  background: #E8EAED;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+.btn-circle-download:after {
+  content: "";
+  position: relative;
+  display: block;
+  width: 200%;
+  height: 100%;
+  background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0));
+  transform: translateX(-100%);
+}
+.btn-circle-download svg {
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+}
+.btn-circle-download svg#border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  stroke: none;
+  stroke-dasharray: 144;
+  stroke-dashoffset: 144;
+  transition: all 0.9s linear;
+}
+.btn-circle-download svg#arrow {
+  position: absolute;
+  top: 14px;
+  left: 17px;
+  stroke: #9098A9;
+  transition: all 0.2s ease;
+}
+.btn-circle-download svg#check {
+  position: absolute;
+  top: 17px;
+  left: 13px;
+  stroke: white;
+  transform: scale(0);
+}
+.btn-circle-download:hover {
+  background: rgba(0, 119, 255, 0.2);
+}
+.btn-circle-download:hover #arrow path,
+.btn-circle-download:hover #arrow polyline {
+  stroke: #0077FF;
+}
+.btn-circle-download.load {
+  background: rgba(0, 119, 255, 0.2);
+}
+.btn-circle-download.load #arrow path,
+.btn-circle-download.load #arrow polyline {
+  stroke: #0077FF;
+}
+.btn-circle-download.load #border {
+  stroke: #0077FF;
+  stroke-dasharray: 144;
+  stroke-dashoffset: 0;
+}
+.btn-circle-download.done {
+  background: #0077FF;
+  animation: rubberBand 0.8s;
+}
+.btn-circle-download.done:after {
+  transform: translateX(50%);
+  transition: transform 0.4s ease;
+  transition-delay: 0.7s;
+}
+.btn-circle-download.done #border,
+.btn-circle-download.done #arrow {
+  display: none;
+}
+.btn-circle-download.done #check {
+  transform: scale(1);
+  transition: all 0.2s ease;
+  transition-delay: 0.2s;
+}
+
+@keyframes rubberBand {
+  from {
+    transform: scale(1, 1, 1);
+  }
+  30% {
+    transform: scale3d(1.15, 0.75, 1);
+  }
+  40% {
+    transform: scale3d(0.75, 1.15, 1);
+  }
+  50% {
+    transform: scale3d(1.1, 0.85, 1);
+  }
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+.credit {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  transition: all 0.2s ease;
+  -webkit-user-select: none;
+  user-select: none;
+  opacity: 0.6;
+}
+.credit img {
+  width: 72px;
+}
+.credit:hover {
+  transform: scale(0.95);
+}
+
+</style>

@@ -1,0 +1,19 @@
+	/*
+  	Flaticon icon font: Flaticon
+  	Creation date: 02/06/2020 05:24
+  	*/
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+
+}
+
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+  font-family: Flaticon;
+font-style: normal;
+}
+
+.flaticon-null:before { content: "\f100"; }
+.flaticon-null-1:before { content: "\f101"; }
+.flaticon-gear:before { content: "\f102"; }
+.flaticon-think:before { content: "\f103"; }

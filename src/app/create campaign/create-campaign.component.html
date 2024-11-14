@@ -1,12 +1,12 @@
 <div class="container">
     <br><br><br><br>
-        <h1 class="text-center mb-4">Create and Donate to Campaigns</h1>
+    <div class="background-image-section">
+        <h1>Create and Donate to Campaigns</h1>
+        <button class="btn btn-primary" (click)="openCreateCampaignModal()">
+            <i class="bi bi-plus-circle"></i> Create Campaign
+        </button>
+    </div>
     
-        <div class="text-center mb-4">
-            <button class="btn btn-primary" (click)="openCreateCampaignModal(createCampaignModal)">
-                <i class="bi bi-plus-circle"></i> Create Campaign
-            </button>
-        </div>
     
         <!-- Approved Campaigns Section -->
         <div class="campaign-section">
@@ -22,8 +22,8 @@
                         <div class="card-body">
                             <h5 class="card-title text-dark">{{ campaign.Campaign_Name }}</h5>
                             <p class="card-text text-muted">{{ campaign.Campaign_Description }}</p>
-                            <p><strong>Goal: ${{ campaign.Campaign_TargetFund }}</strong></p>
-                            <span class="badge bg-info">{{ campaign.Category_ID }}</span>
+                            <p><strong>Goal: ₱{{ campaign.Campaign_TargetFund }}</strong></p>
+
     
                             <div *ngIf="campaign.Campaign_ApprovalStatus === 'Approved'" class="text-success mt-2">
                                 <strong>Approved</strong>
@@ -36,27 +36,6 @@
                 </div>
             </div>
         </div>
-
-<ng-template #donorsModal let-modal>
-        <div class="modal-header">
-          <h5 class="modal-title">Donors</h5>
-          <button type="button" class="btn-close" aria-label="Close" (click)="closeDonorsModal()"></button>
-        </div>
-        <div class="modal-body">
-          <ul *ngIf="donor.length; else noDonors">
-            <li *ngFor="let donor of donor">
-                <img [src]="getImagePath('assets/' + donor.acc_image)" alt="{{ donor.acc_firstname }}" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
-              <strong>{{ donor.acc_firstname }} {{ donor.acc_lastname }} - ₱{{ donor.donation_amount }} </strong>
-            </li>
-          </ul>
-          <ng-template #noDonors>
-            <p>No donors found for this campaign.</p>
-          </ng-template>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" (click)="closeDonorsModal()">Close</button>
-        </div>
-      </ng-template>
     
         <!-- Pending Campaigns Section -->
         <div class="campaign-section">
@@ -64,7 +43,7 @@
             <div *ngIf="pendingCampaigns.length === 0" class="alert alert-warning">No pending campaigns.</div>
             <div class="row">
                 <div class="col-md-4 mb-4" *ngFor="let campaign of pendingCampaigns">
-                    <div class="card campaign-card h-100 shadow-sm" (click)="openCampaignDetails(campaign, campaignDetailModal)">
+                    <div class="card campaign-card h-100 shadow-sm" (click)="openCampaignDetails(campaign, campaignDetailModal); $event.stopPropagation();">
                         <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" 
                             alt="{{ campaign.Campaign_Name }} Image" 
                             class="card-img-top campaign-image img-fluid rounded-top" 
@@ -72,13 +51,14 @@
                         <div class="card-body">
                             <h5 class="card-title text-dark">{{ campaign.Campaign_Name }}</h5>
                             <p class="card-text text-muted">{{ campaign.Campaign_Description }}</p>
-                            <p><strong>Goal: ${{ campaign.Campaign_TargetFund }}</strong></p>
-                            <span class="badge bg-info">{{ campaign.Category_ID }}</span>
-    
+                            <p><strong>Goal: ₱{{ campaign.Campaign_TargetFund }}</strong></p>
+                            
                             <div *ngIf="campaign.Campaign_ApprovalStatus === 'Waiting For Approval'" class="text-warning mt-2">
                                 <strong>Pending for Approval</strong>
                             </div>
+                            <button type="button" class="btn btn-danger" (click)="deleteCampaign(campaign.Campaign_ID)">Delete</button>
                         </div>
+                        
                     </div>
                 </div>
             </div>
@@ -90,7 +70,7 @@
             <div *ngIf="rejectedCampaigns.length === 0" class="alert alert-danger">No rejected campaigns.</div>
             <div class="row">
                 <div class="col-md-4 mb-4" *ngFor="let campaign of rejectedCampaigns">
-                    <div class="card campaign-card h-100 shadow-sm" (click)="openCampaignDetails(campaign, campaignDetailModal)">
+                    <div class="card campaign-card h-100 shadow-sm" (click)="openCampaignDetails(campaign, campaignDetailModal); $event.stopPropagation();">
                         <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" 
                             alt="{{ campaign.Campaign_Name }} Image" 
                             class="card-img-top campaign-image img-fluid rounded-top" 
@@ -99,180 +79,276 @@
                             <h5 class="card-title text-dark">{{ campaign.Campaign_Name }}</h5>
                             <p class="card-text text-muted">{{ campaign.Campaign_Description }}</p>
                             <p><strong>Goal: ${{ campaign.Campaign_TargetFund }}</strong></p>
-                            <span class="badge bg-info">{{ campaign.Category_ID }}</span>
     
+                            <button type="button" class="btn btn-danger" (click)="deleteCampaign(campaign.Campaign_ID)">Delete</button>
                             <div *ngIf="campaign.Campaign_ApprovalStatus === 'Rejected'" class="text-danger mt-2">
                                 <strong>Rejected</strong>
                             </div>
                         </div>
-                    </div>
-                </div>
             </div>
         </div>
     
-        <!-- Campaign Details Modal -->
-        <ng-template #campaignDetailModal let-modal>
-            <div class="modal-header">
-                <h5 class="modal-title">{{ selectedCampaign?.Campaign_Name }}</h5>
-                <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+        <!-- Done Campaigns Section -->
+        <div class="campaign-section">
+            <h3 class="text-success">Done Campaigns</h3>
+            <div *ngIf="doneCampaigns.length === 0" class="alert alert-success">No campaigns marked as done.</div>
+            <div class="row">
+                <div class="card campaign-card h-100 shadow-sm" *ngFor="let campaign of doneCampaigns">
+                  <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" 
+                  alt="{{ campaign.Campaign_Name }} Image" 
+                  class="card-img-top campaign-image img-fluid rounded-top" 
+                  (error)="this.src='assets/jb-symbol-logo.png'">
+                  <div class="card-body">
+                      <h5 class="card-title text-dark">{{ campaign.Campaign_Name }}</h5>
+                      <p class="card-text text-muted">{{ campaign.Campaign_Description }}</p>
+                      <p><strong>Goal: ${{ campaign.Campaign_TargetFund }}</strong></p>
+
+                      <div *ngIf="campaign.Campaign_ApprovalStatus === 'Done'" class="text-success mt-2">
+                          <strong>Done</strong>
+                      </div>
+                      <!-- Button to submit testimony -->
+                      <button class="btn btn-primary mt-3" (click)="openTestimonyModal(campaign.Campaign_ID)">Submit Testimony</button>
+                  </div>
+                </div>
             </div>
-            <div class="modal-body">
-                <img [src]="getImagePath('assets/' + selectedCampaign?.Campaign_Image)" 
-                     alt="{{ selectedCampaign?.Campaign_Name }} Image" 
-                     class="img-fluid mb-3 rounded">
-    
-                <p><strong>Description:</strong> {{ selectedCampaign?.Campaign_Description }}</p>
-                <p><strong>Category:</strong> {{ selectedCampaign?.Category_ID }}</p>
-                <p><strong>Target Fund:</strong> {{ selectedCampaign?.Campaign_TargetFund | currency }}</p>
-                <p><strong>Current Raised:</strong> {{ selectedCampaign?.Campaign_CurrentRaised | currency }}</p>
-                <p><strong>Start Date:</strong> {{ selectedCampaign?.Campaign_Start | date: 'longDate' }}</p>
-                <p><strong>End Date:</strong> {{ selectedCampaign?.Campaign_End | date: 'longDate' }}</p>
-                <p><strong>Status:</strong> {{ selectedCampaign?.Campaign_Status === 1 ? 'Active' : 'Inactive' }}</p>
-            </div>
+        </div>
+  
+        <!-- NEW MODALS -->
+         <!-- Donors Modal -->
+        <div class="modal fade" [ngClass]="{'show': showDonorsModal}" tabindex="-1" [style.display]="showDonorsModal ? 'block' : 'none'">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title">Donors</h5>
+                <button type="button" class="btn-close" aria-label="Close" (click)="closeDonorsModal()"></button>
+                </div>
+                <div class="modal-body">
+                <ul *ngIf="donor.length; else noDonors">
+                    <li *ngFor="let donor of donor">
+                        <img [src]="getImagePath('assets/' + donor.acc_image)" alt="{{ donor.acc_firstname }}" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+                    <strong>{{ donor.acc_firstname }} {{ donor.acc_lastname }} - ₱{{ donor.donation_amount }} </strong>
+                    </li>
+                </ul>
+                <ng-template #noDonors>
+                    <p>No donors found for this campaign.</p>
+                </ng-template>
+                </div>
             <div class="modal-footer">
-                <button *ngIf="selectedCampaign?.Campaign_ApprovalStatus === 'Approved'" type="button" class="btn btn-primary" (click)="openEditCampaignModal(selectedCampaign, editCampaignModal)">Edit</button>
-                <button *ngIf="selectedCampaign?.Campaign_ApprovalStatus === 'Waiting For Approval' || selectedCampaign?.Campaign_ApprovalStatus === 'Rejected'"
-                        type="button" class="btn btn-danger" (click)="openConfirmationModal(selectedCampaign, confirmationModal)">Delete</button>
-                <button type="button" class="btn btn-secondary" (click)="closeModal(modal)">Close</button>
+            <button type="button" class="btn btn-secondary" (click)="closeDonorsModal()">Close</button>
             </div>
-        </ng-template>
-    
-                
-            <!-- Edit Campaign Modal -->
-            <ng-template #editCampaignModal let-modal>
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Campaign</h5>
-                    <button type="button" class="btn-close" (click)="closeModal(modal)"></button>
-                </div>
-                <div class="modal-body">
-                    <form [formGroup]="editCampaignForm" (ngSubmit)="updateCampaign()">
-                        <div class="mb-3">
-                            <label for="editCampaignName" class="form-label">Campaign Name</label>
-                            <input type="text" class="form-control" id="editCampaignName" formControlName="Campaign_Name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editCampaignDescription" class="form-label">Campaign Description</label>
-                            <textarea class="form-control" id="editCampaignDescription" formControlName="Campaign_Description" rows="3" required></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editCampaignGoal" class="form-label">Campaign Goal ($)</label>
-                            <input type="number" class="form-control" id="editCampaignGoal" formControlName="Campaign_TargetFund" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editCampaignCategory" class="form-label">Category</label>
-                            <select class="form-select" id="editCampaignCategory" formControlName="Category_ID" required>
-                                <option value="">Select a category</option>
-                                <option *ngFor="let category of categories" [value]="category.Category_ID">
-                                  {{ category.Category_Name }}
-                                </option>
-                              </select>
-                            <input type="text" class="form-control mt-2" formControlName="Other_Category" placeholder="Specify other category" *ngIf="editCampaignForm.get('Category_ID')?.value === 4">
-                        </div>
-                        <div class="mb-3">
-                            <label for="editCampaignStartDate" class="form-label">Start Date</label>
-                            <input type="date" class="form-control" id="editCampaignStartDate" formControlName="Campaign_Start" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editCampaignEndDate" class="form-label">End Date</label>
-                            <input type="date" class="form-control" id="editCampaignEndDate" formControlName="Campaign_End" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editCampaignImage" class="form-label">Upload Campaign Image</label>
-                            <input type="file" class="form-control" id="editCampaignImage" (change)="onFileSelected($event)">
-                        </div>
-                        <!-- Proof Files Upload -->
-                        <div class="form-group">
-                            <label for="proofFiles">Proof Files</label>
-                            <p><i>Please upload one (1) valid ID, Certificate of Barangay Indigency, and other proofs.</i></p>
-                            <input type="file" id="proofFiles" (change)="onProofFilesSelected($event)" multiple class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label for="editNoteToAdmin" class="form-label">Note to Admin</label>
-                            <textarea class="form-control" id="editNoteToAdmin" formControlName="Campaign_Notes" rows="3" placeholder="Write a note to the admin (optional)"></textarea>
-                        </div>
-                        <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
-                        <button type="submit" class="btn btn-primary" [disabled]="loading">{{ loading ? 'Updating...' : 'Update Campaign' }}</button>
-                    </form>
-                </div>
-            </ng-template>
-        
-            <!-- Create Campaign Modal -->
-            <ng-template #createCampaignModal>
-                <div class="modal-header">
-                    <h5 class="modal-title">Create a Campaign</h5>
-                    <button type="button" class="btn-close" (click)="closeCreateCampaignModal()"></button>
-                </div>
-                <div class="modal-body">
-                    <form [formGroup]="createCampaignForm" (ngSubmit)="createCampaign()">
-                        <div class="mb-3">
-                            <label for="campaignName" class="form-label">Campaign Name</label>
-                            <input type="text" class="form-control" id="campaignName" formControlName="Campaign_Name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="campaignDescription" class="form-label">Campaign Description</label>
-                            <textarea class="form-control" id="campaignDescription" formControlName="Campaign_Description" rows="3" required></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="campaignGoal" class="form-label">Campaign Goal ($)</label>
-                            <input type="number" class="form-control" id="campaignGoal" formControlName="Campaign_TargetFund" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="categoryID" class="form-label">Category</label>
-                            <select class="form-select" id="editCampaignCategory" formControlName="Category_ID" required>
-                                <option value="">Select a category</option>
-                                <option *ngFor="let category of categories" [value]="category.Category_ID">
-                                  {{ category.Category_Name }}
-                                </option>
-                              </select>
-                            <input type="text" class="form-control mt-2" formControlName="Other_Category" placeholder="Specify other category" *ngIf="createCampaignForm.get('Category_ID')?.value === 4">
-                        </div>
-                        <div class="mb-3">
-                            <label for="campaignStartDate" class="form-label">Start Date</label>
-                            <input type="date" class="form-control" id="campaignStartDate" formControlName="Campaign_Start" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="campaignEndDate" class="form-label">End Date</label>
-                            <input type="date" class="form-control" id="campaignEndDate" formControlName="Campaign_End" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="campaignImage" class="form-label">Upload Campaign Image</label>
-                            <input type="file" class="form-control" id="campaignImage" (change)="onFileSelected($event)">
-                        </div>
-                        <!-- Proof Files Upload -->
-                        <div class="form-group">
-                            <label for="proofFiles">Proof Files</label>
-                            <p><i>Please upload one (1) valid ID, Certificate of Barangay Indigency, and other proofs.</i></p>
-                            <input type="file" id="proofFiles" (change)="onProofFilesSelected($event)" multiple class="form-control" />
-                        </div>
-
-                         <!-- New Notes to Admin Field -->
-                        <div class="mb-3">
-                            <label for="editNoteToAdmin" class="form-label">Note to Admin</label>
-                            <textarea class="form-control" id="editNoteToAdmin" formControlName="Campaign_Notes" rows="3" placeholder="Write a note to the admin (optional)"></textarea>
-                        </div>
-                        <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
-                        <button type="submit" class="btn btn-primary" [disabled]="loading">{{ loading ? 'Creating...' : 'Create Campaign' }}</button>
-                    </form>
-                    <form [formGroup]="">
-
-                    </form>
-                </div>
-            </ng-template>
-    
-    
-            <!-- Confirmation Delete Modal -->
-            <ng-template #confirmationModal let-modal>
-                <div class="modal-header">
-                    <h5 class="modal-title">Confirm Deletion</h5>
-                    <button type="button" class="btn-close" (click)="closeModal()"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to delete the campaign "{{ selectedCampaign?.Campaign_Name }}"?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
-                    <button type="button" class="btn btn-danger" (click)="deleteCampaign(selectedCampaign.Campaign_ID)">Delete</button>
-                </div>
-            </ng-template>
-    
         </div>
+        </div>
+    </div>
+  
+  <!-- Campaign Details Modal -->
+  <div class="modal fade" [ngClass]="{'show': isDetailModalOpen}" tabindex="-1" [style.display]="isDetailModalOpen ? 'block' : 'none'">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ selectedCampaign?.Campaign_Name }}</h5>
+          <button type="button" class="btn-close" aria-label="Close" (click)="closeDetailModal()"></button>
+        </div>
+        <div class="modal-body">
+          <img [src]="getImagePath('assets/' + selectedCampaign?.Campaign_Image)" 
+               alt="{{ selectedCampaign?.Campaign_Name }} Image" 
+               class="img-fluid mb-3 rounded">
+  
+          <p><strong>Description:</strong> {{ selectedCampaign?.Campaign_Description }}</p>
+          <p><strong>Target Fund:</strong> {{ selectedCampaign?.Campaign_TargetFund | currency }}</p>
+          <p><strong>Current Raised:</strong> {{ selectedCampaign?.Campaign_CurrentRaised | currency }}</p>
+          <p><strong>Start Date:</strong> {{ selectedCampaign?.Campaign_Start | date: 'longDate' }}</p>
+          <p><strong>End Date:</strong> {{ selectedCampaign?.Campaign_End | date: 'longDate' }}</p>
+          <p><strong>Status:</strong> {{ selectedCampaign?.Campaign_Status === 1 ? 'Active' : 'Inactive' }}</p>
+        </div>
+        <div class="modal-footer">
+          <button *ngIf="selectedCampaign?.Campaign_ApprovalStatus === 'Approved'" type="button" class="btn btn-primary" (click)="openEditCampaignModal(selectedCampaign, editCampaignModal)">Edit</button>
+          <button *ngIf="selectedCampaign?.Campaign_ApprovalStatus === 'Waiting For Approval' || selectedCampaign?.Campaign_ApprovalStatus === 'Rejected'"
+                  type="button" class="btn btn-danger" (click)="openConfirmationModal(selectedCampaign, confirmationModal)">Delete</button>
+          <button type="button" class="btn btn-secondary" (click)="closeDetailModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Edit Campaign Modal -->
+  <div class="modal fade" [ngClass]="{'show': editCampaignModal}" tabindex="-1" [style.display]="editCampaignModal ? 'block' : 'none'">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Campaign</h5>
+          <button type="button" class="btn-close" (click)="closeEditModal()"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="editCampaignForm" (ngSubmit)="updateCampaign()">
+            <div class="mb-3">
+                <label for="editCampaignName" class="form-label">Campaign Name</label>
+                <input type="text" class="form-control" id="editCampaignName" formControlName="Campaign_Name" required>
+            </div>
+            <div class="mb-3">
+                <label for="editCampaignDescription" class="form-label">Campaign Description</label>
+                <textarea class="form-control" id="editCampaignDescription" formControlName="Campaign_Description" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="editCampaignGoal" class="form-label">Campaign Goal ($)</label>
+                <input type="number" class="form-control" id="editCampaignGoal" formControlName="Campaign_TargetFund" required>
+            </div>
+            <div class="mb-3">
+                <label for="editCampaignCategory" class="form-label">Category</label>
+                <select class="form-select" id="editCampaignCategory" formControlName="Category_ID" required>
+                    <option value="">Select a category</option>
+                    <option *ngFor="let category of categories" [value]="category.Category_ID">
+                      {{ category.Category_Name }}
+                    </option>
+                  </select>
+                <input type="text" class="form-control mt-2" formControlName="Other_Category" placeholder="Specify other category" *ngIf="editCampaignForm.get('Category_ID')?.value === 4">
+            </div>
+            <div class="mb-3">
+                <label for="editCampaignStartDate" class="form-label">Start Date</label>
+                <input type="date" class="form-control" id="editCampaignStartDate" formControlName="Campaign_Start" required>
+            </div>
+            <div class="mb-3">
+                <label for="editCampaignEndDate" class="form-label">End Date</label>
+                <input type="date" class="form-control" id="editCampaignEndDate" formControlName="Campaign_End" required>
+            </div>
+            <!-- Image Upload with Preview -->
+            <div class="mb-3">
+                <label for="editCampaignImage" class="form-label">Upload Campaign Image</label>
+                <input type="file" class="form-control" id="editCampaignImage" (change)="onImagePreview($event)" accept="image/*" formControlName="Campaign_Image">
+                <div *ngIf="imagePreview" class="mt-3">
+                    <p><strong>Image Preview:</strong></p>
+                    <img [src]="imagePreview" alt="Preview" class="img-fluid border" style="max-height: 200px;">
+                </div>
+            </div>
+            
+            <!-- Proof Files Upload -->
+            <div class="form-group">
+                <label for="proofFiles">Proof Files</label>
+                <p><i>Please upload one (1) valid ID, Certificate of Barangay Indigency, and other proofs.</i></p>
+                <input type="file" id="proofFiles" (change)="onProofFilesSelected($event)" multiple class="form-control" accept="image/*">
+            </div>
+            <div class="mb-3">
+                <label for="editNoteToAdmin" class="form-label">Note to Admin</label>
+                <textarea class="form-control" id="editNoteToAdmin" formControlName="Campaign_Notes" rows="3" placeholder="Write a note to the admin (optional)"></textarea>
+            </div>
+            <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+            <button type="submit" class="btn btn-primary" [disabled]="loading">{{ loading ? 'Updating...' : 'Update Campaign' }}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Create Campaign Modal -->
+  <div class="modal fade" [ngClass]="{'show': createCampaignModal}" tabindex="-1" [style.display]="createCampaignModal ? 'block' : 'none'">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create a Campaign</h5>
+          <button type="button" class="btn-close" (click)="closeCreateCampaignModal()"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="createCampaignForm" (ngSubmit)="createCampaign()">
+            <div class="mb-3">
+                <label for="campaignName" class="form-label">Campaign Name</label>
+                <input type="text" class="form-control" id="campaignName" formControlName="Campaign_Name" required>
+            </div>
+            <div class="mb-3">
+                <label for="campaignDescription" class="form-label">Campaign Description</label>
+                <textarea class="form-control" id="campaignDescription" formControlName="Campaign_Description" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="campaignGoal" class="form-label">Campaign Goal ($)</label>
+                <input type="number" class="form-control" id="campaignGoal" formControlName="Campaign_TargetFund" required>
+            </div>
+            <div class="mb-3">
+                <label for="categoryID" class="form-label">Category</label>
+                <select class="form-select" id="editCampaignCategory" formControlName="Category_ID" required>
+                    <option value="">Select a category</option>
+                    <option *ngFor="let category of categories" [value]="category.Category_ID">
+                      {{ category.Category_Name }}
+                    </option>
+                  </select>
+                <input type="text" class="form-control mt-2" formControlName="Other_Category" placeholder="Specify other category" *ngIf="createCampaignForm.get('Category_ID')?.value === 4">
+            </div>
+            <div class="mb-3">
+                <label for="campaignStartDate" class="form-label">Start Date</label>
+                <input type="date" class="form-control" id="campaignStartDate" formControlName="Campaign_Start" required>
+            </div>
+            <div class="mb-3">
+                <label for="campaignEndDate" class="form-label">End Date</label>
+                <input type="date" class="form-control" id="campaignEndDate" formControlName="Campaign_End" required>
+            </div>
+            <!-- Image Upload with Preview -->
+            <div class="mb-3">
+                <label for="editCampaignImage" class="form-label">Upload Campaign Image</label>
+                <input type="file" class="form-control" id="editCampaignImage" (change)="onImagePreview($event)" accept="image/*" formControlName="Campaign_Image">
+                <div *ngIf="imagePreview" class="mt-3">
+                    <p><strong>Image Preview:</strong></p>
+                    <img [src]="imagePreview" alt="Preview" class="img-fluid border" style="max-height: 200px;">
+                </div>
+            </div>
+            
+            <!-- Proof Files Upload -->
+            <div class="form-group">
+                <label for="proofFiles">Proof Files</label>
+                <p><i>Please upload one (1) valid ID, Certificate of Barangay Indigency, and other proofs.</i></p>
+                <input type="file" id="proofFiles" (change)="onProofFilesSelected($event)" multiple class="form-control" accept="image/*">
+
+            </div>
+             <!-- New Notes to Admin Field -->
+            <div class="mb-3">
+                <label for="editNoteToAdmin" class="form-label">Note to Admin</label>
+                <textarea class="form-control" id="editNoteToAdmin" formControlName="Campaign_Notes" rows="3" placeholder="Write a note to the admin (optional)"></textarea>
+            </div>
+            <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+            <button type="submit" class="btn btn-primary" [disabled]="loading">{{ loading ? 'Creating...' : 'Create Campaign' }}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Confirmation Delete Modal -->
+  <div class="modal fade" [ngClass]="{'show': confirmationModal}" tabindex="-1" [style.display]="confirmationModal ? 'block' : 'none'">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirm Deletion</h5>
+          <button type="button" class="btn-close" (click)="closeModal()"></button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete the campaign "{{ selectedCampaign?.Campaign_Name }}"?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+          <button type="button" class="btn btn-danger" (click)="deleteCampaign(selectedCampaign.Campaign_ID)">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Testimony Modal -->
+<div class="modal fade" [ngClass]="{'show': testimonyModal}" tabindex="-1" [style.display]="testimonyModal ? 'block' : 'none'">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Enter Your Testimony</h4>
+      <button type="button" class="close" (click)="closeTestimonyModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="submitTestimony(testimony)">
+        <div class="form-group">
+          <label for="testimony">Your Testimony</label>
+          <textarea id="testimony" class="form-control" [(ngModel)]="testimony" name="testimony" rows="5" required></textarea>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeTestimonyModal()">Close</button>
+      <button type="button" class="btn btn-primary" (click)="submitTestimony(testimony)">Submit</button>
+    </div>
+  </div>
+</div>
+    
+  </div>
+</div>

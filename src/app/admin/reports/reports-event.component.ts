@@ -6,7 +6,7 @@ import { Chart } from 'chart.js/auto';
 @Component({
   selector: 'app-reports-event',
   templateUrl: './reports-event.component.html',
-  styleUrls: ['./reports-event.component.css']
+  //styleUrls: ['./reports-event.component.css']
 })
 export class ReportsEventComponent implements OnInit, AfterViewInit {
   events: CommunityEvent[] = [];
@@ -110,5 +110,19 @@ export class ReportsEventComponent implements OnInit, AfterViewInit {
       this.chart.data.datasets[0].data = data;
       this.chart.update();
     }
+  }
+
+
+  downloadAnimation() {
+    const downloadButton = document.querySelector('.btn-circle-download') as HTMLElement;
+    downloadButton.classList.add('load');
+
+    setTimeout(() => {
+        downloadButton.classList.add('done');
+    }, 1000);
+
+    setTimeout(() => {
+        downloadButton.classList.remove('load', 'done');
+    }, 5000);
   }
 }

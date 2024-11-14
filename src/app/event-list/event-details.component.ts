@@ -19,7 +19,8 @@ export class EventDetailsComponent implements OnInit {
   newComment: EventComment = { Comment_Text: '', Event_ID: 0, Acc_ID: 0 }; // Initialize as needed
   likeCount: number = 0;
   hasLiked: boolean = false;
-  userId: number = 1; 
+  userId: number = 1;
+  totalComments: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -45,12 +46,15 @@ export class EventDetailsComponent implements OnInit {
     }
   }
 
+  
+
    // Load comments
    loadComments() {
     if (this.event) {
       this.eventCommentService.getCommentsByEventId(this.event.Event_ID).subscribe(
         (comments) => {
           this.comments = comments;
+          this.totalComments = comments.length;
         },
         (error) => {
           console.error('Error loading comments:', error);
@@ -119,6 +123,36 @@ export class EventDetailsComponent implements OnInit {
         }
       );
     }
+  }
+
+  // Generate dynamic campaign URL
+  getEventUrl():string {
+    return `http://juanbayan.com.ph/event/${this.event?.eventId}`; // Replace with your actual base URL
+  }
+
+  // Social media sharing methods
+  shareToFacebook(url: string): void {
+    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`;
+    window.open(facebookUrl, '_blank');
+  }
+
+  shareToTwitter(url: string): void {
+    const twitterUrl = `https://twitter.com/share?url=${encodeURIComponent(url)}&text=Check+out+this+event!`;
+    window.open(twitterUrl, '_blank');
+  }
+
+  shareToInstagram(url: string): void {
+    alert('Instagram doesn\'t allow direct sharing from the web. Link copied to clipboard.');
+    this.copyToClipboard(url);
+  }
+
+  copyToClipboard(text: string): void {
+    const tempInput = document.createElement('input');
+    tempInput.value = text;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
   }
 
   // Define getImagePath method here

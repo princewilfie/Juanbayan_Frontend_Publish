@@ -1,165 +1,243 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
-  body {
-    background-color: #f8f9fa;
-  }
-  .profile-header {
-    position: relative;
-    text-align: center;
-    background-color: #fff;
-    padding: 2rem 1rem;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-  }
-  .profile-header img {
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    margin-bottom: 15px;
-    border: 5px solid #fff;
-  }
+  img {
+  width: 100%;
+  height: 98%;
+}
 
-  .card {
-    border-radius: 10px;
+.bg-black {
+  background: #000;
+}
+
+.skill-block {
+  width: 30%;
+}
+
+@media (min-width: 991px) and (max-width:1200px) {
+  .skill-block {
+    padding: 32px !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .skill-block {
+    padding: 56px !important;
+  }
+}
+
+
+/* Profile */
+.user-card-full {
     overflow: hidden;
-    margin-top: -30px;
-  }
+}
 
-  .card-img-top {
-    height: 200px;
-    object-fit: cover;
-  }
-
-  .card-body {
-    text-align: center;
-  }
-  .nav-button.active {
-    background-color: #0d6efd;
-    color: #fff;
-  }
-  .campaign-section img {
+.card {
     border-radius: 5px;
-  }
-  #passwordError {
-    display: none;
-  }
+    -webkit-box-shadow: 0 1px 20px 0 rgba(69,90,100,0.08);
+    box-shadow: 0 1px 20px 0 rgba(69,90,100,0.08);
+    border: none;
+    margin-bottom: 30px;
+}
+
+.m-r-0 {
+    margin-right: 0px;
+}
+
+.m-l-0 {
+    margin-left: 0px;
+}
+
+.user-card-full .user-profile {
+    border-radius: 5px 0 0 5px;
+}
+
+.bg-c-lite-green {
+        background: -webkit-gradient(linear, left top, right top, from(#f29263), to(#ee5a6f));
+    background: linear-gradient(to right, #ee5a6f, #f29263);
+}
+
+.user-profile {
+    padding: 20px 0;
+}
+
+.card-block {
+    padding: 1.25rem;
+}
+
+.m-b-25 {
+    margin-bottom: 25px;
+}
+
+.img-radius {
+    border-radius: 5px;
+}
+
+
+ 
+h6 {
+    font-size: 14px;
+}
+
+.card .card-block p {
+    line-height: 25px;
+}
+
+@media only screen and (min-width: 1400px){
+p {
+    font-size: 14px;
+}
+}
+
+.card-block {
+    padding: 1.25rem;
+}
+
+.b-b-default {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.m-b-20 {
+    margin-bottom: 20px;
+}
+
+.p-b-5 {
+    padding-bottom: 5px !important;
+}
+
+.card .card-block p {
+    line-height: 25px;
+}
+
+.m-b-10 {
+    margin-bottom: 10px;
+}
+
+.text-muted {
+    color: #919aa3 !important;
+}
+
+.b-b-default {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.f-w-600 {
+    font-weight: 600;
+}
+
+.m-b-20 {
+    margin-bottom: 20px;
+}
+
+.m-t-40 {
+    margin-top: 20px;
+}
+
+.p-b-5 {
+    padding-bottom: 5px !important;
+}
+
+.m-b-10 {
+    margin-bottom: 10px;
+}
+
+.m-t-40 {
+    margin-top: 20px;
+}
+
+.user-card-full .social-link li {
+    display: inline-block;
+}
+
+.user-card-full .social-link li a {
+    font-size: 20px;
+    margin: 0 10px 0 0;
+    -webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+}
+
+
 </style>
 
-<div class="container mt-5">
-  <div class="profile-header">
-    <img [src]=" 'http://localhost:4000/assets/' + account.acc_image" alt="Profile Picture">
-    <h3>{{ account.acc_firstname }} {{ account.acc_lastname }}</h3>
-    <p>Email: {{ account.acc_email }}</p>
-    <p>Phone number: {{ account.acc_pnumber }}</p>
-    <p><a [routerLink]="['update']" [queryParams]="{ id: account.id }">Profile</a></p>
-  </div>
-  
-  <div class="card shadow-sm">
-    <div class="card-body text-center">
-      <div class="row">
-        <div class="col-md-3 mb-3">
-          <button (click)="showSection('activities')" class="nav-button btn btn-outline-primary w-100" [ngClass]="{'active': currentSection === 'activities'}">Your Activities</button>
-        </div>
-        <div class="col-md-3 mb-3">
-          <button (click)="showSection('events')" class="nav-button btn btn-outline-primary w-100" [ngClass]="{'active': currentSection === 'events'}">Accomplished Events</button>
-        </div>
-        <div class="col-md-3 mb-3">
-          <button (click)="showSection('campaigns')" class="nav-button btn btn-outline-primary w-100" [ngClass]="{'active': currentSection === 'campaigns'}">Accomplished Campaigns</button>
-        </div>
-        <div class="col-md-3 mb-3">
-          <button (click)="showSection('rewards')" class="nav-button btn btn-outline-primary w-100" [ngClass]="{'active': currentSection === 'rewards'}">Redeem Rewards</button>
-        </div>
+<div class="container mt-0">
+
+  <!-- Profile widget -->
+<div class="bg-white shadow rounded overflow-hidden mb-5">
+  <div class="px-4 pt-0 pb-4 cover">
+    <div class="media align-items-end profile-head">
+      <div class="profile mr-3 d-flex justify-content-center align-items-center">
+        <img [src]=" 'http://localhost:4000/assets/' + account.acc_image" alt="Profile Picture" style="height: 300px; width: auto;" class="mt-4">
       </div>
-      <div class="p-3 bg-light rounded mt-4">
-        <h5 class="mb-0">Earned Points</h5>
-        <h3 class="fw-bold">{{ account.acc_totalpoints }}</h3>
+      <div class="media-body mb-5 text-whie">
+        <h1 class="mt-0 mb-0">{{ account.acc_firstname }} {{ account.acc_lastname }}</h1>
+        <p class="small mb-0"><i class="fa fa-phone mr-2"></i>{{ account.acc_pnumber }}</p>
+        <p class="small mb-4"><i class="fab fa-google mr-2"></i>{{ account.acc_email }}</p>
+        <a [routerLink]="['update']" [queryParams]="{ id: account.id }" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a>
       </div>
     </div>
   </div>
+</div>
+  
+<div class="card shadow-sm">
+  <div class="card-body text-center">
+    <div class="row">
+      <div class="col-md-3 mb-3">
+        <button (click)="showSection('activities')" class="nav-button btn btn-outline-primary w-100" [ngClass]="{'active': currentSection === 'activities'}">Your Activities</button>
+      </div>
+      <div class="col-md-3 mb-3">
+        <button (click)="showSection('events')" class="nav-button btn btn-outline-primary w-100" [ngClass]="{'active': currentSection === 'events'}">Accomplished Events</button>
+      </div>
+      <div class="col-md-3 mb-3">
+        <button (click)="showSection('campaigns')" class="nav-button btn btn-outline-primary w-100" [ngClass]="{'active': currentSection === 'campaigns'}">Finished Campaigns</button>
+      </div>
+      <div class="col-md-3 mb-3">
+        <button (click)="showSection('rewards')" class="nav-button btn btn-outline-primary w-100" [ngClass]="{'active': currentSection === 'rewards'}">Redeem Rewards</button>
+      </div>
+    </div>
+    <div class="p-3 bg-light rounded mt-4">
+      <h5 class="mb-0">Earned Points</h5>
+      <h3 class="fw-bold">{{ account.acc_totalpoints }}</h3>
+    </div>
+  </div>
+</div>
 
   <!-- Your Activities Section -->
-  <div *ngIf="currentSection === 'activities'" class="container mt-5 section-padding">
-    <h3>Your Activities</h3>
-    <br><br><br><br>
-    <!-- Campaigns Section -->
-    <div *ngIf="campaigns.length > 0">
-        <div *ngFor="let campaign of campaigns" class="card mb-3 shadow-sm">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" 
-                         alt="{{ campaign.Campaign_Name }} Image" 
-                         class="campaign-image" 
-                         (error)="this.src='assets/jb-symbol-logo.png'" style="height: 400px; width: 400px;">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ campaign.Campaign_Name }}</h5>
-                        <p class="card-text">{{ campaign.Campaign_Description }}</p>
-                        <p class="card-text"><small class="text-muted">Category: {{ campaign.Campaign_Category === 1 ? 'Medical' : 'Other' }}</small></p>
-                        <p class="card-text"><small class="text-muted">Status: {{ campaign.Campaign_Status === 0 ? 'Pending' : campaign.Campaign_Status === 1 ? 'Approved' : 'Rejected' }}</small></p>
-                        <p class="card-text"><small class="text-muted">Approval Status: {{ campaign.Campaign_ApprovalStatus }}</small></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<div *ngIf="currentSection === 'activities'" class="container mt-5 section-padding">
+  <h3>Your Activities</h3>
 
-    <!-- Events Section -->
-    <div *ngIf="events.length > 0">
-        <div *ngFor="let event of events" class="card mb-3 shadow-sm">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img [src]="getImagePath('assets/' + event.Event_Image)" 
-                         alt="{{ event.Event_Name }} Image" 
-                         class="event-image" 
-                         (error)="this.src='assets/jb-symbol-logo.png'">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ event.Event_Name }}</h5>
-                        <br><br><br><br>
-                        <p class="card-text">{{ event.Event_Description }}</p>
-                        <p class="card-text"><small class="text-muted">Location: {{ event.Event_Location }}</small></p>
-                        <p class="card-text"><small class="text-muted">Status: {{ event.Event_Status === 0 ? 'Pending' : event.Event_Status === 1 ? 'Approved' : 'Rejected' }}</small></p>
-                        <p class="card-text"><small class="text-muted">Approval Status: {{ event.Event_ApprovalStatus }}</small></p>
-                        <p class="card-text"><small class="text-muted">Start Date: {{ event.Event_Start_Date | date:'shortDate' }}</small></p>
-                        <p class="card-text"><small class="text-muted">End Date: {{ event.Event_End_Date | date:'shortDate' }}</small></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+  <!-- No Activities Message -->
+  <div *ngIf="activities.length === 0">
+    <p>You don't have any activity.</p>
+  </div>
 
-    <!-- Participants Section -->
-  <div *ngIf="joinedEvents.length > 0" class="mt-5">
-    <div *ngFor="let participant of joinedEvents" class="card mb-3 shadow-sm">
-      <div class="row g-0">
-        <div class="col-md-4">
-          <img [src]="getImagePath('assets/' + participant.Event_Image)" 
-               alt="{{ participant.acc_firstname }} {{ participant.acc_lastname }} Image" 
-               class="participant-image" 
-               (error)="this.src='assets/jb-symbol-logo.png'">
+  <!-- Activities Card View -->
+  <div class="row">
+    <div *ngFor="let activity of activities" class="col-md-7">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-header py-3">
+          <h5 class="card-title">{{ activity.type }}</h5>
         </div>
-        <div class="col-md-8">
-          <div class="card-body">
-            <h5 class="card-title">Thank you for volunteering!</h5>
-            <p class="card-text">{{ participant.Event_Name }}</p>
-            <p class="card-text">Joined At: {{ participant.joinedAt | date:'short' }}</p>
-          </div>
+        <div class="card-body">
+          <p class="card-text">
+            <strong>Details:</strong>
+            <ng-container *ngIf="activity.type === 'Donation'">
+              Donated: ₱{{ activity.donation_amount }} on {{ activity.donation_date | date: 'medium' }}
+            </ng-container>
+            <ng-container *ngIf="activity.type === 'Event'">
+              Event: {{ activity.event_name }} starting at {{ activity.Event_Start_Date | date: 'medium' }}
+            </ng-container>
+            <ng-container *ngIf="activity.type === 'Campaign'">
+              Campaign: {{ activity.Campaign_Name }} started on {{ activity.Campaign_Start | date: 'medium' }}
+            </ng-container>
+            <ng-container *ngIf="activity.type === 'EventParticipant'">
+              Joined Event: {{ activity.event.Event_Name }} on {{ activity.joinedAt | date: 'medium' }}
+            </ng-container>
+          </p>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-    <!-- No Activities Message -->
-    <div *ngIf="campaigns.length === 0 && events.length === 0">
-        <p>You don't have any activity.</p>
-    </div>
-  </div>
 
  <!-- Accomplished Events Section -->
 <div *ngIf="currentSection === 'events'" class="container mt-5 section-padding">

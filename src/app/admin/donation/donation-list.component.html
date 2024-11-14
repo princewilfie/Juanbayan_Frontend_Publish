@@ -1,48 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donations List</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        .table td, .table th {
-            border-bottom: 1px solid #dee2e6;
-        }
-        .actions {
-            display: flex;
-            gap: 10px;
-        }
-    </style>
-</head>
-<body>
-<div class="container mt-5">
-    <h2 class="mb-4">Donations List</h2>
-    
-    <table class="table">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col"></th>
-          <th scope="col">Account ID</th>
-          <th scope="col">Campaign ID</th>
-          <th scope="col">Donation Amount</th>
-          <th scope="col">Donation Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let donation of donations">
-          <td><input type="checkbox"></td>
-          <td>{{ donation.acc_id }}</td>
-          <td>{{ donation.campaign_id }}</td>
-          <td>{{ donation.donation_amount | currency }}</td>
-          <td>{{ donation.donation_date | date:'MM/dd/yyyy' }}</td>
-        </tr>
-      </tbody>
-    </table>
-</div>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<div id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+      <div id="content-wrapper" class="d-flex flex-column">
+          <div id="content">
+              <div class="container-fluid col-lg-12">
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+                  <!-- Page Heading -->
+                  <h1 class="h3 mb-2 text-gray-800">Donation</h1>
+                  <p class="mb-4">This donation list is designed to streamline the review process. Use the tools below
+                    to manage and track submissions, making efficient decisions in one centralized location.</p>
+
+
+                  <!-- DataTales Example -->
+                  <div class="card shadow mb-4">
+                      <div class="card-header py-3">
+                          <h6 class="m-0 font-weight-bold text-primary">Donation list</h6>
+                      </div>
+                      <div class="card-body">
+                          <div class="table-responsive">
+                              <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col"></th>
+                                      <th scope="col">Donor ID</th>
+                                      <th scope="col">Donor Name</th>
+                                      <th scope="col">Campaign ID</th>
+                                      <th scope="col">Donation Amount</th>
+                                      <th scope="col">Donation Date</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let donation of donations">
+                                      <td><input type="checkbox"></td>
+                                      <td>{{ donation.acc_id }}</td>
+                                      <td>{{ donation.acc_firstname }} {{ donation.acc_lastname }}</td>
+                                      <td>{{ donation.campaign_id }}</td>
+                                      <td>{{ donation.donation_amount | currency }}</td>
+                                      <td>{{ donation.donation_date | date:'MM/dd/yyyy' }}</td>
+                                    </tr>                               
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+  </a>
+</div>

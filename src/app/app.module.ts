@@ -13,7 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { JwtInterceptor, ErrorInterceptor, appInitializer } from './_helpers';
 import { AccountService } from './_services';
 
-import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';  // Import NgbModule for Bootstrap components
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';  // Import NgbModule for Bootstrap components
 import { FullCalendarModule } from '@fullcalendar/angular';
 
 
@@ -37,7 +37,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { ContactUsComponent } from './contact/contact.component';
 
 @NgModule({
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -54,8 +54,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         FullCalendarModule,
         BrowserAnimationsModule,
         MatDialogModule,
-        MatButtonModule,
-        NgbModalModule
+        MatButtonModule
     ],
     declarations: [
         AppComponent,
@@ -69,7 +68,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         CreateEventComponent,
         EventListComponent,
         EventDetailsComponent,
-        TermsAndConditionsModalComponent
+        TermsAndConditionsModalComponent,
+        ContactUsComponent
     ],
     providers: [
         { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AccountService] },

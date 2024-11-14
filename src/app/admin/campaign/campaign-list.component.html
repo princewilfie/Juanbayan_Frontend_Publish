@@ -1,109 +1,213 @@
-<div class="container mt-5">
-  <br><br>
-  <h2 class="mb-4">Campaigns List</h2>
+<div id="page-top">
+  <div id="wrapper">
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <div class="container-fluid col-lg-12">
+          <h1 class="h3 mb-2 text-gray-800">Campaign</h1>
+          <p class="mb-4">This campaign is designed to streamline the review process, allowing you to approve or reject entries with ease. Use the tools below to manage and track submissions, making efficient decisions in one centralized location.</p>
 
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col"></th>
-        <th scope="col">Campaign Creator</th>
-        <th scope="col">Campaign Name</th>
-        <th scope="col">Target Fund</th>
-        <th scope="col">Current Raised</th>
-        <th scope="col">Start Date</th>
-        <th scope="col">End Date</th>
-        <th scope="col">Status</th>
-        <th scope="col">Approval Status</th>
-        <th scope="col">Proof Files</th>
-        <th scope="col">Notes </th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let campaign of campaigns" (click)="showCampaignDetails(campaign)" style="cursor: pointer;">
-        <td><input type="checkbox"></td>
-        <td>{{ campaign.acc_firstname }}{{ campaign.acc_lastname }}</td>
-        <td>{{ campaign.Campaign_Name }}</td>
-        <td>{{ campaign.Campaign_TargetFund | currency }}</td>
-        <td>{{ campaign.Campaign_CurrentRaised | currency }}</td>
-        <td>{{ campaign.Campaign_Start | date:'MM/dd/yyyy' }}</td>
-        <td>{{ campaign.Campaign_End | date:'MM/dd/yyyy' }}</td>
-        <td>{{ getCampaignStatus(campaign.Campaign_Status) }}</td>
-        <td>{{ campaign.Campaign_ApprovalStatus }}</td>
-        <td>
-          <button class="btn btn-primary btn-sm mt-2" (click)="viewAllImages(imageModal, campaign); $event.stopPropagation()">View Proofs</button>
-        </td>
-        <td><button class="btn btn-primary btn-sm mt-2" (click)="openNotesModal(campaign.Campaign_ID); $event.stopPropagation()">View Notes</button></td>
-        <td>
-          <div class="actions">
-            <button [disabled]="loading" class="btn btn-success btn-sm" (click)="approveCampaign(campaign.Campaign_ID); $event.stopPropagation()"><span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-              Approve</button>
-            <button [disabled]="loading" class="btn btn-danger btn-sm" (click)="openRejectionModal(campaign.Campaign_ID, rejectionModal); $event.stopPropagation()"><span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-              Reject</button>
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Campaign List</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <th>Campaign Creator</th>
+                    <th>Campaign Name</th>
+                    <th>Description</th>
+                    <th>Target Fund</th>
+                    <th>Current Raised</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Approval Status</th>
+                    <th scope="col">Proof Files</th>
+                    <th scope="col">Notes</th>
+                    <th scope="col">Actions</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let campaign of campaigns" (click)="showCampaignDetails(campaign)" style="cursor: pointer;">
+                      <td><input type="checkbox"></td>
+                      <td>{{ campaign.acc_firstname }} {{ campaign.acc_lastname }}</td>
+                      <td>{{ campaign.Campaign_Name }}</td>
+                      <td>{{ campaign.Campaign_TargetFund | currency }}</td>
+                      <td>{{ campaign.Campaign_CurrentRaised | currency }}</td>
+                      <td>{{ campaign.Campaign_Start | date:'MM/dd/yyyy' }}</td>
+                      <td>{{ campaign.Campaign_End | date:'MM/dd/yyyy' }}</td>
+                      <td>{{ getCampaignStatus(campaign.Campaign_Status) }}</td>
+                      <td>{{ campaign.Campaign_ApprovalStatus }}</td>
+                      <td>
+                        <!-- View Proofs Button -->
+                        <button class="btn btn-primary btn-sm mt-2" (click)="viewAllImages(campaign); $event.stopPropagation()">View Proofs</button>
+                      </td>
+                      <td>
+                        <!-- View Notes Button -->
+                        <button class="btn btn-primary btn-sm mt-2" (click)="openNotesModal(campaign.Campaign_ID); $event.stopPropagation()">View Notes</button>
+                      </td>
+                      <td>
+                        <div class="actions">
+                          <!-- Approve and Reject Button -->
+                          <button [disabled]="loading" class="btn btn-success btn-sm" (click)="approveCampaign(campaign.Campaign_ID); $event.stopPropagation()">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span> Approve
+                          </button>
+                          <button [disabled]="loading" class="btn btn-danger btn-sm" (click)="openRejectionModal(campaign.Campaign_ID); $event.stopPropagation()">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span> Reject
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+        </div>
 
-<ng-template #rejectionModal let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title">Reject Campaign</h5>
-    <button type="button" class="btn-close" (click)="modal.close()"></button>
-  </div>
-  <div class="modal-body">
-    <textarea [(ngModel)]="rejectionNote" class="form-control" rows="3" placeholder="Enter the reason for rejection"></textarea>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.close()">Cancel</button>
-    <button type="button" class="btn btn-danger" (click)="confirmRejectCampaign(selectedCampaignId, modal)">Reject</button>
-  </div>
-</ng-template>
+        <!-- Rejection Modal -->
+        <div *ngIf="showRejectionModal" class="modal-overlay" (click)="closeRejectionModal()">
+          <div class="modal-content" (click)="$event.stopPropagation()">
+            <div class="modal-header">
+              <h5 class="modal-title">Reject Campaign</h5>
+            </div>
+            <div class="modal-body">
+              <textarea [(ngModel)]="rejectionNote" class="form-control" rows="3" placeholder="Enter the reason for rejection"></textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" (click)="closeRejectionModal()">Cancel</button>
+              <button type="button" class="btn btn-danger" (click)="confirmRejectCampaign(selectedCampaignId)">Reject</button>
+            </div>
+          </div>
+        </div>
 
-<ng-template #imageModal let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title">Campaign Images</h5>
-    <button type="button" class="close" aria-label="Close" (click)="modal.close()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <div *ngFor="let image of selectedCampaignImages">
-      <img [src]="'http://localhost:4000/assets/' + image" alt="Campaign Image" style="width: 100%; height: auto; margin-bottom: 10px;">
+        <!-- Image Modal -->
+        <div *ngIf="showImageModal" class="modal-overlay" (click)="closeImageModal()">
+          <div class="modal-content" (click)="$event.stopPropagation()">
+            <div class="modal-header">
+              <h5>Campaign Proof Files</h5>
+              <button type="button" class="btn-close" (click)="closeImageModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+              <div *ngFor="let image of selectedCampaignImages">
+                <img [src]="'http://localhost:4000/assets/' + image" alt="Campaign Image" style="width: 100%; height: auto; margin-bottom: 10px;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notes Modal -->
+        <div *ngIf="showNotesModal" class="modal-overlay" (click)="closeNotesModal()">
+          <div class="modal-content" (click)="$event.stopPropagation()">
+            <div class="modal-header">
+              <h5 class="modal-title">User Notes</h5>
+              <button type="button" class="btn-close" (click)="closeNotesModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+              <p *ngIf="selectedNote">{{ selectedNote }}</p>
+              <p *ngIf="!selectedNote">No notes available for this campaign.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Details Modal -->
+        <div *ngIf="showDetailsModal" class="modal-overlay" (click)="closeDetailsModal()">
+          <div class="modal-content" (click)="$event.stopPropagation()">
+            <div class="modal-header">
+              <h5 class="card-title">Campaign Details</h5>
+              <button type="button" class="btn-close" (click)="closeDetailsModal()"></button>
+            </div>
+            <div class="modal-body">
+              <img [src]="'http://localhost:4000/assets/' + campaign.Campaign_Image" alt="Campaign Image" style="width: 100%; height: auto;">
+              <p><strong>Creator:</strong> {{ campaign?.acc_firstname }} {{ campaign?.acc_lastname }}</p>
+              <p><strong>Name:</strong> {{ campaign?.Campaign_Name }}</p>
+              <p><strong>Description:</strong> {{ campaign?.Campaign_Description }}</p>
+              <p><strong>Target Fund:</strong> {{ campaign?.Campaign_TargetFund | currency }}</p>
+              <p><strong>Current Raised:</strong> {{ campaign?.Campaign_CurrentRaised | currency }}</p>
+              <p><strong>Start Date:</strong> {{ campaign?.Campaign_Start | date:'MM/dd/yyyy' }}</p>
+              <p><strong>End Date:</strong> {{ campaign?.Campaign_End | date:'MM/dd/yyyy' }}</p>
+              <p><strong>Status:</strong> {{ getCampaignStatus(campaign?.Campaign_Status) }}</p>
+              <p><strong>Approval Status:</strong> {{ campaign?.Campaign_ApprovalStatus }}</p>
+              <p><strong>Notes:</strong> {{ campaign?.Campaign_Notes }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</ng-template>
 
-<ng-template #notesModal let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title">User Notes</h5>
-    <button type="button" class="btn-close" (click)="closeModal(modal)"></button>
-  </div>
-  <div class="modal-body">
-    <p *ngIf="selectedNote">{{ selectedNote }}</p>
-    <p *ngIf="!selectedNote">No note available for this campaign.</p>
-  </div>
-</ng-template>
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+</div>
 
-<ng-template #detailsModal let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title">Campaign Details</h5>
-    <button type="button" class="btn-close" (click)="modal.close()"></button>
-  </div>
-  <div class="modal-body">
-    <img [src]="'http://localhost:4000/assets/' + campaign.Campaign_Image">
-    <p><strong>Creator:</strong> {{ campaign?.acc_firstname }} {{ campaign?.acc_lastname }}</p>
-    <p><strong>Name:</strong> {{ campaign?.Campaign_Name }}</p>
-    <p><strong>Description:</strong> {{ campaign?.Campaign_Description }}</p>
-    <p><strong>Target Fund:</strong> {{ campaign?.Campaign_TargetFund | currency }}</p>
-    <p><strong>Current Raised:</strong> {{ campaign?.Campaign_CurrentRaised | currency }}</p>
-    <p><strong>Start Date:</strong> {{ campaign?.Campaign_Start | date:'MM/dd/yyyy' }}</p>
-    <p><strong>End Date:</strong> {{ campaign?.Campaign_End | date:'MM/dd/yyyy' }}</p>
-    <p><strong>Status:</strong> {{ getCampaignStatus(campaign?.Campaign_Status) }}</p>
-    <p><strong>Approval Status:</strong> {{ campaign?.Campaign_ApprovalStatus }}</p>
-    <p><strong>Notes:</strong> {{ campaign?.Campaign_Notes }}</p>
-  </div>
-</ng-template>
+<style>
+/* Modal Overlay (to cover the whole screen) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050; /* Ensure it's above other content */
+}
+
+/* Modal Content (to make it look like it pops out) */
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%; /* Adjust width as needed */
+  max-width: 600px; /* Set a max width to ensure it doesn't get too large */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Drop shadow to make it pop */
+  z-index: 1060; /* Ensure modal content is above the overlay */
+  animation: modalPop 0.3s ease-out; /* Add a pop animation */
+  
+  /* Make the modal content scrollable */
+  max-height: 80vh; /* Set a maximum height for the modal */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Animation for modal pop effect */
+@keyframes modalPop {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Close button styling */
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #000;
+  cursor: pointer;
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Modal Body */
+.modal-body {
+  margin-top: 15px;
+  max-height: calc(80vh - 100px); /* Adjust the height of the body content */
+  overflow-y: auto; /* Ensure the body can scroll */
+}
 
 
+</style>

@@ -7,4 +7,5 @@ export interface Donation {
   acc_firstname?: string;
   acc_lastname?: string;
   acc_image?: string;
+  fee_amount?: number;
 }

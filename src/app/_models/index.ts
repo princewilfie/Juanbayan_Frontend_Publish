@@ -12,3 +12,4 @@ export * from './like';
 export * from './category';
 export * from './eventLike';
 export * from './eventComment';
+export * from './revenue';

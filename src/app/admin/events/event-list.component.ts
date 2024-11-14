@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EventService } from '../../_services';
 import { CommunityEvent } from '../../_models';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -10,17 +9,12 @@ import Swal from 'sweetalert2';
 })
 export class EventListComponent implements OnInit {
 
-  @ViewChild('rejectionModal') rejectionModal: TemplateRef<any> | undefined;
-  
   rejectionNote: string = '';
   selectedEventId: number | null = null;
-
   events: CommunityEvent[] = [];
+  showRejectionModal: boolean = false; // Flag to control modal visibility
 
-  constructor(
-    private eventService: EventService,
-    private modalService: NgbModal
-  ) {}
+  constructor(private eventService: EventService) {}
 
   ngOnInit(): void {
     this.eventService.getAll().subscribe(
@@ -37,27 +31,26 @@ export class EventListComponent implements OnInit {
     this.eventService.approve(id).subscribe(
       (response: CommunityEvent) => {
         this.updateEventStatus(id, 'Approved');
-      // Show SweetAlert success message for approval
-      Swal.fire({
-        icon: 'success',
-        title: 'Event Approved!',
-        text: 'The event has been approved successfully.',
-        showConfirmButton: false,
-        timer: 1500
-      });
-    },
-    error => {
-      console.error('Error approving campaign:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error!',
-        text: 'Something went wrong while approving the event. Please try again.',
-      });
-    }
+        Swal.fire({
+          icon: 'success',
+          title: 'Event Approved!',
+          text: 'The event has been approved successfully.',
+          showConfirmButton: false,
+          timer: 1500
+        });
+      },
+      error => {
+        console.error('Error approving campaign:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error!',
+          text: 'Something went wrong while approving the event. Please try again.',
+        });
+      }
     );
   }
 
-  rejectEventWithNote(eventId: number, modal: any): void {
+  rejectEventWithNote(eventId: number): void {
     if (!this.rejectionNote.trim()) {
       Swal.fire({
         icon: 'error',
@@ -73,7 +66,7 @@ export class EventListComponent implements OnInit {
       (response: CommunityEvent) => {
         this.rejectionNote = ''; // Clear the note after submission
         this.loadEvents(); // Reload event list after rejection
-        modal.close(); // Close the modal
+        this.closeRejectionModal(); // Close the modal
         Swal.fire({
           icon: 'success',
           title: 'Event Rejected!',
@@ -95,22 +88,18 @@ export class EventListComponent implements OnInit {
 
   openRejectionModal(eventId: number): void {
     this.selectedEventId = eventId;
-    if (this.rejectionModal) {
-      this.modalService.open(this.rejectionModal, { centered: true });
-    } else {
-      console.error('Rejection modal is undefined.');
-    }
+    this.showRejectionModal = true; // Show the modal
+  }
+
+  closeRejectionModal(): void {
+    this.showRejectionModal = false; // Hide the modal
   }
 
   private updateEventStatus(id: number, approvalStatus: string): void {
     const event = this.events.find(e => e.Event_ID === id);
     if (event) {
       event.Event_ApprovalStatus = approvalStatus;
-      if (approvalStatus === 'Approved') {
-        event.Event_Status = 1; // Active if approved
-      } else if (approvalStatus === 'Rejected') {
-        event.Event_Status = 0; // Remains inactive if rejected
-      }
+      event.Event_Status = approvalStatus === 'Approved' ? 1 : 0;
     }
   }
 

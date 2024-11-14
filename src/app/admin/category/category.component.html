@@ -1,56 +1,115 @@
-<!-- src/app/admin/category-admin/category-admin.component.html -->
-<div class="category-admin">
-    <!-- Form to add or update category -->
-    <h2>{{ isEditing ? 'Edit Category' : 'Add New Category' }}</h2>
-    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="Category_Name">Category Name:</label>
-        <input
-          id="Category_Name"
-          formControlName="Category_Name"
-          type="text"
-          class="form-control"
-          placeholder="Enter category name"
-          required
-        />
-      </div>
-      <button type="submit" class="btn btn-primary">
-        {{ isEditing ? 'Update Category' : 'Add Category' }}
-      </button>
-      <button
-        type="button"
-        *ngIf="isEditing"
-        class="btn btn-secondary"
-        (click)="resetForm()"
-      >
-        Cancel
-      </button>
-    </form>
-  
-    <!-- Table to display, edit, and delete categories -->
-    <h3>Category List</h3>
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Category Name</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let category of categories">
-          <td>{{ category.Category_ID }}</td>
-          <td>{{ category.Category_Name }}</td>
-          <td>
-            <button class="btn btn-info" (click)="editCategory(category)">
-              Edit
-            </button>
-            <button class="btn btn-danger" (click)="deleteCategory(category.Category_ID)">
-              Delete
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<title>Donation Reports</title>
+
+
+<div id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid mt-5 mb-5">
+
+                    <!-- Page Heading -->
+                    <h2>{{ isEditing ? 'Edit Category' : 'Add New Category' }}</h2>
+                    <p class="mb-4">Category table where you can see the total number of categories and the details.</p>
+
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <div class="col-xl-8 col-lg-7">
+
+                            <!-- Area Chart -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 bg-dark">
+                                    <h6 class="m-0 font-weight-bold text-light">Categories table</h6>
+                                </div>
+                                <div class="card-body">
+                                    <!-- Form to add or update category -->
+                                    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+                                      <div class="form-group">
+                                        <label for="Category_Name">Category Name:</label>
+                                        <input
+                                          id="Category_Name"
+                                          formControlName="Category_Name"
+                                          type="text"
+                                          class="form-control"
+                                          placeholder="Enter category name"
+                                          required
+                                        />
+                                      </div>
+                                      <button type="submit" class="btn btn-primary">
+                                        {{ isEditing ? 'Update Category' : 'Add Category' }}
+                                      </button>
+                                      <button
+                                        type="button"
+                                        *ngIf="isEditing"
+                                        class="btn btn-secondary"
+                                        (click)="resetForm()"
+                                      >
+                                        Cancel
+                                      </button>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                            <!-- Bar Chart -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 bg-dark">
+                                    <h6 class="m-0 font-weight-bold text-light">Table</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                              <tr>
+                                                <th>ID</th>
+                                                <th>Category Name</th>
+                                                <th>Actions</th>
+                                              </tr>                                      
+                                            </thead>
+                                            <tbody>
+                                              <tr *ngFor="let category of categories">
+                                                <td>{{ category.Category_ID }}</td>
+                                                <td>{{ category.Category_Name }}</td>
+                                                <td>
+                                                  <button class="btn btn-info" (click)="editCategory(category)">
+                                                    Edit
+                                                  </button>
+                                                  <button class="btn btn-danger" (click)="deleteCategory(category.Category_ID)">
+                                                    Delete
+                                                  </button>
+                                                </td>
+                                              </tr>                                                                            
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+            </div>
+            <!-- End of Main Content -->
+        </div>
+        <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+</div>
+

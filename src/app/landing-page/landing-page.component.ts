@@ -58,6 +58,10 @@ export class LandingPageComponent implements OnInit {
     }
   }
 
+  getStarted() {
+      this.router.navigate(['/account/login-register']);
+  }
+
   getImagePath(image: string): string {
     return image ? `http://localhost:4000/${image}` : 'assets/'; 
   }

@@ -1,176 +1,329 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@200&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background-image: url('https://images.pexels.com/photos/933620/pexels-photo-933620.jpeg'); /* Replace with your image URL */
-            background-size: cover; /* Cover the entire screen */
-            background-position: center; /* Center the image */
-            color: white; /* Change text color to white for better contrast */
-            position: relative; /* Position relative for pseudo-element */
-            overflow: hidden; /* Prevent overflow */
-            height: 100vh; /* Full height */
-        }
-        .container {
-            max-width: 1200px; /* Center content */
-            position: relative; /* Position relative for z-index */
-            z-index: 1; /* Bring content above the pseudo-element */
-        }
-        .card-equal {
-            min-height: 350px; /* Ensures equal height */
-            transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition for hover effect */
-            background-color: rgba(0, 0, 0, 0.7); /* Dark transparent background for cards */
-            border-radius: 10px; /* Rounded corners */
-            backdrop-filter: blur(5px); /* Optional: adds a blur effect */
-        }
-        .card-equal:hover {
-            transform: scale(1.05); /* Slightly enlarge on hover */
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
-        }
-        .logo {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            margin-bottom: 15px;
-        }
-        .card-body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100%;
-        }
-        .card-title {
-            color: #ffffff; /* Change text color to white for better contrast */
-            font-weight: bold;
-        }
-        .card-text {
-            color: #e0e0e0; /* Lighter gray for better visibility */
-            flex-grow: 1; /* Pushes content to the top */
-            text-align: center;
-        }
-        /* Button Hover Effect */
-        .btn-interactive {
-            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-            font-weight: bold; /* Bold button text */
-        }
-        .btn-primary:hover {
-            background-color: #0056b3; /* Darker blue */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transform: translateY(-3px); /* Slightly raise button */
-        }
-        .btn-success:hover {
-            background-color: #218838; /* Darker green */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transform: translateY(-3px);
-        }
-        /* Volunteer Button Hover */
-        .btn-outline-secondary {
-            background-color: rgba(255, 255, 255, 0.2); /* Light background */
-            color: #ffffff; /* White text color */
-            border-color: #ffffff; /* White border */
-        }
-        .btn-outline-secondary:hover {
-            background-color: #ffffff; /* Solid white background on hover */
-            color: #000; /* Black text color on hover */
-        }
-        .border-top {
-            border-top: 3px solid #007bff; /* Highlight the border */
-        }
-        /* Pseudo-element for Gradient Overlay */
-        .background-gradient {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5); /* Dark overlay for contrast */
-            z-index: 0; /* Send behind the content */
-        }
-        /* Custom Font Styles */
-        h1 {
-    font-family: 'Dancing Script', cursive; /* Handwriting-style font */
-    font-size: 3rem; /* Size for "Welcome to" */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Optional shadow */
-    margin-bottom: 0.5rem;
-    text-transform: none; /* Ensures normal capitalization */
-    text-align: center; /* Centers the text horizontally */
-    color: #ffffff; /* Optional: Adjust the text color */
-}
 
-h1 span {
-    font-family: 'Playfair Display', serif; /* Serif-style font for "Juanbayan" */
-    font-size: 3.5rem; /* Adjusted size for "Juanbayan" */
-    color: #ffffff; /* Optional: Change color for "JuanBayan" */
-    display: inline-block; /* Ensures it's treated separately */
-}
-
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f8f9fa; /* Optional: Background color */
-}
-
-.container {
-    text-align: center; /* Centers the content */
-}
-
-
-
-    </style>
-</head>
-<body class="d-flex flex-column justify-content-center align-items-center vh-100">
-    <div class="background-gradient"></div> <!-- Gradient Overlay -->
-    <div class="container text-center">
-        <br>
-        <br>
-        <!-- Welcome Message -->
-        <h1>WELCOME TO 
-            <br><span>JUANBAYAN</span></h1>
-        <p class="lead">Select your role to get started:</p>
-
-        <!-- Role Selection Cards -->
-        <div class="row justify-content-center mt-5">
-            <div class="col-md-4">
-                <div class="card shadow-sm mb-3 card-equal">
-                    <div class="card-body">
-                        <!-- Beneficiary Logo -->
-                        <img src="https://cdn-icons-png.flaticon.com/512/9875/9875333.png" alt="Beneficiary Logo" class="logo">
-                        <h5 class="card-title">Beneficiary</h5>
-                        <p class="card-text">If you are seeking assistance, please select this option.</p>
-                        <a href="beneficiary.html" class="btn btn-primary w-100 btn-interactive">Choose Beneficiary</a>
+<!-- slider Area Start-->
+<div class="slider-area">
+    <div class="slider-active">
+        <!-- Single Slider -->
+        <div class="single-slider slider-height d-flex align-items-center">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-8 col-sm-10">
+                        <div class="hero__caption">
+                            <h1 data-animation="fadeInUp" data-delay=".6s">
+                                Help Disadvantaged Individuals
+                                in the Philippines.</h1>
+                            <P data-animation="fadeInUp" data-delay=".8s" ></P>
+                            <!-- Hero-btn -->
+                            <div class="hero__btn">
+                                <a routerLink="/campaigns" class="btn hero-btn mb-10"  data-animation="fadeInLeft" data-delay=".8s">Donate</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card shadow-sm mb-3 card-equal">
-                    <div class="card-body">
-                        <!-- Donor Logo -->
-                        <img src="https://cdn-icons-png.flaticon.com/512/913/913117.png" alt="Donor Logo" class="logo">
-                        <h5 class="card-title">Donor</h5>
-                        <p class="card-text">If you want to provide assistance, please select this option.</p>
-                        <a href="donor.html" class="btn btn-success w-100 btn-interactive">Choose Donor</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Volunteer Section -->
-        <div class="mt-5 pt-3 border-top">
-            <h3 class="mt-3">Want to Volunteer?</h3>
-            <p>Join us as a volunteer to make a difference in our community. Your efforts can help us reach more people in need.</p>
-            <a href="volunteer.html" class="btn btn-outline-secondary btn-interactive">Become a Volunteer</a>
         </div>
     </div>
+</div>
+<!-- slider Area End-->
+<!--? Services Area Start -->
+<div class="service-area section-padding30">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-7 col-md-10 col-sm-10">
+                <!-- Section Tittle -->
+                <div class="section-tittle text-center mb-80">
+                    <span>What we are doing</span>
+                    <h2>We Are In A Mission To Help The Helpless</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Campaign Creation Feature -->
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="single-cat text-center mb-50">
+                    <div class="cat-icon">
+                        <span class="fa fa-bullhorn"></span> <!-- Replace with actual icon class for "Campaign" -->
+                    </div>
+                    <div class="cat-cap">
+                        <h5><a href="services.html">Create Campaign</a></h5>
+                        <p>Empower communities by creating campaigns that raise awareness and funds for meaningful causes.</p>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Event Participation Feature -->
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="single-cat text-center mb-50">
+                    <div class="cat-icon">
+                        <span class="fa fa-calendar-alt"></span> <!-- Replace with actual icon class for "Event" -->
+                    </div>
+                    <div class="cat-cap">
+                        <h5><a href="services.html">Join Events</a></h5>
+                        <p>Participate in events that bring people together for a cause and strengthen community connections.</p>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Donation Feature -->
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="single-cat text-center mb-50">
+                    <div class="cat-icon">
+                        <span class="fa fa-hand-holding-heart"></span> <!-- Replace with actual icon class for "Donation" -->
+                    </div>
+                    <div class="cat-cap">
+                        <h5><a href="services.html">Donate</a></h5>
+                        <p>Support campaigns with monetary contributions to create impactful changes in communities.</p>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Volunteer Feature -->
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="single-cat text-center mb-50">
+                    <div class="cat-icon">
+                        <span class="fa fa-hands-helping"></span> <!-- Replace with actual icon class for "Volunteer" -->
+                    </div>
+                    <div class="cat-cap">
+                        <h5><a href="services.html">Volunteer</a></h5>
+                        <p>Offer your time and skills to help organizations achieve their mission and drive positive impact.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<!-- Services Area End -->
+ <!--? About Law Start-->
+ <section class="about-low-area section-padding2">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-10">
+                <div class="about-caption mb-50">
+                    <!-- Section Tittle -->
+                    <div class="section-tittle mb-35">
+                        <span>About Us</span>
+                        <h2>We Are In A Mission To  Help Helpless</h2>
+                    </div>
+                    <p>JuanBayan is a crowdfunding platform dedicated to amplifying the voices and stories of disadvantaged individuals. We bridge the gap between those in need and a global community of generous supporters.</p>
+                    <p>Here, you can create campaigns to raise funds for critical expenses, life-changing opportunities, or simply a helping hand during difficult times.</p>
+                    <p>Whether it's supporting medical bills, educational aspirations, or basic necessities, every contribution makes a real difference. Join us in fostering a more compassionate world, one story at a time.</p>
+                </div>
+                <a routerLink="/team-member" class="btn">About US</a>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <!-- about-img -->
+                <div class="about-img ">
+                    <div class="about-font-img d-none d-lg-block">
+                        <img src="assets/user-bootstrap/charityworks-master/assets/img/gallery/about2.png" alt="">
+                    </div>
+                    <div class="about-back-img ">
+                        <img src="assets/user-bootstrap/charityworks-master/assets/img/gallery/about1.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- About Law End-->
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<!-- Our Cases Start -->
+<div class="our-cases-area section-padding30">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-7 col-md-10 col-sm-10">
+                <!-- Section Tittle -->
+                <div class="section-tittle text-center mb-80">
+                    <span>Our Cases you can see</span>
+                    <h2>Explore our latest causes that we works</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let campaign of campaigns">
+                <div class="single-cases mb-40">
+                    <div class="cases-img">
+                        <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" alt="{{ campaign.Campaign_Name }}">
+                    </div>
+                    <div class="cases-caption">
+                        <h3><a routerLink="/campaign-details/{{ campaign.Campaign_ID }}">{{campaign.Campaign_Name}}</a></h3>
+                        <!-- Progress Bar -->
+                        <div class="single-skill mb-15">
+                            <div class="bar-progress">
+                                <div id="bar1" class="barfiller">
+                                    <div class="tipWrap">
+                                        <span class="tip"></span>
+                                    </div>
+                                    <span class="fill" role="progressbar" [style.width.%]="progressPercentage">
+                                        
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- / progress -->
+                        <div class="prices d-flex justify-content-between">
+                            <p>Raised:<span> ₱{{campaign.Campaign_CurrentRaised}}</span></p>
+                            <p>Goal:<span> ₱{{campaign.Campaign_TargetFund}}</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Our Cases End -->
+<!--? Team Ara Start -->
+
+<!-- Want To work -->
+<section class="wantToWork-area ">
+    <div class="container">
+        <div class="wants-wrapper w-padding2  section-bg background-img">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-xl-5 col-lg-9 col-md-8">
+                    <div class="wantToWork-caption wantToWork-caption2">
+                        <h2>Lets Chenge The World With Humanity</h2>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-3 col-md-4">
+                    <a routerLink="/event-list" class="btn white-btn f-right sm-left">Become A Volunteer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Want To work End -->
+<!--? Testimonial Start -->
+<div class="testimonial-area testimonial-padding">
+    <div class="container">
+        <!-- Testimonial contents -->
+        <div class="row d-flex justify-content-center">
+            <div class="col-xl-8 col-lg-8 col-md-10">
+                <div class="h1-testimonial-active dot-style">
+                    <!-- Single Testimonial -->
+                    <div class="single-testimonial text-center">
+                        <div class="testimonial-caption ">
+                            <!-- founder -->
+                            <div class="testimonial-founder">
+                                <div class="founder-img mb-40">
+                                    <img src="assets/user-bootstrap/charityworks-master/assets/img/gallery/testimonial.png" alt="">
+                                    <span>Margaret Lawson</span>
+                                    <p>Creative Director</p>
+                                </div>
+                            </div>
+                            <div class="testimonial-top-cap">
+                                <p>“I am at an age where I just want to be fit and healthy our bodies are our responsibility! So start caring for your body and it will care for you. Eat clean it will care for you and workout hard.”</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Testimonial End -->
+
+<!--? Dinamic para sa Event -->
+<section class="home-blog-area section-padding30">
+    <div class="container">
+        <!-- Section Tittle -->
+        <div class="row justify-content-center">
+            <div class="col-xl-5 col-lg-6 col-md-9 col-sm-10">
+                <div class="section-tittle text-center mb-90">
+                    <span>Our Events</span>
+                    <h2>Latest post from our recent events</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="activeApprovedEvents.length > 0;">
+            <div class="col-xl-6 col-lg-6 col-md-6" *ngFor="let eventItem of activeApprovedEvents | slice:0:5" (click)="viewEventDetails(eventItem.Event_ID)">
+                <div class="home-blog-single mb-30">
+                    <div class="blog-img-cap">
+                        <div class="blog-img">
+                            <img
+                                [src]="getImagePath('assets/'+ eventItem.Event_Image)"
+                                [alt]="eventItem.Event_Name"
+                                style="height: 300px; width: 100%; object-fit: cover;"
+                            />  
+                            <!-- Blog date -->
+                            <div class="blog-date text-center">
+                                <span>{{ eventItem.Event_Start_Date | date: 'd' }}</span>
+                                <p>{{ eventItem.Event_Start_Date | date: 'MMMM' }}</p>
+                            </div>
+                        </div>
+                        <div class="blog-cap">
+                            <p>{{ eventItem.Event_Name }}</p>
+                            <h3><a (click)="viewEventDetails(eventItem.Event_ID)" class="text-decoration-none">{{ eventItem.Event_Location }}</a></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Blog Area End -->
+<!--? Count Down Start -->
+<div class="count-down-area pt-20 background-img">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12 col-md-12">
+                <div class="count-down-wrapper" >
+                    <div class="row justify-content-between">
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <!-- Counter Up -->
+                            <div class="single-counter text-center">
+                                <div class="counter color-green">
+                                    <div 
+                                        id="progress" 
+                                        class="progress" 
+                                        [style.width.%]="progressPercentage">
+                                    </div>
+                                </div>
+                                <span class="plus">+</span>
+                                <p class="color-green">Donation</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <!-- Counter Up -->
+                            <div class="single-counter text-center">
+                                <span class="counter color-green">₱{{ totalCollection | number }}</span>
+                                <span class="plus">+</span>
+                                <p class="color-green">Fund Raised</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <!-- Counter Up -->
+                            <div class="single-counter text-center">
+                                <span class="counter color-green">₱{{ totalGoal | number }}</span>
+                                <span class="plus">+</span>
+                                <p class="color-green">Goal</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <!-- Counter Up -->
+                            <div class="single-counter text-center">
+                                <span class="counter color-green">256</span>
+                                <span class="plus">+</span>
+                                <p class="color-green">Donation</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Count Down End -->
+
+<style>
+    .background-img{
+        background-image: url(assets/user-bootstrap/charityworks-master/assets/img/gallery/section_bg02.png);
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+    .background-img1{
+        background-image: url(assets/user-bootstrap/charityworks-master/assets/img/gallery/section_bg03.png);
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+    }
+</style>

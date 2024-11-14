@@ -165,4 +165,8 @@ export class AccountService {
           withCredentials: true
         });
     }
+
+    getAccountActivities(id: string): Observable<any> {
+        return this.http.get<any>(`${baseUrl}/${id}/activities`);
+    }
 }

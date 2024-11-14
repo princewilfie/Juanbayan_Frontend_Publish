@@ -1,51 +1,174 @@
-<div class="container mt-5">
-    <h2 class="mb-4">Events List</h2>
-  
-    <table class="table table-striped">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col"></th>
-          <th scope="col">Event Name</th>
-          <th scope="col">Description</th>
-          <th scope="col">Start Date</th>
-          <th scope="col">End Date</th>
-          <th scope="col">Location</th>
-          <th scope="col">Status</th>
-          <th scope="col">Approval Status</th>
-          <th scope="col">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let event of events">
-          <td><input type="checkbox"></td>
-          <td>{{ event.Event_Name }}</td>
-          <td>{{ event.Event_Description }}</td>
-          <td>{{ event.Event_Start_Date | date:'MM/dd/yyyy' }}</td>
-          <td>{{ event.Event_End_Date | date:'MM/dd/yyyy' }}</td>
-          <td>{{ event.Event_Location }}</td>
-          <td>{{ getEventStatus(event.Event_Status) }}</td>
-          <td>{{ event.Event_ApprovalStatus }}</td>
-          <td>
-            <div class="actions">
-              <button class="btn btn-success btn-sm" (click)="approveEvent(event.Event_ID); $event.stopPropagation()">Approve</button> &nbsp;
-              <button class="btn btn-danger btn-sm" (click)="openRejectionModal(event.Event_ID, rejectionModal); $event.stopPropagation()">Reject</button>
+<div id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <div class="container-fluid">
+          <!-- Page Heading -->
+          <h1 class="h3 mb-2 text-gray-800">Event</h1>
+          <p class="mb-4">This event is designed to streamline the review process, allowing you to approve or reject entries with ease. Use the tools below to manage and track submissions, making efficient decisions in one centralized location.</p>
+
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">Event List</h6>
             </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <th scope="col">Event Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Start Date</th>
+                    <th scope="col">End Date</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Approval Status</th>
+                    <th scope="col">Actions</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let event of events">
+                      <td>{{ event.Event_Name }}</td>
+                      <td>{{ event.Event_Description }}</td>
+                      <td>{{ event.Event_Start_Date | date:'MM/dd/yyyy' }}</td>
+                      <td>{{ event.Event_End_Date | date:'MM/dd/yyyy' }}</td>
+                      <td>{{ event.Event_Location }}</td>
+                      <td>{{ getEventStatus(event.Event_Status) }}</td>
+                      <td>{{ event.Event_ApprovalStatus }}</td>
+                      <td>
+                        <div class="actions">
+                          <button class="btn btn-success btn-sm mr-3" (click)="approveEvent(event.Event_ID); $event.stopPropagation()">Approve</button>
+                          <button class="btn btn-danger btn-sm" (click)="openRejectionModal(event.Event_ID); $event.stopPropagation()">Reject</button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
 </div>
 
-<ng-template #rejectionModal let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title">Reject Event</h5>
-    <button type="button" class="btn-close" (click)="modal.close()"></button>
+<!-- Rejection Modal (directly in the HTML) -->
+<div *ngIf="showRejectionModal" class="modal-overlay" (click)="closeRejectionModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="modal-title" id="rejectionModalLabel">Reject Event</h5>
+      <button type="button" class="btn-close" (click)="closeRejectionModal()"></button>
+    </div>
+    <div class="modal-body">
+      <textarea [(ngModel)]="rejectionNote" class="form-control" rows="3" placeholder="Enter the reason for rejection"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeRejectionModal()">Cancel</button>
+      <button type="button" class="btn btn-danger" (click)="rejectEventWithNote(selectedEventId)">Reject</button>
+    </div>
   </div>
-  <div class="modal-body">
-    <textarea [(ngModel)]="rejectionNote" class="form-control" rows="3" placeholder="Enter the reason for rejection"></textarea>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" (click)="modal.close()">Cancel</button>
-    <button type="button" class="btn btn-danger" (click)="rejectEventWithNote(selectedEventId, modal)">Reject</button>
-  </div>
-</ng-template>
+</div>
+
+<style>
+  /* Modal Overlay (to cover the whole screen) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050; /* Ensure it's above other content */
+  overflow: hidden;
+}
+
+/* Modal Content (to make it look like it pops out) */
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%; /* Adjust width as needed */
+  max-width: 600px; /* Set a max width to ensure it doesn't get too large */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Drop shadow to make it pop */
+  z-index: 1060; /* Ensure modal content is above the overlay */
+  animation: modalPop 0.3s ease-out; /* Add a pop animation */
+  
+  /* Make the modal content scrollable */
+  max-height: 80vh; /* Set a maximum height for the modal */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Animation for modal pop effect */
+@keyframes modalPop {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Close button styling */
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #000;
+  cursor: pointer;
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Modal Body */
+.modal-body {
+  margin-top: 15px;
+  max-height: calc(80vh - 160px); /* Adjust the height of the body content */
+  overflow-y: auto; /* Ensure the body can scroll */
+}
+
+/* Modal Footer */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 15px;
+  border-top: 1px solid #ddd;
+}
+
+.modal-footer .btn {
+  margin-left: 10px;
+}
+
+/* Style for the text area */
+textarea.form-control {
+  resize: vertical;
+}
+
+/* Style for the buttons */
+.btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+</style>

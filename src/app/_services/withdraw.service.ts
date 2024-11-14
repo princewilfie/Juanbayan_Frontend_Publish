@@ -30,4 +30,12 @@ export class WithdrawService {
   rejectWithdrawal(withdrawId: number): Observable<Withdraw> {
     return this.http.put<Withdraw>(`${this.baseUrl}/reject`, { Withdraw_ID: withdrawId });
   }
+
+  submitTestimony(withdrawId: number, testimony: string): Observable<Withdraw> {
+    return this.http.put<Withdraw>(`${this.baseUrl}/submit-testimony`, { Withdraw_ID: withdrawId, testimony });
+  }
+
+  getWithdrawByCampaignId(campaignId: number): Observable<Withdraw[]> {
+    return this.http.get<Withdraw[]>(`${this.baseUrl}/campaign/${campaignId}`);
+  }
 }

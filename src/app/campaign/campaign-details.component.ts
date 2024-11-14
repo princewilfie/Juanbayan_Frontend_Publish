@@ -94,7 +94,7 @@ export class CampaignDetailsComponent implements OnInit {
 
 
   openDonationModal(content: any): void {
-    this.modalService.open(content, { ariaLabelledBy: 'donateModalLabel' });
+    this.modalService.open(content, { ariaLabelledBy: 'donateModalLabel', backdrop: false });
   }
 
   // Confirm the donation and handle the donation process

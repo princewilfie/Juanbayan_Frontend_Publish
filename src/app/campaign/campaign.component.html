@@ -1,170 +1,346 @@
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JuanBayan - Campaigns</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JuanBayan - Campaigns</title>
+    
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
-  }
-
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-
-  .header-content {
-    background-image: url('/src/assets/jblogo.png'); /* Replace with actual background image */
+        /* Full-page background */
+        body {
+            background-color: #f7f9fc; /* Light background */
+            color: #333; /* Dark text */
+        }
+        /* Welcome Banner */
+        .welcome-banner {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
+                      url('https://images.pexels.com/photos/17257618/pexels-photo-17257618/free-photo-of-silhouettes-of-people-raising-arms-at-golden-hour.jpeg');
     background-size: cover;
-    background-position: center;
+    background-position: center bottom;
+    color: #ffffff;
+    padding: 180px 0;
     text-align: center;
-    padding: 150px 20px;
-    color: white;
-    position: relative;
-  }
+}
 
-  .header-content::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
+
+        /* Fade-in Animation for Text */
+        .welcome-banner h1 {
+            opacity: 0; /* Start with text invisible */
+            animation: fadeInText 1s ease-out forwards; /* Apply fade-in animation */
+        }
+
+        .welcome-banner p {
+            opacity: 0; /* Start with text invisible */
+            animation: fadeInText 1s ease-out forwards; /* Apply fade-in animation */
+            animation-delay: 2s; /* Delay the fade-in by 2 seconds */
+        }
+
+        /* Fade-in Keyframe */
+        @keyframes fadeInText {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Smooth font resizing for h1 when minimized */
+        .welcome-banner h1 {
+            font-size: 3rem;
+            transition: font-size 0.3s ease;
+        }
+
+        .welcome-banner.shrink h1 {
+            font-size: 1.8rem; /* Smaller font size when minimized */
+        }
+
+        .welcome-banner p {
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1; /* Ensures text is above the background overlay */
+        }
+
+        /* About Section */
+        .about-section {
+            background: #fff; /* White background */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: left; /* Align text to the left */
+            margin-bottom: 30px;
+        }
+
+        /* Animation for the text in About Section */
+        .about-section h2, .about-section p {
+            opacity: 0; /* Start with text hidden */
+            animation: popUpText 3s ease-out forwards; /* Apply pop-up animation */
+        }
+
+        /* Animation for text pop-up */
+        @keyframes popUpText {
+            0% {
+                transform: translateY(30px); /* Start from below */
+                opacity: 0; /* Fully transparent */
+            }
+            100% {
+                transform: translateY(0); /* End at normal position */
+                opacity: 1; /* Fully visible */
+            }
+        }
+
+        .about-section h2 {
+            font-size: 2rem;
+            color: #125f12; /* Green color */
+            margin-bottom: 10px;
+        }
+
+        .about-section p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+
+        /* Campaign Card */
+        .campaign-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: left;
+    transition: transform 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    color: #333;
+    position: relative;
+}
+
+.campaign-card:hover {
+    transform: translateY(-5px);
+}
+
+.campaign-card img {
+    border-radius: 10px;
     width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4);
-    z-index: 1;
-  }
-
-  .header-content h1 {
-    z-index: 2;
-    position: relative;
-    font-size: 3rem;
-  }
-
-  .header-content p {
-    z-index: 2;
-    position: relative;
-    font-size: 1.3rem;
-  }
-
-  /* Campaign Section */
-  .campaign-section {
-    padding: 60px 0;
-    text-align: center;
-  }
-
-  .campaign-section h2 {
-    font-size: 2.5rem;
-    margin-bottom: 40px;
-    color: #007bff;
-  }
-
-  .campaign-card {
-    cursor: pointer;
-    transition: transform 0.3s ease-in-out;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: none;
-    margin-bottom: 30px;
-  }
-
-  .campaign-card:hover {
-    transform: scale(1.05);
-  }
-
-  .campaign-card img {
-    height: 200px;
+    height: 180px;
     object-fit: cover;
-    border-radius: 8px;
-  }
+}
 
-  .campaign-card h5 {
-    font-size: 1.5rem;
-    color: #007bff;
-  }
+.campaign-donations {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+}
 
-  .campaign-card p {
+.card-body {
+    padding: 15px;
+}
+
+.card-title {
     font-size: 1rem;
-    color: #555;
-  }
+    font-weight: bold;
+    margin-bottom: 5px;
+}
 
-</style>
+.card-text {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 10px;
+}
 
+.card-progress {
+    margin: 10px 0;
+    height: 6px;
+    border-radius: 3px;
+    background-color: #e0e0e0;
+    overflow: hidden;
+}
 
-<!-- Header Section -->
-<header class="header-content">
-  <h1>JuanBayan Campaigns</h1>
-  <p>Join us in making a positive impact through our ongoing campaigns.</p>
-</header>
+.card-progress-bar {
+    width: 70%; /* Adjust dynamically based on progress */
+    height: 100%;
+    background-color: #4caf50;
+}
 
-<!-- Campaign Section -->
-<section class="campaign-section container">
-  <h2>Our Campaigns</h2>
-  <div class="container">
+.raised-amount {
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.btn-campaign {
+    background-color: #4caf50;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    color: #fff;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+.btn-campaign:hover {
+    background-color: #45a049;
+}
+
+    
+        /* Testimonials Section */
+        .testimonials-section {
+            background-color: #f9f9f9; /* Light grey background */
+            padding: 40px 0;
+            text-align: center;
+            border-top:  1px solid #d3d0d0; /* Top border */
+            border-bottom: 1% solid #272626; /* Bottom border */
+        }
+        .testimonials-section h2 {
+            color: #4caf50;
+            margin-bottom: 20px;
+        }
+        .testimonial-item img {
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+    
+        /* Statistics Section */
+        .stats-section {
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid #ddd; /* Top border */
+            border-bottom: 1px solid #ddd; /* Bottom border */
+        }
+        .stats-section h3 {
+            color: #4caf50;
+            font-size: 2rem;
+        }
+        .stats-section p {
+            color: #666;
+        }
+        /* Learn More Button Animation */
+        .btn-success {
+            background-color: #28a745; /* Default green */
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            color: #fff;
+            border: none;
+            transition: all 0.3s ease-in-out; /* Transition for smooth effect */
+        }
+
+        .btn-success:hover {
+            background-color: #218838; /* Darker green on hover */
+            transform: scale(1.1); /* Slightly increase size */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Add shadow on hover */
+        }
+        /* Support Button Animation */
+        .btn-campaign {
+            background-color: #4caf50; /* Green */
+            border-radius: 20px;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            color: #fff;
+            border: none;
+            transition: all 0.3s ease-in-out; /* Transition for smooth effect */
+        }
+
+        .btn-campaign:hover {
+            background-color: #45a049; /* Darker green on hover */
+            transform: scale(1.1); /* Slightly increase size */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Add shadow on hover */
+        }   
+
+    </style>
+
+<main>
+  <div class="content">
+    <!-- Welcome Banner -->
+    <div class="welcome-banner">
+        <h1 style="font-size: 70px;" class="text-light">JuanBayan  Campaigns</h1>
+        <p style="font-size: 25px;" class="text-light">Join us in making a positive impact through our ongoing campaigns.</p>
+    </div>
+    <br>
+    <!-- About Section -->
+    <section class="about-section container">
+        <h2>About JuanBayan</h2>
+        <p>JuanBayan is dedicated to making a difference in the lives of disadvantaged individuals in Cebu City. Through our campaigns, we aim to provide resources and support to those who need it most.</p>
+        <button class="btn btn-success">Learn More</button>
+    </section>
+
     <!-- Campaigns Section -->
-    <div class="row">
-      <div class="col-md-4" *ngFor="let campaign of campaigns">
-        <div class="card campaign-card" routerLink="/campaign-details/{{ campaign.Campaign_ID }}" >          <!-- Fix for campaign image path -->
-          <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" alt="{{ campaign.Campaign_Name }} Image" class="card-img-top"
-          style="object-fit: cover; height: 200px;">
-          <div class="card-body">
-            <h5 class="card-title">{{ campaign.Campaign_Name }}</h5>
-            <p class="card-text">{{ campaign.Campaign_Description }}</p>
-          </div>
+    <section class="container my-4">
+        <h2>Our Campaigns</h2>
+        <div class="row">
+            <!-- Campaign Cards -->
+            <div class="col-md-4 mb-4" *ngFor="let campaign of campaigns">
+                <div class="card campaign-card" routerLink="/campaign-details/{{ campaign.Campaign_ID }}">
+                    <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" alt="{{ campaign.Campaign_Name }} Image" class="card-img-top">
+                    <div class="campaign-donations">{{ campaign.Donations_Count }} donations</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ campaign.Campaign_Name }}</h5>
+                        <p class="card-text">{{ campaign.Campaign_Description }}</p>
+                        <div class="card-progress">
+                            <div class="card-progress-bar" [style.width.%]="campaign.Progress_Percentage"></div>
+                        </div>
+                        <p class="raised-amount">{{ campaign.Raised_Amount | currency }} raised</p>
+                        <button class="btn-campaign">Support</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
+    </section>
+    
 
-  
+    <!-- Testimonials Section -->
+    <section class="testimonials-section py-5">
+        <div class="container">
+            <h2>What People Say About Us</h2>
+            <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <!-- Testimonial 1 -->
+                    <div class="carousel-item active">
+                        <div class="testimonial-item d-flex flex-column align-items-center">
+                            <img src="https://via.placeholder.com/60" alt="Person 1">
+                            <h5>Belli Smith</h5>
+                            <p class="testimonial-text">"Contribute to a cause, knowing your help will make a difference."</p>
+                        </div>
+                    </div>
+                    <!-- Add more testimonials here -->
+                </div>
+                <!-- Carousel Controls -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            </div>
+        </div>
+    </section>
 
-  <!-- Modal for Donation via GCash -->
-  <div #donateModal class="modal fade" tabindex="-1" aria-labelledby="donateModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Donate via GCash</h5>
-          <button type="button" class="btn-close" aria-label="Close" (click)="closeModal(donateModal)"></button>
+    <!-- Statistics Section -->
+    <section class="stats-section py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h3>200k</h3>
+                    <p>Received Donations From Our People</p>
+                </div>
+                <div class="col-md-3">
+                    <h3>99K</h3>
+                    <p>Projects Done With The Help Of Donors</p>
+                </div>
+                <div class="col-md-3">
+                    <h3>200k</h3>
+                    <p>People We Helped in 2020</p>
+                </div>
+                <div class="col-md-3">
+                    <h3>10.7K</h3>
+                    <p>Volunteers Solving Many Causes</p>
+                </div>
+            </div>
         </div>
-        <div class="modal-body text-center">
-          <img [src]="qrCodeUrl" alt="GCash QR Code" class="img-fluid">
-          <p>Scan the QR code to donate via GCash.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="initiateDonation()">Proceed</button>
-        </div>
-      </div>
-    </div>
-  </div>
+    </section>
+</div>
+</main>
 
-  <!-- Modal for Uploading Receipt -->
-  <div #uploadModal class="modal fade" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Upload Receipt</h5>
-          <button type="button" class="btn-close" aria-label="Close" (click)="closeModal(uploadModal)"></button>
-        </div>
-        <div class="modal-body">
-          <label for="receiptUpload" class="btn btn-primary">Upload Receipt</label>
-          <input type="file" id="receiptUpload" (change)="onFileChange($event)" style="display: none;">
-          <img *ngIf="receiptPreview" [src]="receiptPreview" class="img-fluid mt-3" alt="Receipt Preview">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="confirmUpload()">Confirm</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</section>
-
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/src/app/campaign/campaign.component.ts"></script> <!-- Reference the external script file -->

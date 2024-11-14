@@ -3,10 +3,10 @@ import { CampaignService } from '../_services/campaign.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Campaign } from '../_models';
+import { Campaign, Withdraw } from '../_models';
 import { AccountService } from '../_services/account.service';
 import Swal from 'sweetalert2'; // Import SweetAlert
-import { DonationService, CategoryService } from '../_services';
+import { DonationService, CategoryService, WithdrawService } from '../_services';
 import { Donation, Category } from '../_models';
 
 
@@ -16,9 +16,6 @@ import { Donation, Category } from '../_models';
   styleUrls: ['./create-campaign.component.css']
 })
 export class CreateCampaignComponent implements OnInit {
-
-  @ViewChild('campaignDetailModal') campaignDetailModal!: TemplateRef<any>;
-  @ViewChild('donorsModal') donorsModal: any;
 
   createCampaignForm: FormGroup;
   editCampaignForm: FormGroup;
@@ -36,11 +33,22 @@ export class CreateCampaignComponent implements OnInit {
   campaignId: number;
   categories: Category[] = [];
   selectedProofFiles: File[] = [];
+  withdrawal: any;
+  selectedCampaignIdT: any;
+  imagePreview: string | ArrayBuffer | null = null;
+  proofImagePreviews: (string | ArrayBuffer | null)[] = [];
+  createCampaignModal: boolean = false;
+  editCampaignModal: boolean = false;
+  confirmationModal: boolean = false;
+  testimonyModal: boolean = false;
+  testimony: string = '';
+  selectedWithdrawId: number | null = null;
 
   // Arrays to store campaigns by their status
   approvedCampaigns: any[] = [];
   pendingCampaigns: any[] = [];
   rejectedCampaigns: any[] = [];
+  doneCampaigns: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -49,7 +57,8 @@ export class CreateCampaignComponent implements OnInit {
     private router: Router,
     private accountService: AccountService,
     private donationService: DonationService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private withdrawService: WithdrawService
   ) {
     this.createCampaignForm = this.formBuilder.group({
       Campaign_Name: ['', Validators.required],
@@ -88,6 +97,7 @@ export class CreateCampaignComponent implements OnInit {
         this.approvedCampaigns = data.filter(campaign => campaign.Campaign_ApprovalStatus === 'Approved'); // Approved campaigns
         this.pendingCampaigns = data.filter(campaign => campaign.Campaign_ApprovalStatus === 'Waiting For Approval'); // Pending campaigns
         this.rejectedCampaigns = data.filter(campaign => campaign.Campaign_ApprovalStatus === 'Rejected'); // Rejected campaigns
+        this.doneCampaigns = data.filter(campaign => campaign.Campaign_ApprovalStatus === 'Done');
 
         // Check if campaigns were approved or rejected
         this.checkCampaignStatus();
@@ -99,6 +109,72 @@ export class CreateCampaignComponent implements OnInit {
     );
   }
 
+  onImagePreview(event: Event): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files[0]) {
+      this.selectedFile = fileInput.files[0]; // Assigning the file
+      console.log('Selected File:', this.selectedFile);
+  
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+      };
+      reader.readAsDataURL(this.selectedFile);
+    } else {
+      this.selectedFile = null; // Reset if no file selected
+    }
+  }
+
+  openTestimonyModal(campaignId: number) {
+    this.campaignId = campaignId; // Set the current campaign ID
+    this.testimonyModal = true; // Open the modal
+
+    // Fetch withdrawals for the given campaign ID
+    this.getWithdrawalsByCampaignId();
+  }
+  
+  getWithdrawalsByCampaignId() {
+    this.withdrawService.getWithdrawByCampaignId(this.campaignId).subscribe(
+      (withdrawals: Withdraw[]) => {
+        if (withdrawals.length > 0) {
+          // Assuming you want the first withdrawal's ID; adjust logic as needed
+          this.selectedWithdrawId = withdrawals[0].Withdraw_ID; 
+          console.log('Withdrawal fetched successfully:', this.selectedWithdrawId);
+        } else {
+          alert('No withdrawals found for this campaign.');
+        }
+      },
+      (error) => {
+        console.error('Error fetching withdrawals:', error);
+        alert('Failed to fetch withdrawals. Please try again.');
+      }
+    );
+  }
+
+  submitTestimony(testimony: string) {
+    if (!this.selectedWithdrawId) {
+      alert('No valid withdrawal selected for submission.');
+      return;
+    }
+
+    this.withdrawService.submitTestimony(this.selectedWithdrawId, testimony).subscribe(
+      (response) => {
+        console.log('Testimony submitted successfully:', response);
+        alert('Testimony submitted successfully!');
+        this.closeTestimonyModal();
+        this.testimony = ''; // Reset form after submission
+      },
+      (error) => {
+        console.error('Error submitting testimony:', error);
+        alert('Failed to submit testimony. Please try again.');
+      }
+    );
+  }
+
+  closeTestimonyModal() {
+    this.testimonyModal = false; // Close the modal
+  }
+  
   loadCategories() {
     this.categoryService.getAllCategories().subscribe(
       (data: Category[]) => {
@@ -118,7 +194,7 @@ export class CreateCampaignComponent implements OnInit {
       console.log(this.selectedProofFiles); // Optional: to log the selected files
     }
   }
-
+  
   checkCampaignStatus() {
     // Use session storage to prevent showing alerts multiple times
     const alertsShown = sessionStorage.getItem('alertsShown');
@@ -160,14 +236,6 @@ export class CreateCampaignComponent implements OnInit {
     sessionStorage.setItem('alertsShown', 'true');
   }
 
-  openCreateCampaignModal(content: TemplateRef<any>) {
-    this.modalRef = this.modalService.open(content, { size: 'lg' });
-  }
-
-  closeCreateCampaignModal() {
-    this.resetCreateForm();
-    this.closeModal();
-  }
 
   resetCreateForm() {
     this.createCampaignForm.reset();
@@ -247,27 +315,11 @@ export class CreateCampaignComponent implements OnInit {
     this.router.navigate(['campaign-details', campaignId]); 
   }
 
-  openCampaignDetails(campaign: Campaign, content: TemplateRef<any>): void {
+  openCampaignDetails(campaign: Campaign) {
     this.selectedCampaign = campaign;
-    this.modalRef = this.modalService.open(content, { centered: true });
     this.isDetailModalOpen = true;
   }
 
-  openEditCampaignModal(campaign: Campaign, content: TemplateRef<any>): void {
-    this.selectedCampaign = campaign;
-
-    this.editCampaignForm.patchValue({
-      Campaign_Name: campaign.Campaign_Name,
-      Campaign_Description: campaign.Campaign_Description,
-      Campaign_TargetFund: campaign.Campaign_TargetFund,
-      Category_ID: campaign.Category_ID,
-      Campaign_Start: campaign.Campaign_Start,
-      Campaign_End: campaign.Campaign_End
-    });
-
-    this.closeDetailModal(); // Close the detail modal before opening edit modal
-    this.modalRef = this.modalService.open(content, { centered: true });
-  }
 
   updateCampaign() {
     if (this.editCampaignForm.invalid) {
@@ -328,6 +380,10 @@ export class CreateCampaignComponent implements OnInit {
     }
   }
 
+
+  closeConfirmationModal(): void {
+    this.confirmationModal = false;
+  }
   
   viewDonors(campaignId: number): void {
     this.donor = []; // Clear donors before fetching new ones
@@ -336,7 +392,7 @@ export class CreateCampaignComponent implements OnInit {
     this.donationService.getDonationsByCampaignId(campaignId).subscribe(
       (donors: Donation[]) => {
         this.donor = donors; // Store donors in the component
-        this.modalService.open(this.donorsModal);
+        this.showDonorsModal = true;
         console.log(this.donor);
       },
       (error) => {
@@ -353,13 +409,6 @@ export class CreateCampaignComponent implements OnInit {
     );
   }
   
-  closeDonorsModal(): void {
-    this.modalService.dismissAll();
-  }
-  openConfirmationModal(campaign: Campaign, content: TemplateRef<any>) {
-    this.selectedCampaign = campaign; 
-    this.modalRef = this.modalService.open(content, { centered: true });
-  }
 
   deleteCampaign(campaignId: number) {
     this.campaignService.deleteCampaign(campaignId).subscribe(
@@ -395,18 +444,6 @@ export class CreateCampaignComponent implements OnInit {
       this.modalRef = null; // Reset modal reference
     }
   }
-
-  closeDetailModal(): void {
-    this.isDetailModalOpen = false; // Reset detail modal state
-    this.closeModal(); // Close the detail modal
-  }
-
-  closeEditModal(): void {
-    this.closeModal(); // Close the edit modal
-    if (this.selectedCampaign) {
-      this.openCampaignDetails(this.selectedCampaign, this.campaignDetailModal); // Reopen the detail modal with correct template
-    }
-  }
   
   onFileChange(event: any): void {
     const file = event.target.files[0];
@@ -415,12 +452,46 @@ export class CreateCampaignComponent implements OnInit {
     reader.readAsDataURL(file);
   }
 
-  formatCategory(category: number): string {
-    switch (category) {
-      case 1: return 'category-financial';
-      case 2: return 'category-education';
-      case 3: return 'category-hospital';
-      default: return 'category-other';
-    }
+  openDonorsModal() {
+    this.showDonorsModal = true;
   }
+
+  closeDonorsModal() {
+    this.showDonorsModal = false;
+  }
+
+  openDetailModal(campaign: any) {
+    this.selectedCampaign = campaign;
+    this.isDetailModalOpen = true;
+  }
+
+  closeDetailModal() {
+    this.isDetailModalOpen = false;
+
+  }
+
+  openEditCampaignModal(campaign: any) {
+    this.selectedCampaign = campaign;
+    this.editCampaignModal = true;
+    this.editCampaignForm.patchValue(campaign);
+  }
+
+  closeEditModal() {
+    this.editCampaignModal = false;
+
+  }
+
+  openCreateCampaignModal() {
+    this.createCampaignModal = true;
+  }
+
+  closeCreateCampaignModal() {
+    this.createCampaignModal = false;
+  }
+
+  openConfirmationModal(campaign: any) {
+    this.selectedCampaign = campaign;
+    this.confirmationModal = true;
+  }
+
 }

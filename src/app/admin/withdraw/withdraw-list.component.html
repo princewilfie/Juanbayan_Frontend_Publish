@@ -1,56 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Withdrawals List</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        .table td, .table th {
-            border-bottom: 1px solid #dee2e6;
-        }
-        .actions {
-            display: flex;
-            gap: 10px;
-        }
-    </style>
-</head>
-<body>
-<div class="container mt-5">
-  <br><br>
-    <h2 class="mb-4">Withdrawals List</h2>
-    
-    <table class="table">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col"></th>
-          <th scope="col">Account ID</th>
-          <th scope="col">Account Number</th>
-          <th scope="col">Bank</th>
-          <th scope="col">Amount</th>
-          <th scope="col">Request Date</th>
-          <th scope="col">Status</th>
-          <th scope="col">Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let withdrawal of withdrawals">
-          <td><input type="checkbox"></td>
-          <td>{{ withdrawal.acc_id }}</td>
-          <td>{{ withdrawal.Acc_number }}</td>
-          <td>{{ withdrawal.Bank_account }}</td>
-          <td>{{ withdrawal.Withdraw_Amount | currency }}</td>
-          <td>{{ withdrawal.Request_Date | date:'MM/dd/yyyy' }}</td>
-          <td>{{ withdrawal.Status }}</td>
-          <td>
-            <div class="actions">
-              <button class="btn btn-success btn-sm" (click)="approveWithdrawal(withdrawal.Withdraw_ID)">Approve</button>
-              <button class="btn btn-danger btn-sm" (click)="rejectWithdrawal(withdrawal.Withdraw_ID)">Reject</button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<div id="page-top">
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+      <div id="content-wrapper" class="d-flex flex-column">
+          <div id="content">
+              <div class="container-fluid">
+
+                  <!-- Page Heading -->
+                  <h1 class="h3 mb-2 text-gray-800">Witdrawals</h1>
+                  <p class="mb-4">This campaign is designed to streamline the review process,
+                    allowing you to approve or reject entries with ease. Use the tools below
+                    to manage and track submissions, making efficient decisions in one centralized location.</p>
+
+
+                  <!-- DataTales Example -->
+                  <div class="card shadow mb-4">
+                      <div class="card-header py-3">
+                          <h6 class="m-0 font-weight-bold text-primary">Campaign List</h6>
+                      </div>
+                      <div class="card-body">
+                          <div class="table-responsive">
+                              <table class="table table-striped" id="dataTable" width="100%" cellspacing="10">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col"></th>
+                                      <th scope="col">Account ID</th>
+                                      <th scope="col">Account Number</th>
+                                      <th scope="col">Bank</th>
+                                      <th scope="col">Amount</th>
+                                      <th scope="col">Request Date</th>
+                                      <th scope="col">Status</th>
+                                      <th scope="col">Actions</th>
+                                    </tr>
+                            
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let withdrawal of withdrawals">
+                                      <td><input type="checkbox"></td>
+                                      <td>{{ withdrawal.acc_id }}</td>
+                                      <td>{{ withdrawal.Acc_number }}</td>
+                                      <td>{{ withdrawal.Bank_account }}</td>
+                                      <td>{{ withdrawal.Withdraw_Amount | currency }}</td>
+                                      <td>{{ withdrawal.Request_Date | date:'MM/dd/yyyy' }}</td>
+                                      <td>{{ withdrawal.Status }}</td>
+                                      <td>
+                                        <div class="actions">
+                                          <button class="btn btn-success btn-sm" (click)="approveWithdrawal(withdrawal.Withdraw_ID)">Approve</button>
+                                          <button class="btn btn-danger btn-sm" (click)="rejectWithdrawal(withdrawal.Withdraw_ID)">Reject</button>
+                                        </div>
+                                      </td>
+                                    </tr>                                  
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+  </a>
 </div>
-</body>
-</html>

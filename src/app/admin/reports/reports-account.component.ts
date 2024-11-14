@@ -6,7 +6,7 @@ import { Chart } from 'chart.js/auto';
 @Component({
   selector: 'app-accounts-report',
   templateUrl: './reports-account.component.html',
-  styleUrls: ['./reports-account.component.css']
+  //styleUrls: ['./reports-account.component.css']
 })
 export class ReportsAccountComponent implements OnInit, AfterViewInit {
   accounts: Account[] = [];
@@ -104,5 +104,18 @@ export class ReportsAccountComponent implements OnInit, AfterViewInit {
   getMonthName(monthIndex: number): string {
     const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     return monthNames[monthIndex];
+  }
+
+  downloadAnimation() {
+    const downloadButton = document.querySelector('.btn-circle-download') as HTMLElement;
+    downloadButton.classList.add('load');
+
+    setTimeout(() => {
+        downloadButton.classList.add('done');
+    }, 1000);
+
+    setTimeout(() => {
+        downloadButton.classList.remove('load', 'done');
+    }, 5000);
   }
 }

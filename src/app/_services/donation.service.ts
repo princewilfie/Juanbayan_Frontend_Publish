@@ -46,4 +46,8 @@ export class DonationService {
     return this.http.get<Donation[]>(`${this.baseUrl}/campaign/${campaignId}`);
   }
 
+  getFeeAmounts(): Observable<{ totalFeeAmount: number, feeAmounts: { donation_id: number, fee_amount: number }[] }> {
+    return this.http.get<{ totalFeeAmount: number, feeAmounts: { donation_id: number, fee_amount: number }[] }>(`${this.baseUrl}/fees`);
+  }
+
 }

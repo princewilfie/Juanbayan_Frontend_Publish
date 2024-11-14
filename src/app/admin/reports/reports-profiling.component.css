@@ -1,0 +1,28 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.chart-container {
+    width: 80%;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.table {
+    margin-top: 20px;
+    width: 100%;
+}
+
+.download-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+.download-button:hover {
+    background-color: #45a049;
+}
