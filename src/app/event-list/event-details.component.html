@@ -36,9 +36,6 @@
                   <button class="genric-btn primary" (click)="showTermsModal()">Join Volunteer</button>
                 </div>
                 <div class="col-md-12 mb-2">
-                  <button class="genric-btn success">Share</button>
-                </div>
-                <div class="col-md-12 mb-2">
                   <button class="like-button genric-btn default-border circle" (click)="toggleLike()">
                     <i [class]="hasLiked ? 'fas fa-thumbs-up' : 'far fa-thumbs-up'"></i>
                     {{ likeCount }} {{ likeCount === 1 ? 'Like' : 'Likes' }}

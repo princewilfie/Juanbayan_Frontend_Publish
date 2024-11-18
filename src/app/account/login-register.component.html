@@ -21,62 +21,103 @@
 						<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
 						<a href="http://localhost:4000/auth/google" class="social"><i class="fab fa-google-plus-g"></i></a>
 					</div>
-					<span>or use your email for registration</span>
 
-					<!-- First Name -->
-					<input type="text" formControlName="acc_firstname" placeholder="First Name" [ngClass]="{ 'is-invalid': submitted && rf.acc_firstname.errors }" />
-					<div *ngIf="submitted && rf.acc_firstname.errors" class="invalid-feedback">
-						<small *ngIf="rf.acc_firstname.errors.required">First Name is required</small>
+					<!-- Multi-step Form Container -->
+					<div *ngIf="step === 1">
+						<h3>Select Account Type</h3>
+						<div class="form-group">
+							<div class="grid-wrapper grid-col-auto">
+								<!-- Donor Radio -->
+								<label for="radio-donor" class="radio-card">
+									<input type="radio" formControlName="acc_type" value="Donor" id="radio-donor" />
+									<div class="card-content-wrapper">
+										<span class="check-icon"></span>
+										<div class="card-content">
+											<img src="https://image.freepik.com/free-vector/group-friends-giving-high-five_23-2148363170.jpg" alt="Donor" />
+											<h4>Donor</h4>
+											<p>Support campaigns and make a difference.</p>
+										</div>
+									</div>
+								</label>
+								<!-- Beneficiary Radio -->
+								<label for="radio-beneficiary" class="radio-card">
+									<input type="radio" formControlName="acc_type" value="Beneficiary" id="radio-beneficiary" />
+									<div class="card-content-wrapper">
+										<span class="check-icon"></span>
+										<div class="card-content">
+											<img src="https://image.freepik.com/free-vector/people-putting-puzzle-pieces-together_52683-28610.jpg" alt="Beneficiary" />
+											<h4>Beneficiary</h4>
+											<p>Create campaigns to get support for your cause.</p>
+										</div>
+									</div>
+								</label>
+							</div>
+							<div *ngIf="submitted && rf.acc_type.errors" class="invalid-feedback">
+								<small>You must select an account type.</small>
+							</div>
+						</div>
+						<button type="button" (click)="nextStep()">Next</button>
 					</div>
 
-					<!-- Last Name -->
-					<input type="text" formControlName="acc_lastname" placeholder="Last Name" [ngClass]="{ 'is-invalid': submitted && rf.acc_lastname.errors }" />
-					<div *ngIf="submitted && rf.acc_lastname.errors" class="invalid-feedback">
-						<small *ngIf="rf.acc_lastname.errors.required">Last Name is required</small>
+					<div *ngIf="step === 2">
+						<!-- Step 2: Personal Details -->
+						<input type="text" formControlName="acc_firstname" placeholder="First Name" [ngClass]="{ 'is-invalid': submitted && rf.acc_firstname.errors }" />
+						<div *ngIf="submitted && rf.acc_firstname.errors" class="invalid-feedback">
+							<small *ngIf="rf.acc_firstname.errors.required">First Name is required</small>
+						</div>
+						
+						<input type="text" formControlName="acc_lastname" placeholder="Last Name" [ngClass]="{ 'is-invalid': submitted && rf.acc_lastname.errors }" />
+						<div *ngIf="submitted && rf.acc_lastname.errors" class="invalid-feedback">
+							<small *ngIf="rf.acc_lastname.errors.required">Last Name is required</small>
+						</div>
+
+						<input type="email" formControlName="acc_email" placeholder="Email" [ngClass]="{ 'is-invalid': submitted && rf.acc_email.errors }" />
+						<div *ngIf="submitted && rf.acc_email.errors" class="invalid-feedback">
+							<small *ngIf="rf.acc_email.errors.required">Email is required</small>
+							<small *ngIf="rf.acc_email.errors.email">Email is invalid</small>
+						</div>
+
+						<input type="text" formControlName="acc_pnumber" placeholder="Phone Number" [ngClass]="{ 'is-invalid': submitted && rf.acc_pnumber.errors }" />
+						<div *ngIf="submitted && rf.acc_pnumber.errors" class="invalid-feedback">
+							<small *ngIf="rf.acc_pnumber.errors.required">Phone Number is required</small>
+							<small *ngIf="rf.acc_pnumber.errors.pattern">Phone Number must be a valid 10-12 digits number</small>
+						</div>
+
+						<button type="button" (click)="previousStep()">Previous</button>
+						<button type="button" (click)="nextStep()">Next</button>
 					</div>
 
-					<!-- Email -->
-					<input type="email" formControlName="acc_email" placeholder="Email" [ngClass]="{ 'is-invalid': submitted && rf.acc_email.errors }" />
-					<div *ngIf="submitted && rf.acc_email.errors" class="invalid-feedback">
-						<small *ngIf="rf.acc_email.errors.required">Email is required</small>
-						<small *ngIf="rf.acc_email.errors.email">Email is invalid</small>
-					</div>
+					<div *ngIf="step === 3">
+						<!-- Step 3: Contact Information -->
+						
+						<input type="password" formControlName="acc_passwordHash" placeholder="Password" [ngClass]="{ 'is-invalid': submitted && rf.acc_passwordHash.errors }" />
+						<div *ngIf="submitted && rf.acc_passwordHash.errors" class="invalid-feedback">
+							<small>Password is required</small>
+							<small *ngIf="rf.acc_passwordHash.errors.minlength">Password must be at least 6 characters</small>
+						</div>
 
-					<!-- Phone Number -->
-					<input type="text" formControlName="acc_pnumber" placeholder="Phone Number" [ngClass]="{ 'is-invalid': submitted && rf.acc_pnumber.errors }" />
-					<div *ngIf="submitted && rf.acc_pnumber.errors" class="invalid-feedback">
-						<small *ngIf="rf.acc_pnumber.errors.required">Phone Number is required</small>
-						<small *ngIf="rf.acc_pnumber.errors.pattern">Phone Number must be a valid 10-12 digits number</small>
-					</div>
+						<input type="password" formControlName="confirmPassword" placeholder="Confirm Password" [ngClass]="{ 'is-invalid': submitted && rf.confirmPassword.errors }" />
+						<div *ngIf="submitted && rf.confirmPassword.errors" class="invalid-feedback">
+							<small>Confirm Password is required</small>
+							<small *ngIf="rf.confirmPassword.errors.mustMatch">Passwords must match</small>
+						</div>
 
-					<!-- Password -->
-					<input type="password" formControlName="acc_passwordHash" placeholder="Password" [ngClass]="{ 'is-invalid': submitted && rf.acc_passwordHash.errors }" />
-					<div *ngIf="submitted && rf.acc_passwordHash.errors" class="invalid-feedback">
-						<small>Password is required</small>
-						<small *ngIf="rf.acc_passwordHash.errors.minlength">Password must be at least 6 characters</small>
-					</div>
-
-					<!-- Confirm Password -->
-					<input type="password" formControlName="confirmPassword" placeholder="Confirm Password" [ngClass]="{ 'is-invalid': submitted && rf.confirmPassword.errors }" />
-					<div *ngIf="submitted && rf.confirmPassword.errors" class="invalid-feedback">
-						<small>Confirm Password is required</small>
-						<small *ngIf="rf.confirmPassword.errors.mustMatch">Passwords must match</small>
-					</div>
-
-					<!-- Accept Terms -->
-					<div class="form-group">
 						<input type="checkbox" formControlName="acc_acceptTerms" id="acceptTerms" [ngClass]="{ 'is-invalid': submitted && rf.acc_acceptTerms.errors }" />
 						<label for="acceptTerms">Accept Terms & Conditions</label>
 						<div *ngIf="submitted && rf.acc_acceptTerms.errors" class="invalid-feedback">
 							<small>You must accept the terms and conditions</small>
 						</div>
+
+						<button type="button" (click)="previousStep()">Previous</button>
+						<button type="submit">Sign Up</button>
+
 					</div>
 
-					<button type="submit">Sign Up</button>
+					<div *ngIf="step === 4">
+
+					</div>
 				</form>
-
 			</div>
-
 			<!-- Login Form -->
 			<div class="form-container sign-in-container">
 				

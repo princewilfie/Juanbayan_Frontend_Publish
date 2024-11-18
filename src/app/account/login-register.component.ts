@@ -10,7 +10,7 @@ import Swal from 'sweetalert2'; // Import SweetAlert
 @Component({
   selector: 'app-login-register',
   templateUrl: './login-register.component.html',
-  styleUrls: ['./login-register.component.css'],
+  styleUrls: ['./login-register.component.css', './login-register.component.scss', './login-register.component.less'],
 })
 export class LoginRegisterComponent implements OnInit {
   loginForm: FormGroup;
@@ -18,6 +18,19 @@ export class LoginRegisterComponent implements OnInit {
   submitted = false;
   isRightPanelActive = false; // For toggling between SignIn and SignUp
   loading = false;
+  step: number = 1;
+
+  nextStep() {
+    if (this.step < 3) {
+        this.step++;
+    }
+}
+
+previousStep() {
+    if (this.step > 1) {
+        this.step--;
+    }
+}
 
   constructor(
     private formBuilder: FormBuilder,
@@ -53,7 +66,8 @@ export class LoginRegisterComponent implements OnInit {
       acc_pnumber: ['', [Validators.required, Validators.pattern('^[0-9]{10,12}$')]],
       acc_passwordHash: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required],
-      acc_acceptTerms: [false, Validators.requiredTrue]
+      acc_acceptTerms: [false, Validators.requiredTrue],
+      acc_type: ['', Validators.required], // Add acc_type here
     }, {
       validator: MustMatch('acc_passwordHash', 'confirmPassword')
     });
