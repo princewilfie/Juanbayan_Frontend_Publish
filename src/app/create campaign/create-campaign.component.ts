@@ -44,6 +44,10 @@ export class CreateCampaignComponent implements OnInit {
   testimony: string = '';
   selectedWithdrawId: number | null = null;
   isTestimonySubmitted: boolean = false;
+  termsModalOpen: boolean = false;
+  termsAccepted = false;
+
+
 
   // Arrays to store campaigns by their status
   approvedCampaigns: any[] = [];
@@ -70,7 +74,7 @@ export class CreateCampaignComponent implements OnInit {
       Category_ID: ['', Validators.required],
       Campaign_Image: [null],
       Proof_Files: [null],
-      Campaign_Notes: ['']
+      Campaign_Notes: [''],
     });
 
     this.editCampaignForm = this.formBuilder.group({
@@ -495,5 +499,16 @@ export class CreateCampaignComponent implements OnInit {
     this.selectedCampaign = campaign;
     this.confirmationModal = true;
   }
-
+  openTermsModal() {
+    this.termsModalOpen = true;
+  }
+  
+  closeTermsModal() {
+    this.termsModalOpen = false;
+  }
+  acceptTerms() {
+    this.termsAccepted = true;
+    this.termsModalOpen = false;
+    this.openCreateCampaignModal();
+  }
 }

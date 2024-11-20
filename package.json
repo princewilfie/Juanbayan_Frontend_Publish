@@ -38,6 +38,7 @@
         "material": "^0.9.16",
         "ngx-charts": "^3.0.2",
         "ngx-cookie-service": "^18.0.0",
+        "ngx-image-cropper": "^8.1.1",
         "popper.js": "^1.16.1",
         "rxjs": "^6.5.5",
         "sweetalert2": "^11.14.4",

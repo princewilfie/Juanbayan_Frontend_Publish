@@ -16,4 +16,5 @@ export class Account {
     jwtToken?: string;
     refreshToken?: string;
     acc_created? : Date;
+    acc_type?: string;
 }

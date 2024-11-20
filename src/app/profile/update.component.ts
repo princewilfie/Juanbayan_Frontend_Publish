@@ -18,13 +18,16 @@ export class UpdateComponent implements OnInit {
     previewUrl: string | ArrayBuffer | null = null;
     originalFormValues: any; // To store the initial form values for comparison
 
+    imageChangedEvent: any = '';
+    croppedImage: string = '';
+    
     constructor(
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
         private accountService: AccountService,
         private alertService: AlertService
-    ) {}
+    ) {}    
 
     ngOnInit() {
         console.log('Account ID:', this.account.id);

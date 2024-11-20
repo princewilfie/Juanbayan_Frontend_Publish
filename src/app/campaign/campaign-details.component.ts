@@ -28,6 +28,9 @@ export class CampaignDetailsComponent implements OnInit {
   donationForm: FormGroup;
   progressPercentage = 0;
   donors: any[] = [];
+  termsModalOpen: boolean = false;
+  termsAccepted = false;
+  isDonateModalOpen: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -93,8 +96,12 @@ export class CampaignDetailsComponent implements OnInit {
   }
 
 
-  openDonationModal(content: any): void {
-    this.modalService.open(content, { ariaLabelledBy: 'donateModalLabel', backdrop: false });
+  openDonationModal(): void {
+    this.isDonateModalOpen = true;
+  }
+
+  closeDonateModal() : void {
+    this.isDonateModalOpen = false;
   }
 
   // Confirm the donation and handle the donation process
@@ -319,5 +326,17 @@ export class CampaignDetailsComponent implements OnInit {
 
   goBack(): void {
     this.router.navigate(['/campaign']); // Update the route as needed
+  }
+  openTermsModal() {
+    this.termsModalOpen = true;
+  }
+  
+  closeTermsModal() {
+    this.termsModalOpen = false;
+  }
+  acceptTerms() {
+    this.termsAccepted = true;
+    this.termsModalOpen = false;
+    this.openDonationModal();
   }
 }

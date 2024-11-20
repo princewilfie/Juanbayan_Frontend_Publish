@@ -1,89 +1,195 @@
-<!-- Welcome Banner -->
-<section class="welcome-banner">
-    <div class="container">
-        <br>
-        <br>
-        <br>
-        <h1>Welcome, {{ user }}</h1>
-        <p class="lead">We're here to support you on your journey. Below are the latest campaigns available for support and participation.</p>
+<!-- Want To work -->
+<section class="wantToWork-area ">
+    <div>
+        <div class="wants-wrapper w-padding2  section-bg background-img">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-xl-5 col-lg-9 col-md-8">
+                    <div class="wantToWork-caption wantToWork-caption2">
+                        <h2>Lets Change The World With Humanity</h2>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-lg-3 col-md-4">
+                    <a routerLink="/event-list" class="btn white-btn f-right sm-left">Become A Volunteer</a>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 
-<!-- Background Wrapper for About Us to Available Campaigns -->
-<div class="content-background">
-    <!-- About Us Section -->
-    <div class="container about-section">
-        <h2>About Us</h2>
-        <h3>Help People, Our Main Goals</h3>
-        <p>JuanBayan is a crowdfunding platform dedicated to amplifying the voices and stories of disadvantaged individuals...</p>
-        <a href="#" class="btn btn-about">More About</a>
-    </div>
-
-    <!-- Campaign Section -->
-    <div class="container my-5">
-        <h2 class="campaign-list-title">Available Campaigns</h2>
+<section class="about-low-area section-padding">
+    <div class="container">
         <div class="row">
-            <!-- Featured Campaign -->
-            <div class="col-md-6 mb-4">
-                <div class="featured-campaign shadow">
-                    <img [src]="featuredCampaign.imageUrl" alt="Featured Campaign" class="img-fluid">
-                    <div class="campaign-content">
-                        <h6 class="text-muted">{{ featuredCampaign.category }}</h6>
-                        <h5>{{ featuredCampaign.title }}</h5>
-                        <p class="text-muted">{{ featuredCampaign.description }}</p>
-                        <p class="text-muted"><strong>Start Date:</strong> {{ featuredCampaign.startDate }}</p>
-                        <p class="text-muted"><strong>End Date:</strong> {{ featuredCampaign.endDate }}</p>
-                        <a href="donate-details.html" class="btn btn-featured">Donate</a>
+            <div class="col-lg-6 col-md-10">
+                <div class="about-caption mb-50">
+                    <div class="section-tittle mb-35">
+                        <span>Help People, Our Main Goals</span>
+                        <h2>JuanBayan is a crowdfunding platform dedicated to amplifying the voices and stories of disadvantaged individuals...</h2>
+                    </div>
+                </div>
+                <a routerLink="/events" class="btn">Create Event</a>
+            </div>
+            <div class="col-lg-6 col-md-10">
+                <div class="container">
+                    <!-- Section Tittle -->
+                    <div class="row justify-content-center">
+                        <div class="col-xl-5 col-lg-6 col-md-9 col-sm-10">
+                            <div class="section-tittle text-center mb-10">
+                                <span>Our Events</span>
+                                <h3 class="text-dark">Latest post from our recent Events</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container home-blog-area">
+                        <div class="row justify-content-center" *ngIf="activeApprovedEvents.length > 0;">
+                            <div class="col-xl-6 col-lg-6 col-md-10" *ngFor="let eventItem of activeApprovedEvents | slice:0:5" (click)="viewEventDetails(eventItem.Event_ID)">
+                                <div class="home-blog-single mb-10">
+                                    <div class="blog-img-cap">
+                                        <div class="blog-img">
+                                            <img
+                                                [src]="getImagePath('assets/'+ eventItem.Event_Image)"
+                                                [alt]="eventItem.Event_Name"
+                                                style="height: 300px; width: 100%; object-fit: cover;"
+                                            />  
+                                            <!-- Blog date -->
+                                            <div class="blog-date text-center background-color">
+                                                <span>{{ eventItem.Event_Start_Date | date: 'd' }}</span>
+                                                <p>{{ eventItem.Event_Start_Date | date: 'MMMM' }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="blog-cap">
+                                            <p>{{ eventItem.Event_Name }}</p>
+                                            <h3><a (click)="viewEventDetails(eventItem.Event_ID)" class="text-decoration-none">{{ eventItem.Event_Location }}</a></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
 
-            <!-- Smaller Campaign Cards -->
-            <div class="col-md-6 mb-4" *ngFor="let campaign of campaigns">
-                <div class="campaign-card shadow">
-                    <img [src]="campaign.imageUrl" alt="Campaign Image" class="img-fluid">
-                    <div class="card-body">
-                        <h6 class="text-muted">{{ campaign.category }}</h6>
-                        <h5>{{ campaign.title }}</h5>
-                        <p class="text-muted">{{ campaign.description }}</p>
-                        <p class="text-muted"><strong>Start Date:</strong> {{ campaign.startDate }}</p>
-                        <p class="text-muted"><strong>End Date:</strong> {{ campaign.endDate }}</p>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" [style.width.%]="campaign.progress"></div>
+<!-- Our Cases Start -->
+<div class="our-cases-area section-padding30">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-6 col-lg-7 col-md-10 col-sm-10">
+                <!-- Section Tittle -->
+                <div class="section-tittle text-center mb-80">
+                    <span>Our Cases you can see</span>
+                    <h2>Explore our latest causes that we works</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let campaign of campaigns">
+                <div class="single-cases mb-40">
+                    <div class="cases-img">
+                        <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" alt="{{ campaign.Campaign_Name }}">
+                    </div>
+                    <div class="cases-caption">
+                        <h3><a routerLink="/campaign-details/{{ campaign.Campaign_ID }}">{{campaign.Campaign_Name}}</a></h3>
+                        <!-- Progress Bar -->
+                        <div class="single-skill mb-15">
+                            <div class="bar-progress">
+                                <div id="bar1" class="barfiller">
+                                    <div class="tipWrap">
+                                        <span class="tip"></span>
+                                    </div>
+                                    <span class="fill" role="progressbar" [style.width.%]="progressPercentage">
+                                        
+                                    </span>
+                                </div>
+                            </div>
                         </div>
-                        <p class="text-muted">Raised: ${{ campaign.raised }} Goal: ${{ campaign.goal }}</p>
-                        <a href="donate-details.html" class="btn btn-campaign">Donate</a>
+                        <!-- / progress -->
+                        <div class="prices d-flex justify-content-between">
+                            <p>Raised:<span> ₱{{campaign.Campaign_CurrentRaised}}</span></p>
+                            <p>Goal:<span> ₱{{campaign.Campaign_TargetFund}}</span></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
-<!-- Testimonials Section -->
-<div class="background-wrapper">
-    <section class="testimonials-section">
-        <h2>What People Say About Us</h2>
-        <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item" *ngFor="let testimonial of testimonials; let i = index" [class.active]="i === 0">
-                    <div class="testimonial-item d-flex flex-column align-items-center">
-                        <img [src]="testimonial.imageUrl" alt="{{ testimonial.name }}" class="testimonial-image">
-                        <h5>{{ testimonial.name }}</h5>
-                        <p class="text-muted">{{ testimonial.role }}</p>
-                        <p class="testimonial-text">{{ testimonial.message }}</p>
+<!-- Our Cases End -->
+<!--? Testimonial Start -->
+<div class="testimonial-area testimonial-padding">
+    <div class="container">
+        <!-- Testimonial contents -->
+        <div class="row d-flex justify-content-center">
+            <div class="col-xl-8 col-lg-8 col-md-10">
+                <div class="h1-testimonial-active dot-style">
+                    <!-- Single Testimonial -->
+                    <div class="single-testimonial text-center">
+                        <div class="testimonial-caption ">
+                            <!-- founder -->
+                            <div class="testimonial-founder">
+                                <div class="founder-img mb-40">
+                                    <img src="assets/user-bootstrap/charityworks-master/assets/img/gallery/testimonial.png" alt="">
+                                    <span>Margaret Lawson</span>
+                                    <p>Creative Director</p>
+                                </div>
+                            </div>
+                            <div class="testimonial-top-cap">
+                                <p>“I am at an age where I just want to be fit and healthy our bodies are our responsibility! So start caring for your body and it will care for you. Eat clean it will care for you and workout hard.”</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
         </div>
-    </section>
+    </div>
 </div>
+<!-- Testimonial End -->
+
+
+<style>
+    .background-img {
+   position: relative;
+   background-image: url(assets/user-bootstrap/charityworks-master/assets/img/gallery/section_bg02.png);
+   background-size: cover;
+   background-position: center center;
+   background-repeat: no-repeat;
+   background-color: #80C4E9; /* Ensures the color remains visible */
+}
+
+.background-color{
+        background-color: #80C4E9; /* Ensures the color remains visible */
+}
+
+.background-img::before {
+   content: "";
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: #80C4E9; /* Same background color */
+   opacity: 0.6; /* Adjust opacity as needed */
+   z-index: 1; /* Keeps the overlay on top of the image */
+}
+
+.background-img1 {
+   position: relative;
+   background-image: url(assets/user-bootstrap/charityworks-master/assets/img/gallery/section_bg03.png);
+   background-size: cover;
+   background-position: center center;
+   background-repeat: no-repeat;
+}
+
+.background-img1::before {
+   content: "";
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0, 0, 0, 0.5); /* Adjust the color and transparency */
+   z-index: 1; /* Keeps the overlay on top of the image */
+}
+
+</style>

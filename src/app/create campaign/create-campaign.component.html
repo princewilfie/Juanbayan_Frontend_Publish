@@ -6,7 +6,7 @@
                <div class="row no-gutters align-items-center">
                    <div class="col mr-2">
                      <h1>Create Campaigns</h1>
-                     <button class="btn btn-primary" (click)="openCreateCampaignModal()">
+                     <button class="btn btn-primary" (click)="openTermsModal()">
                          <i class="bi bi-plus-circle"></i> Create Campaign
                      </button>
                    </div>
@@ -215,7 +215,7 @@
                 <label for="editCampaignCategory" class="form-label">Category</label>
                 <select class="form-select" id="editCampaignCategory" formControlName="Category_ID" required>
                     <option value="">Select a category</option>
-                    <option *ngFor="let category of categories" [value]="category.Category_ID">
+                    <option *ngFor="let category of categories" [value]="category.Category_ID" >
                       {{ category.Category_Name }}
                     </option>
                   </select>
@@ -368,5 +368,106 @@
     </div>
   </div>
 </div>
-    
+
+</div>
+
+<!-- Terms and Conditions Modal -->
+<div class="modal fade" [ngClass]="{'show': termsModalOpen}" tabindex="-1" [style.display]="termsModalOpen ? 'block' : 'none'">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Terms and Conditions</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeTermsModal()"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>By creating a campaign on the JUANBAYAN platform, users agree to comply with the following terms:</strong></p>
+        <ul>
+          <li><strong>14.1 Campaign Creation Limit:</strong><br>
+            <ul>
+              <li>14.1.1 Users may create up to two (2) campaigns within a month period. Additional campaign creation requests beyond this limit will be denied.</li>
+              <li>14.1.2 Campaigns must have clear, accurate, and truthful descriptions, goals, and timelines.</li>
+            </ul>
+          </li>
+          <br>
+          <li><strong>14.2 Approval Process:</strong><br>
+            <ul>
+              <li>14.2.1 All campaigns are subject to an approval process by JUANBAYAN to ensure compliance with the platform’s guidelines and Philippine laws.</li>
+              <li>14.2.2 Campaigns may be rejected if they:
+                <ul>
+                  <li>Do not align with JUANBAYAN’s mission.</li>
+                  <li>Lack sufficient documentation or verification.</li>
+                  <li>Contain false or misleading information.</li>
+                </ul>
+              </li>
+              <li>14.2.3 JUANBAYAN reserves the right to request additional supporting documents, such as proof of identity, financial need, or project plans, during the approval process.</li>
+            </ul>
+          </li>
+          <br>
+          <li><strong>14.3 Usage of Funds:</strong><br>
+            <ul>
+              <li>14.3.1 Funds raised must only be used for the stated purpose in the campaign description. Misuse of funds is grounds for account suspension, campaign removal, and legal action under Philippine law.</li>
+              <li>14.3.2 Beneficiaries must provide updates to donors on how the funds are being utilized and the progress of the campaign.</li>
+            </ul>
+          </li>
+          <br>
+          <li><strong>14.4 Platform Fees and Charges:</strong><br>
+            <ul>
+              <li>14.4.1 JUANBAYAN charges a platform fee for managing campaigns, deducted from each donation:
+                <ul>
+                  <li>3% for donations between PHP 100 to 1,000.</li>
+                  <li>5% for donations above PHP 1,000.</li>
+                </ul>
+              </li>
+              <li>14.4.2 These fees cover operational costs, including verification, platform maintenance, and secure payment processing.</li>
+              <li>14.4.3 Additional third-party payment processing fees may apply, depending on the payment gateway used.</li>
+            </ul>
+          </li>
+          <br>
+          <li><strong>14.5 Campaign Duration:</strong><br>
+            <ul>
+              <li>14.5.1 Campaigns must have a defined start and end date. Campaigns exceeding the stated duration without updates may be flagged for review or suspended.</li>
+              <li>14.5.2 Extensions to campaign durations must be requested in writing and are subject to JUANBAYAN’s approval.</li>
+            </ul>
+          </li>
+          <br>
+          <li><strong>14.6 Prohibited Campaigns:</strong><br>
+            <ul>
+              <li>Users may not create campaigns that:
+                <ul>
+                  <li>Promote violence, hate, discrimination, or illegal activities.</li>
+                  <li>Violate any laws of the Republic of the Philippines.</li>
+                  <li>Solicit funds for personal loans or financial gain without sufficient justification.</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <br>
+          <li><strong>14.7 Transparency and Accountability:</strong><br>
+            <ul>
+              <li>14.7.1 JUANBAYAN is committed to providing transparency to all users. Campaign creators will be informed of any deductions and must ensure clarity in communicating net donation amounts to donors.</li>
+              <li>14.7.2 JUANBAYAN reserves the right to audit campaign records and request evidence of fund usage for transparency and accountability.</li>
+            </ul>
+          </li>
+          <br>
+          <li><strong>14.8 Campaign Termination or Suspension:</strong><br>
+            <ul>
+              <li>14.8.1 JUANBAYAN reserves the right to terminate or suspend campaigns if:
+                <ul>
+                  <li>They violate these Terms and Conditions.</li>
+                  <li>Fraudulent activity or misuse of funds is suspected.</li>
+                </ul>
+              </li>
+              <li>14.8.2 In such cases, any remaining funds may be withheld or returned to donors, depending on the circumstances.</li>
+            </ul>
+          </li>
+        </ul>
+        <p>Please read these terms carefully and indicate your agreement below.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeTermsModal()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="acceptTerms(); ">I Agree</button>
+      </div>
+    </div>
   </div>
+</div>
+    

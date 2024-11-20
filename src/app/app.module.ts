@@ -42,6 +42,8 @@ import { BeneficiaryDashboardComponent } from './beneficiary/beneficiary-dashboa
 import { DonorDashboardComponent } from './donor/donor-dashboard.component';
 import { NotFoundComponent } from './lost-page/404.page.component';
 
+
+
 @NgModule({
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     imports: [
@@ -57,7 +59,7 @@ import { NotFoundComponent } from './lost-page/404.page.component';
         FullCalendarModule,
         BrowserAnimationsModule,
         MatDialogModule,
-        MatButtonModule
+        MatButtonModule,
     ],
     declarations: [
         AppComponent,

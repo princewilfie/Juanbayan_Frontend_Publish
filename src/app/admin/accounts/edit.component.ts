@@ -101,6 +101,6 @@ export class EditComponent implements OnInit {
 
     // Method to handle back navigation
     goBack() {
-        this.router.navigate(['./'], { relativeTo: this.route });
+        this.router.navigate(['/admin/accounts'], { relativeTo: this.route });
     }
 }

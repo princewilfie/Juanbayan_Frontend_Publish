@@ -3,10 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 import { AccountService, AlertService } from '@app/_services';
-import { MustMatch } from '@app/_helpers'; // Custom Validator to ensure passwords match
+import { MustMatch } from '@app/_helpers'; 
 import { Role } from '../_models';
-import Swal from 'sweetalert2'; // Import SweetAlert
-
+import Swal from 'sweetalert2'; 
+import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-login-register',
   templateUrl: './login-register.component.html',
@@ -19,6 +19,8 @@ export class LoginRegisterComponent implements OnInit {
   isRightPanelActive = false; // For toggling between SignIn and SignUp
   loading = false;
   step: number = 1;
+  hasExistingAccounts: boolean = true; // Default to true; update based on API call.
+  termsModalOpen: boolean = false; // For terms modal
 
   nextStep() {
     if (this.step < 3) {
@@ -41,6 +43,24 @@ previousStep() {
   ) {}
 
   ngOnInit(): void {
+
+
+    // Check if there are existing accounts
+    this.accountService.getAll().subscribe({
+      next: (accounts) => {
+          this.hasExistingAccounts = accounts.length > 0;
+          if (!this.hasExistingAccounts) {
+              // Auto-set acc_type to Admin and skip Step 1
+              this.registerForm.patchValue({ acc_type: 'Admin' });
+              console.log('Auto-set acc_type to Admin: ', this.registerForm.value.acc_type);
+              this.step = 2; // Skip Step 1
+          }
+      },
+      error: (err) => {
+          console.error('Error fetching accounts', err);
+      }
+  });
+
     // Handle Google OAuth redirect token
     this.route.queryParams.subscribe(params => {
       const token = params['token'];
@@ -48,7 +68,7 @@ previousStep() {
         // Save the token in local storage
         localStorage.setItem('authToken', token);
         // Redirect to the home page or another appropriate page
-        this.router.navigate(['/dashboard-switch']);
+        this.router.navigate(['/home']);
       }
     });
 
@@ -111,14 +131,19 @@ previousStep() {
 
                 if (userRole === Role.User) {
                     // Navigate to the user dashboard-switcher
-                    this.router.navigate(['/dashboard-switch']);
+                    if(user.acc_type === 'Donor') {
+                      this.router.navigate(['/donor']);
+                    } else if (user.acc_type === 'Beneficiary') {
+                      this.router.navigate(['/beneficiary']);
+                    }
+
                 } else if (userRole === Role.Admin) {
                     // For admins or other roles, route accordingly
                     this.router.navigate(['/admin']); // Example for admins
                 } else {
                     // Show SweetAlert error for invalid credentials
                     Swal.fire({
-                      icon: 'error',
+                      icon: 'warning',
                       title: 'Login Failed',
                       text: 'Invalid account credentials. Please try again.',
                       confirmButtonText: 'OK'
@@ -127,17 +152,22 @@ previousStep() {
                     this.submitted = false; // Allow resubmission on error
                 }
             },
-            error: error => {
-              // SweetAlert error for incorrect login attempt
+            error: (err: HttpErrorResponse) => {
+              // Extract the backend error message
+              const errorMessage = err.error.message;
+
+              console.log("Error message: ", errorMessage)
+              // Display SweetAlert with the error message
               Swal.fire({
-                icon: 'error',
-                title: 'Login Failed',
-                text: 'Incorrect email or password. Please try again.',
-                confirmButtonText: 'OK'
+                  icon: 'error',
+                  title: 'Login Failed',
+                  text: errorMessage,
+                  confirmButtonText: 'OK'
               });
+          
               this.loading = false;
-            }
-        });
+          }
+      });
   }
 
   // Register form submission
@@ -180,5 +210,23 @@ previousStep() {
           this.submitted = false;
         }
       });
+  }
+   // Modal for Terms
+   openTermsModal(event: Event): void {
+    event.preventDefault(); // Prevent default checkbox toggle on click
+    this.termsModalOpen = true;
+  }
+
+  closeTermsModal(): void {
+    this.termsModalOpen = false;
+  }
+
+  acceptTerms(): void {
+    this.closeTermsModal();
+    const termsCheckbox = document.getElementById('acceptTerms') as HTMLInputElement;
+    if (termsCheckbox) {
+      termsCheckbox.checked = true;
+      this.registerForm.patchValue({ acc_acceptTerms: true }); // Sync with form
+    }
   }
 }

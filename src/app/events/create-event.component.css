@@ -84,7 +84,7 @@
   input:focus,
   textarea:focus,
   select:focus {
-    border-color: #28a745;
+    border-color: #2279a8;
     box-shadow: 0px 0px 8px rgba(40, 167, 69, 0.3);
   }
   
@@ -93,12 +93,12 @@
   input[type="date"]:hover,
   textarea:hover,
   select:hover {
-    border-color: #28a745; /* Change border color on hover */
+    border-color: #80C4E9; /* Change border color on hover */
   }
   
   /* Submit Button */
   .submit-button {
-    background-color: #28a745;
+    background-color: #80C4E9;
     color: white;
     padding: 12px 25px;
     border: none;
@@ -111,7 +111,7 @@
   }
   
   .submit-button:hover {
-    background-color: #218838;
+    background-color: #80C4E9;
     transform: translateY(-2px); /* Lift effect on hover */
   }
   

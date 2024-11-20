@@ -89,26 +89,26 @@
 /* line 50, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_variables.scss */
 .boxed-btn {
   background: #fff;
-  color: #09cc7f !important;
+  color: #80C4E9 !important;
   display: inline-block;
   padding: 18px 44px;
   font-family: "Muli", sans-serif;
   font-size: 14px;
   font-weight: 400;
   border: 0;
-  border: 1px solid #09cc7f;
+  border: 1px solid #80C4E9;
   letter-spacing: 3px;
   text-align: center;
-  color: #09cc7f;
+  color: #80C4E9;
   text-transform: uppercase;
   cursor: pointer;
 }
 
 /* line 67, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_variables.scss */
 .boxed-btn:hover {
-  background: #09cc7f;
+  background: #80C4E9;
   color: #fff !important;
-  border: 1px solid #09cc7f;
+  border: 1px solid #80C4E9;
 }
 
 /* line 72, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_variables.scss */
@@ -496,7 +496,7 @@ hr {
 
 /* line 245, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_common.scss */
 .btn {
-  background: #09cc7f;
+  background: #80C4E9;
   font-family: "Muli", sans-serif;
   text-transform: capitalize;
   padding: 27px 44px;
@@ -576,13 +576,13 @@ hr {
 /* line 314, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_common.scss */
 .white-btn {
   padding: 30px 39px;
-  background: #fff;
+  background: #f8fcff;
   color: #072366 !important;
 }
 
 /* line 318, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_common.scss */
 .white-btn::before {
-  background: #09cc7f;
+  background: #80C4E9;
   color: #fff !important;
 }
 
@@ -2958,7 +2958,7 @@ hr {
   font-size: 18px;
   font-weight: 700;
   margin-bottom: 22px;
-  color: #09cc7f;
+  color: #80C4E9;
   text-transform: capitalize;
   display: inline-block;
   letter-spacing: 0.05em;
@@ -3320,7 +3320,7 @@ hr {
 
 /* line 174, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_headerMenu.scss */
 .main-header .main-menu ul li:hover > a {
-  color: #09cc7f;
+  color: #80C4E9 ;
 }
 
 /* line 179, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_headerMenu.scss */
@@ -3356,7 +3356,7 @@ hr {
 
 /* line 198, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_headerMenu.scss */
 .main-header .main-menu ul ul.submenu > li > a:hover {
-  color: #09cc7f;
+  color: #80C4E9;
   background: none;
   padding-left: 13px !important;
 }
@@ -3887,7 +3887,7 @@ hr {
   content: "";
   width: 100%;
   height: 0;
-  background: #09cc7f;
+  background: #80C4E9;
   transition: .6s;
   bottom: 0;
   left: 0;
@@ -3900,7 +3900,7 @@ hr {
   margin-bottom: 50px;
   width: 90px;
   height: 90px;
-  background: #09cc7f;
+  background: #80C4E9;
   line-height: 90px;
   text-align: center;
   border-radius: 50%;
@@ -3998,7 +3998,7 @@ hr {
 
 /* line 103, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_services_section.scss */
 .service-area .single-cat:hover .cat-icon span {
-  color: #09cc7f;
+  color: #133E87;
   background: #fff;
 }
 
@@ -5180,7 +5180,7 @@ hr {
 
 /* line 150, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_blog_page.scss */
 .blog_area a:hover, .blog_area a :hover {
-  background: -webkit-linear-gradient(131deg, #09cc7f 0%, #09cc7f 99%);
+  background: -webkit-linear-gradient(131deg, #80C4E9 0%, #80C4E9 99%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-decoration: none;
@@ -5865,7 +5865,7 @@ hr {
 
 /* line 830, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_blog_page.scss */
 .blog_right_sidebar .search_widget .input-group button {
-  background: #09cc7f;
+  background: #80C4E9;
   border-left: 0;
   border: 1px solid #f0e9ff;
   padding: 4px 15px;
@@ -6003,7 +6003,7 @@ hr {
 
 /* line 981, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_blog_page.scss */
 .blog_right_sidebar .tag_cloud_widget ul li a:hover {
-  background: #09cc7f;
+  background: #80C4E9;
   color: #fff !important;
   -webkit-text-fill-color: #fff;
   text-decoration: none;
@@ -6251,7 +6251,7 @@ hr {
 
 /* line 1347, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_blog_page.scss */
 .single-post-area .blog-author a:hover {
-  color: #09cc7f;
+  color: #80C4E9;
 }
 
 /* line 1352, C:/Users/HP/Desktop/jun-2020/277.Charity _Non-profit/assets/scss/_blog_page.scss */

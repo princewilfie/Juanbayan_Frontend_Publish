@@ -1,257 +1,505 @@
 <style>
-    .badge {
-      padding: 5px 10px;
-      border-radius: 12px;
-      color: white;
-    }
-    .badge-approved {
-      background-color: #28a745; /* Green */
-    }
-    .badge-pending {
-      background-color: orange; /* Orange */
-    }
-    .badge-rejected {
-      background-color: red; /* Red */
-    }
-  </style>
-  <br><br><br><br><br>
-  
-  <div style="max-width: 1200px; margin: 0 auto; padding: 20px;">
-    <h2 style="text-align: center; margin: 20px 0;">Event Management</h2>
-  
-    <div class="button-container" style="display: flex; justify-content: center; margin: 20px 0;">
-      <button 
-        (click)="openModal()" 
-        class="open-button" 
-        style="padding: 12px 24px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-        Create Event
-      </button>
-    </div>
-  
-    <h2 style="text-align: center; margin-top: 40px;">Event List</h2>
-  
-    <!-- Approved Events -->
-    <h3>Approved Events</h3>
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px;">
-      <div *ngIf="approveEvents.length === 0" class="alert alert-info">No approved events.</div>
-      <div *ngFor="let event of approveEvents" 
-           (click)="selectEvent(event)" 
-           style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;">
-        <div class="badge badge-approved">
-          <h3 style="margin: 0;">{{ event.Event_Start_Date | date: 'd' }}</h3>
-          <p style="margin: 0;">{{ event.Event_Start_Date | date: 'MMMM' }}</p>
-        </div>
-  
-        <div style="margin: 10px 0;">
-          <img [src]="getImagePath('assets/' + event.Event_Image)" alt="Event Image" style="width: 100%; height: auto; max-height: 200px; object-fit: cover;"/>
-        </div>
-        <strong>{{ event.Event_Name }}</strong>
-        <p style="margin: 10px 0;">{{ event.Event_Description }}</p>
-        <p style="margin: 10px 0;"><strong>Location:</strong> {{ event.Event_Location }}</p>
-        <span class="badge badge-approved">Approved</span> <br>
-        <button (click)="selectEvent(event)" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer; margin-top: 10px;">
-          View Details
-        </button>
-        &nbsp;
-        <button (click)="viewParticipants(event.Event_ID); $event.stopPropagation();" style="background-color: #007bff; color: white; border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer; margin-top: 10px;">
-          View Participants
-        </button>
-      </div>
-    </div>
+  .badge {
+    padding: 5px 10px;
+    border-radius: 12px;
+    color: white;
+  }
+  .badge-approved {
+    background-color: #28a745; /* Green */
+  }
+  .badge-pending {
+    background-color: orange; /* Orange */
+  }
+  .badge-rejected {
+    background-color: red; /* Red */
+  }
 
-   <!-- Participants Modal -->
-<div *ngIf="showParticipantsModal" class="overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 1000;">
-  <div class="overlay-content" style="width: 80%; max-width: 500px; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); position: relative;">
-    <button (click)="closeParticipantsModal()" style="position: absolute; top: 10px; right: 10px; background-color: #ff5c5c; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 16px;">&times;</button>
-    
-    <h3 style="text-align: center;">Participants List</h3>
-    <div *ngIf="!participants || participants.length === 0">
-      <p>No participants found for this event.</p>
-    </div>
-    <ul *ngIf="participants && participants.length > 0" style="list-style: none; padding: 0;">
-      <li *ngFor="let participant of participants" style="display: flex; align-items: center; margin-bottom: 10px;">
-        <img [src]=" 'http://localhost:4000/assets/' + participant.acc_image" alt="{{ participant.acc_firstname }}" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
-        <div>
-          <strong>{{ participant.acc_firstname }} {{ participant.acc_lastname }}</strong><br>
-          <span>Phone: {{ participant.acc_pnumber }}</span><br>
-          <span>Email: {{ participant.acc_email }}</span>
-        </div>
-      </li>
-    </ul>
+  .welcome-banner {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
+                      url('https://images.pexels.com/photos/17257618/pexels-photo-17257618/free-photo-of-silhouettes-of-people-raising-arms-at-golden-hour.jpeg');
+    background-size: cover;
+    background-position: center bottom;
+    color: #ffffff;
+    padding: 180px 0;
+    text-align: center;
+}
+
+
+        /* Fade-in Animation for Text */
+        .welcome-banner h1 {
+            opacity: 0; /* Start with text invisible */
+            animation: fadeInText 1s ease-out forwards; /* Apply fade-in animation */
+        }
+
+        .welcome-banner p {
+            opacity: 0; /* Start with text invisible */
+            animation: fadeInText 1s ease-out forwards; /* Apply fade-in animation */
+            animation-delay: 2s; /* Delay the fade-in by 2 seconds */
+        }
+
+        /* Fade-in Keyframe */
+        @keyframes fadeInText {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Smooth font resizing for h1 when minimized */
+        .welcome-banner h1 {
+            font-size: 3rem;
+            transition: font-size 0.3s ease;
+        }
+
+        .welcome-banner.shrink h1 {
+            font-size: 1.8rem; /* Smaller font size when minimized */
+        }
+
+        .welcome-banner p {
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1; /* Ensures text is above the background overlay */
+        }
+
+        .no-pending-events {
+  background-color: #fff3cd; /* Light yellow background */
+  color: #856404; /* Brown text color */
+  padding: 10px;
+  border-radius: 5px;
+  grid-column: 1 / -1; /* Extend across all grid columns */
+  text-align: center; /* Center align text */
+}
+
+.no-rejected-events {
+  background-color: #f8d7da; /* Light red background */
+  color: #721c24; /* Dark red text color */
+  padding: 10px;
+  border-radius: 5px;
+  grid-column: 1 / -1; /* Extend across all grid columns */
+  text-align: center; /* Center align text */
+}
+
+.no-approved-events {
+  background-color: #d1ecf1; /* Light blue background */
+  color: #0c5460; /* Dark blue text color */
+  padding: 10px;
+  border-radius: 5px;
+  grid-column: 1 / -1; /* Extend across all grid columns */
+  text-align: center; /* Center align text */
+}
+
+
+
+</style>
+<br><br><br><br><br>
+
+<div class="content">
+  <!-- Welcome Banner -->
+  <div class="welcome-banner">
+      <h1 style="font-size: 70px;" class="text-light">JuanBayan  Events</h1>
+      <p style="font-size: 25px;" class="text-light">Join us in making a positive impact through our ongoing Events.</p>
   </div>
+  <br>
+
+<div style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+  <h2 style="text-align: center; margin: 20px 0;">Event Management</h2>
+
+  <div class="button-container" style="display: flex; justify-content: center; margin: 20px 0;">
+    <button 
+      (click)="openTermsModal()" 
+      class="open-button" 
+      style="padding: 12px 24px; font-size: 16px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+      Create Event
+    </button>
+  </div>
+
+  <h2 style="text-align: center; margin-top: 40px;">Event List</h2>
+
+  <!-- Default Card Example -->
+  <div class="card mb-4 mt-5">
+    <div class="card-header">
+      <h3 style="font-weight: bold; color: #007bff;">Approved Events</h3>
+
+    </div>
+    <div class="card-body">
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px;">
+        <div *ngIf="approveEvents.length === 0" class="no-approved-events">
+          No approved events.
+        </div>
+        <div *ngFor="let event of approveEvents" 
+             (click)="selectEvent(event)" 
+             style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;">
+          <div class="badge badge-approved" style="border-radius: 0;">
+            <h3 style="margin: 0; color: white;">{{ event.Event_Start_Date | date: 'd' }}</h3>
+            <p style="margin: 0; color: white;">{{ event.Event_Start_Date | date: 'MMMM' }}</p>
+          </div>
+    
+          <div style="margin: 10px 0;">
+            <img [src]="getImagePath('assets/' + event.Event_Image)" alt="Event Image" style="width: 100%; height: auto; max-height: 200px; object-fit: cover;"/>
+          </div>
+          <strong>{{ event.Event_Name }}</strong>
+          <p style="margin: 10px 0;">{{ event.Event_Description }}</p>
+          <p style="margin: 10px 0;"><strong>Location:</strong> {{ event.Event_Location }}</p>
+          <span class="badge badge-approved">Approved</span> <br>
+          <button 
+            (click)="selectEvent(event); $event.stopPropagation();" 
+            style="background-color: #28a745; color: white; border: none; border-radius: 0; padding: 8px 12px; cursor: pointer; margin-top: 10px;">
+            View Details
+          </button>&nbsp;
+
+          &nbsp;
+          <button 
+            (click)="viewParticipants(event.Event_ID); $event.stopPropagation();" 
+            style="background-color: #007bff; color: white; border: none; border-radius: 0; padding: 8px 12px; cursor: pointer; margin-top: 10px;">
+            View Participants
+          </button>
+        
+        </div>
+      </div>
+        
+    </div>
 </div>
 
 
-  
-    <!-- Pending Events -->
-    <h3>Pending Events</h3>
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px;">
-      <div *ngIf="pendingEvents.length === 0" class="alert alert-info">No pending events.</div>
-      <div *ngFor="let event of pendingEvents"
-        (click)="selectEvent(event)" 
-           style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;">
-        <div class="badge badge-pending">
-          <h3 style="margin: 0;">{{ event.Event_Start_Date | date: 'd' }}</h3>
-          <p style="margin: 0;">{{ event.Event_Start_Date | date: 'MMMM' }}</p>
-        </div>
-  
-        <div style="margin: 10px 0;">
-          <img [src]="getImagePath('assets/' + event.Event_Image)" alt="Event Image" style="width: 100%; height: auto; max-height: 200px; object-fit: cover;"/>
-        </div>
-        <strong>{{ event.Event_Name }}</strong>
-        <p style="margin: 10px 0;">{{ event.Event_Description }}</p>
-        <p style="margin: 10px 0;"><strong>Location:</strong> {{ event.Event_Location }}</p>
-        <span class="badge badge-pending">Pending</span> <br>
-        <button (click)="selectEvent(event); $event.stopPropagation();" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer; margin-top: 10px;">
-          View Details
-        </button>&nbsp;
-        <button type="button" (click)="deleteEvent(event.Event_ID)" style="background-color: #cf2323; color: white; border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer; margin-top: 10px;">Delete</button>
-      </div>
-    </div>
-  
-    <!-- Rejected Events -->
-    <h3>Rejected Events</h3>
-    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px;">
-      <div *ngIf="rejectEvents.length === 0" class="alert alert-info">No rejected events.</div>
-      <div *ngFor="let event of rejectEvents" 
-           (click)="selectEvent(event)" 
-           style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;">
-        <div class="badge badge-rejected">
-          <h3 style="margin: 0;">{{ event.Event_Start_Date | date: 'd' }}</h3>
-          <p style="margin: 0;">{{ event.Event_Start_Date | date: 'MMMM' }}</p>
-        </div>
-  
-        <div style="margin: 10px 0;">
-          <img [src]="getImagePath('assets/' + event.Event_Image)" alt="Event Image" style="width: 100%; height: auto; max-height: 200px; object-fit: cover;"/>
-        </div>
 
-        <strong>{{ event.Event_Name }}</strong>
-        <p style="margin: 10px 0;">{{ event.Event_Description }}</p>
-        <p style="margin: 10px 0;"><strong>Location:</strong> {{ event.Event_Location }}</p>
-        <span class="badge badge-rejected">Rejected</span> <br>
-        <button (click)="selectEvent(event);$event.stopPropagation();" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer; margin-top: 10px;">
-          View Details
-        </button> &nbsp;
-        <button type="button"(click)="deleteEvent(event.Event_ID)" style="background-color: #cf2323; color: white; border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer; margin-top: 10px;">Delete</button>
+  <!-- Default Card Example -->
+  <div class="card mb-4">
+    <div class="card-header">
+      <h3 style="font-weight: bold; color: #ffcc00;">Pending Events</h3>
+
       </div>
-    </div>
-  
-    <!-- Card view -->
-    <div *ngIf="selectedEvent" class="overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 1000;">
-      <div class="overlay-content" style="width: 80%; max-width: 500px; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); position: relative;">
-        <button (click)="closeEventDetails()" style="position: absolute; top: 10px; right: 10px; background-color: #ff5c5c; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 16px;">&times;</button>
+
+
+      <div class="card-body">
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px;">
+          <div *ngIf="pendingEvents.length === 0" class="no-pending-events">
+            No pending events.
+          </div>
+        </div>
         
-        <h3 style="text-align: center;">Event Details</h3>
-        <img [src]="getImagePath('assets/' + selectedEvent.Event_Image)" alt="{{ selectedEvent.Event_Name }} Image" (error)="this.src='assets/jb-symbol-logo.png'" style="width: 100%; height: auto; max-height: 300px; object-fit: cover;">
-        <p><strong>Event Name:</strong> {{ selectedEvent.Event_Name }}</p>
-        <p><strong>Event Description:</strong> {{ selectedEvent.Event_Description }}</p>
-        <p><strong>Event Start Date:</strong> {{ selectedEvent.Event_Start_Date | date }}</p>
-        <p><strong>Event End Date:</strong> {{ selectedEvent.Event_End_Date | date }}</p>
-        <p><strong>Event Location:</strong> {{ selectedEvent.Event_Location }}</p>
-        
-        <div style="display: flex; justify-content: center; margin-top: 20px;">
-          <button (click)="openUpdateModal()" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer;">
-            Update Event
-          </button>
+        <div *ngFor="let event of pendingEvents"
+          (click)="selectEvent(event)" 
+             style="padding: 15px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;">
+          <div class="badge badge-pending">
+            <h3 style="margin: 0;">{{ event.Event_Start_Date | date: 'd' }}</h3>
+            <p style="margin: 0;">{{ event.Event_Start_Date | date: 'MMMM' }}</p>
+          </div>
+    
+          <div style="margin: 10px 0;">
+            <img [src]="getImagePath('assets/' + event.Event_Image)" alt="Event Image" style="width: 100%; height: auto; max-height: 200px; object-fit: cover;"/>
+          </div>
+          <strong>{{ event.Event_Name }}</strong>
+          <p style="margin: 10px 0;">{{ event.Event_Description }}</p>
+          <p style="margin: 10px 0;"><strong>Location:</strong> {{ event.Event_Location }}</p>
+          <span class="badge badge-pending">Pending</span> <br>
+          <button 
+  (click)="selectEvent(event); $event.stopPropagation();" 
+  style="background-color: #28a745; color: white; border: none; border-radius: 0; padding: 8px 12px; cursor: pointer; margin-top: 10px;">
+  View Details
+</button>&nbsp;
+
+          <button type="button" (click)="deleteEvent(event.Event_ID)" style="background-color: #cf2323; color: white; border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer; margin-top: 10px;">Delete</button>
         </div>
       </div>
     </div>
+</div>
+
+
+
+
   
-    <!-- update modal -->
-    <div class="modal" [ngClass]="{'active': showUpdateModal}">
-      <div class="modal-content enhanced-modal">
-        <span class="close" (click)="closeUpdateModal()">&times;</span>
-        <h2>Update Event</h2>
+ 
   
-        <form [formGroup]="updateEventForm" (ngSubmit)="updateEvent()">
-          <label for="updateEventTitle">Event Title</label>
-          <input type="text" id="updateEventTitle" formControlName="Event_Name" placeholder="Enter Event Title" required />
-          <div *ngIf="updateEventForm.get('Event_Name')?.invalid && updateEventForm.get('Event_Name')?.touched" class="error-message">
-            Event Name is required
-          </div>
+
+ <!-- Participants Modal -->
+<div *ngIf="showParticipantsModal" class="overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 1000;">
+<div class="overlay-content" style="width: 80%; max-width: 500px; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); position: relative;">
+  <button (click)="closeParticipantsModal()" style="position: absolute; top: 10px; right: 10px; background-color: #ff5c5c; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 16px;">&times;</button>
   
-          <label for="updateEventDescription">Event Description</label>
-          <textarea id="updateEventDescription" formControlName="Event_Description" placeholder="Enter Event Description" required></textarea>
-          <div *ngIf="updateEventForm.get('Event_Description')?.invalid && updateEventForm.get('Event_Description')?.touched" class="error-message">
-            Event Description is required
-          </div>
-  
-          <label for="updateEventStartDate">Event Start Date</label>
-          <input type="date" id="updateEventStartDate" formControlName="Event_Start_Date" required />
-          <label for="updateEventEndDate">Event End Date</label>
-          <input type="date" id="updateEventEndDate" formControlName="Event_End_Date" required />
-  
-          <label for="updateEventLocation">Event Location</label>
-          <input type="text" id="updateEventLocation" formControlName="Event_Location" placeholder="Enter Event Location" required />
-          <div *ngIf="updateEventForm.get('Event_Location')?.invalid && updateEventForm.get('Event_Location')?.touched" class="error-message">
-            Event Location is required
-          </div>
-  
-          <label for="updateEventImages">Update Event Images</label>
-          <input type="file" id="updateEventImages" (change)="handleUpdateFileInput($event)" multiple accept="image/*" />
-          
-          <div class="image-preview" *ngIf="updateImagePreviews.length > 0">
-            <h4>Updated Image Preview(s):</h4>
-            <div class="image-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
-              <div *ngFor="let img of updateImagePreviews" class="image-card" style="position: relative;">
-                <img [src]="img" alt="Updated Image Preview" class="preview-img" style="width: 100px; height: auto; border: 1px solid #ccc; border-radius: 4px;" />
-              </div>
-            </div>
-          </div>
-  
-          <button type="submit" class="submit-button" [disabled]="updateEventForm.invalid" style="margin-top: 20px;">
-            Update Event
-          </button>
-        </form>
+  <h3 style="text-align: center;">Participants List</h3>
+  <div *ngIf="!participants || participants.length === 0">
+    <p>No participants found for this event.</p>
+  </div>
+  <ul *ngIf="participants && participants.length > 0" style="list-style: none; padding: 0;">
+    <li *ngFor="let participant of participants" style="display: flex; align-items: center; margin-bottom: 10px;">
+      <img [src]=" 'http://localhost:4000/assets/' + participant.acc_image" alt="{{ participant.acc_firstname }}" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+      <div>
+        <strong>{{ participant.acc_firstname }} {{ participant.acc_lastname }}</strong><br>
+        <span>Phone: {{ participant.acc_pnumber }}</span><br>
+        <span>Email: {{ participant.acc_email }}</span>
       </div>
+    </li>
+  </ul>
+</div>
+</div>
+
+
+
+  <!-- Pending Events -->
+
+   <!-- Default Card Example -->
+   
+  
+  
+
+  <!-- Rejected Events -->
+
+  <<div class="card mb-4" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+    <div class="card-header">
+      <h3 style="font-weight: bold; color: #8B0000; text-align: center;">Rejected Events</h3>
     </div>
+    <div class="card-body">
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding: 20px;">
+        <div *ngIf="rejectEvents.length === 0" class="no-rejected-events">
+          No rejected events.
+        </div>
   
-    <!-- Create modal -->
-    <div class="modal" [ngClass]="{'active': showModal}">
-      <div class="modal-content enhanced-modal">
-        <span class="close" (click)="closeModal()">&times;</span>
-        <h2>Create Event</h2>
-  
-        <form [formGroup]="createEventForm" (ngSubmit)="createEvent()">
-          <label for="eventTitle">Event Title</label>
-          <input type="text" id="eventTitle" formControlName="Event_Name" placeholder="Enter Event Title" required />
-          <div *ngIf="createEventForm.get('Event_Name')?.invalid && createEventForm.get('Event_Name')?.touched" class="error-message">
-            Event Name is required
+        <div *ngFor="let event of rejectEvents" 
+             (click)="selectEvent(event)" 
+             style="padding: 9px; border: 1px solid #ddd; border-radius: 8px; background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;">
+          <div class="badge badge-rejected">
+            <h3 style="margin: 0;">{{ event.Event_Start_Date | date: 'd' }}</h3>
+            <p style="margin: 0;">{{ event.Event_Start_Date | date: 'MMMM' }}</p>
           </div>
-  
-          <label for="eventDescription">Event Description</label>
-          <textarea id="eventDescription" formControlName="Event_Description" placeholder="Enter Event Description" required></textarea>
-          <div *ngIf="createEventForm.get('Event_Description')?.invalid && createEventForm.get('Event_Description')?.touched" class="error-message">
-            Event Description is required
+    
+          <div style="margin: 10px 0;">
+            <img [src]="getImagePath('assets/' + event.Event_Image)" alt="Event Image" style="width: 100%; height: auto; max-height: 200px; object-fit: cover;"/>
           </div>
-  
-          <label for="eventStartDate">Event Start Date</label>
-          <input type="date" id="eventStartDate" formControlName="Event_Start_Date" required />
-          <label for="eventEndDate">Event End Date</label>
-          <input type="date" id="eventEndDate" formControlName="Event_End_Date" required />
-  
-          <label for="eventLocation">Event Location</label>
-          <input type="text" id="eventLocation" formControlName="Event_Location" placeholder="Enter Event Location" required />
-          <div *ngIf="createEventForm.get('Event_Location')?.invalid && createEventForm.get('Event_Location')?.touched" class="error-message">
-            Event Location is required
-          </div>
-  
-          <label for="eventImages">Event Images</label>
-          <input type="file" id="eventImages" (change)="handleFileInput($event)" multiple accept="image/*" />
-  
-          <div class="image-preview" *ngIf="imagePreviews.length > 0">
-            <h4>Image Preview(s):</h4>
-            <div class="image-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
-              <div *ngFor="let img of imagePreviews" class="image-card" style="position: relative;">
-                <img [src]="img" alt="Image Preview" class="preview-img" style="width: 100px; height: auto; border: 1px solid #ccc; border-radius: 4px;" />
-              </div>
-            </div>
-          </div>
-  
-          <button type="submit" class="submit-button" [disabled]="createEventForm.invalid" style="margin-top: 20px;">
-            Create Event
-          </button>
-        </form>
+    
+          <strong>{{ event.Event_Name }}</strong>
+          <p style="margin: 10px 0;">{{ event.Event_Description }}</p>
+          <p style="margin: 10px 0;"><strong>Location:</strong> {{ event.Event_Location }}</p>
+          <span class="badge badge-rejected">Rejected</span> <br>
+          <button (click)="selectEvent(event); $event.stopPropagation();" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer; margin-top: 10px;">
+            View Details
+          </button>&nbsp;
+          <button type="button" (click)="deleteEvent(event.Event_ID)" style="background-color: #cf2323; color: white; border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer; margin-top: 10px;">Delete</button>
+        </div>
       </div>
     </div>
   </div>
+  
+  
+  
+
+  <!-- Card view -->
+  <div *ngIf="selectedEvent" class="overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); display: flex; justify-content: center; align-items: center; z-index: 1000;">
+    <div class="overlay-content" style="width: 80%; max-width: 500px; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); position: relative;">
+      <button (click)="closeEventDetails()" style="position: absolute; top: 10px; right: 10px; background-color: #ff5c5c; color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; font-size: 16px;">&times;</button>
+      
+      <h3 style="text-align: center;">Event Details</h3>
+      <img [src]="getImagePath('assets/' + selectedEvent.Event_Image)" alt="{{ selectedEvent.Event_Name }} Image" (error)="this.src='assets/jb-symbol-logo.png'" style="width: 100%; height: auto; max-height: 300px; object-fit: cover;">
+      <p><strong>Event Name:</strong> {{ selectedEvent.Event_Name }}</p>
+      <p><strong>Event Description:</strong> {{ selectedEvent.Event_Description }}</p>
+      <p><strong>Event Start Date:</strong> {{ selectedEvent.Event_Start_Date | date }}</p>
+      <p><strong>Event End Date:</strong> {{ selectedEvent.Event_End_Date | date }}</p>
+      <p><strong>Event Location:</strong> {{ selectedEvent.Event_Location }}</p>
+      
+      <div style="display: flex; justify-content: center; margin-top: 20px;">
+        <button (click)="openUpdateModal()" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 8px 12px; cursor: pointer;">
+          Update Event
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- update modal -->
+  <div class="modal" [ngClass]="{'active': showUpdateModal}">
+    <div class="modal-content enhanced-modal">
+      <span class="close" (click)="closeUpdateModal()">&times;</span>
+      <h2>Update Event</h2>
+
+      <form [formGroup]="updateEventForm" (ngSubmit)="updateEvent()">
+        <label for="updateEventTitle">Event Title</label>
+        <input type="text" id="updateEventTitle" formControlName="Event_Name" placeholder="Enter Event Title" required />
+        <div *ngIf="updateEventForm.get('Event_Name')?.invalid && updateEventForm.get('Event_Name')?.touched" class="error-message">
+          Event Name is required
+        </div>
+
+        <label for="updateEventDescription">Event Description</label>
+        <textarea id="updateEventDescription" formControlName="Event_Description" placeholder="Enter Event Description" required></textarea>
+        <div *ngIf="updateEventForm.get('Event_Description')?.invalid && updateEventForm.get('Event_Description')?.touched" class="error-message">
+          Event Description is required
+        </div>
+
+        <label for="updateEventStartDate">Event Start Date</label>
+        <input type="date" id="updateEventStartDate" formControlName="Event_Start_Date" required />
+        <label for="updateEventEndDate">Event End Date</label>
+        <input type="date" id="updateEventEndDate" formControlName="Event_End_Date" required />
+
+        <label for="updateEventLocation">Event Location</label>
+        <input type="text" id="updateEventLocation" formControlName="Event_Location" placeholder="Enter Event Location" required />
+        <div *ngIf="updateEventForm.get('Event_Location')?.invalid && updateEventForm.get('Event_Location')?.touched" class="error-message">
+          Event Location is required
+        </div>
+
+        <label for="updateEventImages">Update Event Images</label>
+        <input type="file" id="updateEventImages" (change)="handleUpdateFileInput($event)" multiple accept="image/*" />
+        
+        <div class="image-preview" *ngIf="updateImagePreviews.length > 0">
+          <h4>Updated Image Preview(s):</h4>
+          <div class="image-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
+            <div *ngFor="let img of updateImagePreviews" class="image-card" style="position: relative;">
+              <img [src]="img" alt="Updated Image Preview" class="preview-img" style="width: 100px; height: auto; border: 1px solid #ccc; border-radius: 4px;" />
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-button" [disabled]="updateEventForm.invalid" style="margin-top: 20px;">
+          Update Event
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Create modal -->
+  <div class="modal" [ngClass]="{'active': showModal}">
+    <div class="modal-content enhanced-modal">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h2>Create Event</h2>
+
+      <form [formGroup]="createEventForm" (ngSubmit)="createEvent()">
+        <label for="eventTitle">Event Title</label>
+        <input type="text" id="eventTitle" formControlName="Event_Name" placeholder="Enter Event Title" required />
+        <div *ngIf="createEventForm.get('Event_Name')?.invalid && createEventForm.get('Event_Name')?.touched" class="error-message">
+          Event Name is required
+        </div>
+
+        <label for="eventDescription">Event Description</label>
+        <textarea id="eventDescription" formControlName="Event_Description" placeholder="Enter Event Description" required></textarea>
+        <div *ngIf="createEventForm.get('Event_Description')?.invalid && createEventForm.get('Event_Description')?.touched" class="error-message">
+          Event Description is required
+        </div>
+
+        <label for="eventStartDate">Event Start Date</label>
+        <input type="date" id="eventStartDate" formControlName="Event_Start_Date" required />
+        <label for="eventEndDate">Event End Date</label>
+        <input type="date" id="eventEndDate" formControlName="Event_End_Date" required />
+
+        <label for="eventLocation">Event Location</label>
+        <input type="text" id="eventLocation" formControlName="Event_Location" placeholder="Enter Event Location" required />
+        <div *ngIf="createEventForm.get('Event_Location')?.invalid && createEventForm.get('Event_Location')?.touched" class="error-message">
+          Event Location is required
+        </div>
+
+        <label for="eventImages">Event Images</label>
+        <input type="file" id="eventImages" (change)="handleFileInput($event)" multiple accept="image/*" />
+
+        <div class="image-preview" *ngIf="imagePreviews.length > 0">
+          <h4>Image Preview(s):</h4>
+          <div class="image-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
+            <div *ngFor="let img of imagePreviews" class="image-card" style="position: relative;">
+              <img [src]="img" alt="Image Preview" class="preview-img" style="width: 100px; height: auto; border: 1px solid #ccc; border-radius: 4px;" />
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-button" [disabled]="createEventForm.invalid" style="margin-top: 20px;">
+          Create Event
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Terms and Conditions Modal -->
+<div class="modal fade" [ngClass]="{'show': termsModalOpen}" tabindex="-1" [style.display]="termsModalOpen ? 'block' : 'none'" aria-labelledby="termsModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="termsModalLabel">Terms and Conditions</h5>
+      <button type="button" class="btn-close" aria-label="Close" (click)="closeTermsModal()"></button>
+    </div>
+    <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+      <p><strong>By creating a event on the JUANBAYAN platform, users agree to comply with the following terms:</strong></p>
+      <ul>
+        <li><strong>14.1 Campaign Creation Limit:</strong><br>
+          <ul>
+            <li>14.1.1 Users may create up to two (2) campaigns within a month period. Additional campaign creation requests beyond this limit will be denied.</li>
+            <li>14.1.2 Campaigns must have clear, accurate, and truthful descriptions, goals, and timelines.</li>
+          </ul>
+        </li>
+        <br>
+        <li><strong>14.2 Approval Process:</strong><br>
+          <ul>
+            <li>14.2.1 All campaigns are subject to an approval process by JUANBAYAN to ensure compliance with the platform’s guidelines and Philippine laws.</li>
+            <li>14.2.2 Campaigns may be rejected if they:
+              <ul>
+                <li>Do not align with JUANBAYAN’s mission.</li>
+                <li>Lack sufficient documentation or verification.</li>
+                <li>Contain false or misleading information.</li>
+              </ul>
+            </li>
+            <li>14.2.3 JUANBAYAN reserves the right to request additional supporting documents, such as proof of identity, financial need, or project plans, during the approval process.</li>
+          </ul>
+        </li>
+        <br>
+        <li><strong>14.3 Usage of Funds:</strong><br>
+          <ul>
+            <li>14.3.1 Funds raised must only be used for the stated purpose in the campaign description. Misuse of funds is grounds for account suspension, campaign removal, and legal action under Philippine law.</li>
+            <li>14.3.2 Beneficiaries must provide updates to donors on how the funds are being utilized and the progress of the campaign.</li>
+          </ul>
+        </li>
+        <br>
+        <li><strong>14.4 Platform Fees and Charges:</strong><br>
+          <ul>
+            <li>14.4.1 JUANBAYAN charges a platform fee for managing campaigns, deducted from each donation:
+              <ul>
+                <li>3% for donations between PHP 100 to 1,000.</li>
+                <li>5% for donations above PHP 1,000.</li>
+              </ul>
+            </li>
+            <li>14.4.2 These fees cover operational costs, including verification, platform maintenance, and secure payment processing.</li>
+            <li>14.4.3 Additional third-party payment processing fees may apply, depending on the payment gateway used.</li>
+          </ul>
+        </li>
+        <br>
+        <li><strong>14.5 Campaign Duration:</strong><br>
+          <ul>
+            <li>14.5.1 Campaigns must have a defined start and end date. Campaigns exceeding the stated duration without updates may be flagged for review or suspended.</li>
+            <li>14.5.2 Extensions to campaign durations must be requested in writing and are subject to JUANBAYAN’s approval.</li>
+          </ul>
+        </li>
+        <br>
+        <li><strong>14.6 Prohibited Campaigns:</strong><br>
+          <ul>
+            <li>Users may not create campaigns that:
+              <ul>
+                <li>Promote violence, hate, discrimination, or illegal activities.</li>
+                <li>Violate any laws of the Republic of the Philippines.</li>
+                <li>Solicit funds for personal loans or financial gain without sufficient justification.</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <br>
+        <li><strong>14.7 Transparency and Accountability:</strong><br>
+          <ul>
+            <li>14.7.1 JUANBAYAN is committed to providing transparency to all users. Campaign creators will be informed of any deductions and must ensure clarity in communicating net donation amounts to donors.</li>
+            <li>14.7.2 JUANBAYAN reserves the right to audit campaign records and request evidence of fund usage for transparency and accountability.</li>
+          </ul>
+        </li>
+        <br>
+        <li><strong>14.8 Campaign Termination or Suspension:</strong><br>
+          <ul>
+            <li>14.8.1 JUANBAYAN reserves the right to terminate or suspend campaigns if:
+              <ul>
+                <li>They violate these Terms and Conditions.</li>
+                <li>Fraudulent activity or misuse of funds is suspected.</li>
+              </ul>
+            </li>
+            <li>14.8.2 In such cases, any remaining funds may be withheld or returned to donors, depending on the circumstances.</li>
+          </ul>
+        </li>
+      </ul>
+      <p>Please read these terms carefully and indicate your agreement below.</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeTermsModal()">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="acceptTerms();">I Agree</button>
+    </div>
+  </div>
+</div>
+</div>

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
+import { AccountService, CampaignService, EventService } from '../_services';
+import { Campaign } from '../_models';
 
 @Component({
   selector: 'app-donor-dashboard',
@@ -7,48 +9,71 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DonorDashboardComponent implements OnInit {
   user = 'User';
-  featuredCampaign = {
-    title: "Donate For Jenny's Treatment and Medicine",
-    description: "Help Jenny receive the medical treatment she urgently needs to recover and regain her health.",
-    category: "Medical",
-    startDate: "January 1, 2024",
-    endDate: "March 31, 2024",
-    imageUrl: "https://via.placeholder.com/500x300"
-  };
-  campaigns = [
-    {
-      title: "Children You Work With",
-      description: "Help provide shelter and food for homeless children in our community.",
-      category: "Homeless",
-      startDate: "January 1, 2024",
-      endDate: "March 31, 2024",
-      raised: 6500,
-      goal: 10000,
-      progress: 65,
-      imageUrl: "https://via.placeholder.com/500x300"
-    },
-    {
-      title: "Help For Education",
-      description: "Support children in need by providing access to educational resources.",
-      category: "Education",
-      startDate: "January 1, 2024",
-      endDate: "March 31, 2024",
-      raised: 3000,
-      goal: 10000,
-      progress: 30,
-      imageUrl: "https://via.placeholder.com/500x300"
+  campaigns: Campaign[] = [];
+  totalGoal: number = 0;
+  totalCollection: number = 0;
+  progressPercentage: number = 0;
+  activeApprovedEvents: any;
+  account: any;
+
+  constructor(
+    private renderer: Renderer2,
+    private eventService: EventService,
+    private accountService: AccountService,
+    private campaignService: CampaignService
+  ) {}
+
+  ngOnInit() {
+    this.updateProgressBar();
+    this.account = this.accountService.accountValue;
+    this.loadActiveApprovedEvents();
+    this.loadApprovedCampaigns(); // Only check the login status, no redirection
+  }
+
+  updateProgressBar(): void {
+    const progress = this.totalGoal ? (this.totalCollection / this.totalGoal) * 100 : 0;
+    this.progressPercentage = progress;
+    const progressBarElement = document.getElementById('progress') as HTMLElement;
+    if (progressBarElement) {
+      this.renderer.setStyle(progressBarElement, 'width', `${this.progressPercentage}%`);
     }
-  ];
-  testimonials = [
-    { name: "Belli Smith", role: "Designer", message: "Contribute to a cause, knowing your help will make a difference.", imageUrl: "https://via.placeholder.com/60" },
-    { name: "Sara Taylor", role: "Donor", message: "This platform bridges the gap between those in need and willing donors.", imageUrl: "https://via.placeholder.com/60" },
-    { name: "John Doe", role: "Volunteer", message: "Volunteering here has given me purpose and a chance to help my community.", imageUrl: "https://via.placeholder.com/60" },
-    { name: "Mary Johnson", role: "Beneficiary", message: "I am grateful for the support I received when I needed it the most.", imageUrl: "https://via.placeholder.com/60" }
-  ];
+  }
 
-  constructor() {}
+  getImagePath(image: string): string {
+    return image ? `http://localhost:4000/${image}` : 'assets/'; 
+  }
 
-  ngOnInit(): void {}
+  loadActiveApprovedEvents() {
+    this.eventService.getApprovedActiveEvents().subscribe(
+      (data: any[]) => {
+        this.activeApprovedEvents = data;
+        console.log("Fetched events:", this.activeApprovedEvents);
+      },
+      (error) => {
+        console.error('Error fetching events:', error);
+      }
+    );
+  }
 
+  loadApprovedCampaigns(): void {
+    this.campaignService.getApprovedCampaigns().subscribe({
+      next: (data) => {
+        this.campaigns = data;
+        this.calculateTotals();
+      },
+      error: (err) => {
+        console.error('Error loading campaigns:', err);
+      }
+    });
+  }
+
+  calculateTotals(): void {
+    this.totalGoal = this.campaigns.reduce((sum, campaign) => sum + campaign.Campaign_TargetFund, 0);
+    this.totalCollection = this.campaigns.reduce((sum, campaign) => sum + (campaign.Campaign_CurrentRaised || 0), 0);
+    
+    // Calculate progress percentage, making sure to avoid division by zero
+    this.progressPercentage = this.totalGoal ? (this.totalCollection / this.totalGoal) * 100 : 0;
+    this.updateProgressBar();
+  }
   
 }

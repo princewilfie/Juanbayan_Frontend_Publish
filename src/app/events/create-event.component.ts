@@ -29,6 +29,8 @@ export class CreateEventComponent implements OnInit {
   participants: Participant[] = [];
   eventId: number;
   showParticipantsModal: boolean = false;
+  termsModalOpen: boolean = false;
+  termsAccepted = false;
 
   // Define properties for different event statuses
   approveEvents: any[] = [];
@@ -350,5 +352,17 @@ export class CreateEventComponent implements OnInit {
         });
       }
     );
-  }  
+  }
+  openTermsModal() {
+    this.termsModalOpen = true;
+  }
+  
+  closeTermsModal() {
+    this.termsModalOpen = false;
+  }
+  acceptTerms() {
+    this.termsAccepted = true;
+    this.termsModalOpen = false;
+    this.openModal();
+  }
 }

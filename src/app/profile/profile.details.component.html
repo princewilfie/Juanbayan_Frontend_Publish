@@ -208,8 +208,13 @@ p {
   <div class="px-4 pt-0 pb-4 cover">
     <div class="media align-items-end profile-head">
       <div class="profile mr-3 d-flex justify-content-center align-items-center">
-        <img [src]=" 'http://localhost:4000/assets/' + account.acc_image" alt="Profile Picture" style="height: 300px; width: auto;" class="mt-4">
+        <img 
+        [src]="'http://localhost:4000/assets/' + account.acc_image" 
+        alt="Profile Picture" 
+        style="height: 300px; width: 300px; object-fit: cover;" 
+        class="mt-4">
       </div>
+
       <div class="media-body mb-5 text-whie">
         <h1 class="mt-0 mb-0">{{ account.acc_firstname }} {{ account.acc_lastname }}</h1>
         <p class="small mb-0"><i class="fa fa-phone mr-2"></i>{{ account.acc_pnumber }}</p>

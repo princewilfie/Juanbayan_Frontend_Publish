@@ -223,18 +223,18 @@
 
 <!--? Dinamic para sa Event -->
 <section class="home-blog-area section-padding30">
-    <div class="container">
+    <div class="container ">
         <!-- Section Tittle -->
         <div class="row justify-content-center">
-            <div class="col-xl-5 col-lg-6 col-md-9 col-sm-10">
-                <div class="section-tittle text-center mb-90">
+            <div class="col-xl-12 col-lg-12 col-md-9 col-sm-10">
+                <div class="section-tittle text-center mb-90 mt-0">
                     <span>Our Events</span>
                     <h2>Latest post from our recent events</h2>
                 </div>
             </div>
         </div>
         <div class="row" *ngIf="activeApprovedEvents.length > 0;">
-            <div class="col-xl-6 col-lg-6 col-md-6" *ngFor="let eventItem of activeApprovedEvents | slice:0:5" (click)="viewEventDetails(eventItem.Event_ID)">
+            <div class="col-xl-6 col-lg-6 col-md-6" *ngFor="let eventItem of activeApprovedEvents | slice:0:1" (click)="viewEventDetails(eventItem.Event_ID)">
                 <div class="home-blog-single mb-30">
                     <div class="blog-img-cap">
                         <div class="blog-img">
@@ -314,16 +314,44 @@
 <!-- Count Down End -->
 
 <style>
-    .background-img{
-        background-image: url(assets/user-bootstrap/charityworks-master/assets/img/gallery/section_bg02.png);
-        background-size: cover;
-        background-position: center center;
-        background-repeat: no-repeat;
-    }
-    .background-img1{
-        background-image: url(assets/user-bootstrap/charityworks-master/assets/img/gallery/section_bg03.png);
-        background-size: cover;
-        background-position: center center;
-        background-repeat: no-repeat;
-    }
+     .background-img {
+    position: relative;
+    background-image: url(assets/user-bootstrap/charityworks-master/assets/img/gallery/section_bg02.png);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: #80C4E9; /* Ensures the color remains visible */
+}
+
+.background-img::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #80C4E9; /* Same background color */
+    opacity: 0.6; /* Adjust opacity as needed */
+    z-index: 1; /* Keeps the overlay on top of the image */
+}
+
+.background-img1 {
+    position: relative;
+    background-image: url(assets/user-bootstrap/charityworks-master/assets/img/gallery/section_bg03.png);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.background-img1::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust the color and transparency */
+    z-index: 1; /* Keeps the overlay on top of the image */
+}
+
 </style>

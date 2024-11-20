@@ -13,7 +13,7 @@ export class AlertService {
     onAlert(id = this.defaultId): Observable<Alert> {
         return this.subject.asObservable().pipe(filter(x => x && x.id === id));
     }
-
+    
     // convenience methods
     success(message: string, options?: any) {
         this.alert(new Alert({ ...options, type: AlertType.Success, message }));
