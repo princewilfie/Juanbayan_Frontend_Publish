@@ -43,26 +43,49 @@ export class ReportsRevenueComponent implements OnInit {
       }
     );
   }
-
+  
   prepareChartData(): void {
-    const monthlyRevenue = {};
-
-    // Group revenue by month
+    const monthlyRevenue: { [key: string]: number } = {};
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  
     this.feeAmounts.forEach(fee => {
-      const month = new Date(fee.date_created).toLocaleString('default', { month: 'short' }) + ' ' + new Date(fee.date_created).getFullYear();
+      if (!fee.donation_date) {
+        console.warn('Missing date in fee:', fee);
+        return; // Skip if date_created is undefined
+      }
+  
+      const date = new Date(fee.donation_date);
+      if (isNaN(date.getTime())) {
+        console.warn('Invalid date in fee:', fee.donation_date);
+        return; // Skip invalid dates
+      }
+  
+      // Extract the month name and year
+      const month = `${monthNames[date.getMonth()]} ${date.getFullYear()}`;
+  
+      // Accumulate revenue for the month
       if (!monthlyRevenue[month]) {
         monthlyRevenue[month] = 0;
       }
       monthlyRevenue[month] += fee.fee_amount;
     });
-
-    // Prepare chart data
-    this.barChartData.labels = Object.keys(monthlyRevenue);
-    this.barChartData.datasets[0].data = Object.values(monthlyRevenue);
-
-    // Update the chart after data processing
+  
+    // Sort the months by date
+    const sortedMonths = Object.keys(monthlyRevenue).sort((a, b) => {
+      const [aMonth, aYear] = a.split(' ');
+      const [bMonth, bYear] = b.split(' ');
+      return new Date(`${aMonth} 1 ${aYear}`).getTime() - new Date(`${bMonth} 1 ${bYear}`).getTime();
+    });
+  
+    // Update chart data
+    this.barChartData.labels = sortedMonths;
+    this.barChartData.datasets[0].data = sortedMonths.map(month => monthlyRevenue[month]);
+  
+    // Update the chart
     this.updateChart();
   }
+  
+  
 
   updateChart(): void {
     const canvas = document.getElementById('barChartCanvas') as HTMLCanvasElement;

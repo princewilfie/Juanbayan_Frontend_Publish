@@ -71,11 +71,13 @@ export class EditComponent implements OnInit {
     }
 
     private updateAccount() {
+        
         this.accountService.update(this.id, this.form.value)
             .pipe(first())
             .subscribe({
                 next: () => {
                     // SweetAlert for success if changes are made and update is successful
+                    this.loading = true;
                     Swal.fire({
                         icon: 'success',
                         title: 'Update Successful',
@@ -84,15 +86,18 @@ export class EditComponent implements OnInit {
                     }).then(() => {
                         // After the alert is dismissed, navigate back to the previous page
                         this.router.navigate(['../../'], { relativeTo: this.route });
+                        this.loading = false;
                     });
                 },
-                error: error => {
-                    // SweetAlert for error if there is an issue with updating
+                error: (error: any) => {
+          
+                    const errorMessage = typeof error === 'string' ? error : 'An unexpected error occurred.';
+                    // Display SweetAlert with the error message
                     Swal.fire({
                         icon: 'error',
                         title: 'Update Failed',
-                        text: `There was an error updating the account: ${error}`,
-                        confirmButtonText: 'OK'
+                        text: errorMessage, // Directly show the string error
+                        confirmButtonText: 'OK',
                     });
                     this.loading = false; // Stop the loading spinner
                 }

@@ -366,3 +366,5 @@ export class CreateEventComponent implements OnInit {
     this.openModal();
   }
 }
+
+

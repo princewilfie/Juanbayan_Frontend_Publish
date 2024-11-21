@@ -276,7 +276,7 @@
                 <textarea class="form-control" id="campaignDescription" formControlName="Campaign_Description" rows="3" required></textarea>
             </div>
             <div class="mb-3">
-                <label for="campaignGoal" class="form-label">Campaign Goal ($)</label>
+                <label for="campaignGoal" class="form-label">Campaign Goal (₱)</label>
                 <input type="number" class="form-control" id="campaignGoal" formControlName="Campaign_TargetFund" required>
             </div>
             <div class="mb-3">
@@ -297,23 +297,38 @@
                 <label for="campaignEndDate" class="form-label">End Date</label>
                 <input type="date" class="form-control" id="campaignEndDate" formControlName="Campaign_End" required>
             </div>
-            <!-- Image Upload with Preview -->
-            <div class="mb-3">
-                <label for="editCampaignImage" class="form-label">Upload Campaign Image</label>
-                <input type="file" class="form-control" id="editCampaignImage" (change)="onImagePreview($event)" accept="image/*" formControlName="Campaign_Image">
-                <div *ngIf="imagePreview" class="mt-3">
-                    <p><strong>Image Preview:</strong></p>
-                    <img [src]="imagePreview" alt="Preview" class="img-fluid border" style="max-height: 200px;">
-                </div>
-            </div>
-            
-            <!-- Proof Files Upload -->
-            <div class="form-group">
-                <label for="proofFiles">Proof Files</label>
-                <p><i>Please upload one (1) valid ID, Certificate of Barangay Indigency, and other proofs.</i></p>
-                <input type="file" id="proofFiles" (change)="onProofFilesSelected($event)" multiple class="form-control" accept="image/*">
 
+            <!-- Image Upload with Preview -->
+            <div class="mb-4">
+              <label for="editCampaignImage" class="form-label">Upload Campaign Image</label>
+              
+              <!-- Custom File Upload Button -->
+              <div class="custom-file-upload">
+                <input type="file" class="form-control-file" id="editCampaignImage" (change)="onImagePreview($event)" accept="image/*" formControlName="Campaign_Image">
+                <small class="text-muted">Accepted formats: JPG, PNG, JPEG (Max size: 5MB)</small>
+              </div>
+              
+              <!-- Image Preview -->
+              <div *ngIf="imagePreview" class="mt-3 text-center">
+                <p><strong>Image Preview:</strong></p>
+                <img [src]="imagePreview" alt="Preview" class="img-fluid border rounded" style="max-height: 200px; object-fit: cover; width: 100%;">
+              </div>
             </div>
+
+            <!-- Proof Files Upload -->
+            <div class="mb-4">
+              <label for="proofFiles" class="form-label">Upload Proof Files</label>
+              <p><i>Please upload one (1) valid ID, Certificate of Barangay Indigency, and other proofs.</i></p>
+              
+              <!-- Custom File Upload Button for Proof Files -->
+              <div class="custom-file-upload">
+                <input type="file" id="proofFiles" (change)="onProofFilesSelected($event)" multiple class="form-control-file" accept="image/*">
+                <small class="text-muted">Accepted formats: JPG, PNG, JPEG (Max size: 5MB each)</small>
+              </div>
+            </div>
+          
+
+
              <!-- New Notes to Admin Field -->
             <div class="mb-3">
                 <label for="editNoteToAdmin" class="form-label">Note to Admin</label>
@@ -377,7 +392,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Terms and Conditions</h5>
-        <button type="button" class="btn-close" aria-label="Close" (click)="closeTermsModal()"></button>
+        <button type="button" class="btn btn-danger" aria-label="Close" (click)="closeTermsModal()">Close</button>
       </div>
       <div class="modal-body">
         <p><strong>By creating a campaign on the JUANBAYAN platform, users agree to comply with the following terms:</strong></p>
@@ -471,3 +486,63 @@
   </div>
 </div>
     
+
+<style>
+  .form-label {
+    font-weight: 500;
+    color: #555;
+  }
+  
+  .custom-file-upload input[type="file"] {
+    border: 1px solid #ccc;
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    background-color: #f8f9fa;
+    transition: border-color 0.3s ease;
+    display: block;
+    width: 100%;
+  }
+
+  .custom-file-upload input[type="file"]:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+
+  .form-control-file {
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    width: 100%;
+  }
+
+  .img-fluid {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .list-group-item {
+    border: 1px solid #ddd;
+    border-radius: 0.375rem;
+    margin-bottom: 0.5rem;
+    padding: 0.75rem;
+  }
+
+  .list-group-item strong {
+    font-size: 14px;
+    color: #333;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .mt-3 {
+    margin-top: 1rem;
+  }
+  
+  small.text-muted {
+    font-size: 0.875rem;
+    color: #6c757d;
+  }
+</style>

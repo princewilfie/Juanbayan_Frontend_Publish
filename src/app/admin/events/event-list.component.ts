@@ -13,6 +13,7 @@ export class EventListComponent implements OnInit {
   selectedEventId: number | null = null;
   events: CommunityEvent[] = [];
   showRejectionModal: boolean = false; // Flag to control modal visibility
+  loading = false;
 
   constructor(private eventService: EventService) {}
 
@@ -28,6 +29,7 @@ export class EventListComponent implements OnInit {
   }
 
   approveEvent(id: number): void {
+    this.loading = true;
     this.eventService.approve(id).subscribe(
       (response: CommunityEvent) => {
         this.updateEventStatus(id, 'Approved');
@@ -38,9 +40,11 @@ export class EventListComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         });
+        this.loading = false;
       },
       error => {
         console.error('Error approving campaign:', error);
+        this.loading = false;
         Swal.fire({
           icon: 'error',
           title: 'Error!',
@@ -61,12 +65,15 @@ export class EventListComponent implements OnInit {
       });
       return;
     }
-
+    
+    this.loading = true;  // Set loading to true when the rejection starts
+    
     this.eventService.reject(eventId, this.rejectionNote).subscribe(
       (response: CommunityEvent) => {
         this.rejectionNote = ''; // Clear the note after submission
         this.loadEvents(); // Reload event list after rejection
         this.closeRejectionModal(); // Close the modal
+  
         Swal.fire({
           icon: 'success',
           title: 'Event Rejected!',
@@ -74,6 +81,8 @@ export class EventListComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         });
+  
+        this.loading = false;  // Reset loading after the request completes
       },
       error => {
         console.error('Error rejecting event:', error);
@@ -82,6 +91,8 @@ export class EventListComponent implements OnInit {
           title: 'Error!',
           text: 'Something went wrong while rejecting the event. Please try again.',
         });
+        
+        this.loading = false;  // Reset loading after an error occurs
       }
     );
   }

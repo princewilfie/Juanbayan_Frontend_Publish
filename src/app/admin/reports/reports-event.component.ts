@@ -100,17 +100,60 @@ export class ReportsEventComponent implements OnInit, AfterViewInit {
   }
 
   updateChart(): void {
-    if (this.chart) {
-      const years = [...new Set(this.filteredEvents.map(e => new Date(e.Event_Start_Date).getMonth()))];
-      const data = years.map(year =>
-        this.filteredEvents.filter(e => new Date(e.Event_Start_Date).getMonth() === year).length
-      );
-
-      this.chart.data.labels = years;
-      this.chart.data.datasets[0].data = data;
+    if (!this.chart) {
+      console.error('Chart is not initialized');
+      return;
+    }
+  
+    // Ensure the filtered events are not empty
+    if (!this.filteredEvents || this.filteredEvents.length === 0) {
+      console.warn('No events available to display on the chart');
+      this.chart.data.labels = [];
+      this.chart.data.datasets[0].data = [];
       this.chart.update();
+      return;
+    }
+  
+    // Map month indices to month names
+    const monthNames = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+  
+    try {
+      // Extract unique months from filtered events
+      const months = [...new Set(this.filteredEvents.map(e => {
+        const date = new Date(e.Event_Start_Date);
+        if (isNaN(date.getTime())) {
+          console.error('Invalid date format in event:', e.Event_Start_Date);
+          return null;
+        }
+        return date.getMonth();
+      }))].filter(month => month !== null);
+  
+      // Sort months in ascending order
+      months.sort((a, b) => a - b);
+  
+      // Map month indices to month names
+      const labels = months.map(month => monthNames[month]);
+  
+      // Count the number of events for each month
+      const data = months.map(month =>
+        this.filteredEvents.filter(e => new Date(e.Event_Start_Date).getMonth() === month).length
+      );
+  
+      // Update chart labels and data
+      this.chart.data.labels = labels;
+      this.chart.data.datasets[0].data = data;
+  
+      // Update the chart to reflect changes
+      this.chart.update();
+    } catch (error) {
+      console.error('Error while updating the chart:', error);
     }
   }
+  
+  
 
 
   downloadAnimation() {

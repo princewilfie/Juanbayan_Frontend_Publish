@@ -14,6 +14,8 @@ export class RewardListComponent implements OnInit {
   rewardForm: FormGroup;
   isEditing: boolean = false;
   currentRewardId: number | null = null;
+  loading = false;
+  selectedFileName: string | null = null;
 
   constructor(
     private rewardService: RewardService,
@@ -78,39 +80,42 @@ export class RewardListComponent implements OnInit {
           formData.append(key, this.rewardForm.get(key)?.value);
         }
       });
-
+      this.loading = true;
       if (this.isEditing && this.currentRewardId !== null) {
         this.rewardService.updateReward(this.currentRewardId, formData).subscribe({
           next: () => {
             Swal.fire('Success', 'Reward updated successfully', 'success');
             this.loadRewards();
+            this.loading = false;
           },
           error: () => {
+            this.loading = false;
             Swal.fire('Error', 'Error updating reward', 'error');
           }
         });
       } else {
         this.rewardService.createReward(formData).subscribe({
           next: () => {
+            this.loading = false;
             Swal.fire('Success', 'Reward added successfully', 'success');
             this.loadRewards();
           },
           error: () => {
+            this.loading = false;
             Swal.fire('Error', 'Error adding reward', 'error');
           }
         });
       }
-
       this.closeRewardModal();
     }
   }
 
-  onFileChange(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      this.rewardForm.patchValue({
-        reward_Image: file
-      });
+  onFileChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input?.files?.length) {
+      this.selectedFileName = input.files[0].name;
+    } else {
+      this.selectedFileName = null;
     }
   }
 
@@ -123,7 +128,9 @@ export class RewardListComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!',
       cancelButtonText: 'No, keep it'
     }).then((result) => {
+      this.loading = true;
       if (result.isConfirmed) {
+        this.loading = false;
         this.rewardService.deleteReward(id).subscribe({
           next: () => {
             Swal.fire('Deleted!', 'Your reward has been deleted.', 'success');

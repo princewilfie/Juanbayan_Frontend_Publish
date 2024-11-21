@@ -34,6 +34,7 @@ export class DetailsComponent implements OnInit {
   isFundRequest: boolean = false;
   fundRequestModal: boolean = false;
   deliveryModalOpen: boolean = false; 
+  loading: boolean = false;
 
   constructor(
     private accountService: AccountService,
@@ -170,6 +171,7 @@ export class DetailsComponent implements OnInit {
       Withdraw_Amount: this.amount, // Ensure this is defined and valid
     };
 
+    this.loading = true;
   
     this.withdrawService.requestWithdrawal(fundRequestData).subscribe(
       response => {
@@ -194,6 +196,8 @@ export class DetailsComponent implements OnInit {
         });
       }
     );
+  
+    this.loading = false;
   }
   
 

@@ -152,21 +152,19 @@ previousStep() {
                     this.submitted = false; // Allow resubmission on error
                 }
             },
-            error: (err: HttpErrorResponse) => {
-              // Extract the backend error message
-              const errorMessage = err.error.message;
-
-              console.log("Error message: ", errorMessage)
+            error: (error: any) => {
+          
+              const errorMessage = typeof error === 'string' ? error : 'An unexpected error occurred.';
               // Display SweetAlert with the error message
               Swal.fire({
                   icon: 'error',
                   title: 'Login Failed',
-                  text: errorMessage,
-                  confirmButtonText: 'OK'
+                  text: errorMessage, // Directly show the string error
+                  confirmButtonText: 'OK',
               });
           
               this.loading = false;
-          }
+          }         
       });
   }
 
@@ -198,13 +196,15 @@ previousStep() {
           });
           this.router.navigate(['/login-register']);
         },
-        error: error => {
-          // SweetAlert for registration error
+        error: (error: any) => {
+          
+          const errorMessage = typeof error === 'string' ? error : 'An unexpected error occurred.';
+          // Display SweetAlert with the error message
           Swal.fire({
-            icon: 'error',
-            title: 'Registration Failed',
-            text: `Error: ${error}. Please try again.`,
-            confirmButtonText: 'OK'
+              icon: 'error',
+              title: 'Registration Failed',
+              text: errorMessage, // Directly show the string error
+              confirmButtonText: 'OK',
           });
           this.loading = false;
           this.submitted = false;

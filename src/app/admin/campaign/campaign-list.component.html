@@ -47,12 +47,14 @@
                         <!-- View Notes Button -->
                         <button class="btn btn-primary btn-sm mt-2" (click)="openNotesModal(campaign.Campaign_ID); $event.stopPropagation()">View Notes</button>
                       </td>
+                      <!-- Campaign Actions (Approve/Reject Buttons) -->
                       <td>
                         <div class="actions">
-                          <!-- Approve and Reject Button -->
+                          <!-- Approve Button -->
                           <button [disabled]="loading" class="btn btn-success btn-sm" (click)="approveCampaign(campaign.Campaign_ID); $event.stopPropagation()">
                             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span> Approve
                           </button>
+                          <!-- Reject Button -->
                           <button [disabled]="loading" class="btn btn-danger btn-sm" (click)="openRejectionModal(campaign.Campaign_ID); $event.stopPropagation()">
                             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span> Reject
                           </button>
@@ -77,7 +79,8 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" (click)="closeRejectionModal()">Cancel</button>
-              <button type="button" class="btn btn-danger" (click)="confirmRejectCampaign(selectedCampaignId)">Reject</button>
+              <button type="button" class="btn btn-danger" (click)="confirmRejectCampaign(selectedCampaignId)">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Reject</button>
             </div>
           </div>
         </div>

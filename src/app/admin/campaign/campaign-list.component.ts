@@ -67,11 +67,11 @@ export class CampaignListComponent implements OnInit {
 
   // Approve Campaign
   approveCampaign(id: number): void {
-    this.loading = true;
+    this.loading = true;  // Show spinner
     this.campaignService.approve(id).subscribe(
       (response: Campaign) => {
-        this.loadCampaigns();
-        this.loading = false;
+        this.loadCampaigns();  // Reload campaigns after approval
+        this.loading = false;  // Hide spinner
         Swal.fire({
           icon: 'success',
           title: 'Campaign Approved!',
@@ -81,7 +81,7 @@ export class CampaignListComponent implements OnInit {
         });
       },
       error => {
-        this.loading = false;
+        this.loading = false;  // Hide spinner in case of error
         Swal.fire({
           icon: 'error',
           title: 'Error!',
@@ -90,7 +90,6 @@ export class CampaignListComponent implements OnInit {
       }
     );
   }
-
   // Reject Campaign
   openRejectionModal(campaignId: number): void {
     this.selectedCampaignId = campaignId;
@@ -100,40 +99,44 @@ export class CampaignListComponent implements OnInit {
     this.closeDetailsModal();
   }
 
-  confirmRejectCampaign(campaignId: number): void {
-    if (!this.rejectionNote.trim()) {
+ // Reject Campaign
+confirmRejectCampaign(campaignId: number): void {
+  if (!this.rejectionNote.trim()) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Empty Field!',
+      text: 'Please add reason for rejection.',
+      showConfirmButton: false,
+      timer: 1500
+    });
+    return;
+  }
+
+  this.loading = true;  // Show spinner
+  this.campaignService.reject(campaignId, this.rejectionNote).subscribe(
+    (response: Campaign) => {
+      this.rejectionNote = '';  // Clear the rejection note after rejection
+      this.loadCampaigns();  // Reload campaigns after rejection
+      this.showRejectionModal = false;  // Close rejection modal
+      this.loading = false;  // Hide spinner
       Swal.fire({
-        icon: 'error',
-        title: 'Empty Field!',
-        text: 'Please add reason for rejection.',
+        icon: 'success',
+        title: 'Campaign Rejected!',
+        text: 'The campaign has been rejected successfully.',
         showConfirmButton: false,
         timer: 1500
       });
-      return;
+    },
+    error => {
+      this.loading = false;  // Hide spinner in case of error
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: 'Something went wrong while rejecting the campaign. Please try again.',
+      });
     }
-
-    this.campaignService.reject(campaignId, this.rejectionNote).subscribe(
-      (response: Campaign) => {
-        this.rejectionNote = '';
-        this.loadCampaigns();
-        this.showRejectionModal = false;
-        Swal.fire({
-          icon: 'success',
-          title: 'Campaign Rejected!',
-          text: 'The campaign has been rejected successfully.',
-          showConfirmButton: false,
-          timer: 1500
-        });
-      },
-      error => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error!',
-          text: 'Something went wrong while rejecting the campaign. Please try again.',
-        });
-      }
-    );
-  }
+  );
+}
 
   closeRejectionModal(): void {
     this.showRejectionModal = false;

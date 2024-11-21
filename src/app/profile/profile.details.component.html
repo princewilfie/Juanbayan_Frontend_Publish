@@ -328,7 +328,7 @@ p {
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Request Funds</h5>
-        <button type="button" class="btn-close" aria-label="Close" (click)="closeFundRequestModal()"></button>
+        <button type="button" class="btn-danger" aria-label="Close" (click)="closeFundRequestModal()">Close</button>
       </div>
       <div class="modal-body">
         <form>
@@ -345,7 +345,8 @@ p {
           </div>
           <div class="mb-3">
             <!-- Pass the bank and account number directly to the method -->
-            <button type="button" class="btn btn-success" (click)="submitFundRequest(selectedBank, accountNumber)">Submit Request</button>
+            <button [disabled]="loading" type="button" class="btn btn-success" (click)="submitFundRequest(selectedBank, accountNumber)">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Submit Request</button>
           </div>
         </form>
       </div>

@@ -37,8 +37,10 @@
                       <td>{{ event.Event_ApprovalStatus }}</td>
                       <td>
                         <div class="actions">
-                          <button class="btn btn-success btn-sm mr-3" (click)="approveEvent(event.Event_ID); $event.stopPropagation()">Approve</button>
-                          <button class="btn btn-danger btn-sm" (click)="openRejectionModal(event.Event_ID); $event.stopPropagation()">Reject</button>
+                          <button [disabled]="loading" class="btn btn-success btn-sm mr-3" (click)="approveEvent(event.Event_ID); $event.stopPropagation()">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Approve</button>
+                          <button class="btn btn-danger btn-sm" (click)="openRejectionModal(event.Event_ID); $event.stopPropagation()">
+                            Reject</button>
                         </div>
                       </td>
                     </tr>
@@ -68,10 +70,14 @@
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" (click)="closeRejectionModal()">Cancel</button>
-      <button type="button" class="btn btn-danger" (click)="rejectEventWithNote(selectedEventId)">Reject</button>
+      <button [disabled]="loading" type="button" class="btn btn-danger" (click)="rejectEventWithNote(selectedEventId)">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Reject
+      </button>
     </div>
   </div>
 </div>
+
+
 
 <style>
   /* Modal Overlay (to cover the whole screen) */

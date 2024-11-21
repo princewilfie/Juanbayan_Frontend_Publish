@@ -71,6 +71,16 @@ export class CampaignComponent implements OnInit {
   }
 
 
+  currentIndex = 0;
+
+    prevSlide() {
+        this.currentIndex = (this.currentIndex === 0) ? this.testimonies.length - 1 : this.currentIndex - 1;
+    }
+
+    nextSlide() {
+        this.currentIndex = (this.currentIndex + 1) % this.testimonies.length;
+    }
+
   getImagePath(image: string): string {
     return image ? `http://localhost:4000/${image}` : 'assets/'; 
   }
