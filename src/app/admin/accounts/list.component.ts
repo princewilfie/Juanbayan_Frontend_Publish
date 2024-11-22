@@ -21,6 +21,9 @@ export class ListComponent implements OnInit {
         acc_status: ''
     };
     isEditing = false;
+    showDetailsModal = false;
+    account: any;
+
 
     constructor(private accountService: AccountService) {}
 
@@ -33,6 +36,15 @@ export class ListComponent implements OnInit {
             .pipe(first())
             .subscribe(accounts => this.accounts = accounts);
     }
+
+    closeDetailsModal(): void {
+        this.showDetailsModal = false;
+      }
+    
+      showAccountDetails(account: Account): void {
+        this.account = account;
+        this.showDetailsModal = true;
+      }
 
     // Delete an account with confirmation alert
     deleteAccount(id: string) {

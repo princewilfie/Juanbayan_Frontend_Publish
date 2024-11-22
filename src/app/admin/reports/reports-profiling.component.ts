@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Account, Donation, Campaign } from '../../_models';
-import { CampaignService, DonationService, AccountService } from '../../_services';
+import { AccountService } from '../../_services';
 
 @Component({
   selector: 'app-reports-profiling',
@@ -8,97 +7,93 @@ import { CampaignService, DonationService, AccountService } from '../../_service
   styleUrls: ['./reports-profiling.component.css']
 })
 export class ReportsProfilingComponent implements OnInit {
-  accounts: Account[] = []; // Complete list of accounts (both donors and beneficiaries)
-  donations: Donation[] = []; // Donations data
-  campaigns: Campaign[] = []; // Campaign data
-
+  donors: any[] = [];
+  beneficiaries: any[] = [];
+  filteredDonors: any[] = [];
+  filteredBeneficiaries: any[] = [];
   donorSearchTerm: string = '';
   beneficiarySearchTerm: string = '';
-  filteredDonors: Account[] = [];
-  filteredBeneficiaries: Account[] = [];
-  totalDonationsAmount: number = 0;
-  totalHelpReceivedAmount: number = 0;
+  totalDonations: number = 0;
+  totalHelpReceived: number = 0;
 
-  constructor(
-    private donationService: DonationService,
-    private campaignService: CampaignService,
-    private accountService: AccountService // Assuming you have this service for accounts
-  ) {}
+  constructor(private accountService: AccountService) {}
 
   ngOnInit(): void {
-    // Fetch or initialize your data here (for example, accounts, donations, and campaigns)
-    this.fetchData();
+    this.loadDonors();
+    this.loadBeneficiaries();
   }
 
-  fetchData() {
-    console.log('Fetching data...');
-
-    // Fetch donations
-    this.donationService.getAllDonations().subscribe(donations => {
-      console.log('Donations fetched:', donations);
-      this.donations = donations;
-      this.filterDonors(); // Reapply filters after fetching data
-      this.filterBeneficiaries(); // Reapply filters after fetching data
-    }, error => {
-      console.error('Error fetching donations:', error);
-    });
-
-    // Fetch campaigns
-    this.campaignService.getAllCampaigns().subscribe(campaigns => {
-      console.log('Campaigns fetched:', campaigns);
-      this.campaigns = campaigns;
-      this.filterDonors(); // Reapply filters after fetching data
-      this.filterBeneficiaries(); // Reapply filters after fetching data
-    }, error => {
-      console.error('Error fetching campaigns:', error);
-    });
-
-    // Fetch accounts
-    this.accountService.getAll().subscribe(accounts => {
-      console.log('Accounts fetched:', accounts);
-      this.accounts = accounts;
-      this.filterDonors(); // Reapply filters after fetching data
-      this.filterBeneficiaries(); // Reapply filters after fetching data
-    }, error => {
-      console.error('Error fetching accounts:', error);
-    });
+  loadDonors(): void {
+    this.accountService.getAllDonors().subscribe(
+      (data) => {
+        this.donors = data;
+        this.filteredDonors = this.donors; // Initialize filtered donors
+        this.calculateTotalDonations();
+      },
+      (error) => {
+        console.error('Error fetching donors:', error);
+      }
+    );
   }
 
-  filterDonors() {
-    console.log('Filtering donors with search term:', this.donorSearchTerm);
-    this.filteredDonors = this.accounts.filter(account => {
-      // Ensure comparison types are consistent (convert account.id to a number if needed)
-      const matchesName = (account.acc_firstname + ' ' + account.acc_lastname).toLowerCase().includes(this.donorSearchTerm.toLowerCase());
-      const matchesCampaign = this.campaigns.some(campaign => 
-        campaign.Campaign_Name.toLowerCase().includes(this.donorSearchTerm.toLowerCase()) && +campaign.Acc_ID === +account.id // Convert both to number
-      );
-      return matchesName || matchesCampaign;
-    });
-    console.log('Filtered donors:', this.filteredDonors);
-
-    // Update total donations
-    this.totalDonationsAmount = this.filteredDonors.reduce((sum, donor) => {
-      return sum + (this.donations.filter(donation => Number(donation.acc_id) === Number(donor.id)).reduce((sum, donation) => sum + donation.donation_amount, 0));
-    }, 0);
-    console.log('Total donations amount:', this.totalDonationsAmount);
+  loadBeneficiaries(): void {
+    this.accountService.getAllBeneficiaries().subscribe(
+      (data) => {
+        this.beneficiaries = data;
+        this.filteredBeneficiaries = this.beneficiaries; // Initialize filtered beneficiaries
+        this.calculateTotalHelpReceived();
+      },
+      (error) => {
+        console.error('Error fetching beneficiaries:', error);
+      }
+    );
   }
 
-  filterBeneficiaries() {
-    console.log('Filtering beneficiaries with search term:', this.beneficiarySearchTerm);
-    this.filteredBeneficiaries = this.accounts.filter(account => {
-      // Ensure comparison types are consistent (convert account.id to a number if needed)
-      const matchesName = (account.acc_firstname + ' ' + account.acc_lastname).toLowerCase().includes(this.beneficiarySearchTerm.toLowerCase());
-      const matchesCampaign = this.campaigns.some(campaign => 
-        campaign.Campaign_Name.toLowerCase().includes(this.beneficiarySearchTerm.toLowerCase()) && +campaign.Acc_ID === +account.id // Convert both to number
-      );
-      return matchesName || matchesCampaign;
-    });
-    console.log('Filtered beneficiaries:', this.filteredBeneficiaries);
+  filterDonors(): void {
+    this.filteredDonors = this.donors.filter((donor) =>
+      `${donor.acc_firstname} ${donor.acc_lastname}`
+        .toLowerCase()
+        .includes(this.donorSearchTerm.toLowerCase())
+    );
+  }
 
-    // Update total help received
-    this.totalHelpReceivedAmount = this.filteredBeneficiaries.reduce((sum, beneficiary) => {
-      return sum + (this.donations.filter(donation => Number(donation.acc_id) === Number(beneficiary.id)).reduce((sum, donation) => sum + donation.donation_amount, 0));
-    }, 0);
-    console.log('Total help received amount:', this.totalHelpReceivedAmount);
+  filterBeneficiaries(): void {
+    this.filteredBeneficiaries = this.beneficiaries.filter((beneficiary) =>
+      `${beneficiary.acc_firstname} ${beneficiary.acc_lastname}`
+        .toLowerCase()
+        .includes(this.beneficiarySearchTerm.toLowerCase())
+    );
+  }
+
+  calculateTotalDonations(): void {
+    this.totalDonations = this.donors.reduce(
+      (sum, donor) => sum + (donor.totalDonations || 0),
+      0
+    );
+  }
+
+  calculateTotalHelpReceived(): void {
+    this.totalHelpReceived = this.beneficiaries.reduce(
+      (sum, beneficiary) => sum + (beneficiary.totalHelpReceived || 0),
+      0
+    );
+  }
+
+  downloadCSV(data: any[], filename: string): void {
+    const csvData = this.convertToCSV(data);
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.setAttribute('href', url);
+    a.setAttribute('download', `${filename}.csv`);
+    a.click();
+  }
+
+  private convertToCSV(data: any[]): string {
+    const headers = Object.keys(data[0]);
+    const rows = data.map((row) =>
+      headers.map((header) => `"${row[header] || ''}"`).join(',')
+    );
+    return [headers.join(','), ...rows].join('\n');
   }
 }

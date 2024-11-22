@@ -1,122 +1,103 @@
 <div class="container">
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Reports Profiling</h1>
-    <p class="mb-4">Here you can see donor and beneficiary profiles, donations, and campaigns.</p>
-  
-    <!-- Donor Profiling Section -->
-    <div class="row">
-      <div class="col-xl-12 col-lg-5">
-        <div class="card shadow mb-4">
-          <a href="#collapseDonor" class="d-block card-header py-3 bg-dark" data-toggle="collapse"
-            role="button" aria-expanded="true" aria-controls="collapseDonor">
-            <h6 class="m-0 font-weight-bold text-light">Donor Profiling</h6>
-          </a>
-          <div class="collapse show" id="collapseDonor">
-            <div class="card-body">
-              <!-- Donor Filter -->
-              <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Search by Name or Campaign" [(ngModel)]="donorSearchTerm" (ngModelChange)="filterDonors()" name="donorSearch">
-                  <div class="input-group-append">
-                    <button class="btn btn-primary" type="button">Search</button>
-                  </div>
-                </div>
-              </form>
-  
-              <!-- Donor Table -->
-              <div class="table-responsive mt-3">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th>Donor ID</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Email</th>
-                      <th>Total Donations</th>
-                      <th>Campaigns</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let donor of filteredDonors">
-                      <td>{{ donor.acc_id }}</td>
-                      <td>{{ donor.acc_firstname }}</td>
-                      <td>{{ donor.acc_lastname }}</td>
-                      <td>{{ donor.acc_email }}</td>
-                      <td>{{ donor.totalDonations }}</td>
-                      <td>{{ donor.campaigns?.join(', ') }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-  
-              <!-- Donor Statistics -->
-              <div class="mt-3">
-                <h5>Statistics</h5>
-                <p>Total Donors: {{ filteredDonors.length }}</p>
-                <p>Total Donations: {{ totalDonationsAmount }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  <h1 class="h3 mb-2 text-gray-800">Reports Profiling</h1>
+
+  <!-- Donors Section -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3 bg-dark d-flex justify-content-between align-items-center">
+      <h6 class="m-0 font-weight-bold text-light">Donors</h6>
+      <button class="btn btn-light" (click)="downloadCSV(filteredDonors, 'Donors')">Download CSV</button>
     </div>
-  
-    <!-- Beneficiary Profiling Section -->
-    <div class="row">
-      <div class="col-xl-12 col-lg-5">
-        <div class="card shadow mb-4">
-          <a href="#collapseBeneficiary" class="d-block card-header py-3 bg-dark" data-toggle="collapse"
-            role="button" aria-expanded="true" aria-controls="collapseBeneficiary">
-            <h6 class="m-0 font-weight-bold text-light">Beneficiary Profiling</h6>
-          </a>
-          <div class="collapse show" id="collapseBeneficiary">
-            <div class="card-body">
-              <!-- Beneficiary Filter -->
-              <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Search by Name or Campaign" [(ngModel)]="beneficiarySearchTerm" (ngModelChange)="filterBeneficiaries()" name="beneficiarySearch">
-                  <div class="input-group-append">
-                    <button class="btn btn-primary" type="button">Search</button>
-                  </div>
-                </div>
-              </form>
-  
-              <!-- Beneficiary Table -->
-              <div class="table-responsive mt-3">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th>Beneficiary ID</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Email</th>
-                      <th>Total Help Received</th>
-                      <th>Donations</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let beneficiary of filteredBeneficiaries">
-                      <td>{{ beneficiary.id }}</td>
-                      <td>{{ beneficiary.acc_firstname }}</td>
-                      <td>{{ beneficiary.acc_lastname }}</td>
-                      <td>{{ beneficiary.acc_email }}</td>
-                      <td>{{ beneficiary.totalHelpReceived }}</td>
-                      <td>{{ beneficiary.donations?.join(', ') }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-  
-              <!-- Beneficiary Statistics -->
-              <div class="mt-3">
-                <h5>Statistics</h5>
-                <p>Total Beneficiaries: {{ filteredBeneficiaries.length }}</p>
-                <p>Total Help Given: {{ totalHelpReceivedAmount }}</p>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="card-body">
+      <!-- Search -->
+      <div class="mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by name"
+          [(ngModel)]="donorSearchTerm"
+          (ngModelChange)="filterDonors()"
+        />
+      </div>
+      <!-- Table -->
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Phone Number</th>
+              <th>Total Donations</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let donor of filteredDonors">
+              <td>{{ donor.id }}</td>
+              <td>{{ donor.acc_firstname }}</td>
+              <td>{{ donor.acc_lastname }}</td>
+              <td>{{ donor.acc_email }}</td>
+              <td>{{ donor.acc_pnumber }}</td>
+              <td>{{ donor.totalDonations || 0 }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Summary -->
+      <div class="mt-3">
+        <p>Total Donors: {{ filteredDonors.length }}</p>
+        <p>Total Donations: {{ totalDonations }}</p>
       </div>
     </div>
   </div>
-  
+
+  <!-- Beneficiaries Section -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3 bg-dark d-flex justify-content-between align-items-center">
+      <h6 class="m-0 font-weight-bold text-light">Beneficiaries</h6>
+      <button class="btn btn-light" (click)="downloadCSV(filteredBeneficiaries, 'Beneficiaries')">Download CSV</button>
+    </div>
+    <div class="card-body">
+      <!-- Search -->
+      <div class="mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search by name"
+          [(ngModel)]="beneficiarySearchTerm"
+          (ngModelChange)="filterBeneficiaries()"
+        />
+      </div>
+      <!-- Table -->
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Phone Number</th>
+              <th>Total Help Received</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let beneficiary of filteredBeneficiaries">
+              <td>{{ beneficiary.id }}</td>
+              <td>{{ beneficiary.acc_firstname }}</td>
+              <td>{{ beneficiary.acc_lastname }}</td>
+              <td>{{ beneficiary.acc_email }}</td>
+              <td>{{ beneficiary.acc_pnumber }}</td>
+              <td>{{ beneficiary.totalHelpReceived || 0 }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Summary -->
+      <div class="mt-3">
+        <p>Total Beneficiaries: {{ filteredBeneficiaries.length }}</p>
+        <p>Total Help Received: {{ totalHelpReceived }}</p>
+      </div>
+    </div>
+  </div>
+</div>
