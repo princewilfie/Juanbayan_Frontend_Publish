@@ -49,7 +49,17 @@
                                           <li><a routerLink="/campaign">Latest Causes</a></li>
                                           <li><a routerLink="/event-list">Volunteer</a></li>
                                         <li><a routerLink="/contact">Contact</a></li>
-                                        <li><a routerLink="/profile"><span>{{ account?.acc_firstname || 'User' }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                                        <li><a routerLink="/help">Help?</a></li>
+                                        <li>
+                                            <a routerLink="/profile">
+                                                <img class="img-profile rounded-circle"
+                                                [src]=" 'http://localhost:4000/assets/' + account.acc_image"
+                                                alt="Profile Picture"
+                                                style="width: 30px; height: 30px; border-radius: 50%; margin-right: 5px;">
+                                                <i class="bi bi-chevron-down toggle-dropdown">
+                                                </i>
+                                                <span>{{ account?.acc_firstname || 'User' }}</span>
+                                            </a>
                                             <ul class="submenu">
                                               <li><a routerLink="/profile">Profile</a></li>
                                               <li *ngIf="account?.acc_type === 'Beneficiary'">
@@ -64,10 +74,7 @@
                                       </ul>
                                   </nav>
                               </div>
-                              <!-- Header-btn -->
-                              <div class="header-right-btn d-none d-lg-block ml-20">
-                                  <a routerLink="/campaign" class="btn header-btn">Donate</a>
-                              </div>
+                              
                           </div>
                       </div> 
                       <!-- Mobile Menu -->

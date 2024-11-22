@@ -49,7 +49,7 @@
           <p class="text-muted">
             Raised: {{ campaign?.Campaign_CurrentRaised | currency: 'PHP':'symbol':'1.2-2' }} of {{ campaign?.Campaign_TargetFund | currency: 'PHP':'symbol':'1.2-2' }}
           </p>
-          <button class="btn btn-donate w-100" (click)="openTermsModal()">Donate Now</button>
+          <button class="btn" (click)="openTermsModal()">Donate Now</button>
           
           <!-- Like/Reaction Button -->
           <div class="like-section">
@@ -117,7 +117,6 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="donateModalLabel">{{ campaign?.Campaign_Name }}</h5>
-        <button type="button" class="btn-close" aria-label="Close" (click)="closeDonateModal()"></button>
       </div>
       <div class="modal-body">
         <form [formGroup]="donationForm">
@@ -134,7 +133,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closeDonateModal()">Close</button>
-        <button type="button" class="btn btn-donate" (click)="confirmDonation()">Confirm Donation</button>
+        <button type="button" class="btn btn-primary" (click)="confirmDonation()">Confirm Donation</button>
       </div>
     </div>
   </div>
@@ -147,7 +146,6 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="termsModalLabel">Terms and Conditions</h5>
-        <button type="button" class="btn-close" aria-label="Close" (click)="closeTermsModal()"></button>
       </div>
       <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
         <p><strong>By creating a event on the JUANBAYAN platform, users agree to comply with the following terms:</strong></p>
@@ -235,7 +233,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closeTermsModal()">Cancel</button>
-        <button type="button" class="btn btn-primary" (click)="acceptTerms();">I Agree</button>
+        <button type="button" class="btn btn-primary" (click)="acceptTerms(); $event.stopPropagation()">I Agree</button>
       </div>
     </div>
   </div>

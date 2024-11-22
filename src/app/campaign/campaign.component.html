@@ -1,391 +1,355 @@
-<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JuanBayan - Campaigns</title>
-    
-<style>
-        /* Welcome Banner */
-        .welcome-banner {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
-                            url('https://images.pexels.com/photos/17257618/pexels-photo-17257618/free-photo-of-silhouettes-of-people-raising-arms-at-golden-hour.jpeg');
-            background-size: cover;
-            background-position: center bottom;
-            color: #ffffff;
-            padding: 180px 0;
-            text-align: center;
-        }
-
-
-        /* Fade-in Animation for Text */
-        .welcome-banner h1 {
-            opacity: 0; /* Start with text invisible */
-            animation: fadeInText 1s ease-out forwards; /* Apply fade-in animation */
-        }
-
-        .welcome-banner p {
-            opacity: 0; /* Start with text invisible */
-            animation: fadeInText 1s ease-out forwards; /* Apply fade-in animation */
-            animation-delay: 2s; /* Delay the fade-in by 2 seconds */
-        }
-
-        /* Fade-in Keyframe */
-        @keyframes fadeInText {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
-
-        /* Smooth font resizing for h1 when minimized */
-        .welcome-banner h1 {
-            font-size: 3rem;
-            transition: font-size 0.3s ease;
-        }
-
-        .welcome-banner.shrink h1 {
-            font-size: 1.8rem; /* Smaller font size when minimized */
-        }
-
-        .welcome-banner p {
-            font-size: 1.2rem;
-            position: relative;
-            z-index: 1; /* Ensures text is above the background overlay */
-        }
-
-        /* About Section */
-        .about-section {
-            background: #fff; /* White background */
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            text-align: left; /* Align text to the left */
-            margin-bottom: 30px;
-        }
-
-        /* Animation for the text in About Section */
-        .about-section h2, .about-section p {
-            opacity: 0; /* Start with text hidden */
-            animation: popUpText 3s ease-out forwards; /* Apply pop-up animation */
-        }
-
-        /* Animation for text pop-up */
-        @keyframes popUpText {
-            0% {
-                transform: translateY(30px); /* Start from below */
-                opacity: 0; /* Fully transparent */
-            }
-            100% {
-                transform: translateY(0); /* End at normal position */
-                opacity: 1; /* Fully visible */
-            }
-        }
-
-        .about-section h2 {
-            font-size: 2rem;
-            color: #031e2c ; /* Green color */
-            margin-bottom: 10px;
-        }
-
-        .about-section p {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-
-        /* Campaign Card */
-        .campaign-card {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 15px;
-    text-align: left;
-    transition: transform 0.3s ease;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    color: #333;
-    position: relative;
-}
-
-.campaign-card:hover {
-    transform: translateY(-5px);
-}
-
-.campaign-card img {
-    border-radius: 10px;
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-}
-
-.campaign-donations {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    background-color: rgba(0, 0, 0, 0.7);
-    color: #fff;
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 0.8rem;
-}
-
-.card-body {
-    padding: 15px;
-}
-
-.card-title {
-    font-size: 1rem;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.card-text {
-    font-size: 0.9rem;
-    color: #666;
-    margin-bottom: 10px;
-}
-
-.card-progress {
-    margin: 10px 0;
-    height: 6px;
-    border-radius: 3px;
-    background-color: #e0e0e0;
-    overflow: hidden;
-}
-
-.card-progress-bar {
-    width: 70%; /* Adjust dynamically based on progress */
-    height: 100%;
-    background-color: #2e42b6;
-}
-
-.raised-amount {
-    font-weight: bold;
-    font-size: 0.9rem;
-    color: #333;
-}
-
-.btn-campaign {
-    background-color: #4caf50;
-    border-radius: 20px;
-    padding: 10px 20px;
-    font-size: 0.9rem;
-    color: #fff;
-    border: none;
-    transition: background-color 0.3s;
-}
-
-.btn-campaign:hover {
-    background-color: #45a049;
-}
-    
-        /* Testimonials Section */
-        .testimonials-section {
-            background-color: #f9f9f9; /* Light grey background */
-            padding: 40px 0;
-            text-align: center;
-            border-top:  1px solid #d3d0d0; /* Top border */
-            border-bottom: 1% solid #272626; /* Bottom border */
-        }
-        .testimonials-section h2 {
-            color: #80C4E9 ;
-            margin-bottom: 20px;
-        }
-        .testimonial-item img {
-            border-radius: 50%;
-            margin-bottom: 10px;
-        }
-    
-        /* Statistics Section */
-        .stats-section {
-            padding: 40px 0;
-            text-align: center;
-            border-top: 1px solid #ddd; /* Top border */
-            border-bottom: 1px solid #ddd; /* Bottom border */
-        }
-        .stats-section h3 {
-            color: #80C4E9 ;
-            font-size: 2rem;
-        }
-        .stats-section p {
-            color: #666;
-        }
-        /* Learn More Button Animation */
-        .btn-success {
-            background-color: #80C4E9 ; /* Default green */
-            border-radius: 20px;
-            padding: 10px 20px;
-            font-size: 1rem;
-            color: #fff;
-            border: none;
-            transition: all 0.3s ease-in-out; /* Transition for smooth effect */
-        }
-
-        .btn-success:hover {
-            background-color: #218838; /* Darker green on hover */
-            transform: scale(1.1); /* Slightly increase size */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Add shadow on hover */
-        }
-        /* Support Button Animation */
-        .btn-campaign {
-            background-color: #4caf50; /* Green */
-            border-radius: 20px;
-            padding: 10px 20px;
-            font-size: 0.9rem;
-            color: #fff;
-            border: none;
-            transition: all 0.3s ease-in-out; /* Transition for smooth effect */
-        }
-
-        .btn-campaign:hover {
-            background-color: #45a049; /* Darker green on hover */
-            transform: scale(1.1); /* Slightly increase size */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Add shadow on hover */
-        }   
-
-    </style>
-
 <main>
-  <div class="content">
-    <!-- Welcome Banner -->
-    <div class="welcome-banner">
-        <h1 style="font-size: 70px;" class="text-light">JuanBayan  Campaigns</h1>
-        <p style="font-size: 25px;" class="text-light">Join us in making a positive impact through our ongoing campaigns.</p>
+    <!--? Hero Start -->
+    <div class="slider-area2">
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+            <h1 style="font-size: 70px;" class="text-light">JuanBayan Campaigns</h1>
+            <p style="font-size: 25px;" class="text-light">Join us in making a positive impact through our ongoing campaigns.</p>
+        </div>
+        <br>
+        <!-- About Section -->
     </div>
-    <br>
-    <!-- About Section -->
+    <!-- Hero End -->
     <section class="about-section container">
         <h2>About JuanBayan</h2>
         <p>JuanBayan is dedicated to making a difference in the lives of disadvantaged individuals in Cebu City. Through our campaigns, we aim to provide resources and support to those who need it most.</p>
         <button class="btn">Learn More</button>
     </section>
-
-    <!-- Campaigns Section -->
-    <section class="container my-4">
-        <h2>Our Campaigns</h2>
-        <div class="row">
-            <!-- Campaign Cards -->
-            <div class="col-md-4 mb-4" *ngFor="let campaign of campaigns">
-                <div class="card campaign-card" routerLink="/campaign-details/{{ campaign.Campaign_ID }}">
-                    <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" alt="{{ campaign.Campaign_Name }} Image" class="card-img-top">
-                    <div class="campaign-donations">{{ campaign.Donations_Count }} donations</div>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ campaign.Campaign_Name }}</h5>
-                        <p class="card-text">{{ campaign.Campaign_Description }}</p>
-                        <div class="card-progress">
-                            <div class="card-progress-bar" [style.width.%]="campaign.Progress_Percentage"></div>
-                        </div>
-                        <p class="raised-amount">{{ campaign.Raised_Amount | currency }} raised</p>
-                        <button class="btn text-dark">Support</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!--? Testimonial Start -->
-    <div class="testimonial-area testimonial-padding">
-        <div class="container">
-            <!-- Testimonial contents -->
-            <div class="row d-flex justify-content-center">
-                <div class="col-xl-8 col-lg-8 col-md-10">
-                    <div class="h1-testimonial-active dot-style">
-                        <!-- Single Testimonial -->
-                        <h2>What People Say About Us</h2>
-                        <div class="single-testimonial text-center">
-                            <div class="testimonial-caption ">
-                                <div class="slider">
-                                    <div class="slider__inner" [style.transform]="'translateX(' + (-currentIndex * 100) + '%)'">
-                                        <div class="slider__contents" *ngFor="let testimony of testimonies; let i = index">
-                                            <div class="testimonial-item d-flex flex-column align-items-center">
-                                                <img [src]="getImagePath('assets/' + testimony.acc_image)" 
-                                                     [alt]="testimony.acc_firstname + ' ' + testimony.acc_lastname" 
-                                                     class="testimonial-image" 
-                                                     style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
-                                                <h5 class="slider__caption">{{ testimony.acc_firstname }} {{ testimony.acc_lastname }}</h5>
-                                                <p class="slider__txt">"{{ testimony.Testimony }}"</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button class="slider__btn prev" (click)="prevSlide()">&#10094;</button>
-                                    <button class="slider__btn next" (click)="nextSlide()">&#10095;</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Testimonial End -->
-
-
-
-    <!-- Statistics Section -->
-    <section class="stats-section py-5">
+    <!--? Blog Area Start-->
+    <section class="blog_area section-padding">
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
-                    <h3>200k</h3>
-                    <p>Received Donations From Our People</p>
-                </div>
-                <div class="col-md-3">
-                    <h3>99K</h3>
-                    <p>Projects Done With The Help Of Donors</p>
-                </div>
-                <div class="col-md-3">
-                    <h3>200k</h3>
-                    <p>People We Helped in 2020</p>
-                </div>
-                <div class="col-md-3">
-                    <h3>10.7K</h3>
-                    <p>Volunteers Solving Many Causes</p>
+              <div class="col-lg-8 mb-5 mb-lg-0">
+                  <div class="blog_left_sidebar">   
+                      <article class="blog_item" *ngFor="let campaign of filteredCampaigns || searchCampaigns" routerLink="/campaign-details/{{ campaign.Campaign_ID }}">
+                        <div class="blog_item_img">
+                          <img
+                            class="card-img rounded-0"
+                            style="height: 300px; width: 100%; object-fit: cover;"
+                            [src]="getImagePath('assets/' + campaign.Campaign_Image)"
+                            alt="{{ campaign.Campaign_Name }} Image" 
+                            (error)="this.src='assets/jb-symbol-logo.png'"
+                          />
+                        </div>
+                        <div class="blog_details">
+                          <a class="d-inline-block" routerLink="/campaign-details/{{ campaign.Campaign_ID }}">
+                            <h2 class="blog-head" style="color: #2d2d2d;">{{ campaign.Campaign_Name }}</h2>
+                          </a>
+                          <p>{{ campaign.Campaign_Description }}</p>
+                          <div class="card-progress">
+                            <div class="card-progress-bar" [style.width.%]="campaign.Progress_Percentage"></div>
+                          </div>
+                          <p class="raised-amount">{{ campaign.Raised_Amount | currency }} raised</p>
+                        </div>
+                      </article>
+                  </div>
+              </div>
+  
+                <!-- Message if no events are available -->
+                <ng-template #noEvents>
+                  <div class="blog_item">No active events available at this time.</div>
+                </ng-template>
+                
+
+                <div class="col-lg-4">
+                    <div class="blog_right_sidebar">
+                        <!-- Search Sidebar -->
+                        <aside class="single_sidebar_widget search_widget">
+                            <form (ngSubmit)="searchCampaigns()">
+                                <div class="form-group">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" placeholder="Search Keyword"
+                                            [(ngModel)]="searchQuery"
+                                            name="searchQuery" 
+                                            onfocus="this.placeholder = ''"
+                                            onblur="this.placeholder = 'Search Keyword'">
+                                        <div class="input-group-append">
+                                            <button class="btns" type="submit"><i class="ti-search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+                                    type="submit">Search</button>
+                            </form>
+                        </aside>
+
+                        <aside class="single_sidebar_widget post_category_widget">
+                            <h4 class="widget_title" style="color: #2d2d2d;">Category</h4>
+                            <ul class="list cat-list">
+                              <li *ngFor="let category of categories" (click)="filterCampaignsByCategory(category.Category_ID)">
+                                <a href="javascript:void(0);" class="d-flex">
+                                  <p>{{ category.Category_Name }}</p>
+                                </a>
+                              </li>
+                            </ul>
+                        </aside>  
+                        <aside class="single_sidebar_widget popular_post_widget" >
+                            <h3 class="widget_title" style="color: #2d2d2d;">Join as Volunteer</h3>
+                            <div *ngIf="activeApprovedEvents.length > 0; else noEvents">
+                                <div class="media post_item" *ngFor="let eventItem of activeApprovedEvents" (click)="viewEventDetails(eventItem.Event_ID)">
+                                    <img
+                                        class="card-img rounded-0"
+                                        style="height: 50px; width: 50px; object-fit: cover;"
+                                        [src]="getImagePath( 'assets/' + eventItem.Event_Image)"
+                                        [alt]="eventItem.Event_Name"
+                                        (error)="this.src='assets/jb-symbol-logo.png'"
+                                    />
+                                    <div class="media-body">
+                                        <a routerLink="/event-details/{{ eventItem.Event_ID }}">
+                                            <h3 style="color: #2d2d2d;">{{ eventItem.Event_Name }}</h3>
+                                        </a>
+                                        <p>{{ eventItem.Event_Start_Date | date: 'd MMMM yyyy'}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-</div>
-</main>
+    <!-- Blog Area End -->
+  </main>
 
 
-<style>
-    .slider {
-        height: 400px;
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    .slider__inner {
-        display: flex;
-        transition: transform 0.4s ease-in-out;
-        width: 100%;
-        height: 100%;
-    }
-    .slider__contents {
-        flex: 0 0 100%;
+  <style>
+    /* Welcome Banner */
+    .welcome-banner {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
+                        url('https://images.pexels.com/photos/17257618/pexels-photo-17257618/free-photo-of-silhouettes-of-people-raising-arms-at-golden-hour.jpeg');
+        background-size: cover;
+        background-position: center bottom;
+        color: #ffffff;
+        padding: 180px 0;
         text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 2rem;
     }
-    .slider__btn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background-color: rgba(0, 0, 0, 0.5);
-        color: white;
+
+
+    /* Fade-in Animation for Text */
+    .welcome-banner h1 {
+        opacity: 0; /* Start with text invisible */
+        animation: fadeInText 1s ease-out forwards; /* Apply fade-in animation */
+    }
+
+    .welcome-banner p {
+        opacity: 0; /* Start with text invisible */
+        animation: fadeInText 1s ease-out forwards; /* Apply fade-in animation */
+        animation-delay: 2s; /* Delay the fade-in by 2 seconds */
+    }
+
+    /* Fade-in Keyframe */
+    @keyframes fadeInText {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    /* Smooth font resizing for h1 when minimized */
+    .welcome-banner h1 {
+        font-size: 3rem;
+        transition: font-size 0.3s ease;
+    }
+
+    .welcome-banner.shrink h1 {
+        font-size: 1.8rem; /* Smaller font size when minimized */
+    }
+
+    .welcome-banner p {
+        font-size: 1.2rem;
+        position: relative;
+        z-index: 1; /* Ensures text is above the background overlay */
+    }
+
+    /* About Section */
+    .about-section {
+        background: #fff; /* White background */
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        text-align: left; /* Align text to the left */
+        margin-bottom: 30px;
+    }
+
+    /* Animation for the text in About Section */
+    .about-section h2, .about-section p {
+        opacity: 0; /* Start with text hidden */
+        animation: popUpText 3s ease-out forwards; /* Apply pop-up animation */
+    }
+
+    /* Animation for text pop-up */
+    @keyframes popUpText {
+        0% {
+            transform: translateY(30px); /* Start from below */
+            opacity: 0; /* Fully transparent */
+        }
+        100% {
+            transform: translateY(0); /* End at normal position */
+            opacity: 1; /* Fully visible */
+        }
+    }
+
+    .about-section h2 {
+        font-size: 2rem;
+        color: #031e2c ; /* Green color */
+        margin-bottom: 10px;
+    }
+
+    .about-section p {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 30px;
+    }
+
+
+    /* Campaign Card */
+    .campaign-card {
+background-color: #fff;
+border-radius: 10px;
+padding: 15px;
+text-align: left;
+transition: transform 0.3s ease;
+box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+color: #333;
+position: relative;
+}
+
+.campaign-card:hover {
+transform: translateY(-5px);
+}
+
+.campaign-card img {
+border-radius: 10px;
+width: 100%;
+height: 180px;
+object-fit: cover;
+}
+
+.campaign-donations {
+position: absolute;
+top: 10px;
+left: 10px;
+background-color: rgba(0, 0, 0, 0.7);
+color: #fff;
+padding: 4px 8px;
+border-radius: 12px;
+font-size: 0.8rem;
+}
+
+.card-body {
+padding: 15px;
+}
+
+.card-title {
+font-size: 1rem;
+font-weight: bold;
+margin-bottom: 5px;
+}
+
+.card-text {
+font-size: 0.9rem;
+color: #666;
+margin-bottom: 10px;
+}
+
+.card-progress {
+margin: 10px 0;
+height: 6px;
+border-radius: 3px;
+background-color: #e0e0e0;
+overflow: hidden;
+}
+
+.card-progress-bar {
+width: 70%; /* Adjust dynamically based on progress */
+height: 100%;
+background-color: #2e42b6;
+}
+
+.raised-amount {
+font-weight: bold;
+font-size: 0.9rem;
+color: #333;
+}
+
+.btn-campaign {
+background-color: #4caf50;
+border-radius: 20px;
+padding: 10px 20px;
+font-size: 0.9rem;
+color: #fff;
+border: none;
+transition: background-color 0.3s;
+}
+
+.btn-campaign:hover {
+background-color: #45a049;
+}
+
+    /* Testimonials Section */
+    .testimonials-section {
+        background-color: #f9f9f9; /* Light grey background */
+        padding: 40px 0;
+        text-align: center;
+        border-top:  1px solid #d3d0d0; /* Top border */
+        border-bottom: 1% solid #272626; /* Bottom border */
+    }
+    .testimonials-section h2 {
+        color: #80C4E9 ;
+        margin-bottom: 20px;
+    }
+    .testimonial-item img {
+        border-radius: 50%;
+        margin-bottom: 10px;
+    }
+
+    /* Statistics Section */
+    .stats-section {
+        padding: 40px 0;
+        text-align: center;
+        border-top: 1px solid #ddd; /* Top border */
+        border-bottom: 1px solid #ddd; /* Bottom border */
+    }
+    .stats-section h3 {
+        color: #80C4E9 ;
+        font-size: 2rem;
+    }
+    .stats-section p {
+        color: #666;
+    }
+    /* Learn More Button Animation */
+    .btn-success {
+        background-color: #80C4E9 ; /* Default green */
+        border-radius: 20px;
+        padding: 10px 20px;
+        font-size: 1rem;
+        color: #fff;
         border: none;
-        padding: 0.5rem 1rem;
-        cursor: pointer;
-        z-index: 10;
+        transition: all 0.3s ease-in-out; /* Transition for smooth effect */
     }
-    .slider__btn.prev {
-        left: 10px;
+
+    .btn-success:hover {
+        background-color: #218838; /* Darker green on hover */
+        transform: scale(1.1); /* Slightly increase size */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Add shadow on hover */
     }
-    .slider__btn.next {
-        right: 10px;
+    /* Support Button Animation */
+    .btn-campaign {
+        background-color: #4caf50; /* Green */
+        border-radius: 20px;
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        color: #fff;
+        border: none;
+        transition: all 0.3s ease-in-out; /* Transition for smooth effect */
     }
+
+    .btn-campaign:hover {
+        background-color: #45a049; /* Darker green on hover */
+        transform: scale(1.1); /* Slightly increase size */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Add shadow on hover */
+    }   
+
 </style>

@@ -47,8 +47,6 @@ export class CreateCampaignComponent implements OnInit {
   termsModalOpen: boolean = false;
   termsAccepted = false;
 
-
-
   // Arrays to store campaigns by their status
   approvedCampaigns: any[] = [];
   pendingCampaigns: any[] = [];
@@ -306,7 +304,7 @@ export class CreateCampaignComponent implements OnInit {
         Swal.fire({
           icon: 'error',
           title: 'Campaign Creation Failed',
-          text: `Failed to create campaign: ${error.message}`,
+          html: `You have reached the maximum of 2 campaigns this month. For more information or assistance, please contact us at <a href="mailto:juanbayan.ph@gmail.com" style="color: #007bff;">juanbayan.ph@gmail.com</a>.`,
           confirmButtonText: 'OK'
         });
       }

@@ -1,239 +1,196 @@
+<style>
+    /* Welcome Banner */
+    .welcome-banner {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
+                        url('https://images.pexels.com/photos/17257618/pexels-photo-17257618/free-photo-of-silhouettes-of-people-raising-arms-at-golden-hour.jpeg');
+        background-size: cover;
+        background-position: center bottom;
+        color: #ffffff;
+        padding: 180px 0;
+        text-align: center;
+    }
+
+
+    /* Fade-in Animation for Text */
+    .welcome-banner h1 {
+        opacity: 0; /* Start with text invisible */
+        animation: fadeInText 1s ease-out forwards; /* Apply fade-in animation */
+    }
+
+    .welcome-banner p {
+        opacity: 0; /* Start with text invisible */
+        animation: fadeInText 1s ease-out forwards; /* Apply fade-in animation */
+        animation-delay: 2s; /* Delay the fade-in by 2 seconds */
+    }
+
+    /* Fade-in Keyframe */
+    @keyframes fadeInText {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    /* Smooth font resizing for h1 when minimized */
+    .welcome-banner h1 {
+        font-size: 3rem;
+        transition: font-size 0.3s ease;
+    }
+
+    .welcome-banner.shrink h1 {
+        font-size: 1.8rem; /* Smaller font size when minimized */
+    }
+
+    .welcome-banner p {
+        font-size: 1.2rem;
+        position: relative;
+        z-index: 1; /* Ensures text is above the background overlay */
+    }
+</style>
 <main>
-  <!--? Hero Start -->
+  <!-- Hero Start -->
   <div class="slider-area2">
-      <div class="slider-height2 d-flex align-items-center">
-          <div class="container">
-              <div class="row">
-                  <div class="col-xl-12">
-                      <div class="hero-cap hero-cap2 pt-70 text-center">
-                          <h2>Events</h2>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
+    <!-- Welcome Banner -->
+    <div class="welcome-banner">
+      <h1 style="font-size: 70px;" class="text-light">JuanBayan Events</h1>
+      <p style="font-size: 25px;" class="text-light">
+        Join us in making a positive impact through our ongoing Events.
+      </p>
+    </div>
   </div>
-  <!-- Hero End -->
-  <!--? Blog Area Start-->
+
+  <br />
+
+  <!-- Blog Area Start -->
   <section class="blog_area section-padding">
-      <div class="container">
-          <div class="row">
-            <div class="col-lg-8 mb-5 mb-lg-0" *ngIf="activeApprovedEvents.length > 0; else noEvents">
-                <div class="blog_left_sidebar">
-                    <!-- Loop through events dynamically -->
-                    <article class="blog_item" *ngFor="let eventItem of activeApprovedEvents" (click)="viewEventDetails(eventItem.Event_ID)">
-                      <div class="blog_item_img">
-                        <img
-                          class="card-img rounded-0"
-                          style="height: 300px; width: 100%; object-fit: cover;"
-                          [src]="getImagePath(eventItem.Event_Image)"
-                          [alt]="eventItem.Event_Name"
-                          (error)="this.src='assets/jb-symbol-logo.png'"
-                        />
-                        <a href="#" class="blog_item_date">
-                          <h3>{{ eventItem.Event_Start_Date | date: 'd' }}</h3>
-                          <p>{{ eventItem.Event_Start_Date | date: 'MMMM' }}</p>
-                        </a>
-                      </div>
-                      <div class="blog_details">
-                        <a class="d-inline-block" (click)="viewEventDetails(eventItem.Event_ID)">
-                          <h2 class="blog-head" style="color: #2d2d2d;">{{ eventItem.Event_Name }}</h2>
-                        </a>
-                        <p>{{ eventItem.Event_Description }}</p>
-                        <ul class="blog-info-link">
-                          <li><a href="#"><i class="fa fa-comments"></i> 03 Comments</a></li>
-                          <li><a href="#"><i class="fa fa-map-marker-alt"></i>{{ eventItem.Event_Location }}</a></li>
-                        </ul>
-                      </div>
-                    </article>
-                </div>
-            </div>
-
-              <!-- Message if no events are available -->
-              <ng-template #noEvents>
-                <div class="blog_item">No active, approved events available at this time.</div>
-              </ng-template>
-              
-              
-
-              <div class="col-lg-4">
-                  <div class="blog_right_sidebar">
-                      <aside class="single_sidebar_widget search_widget">
-                          <form action="#">
-                              <div class="form-group">
-                                  <div class="input-group mb-3">
-                                      <input type="text" class="form-control" placeholder='Search Keyword'
-                                          onfocus="this.placeholder = ''"
-                                          onblur="this.placeholder = 'Search Keyword'">
-                                      <div class="input-group-append">
-                                          <button class="btns" type="button"><i class="ti-search"></i></button>
-                                      </div>
-                                  </div>
-                              </div>
-                              <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                                  type="submit">Search</button>
-                          </form>
-                      </aside>
-                      <aside class="single_sidebar_widget post_category_widget">
-                          <h4 class="widget_title" style="color: #2d2d2d;">Category</h4>
-                          <ul class="list cat-list">
-                              <li>
-                                  <a href="#" class="d-flex">
-                                      <p>Resaurant food</p>
-                                      <p>(37)</p>
-                                  </a>
-                              </li>
-                              <li>
-                                  <a href="#" class="d-flex">
-                                      <p>Travel news</p>
-                                      <p>(10)</p>
-                                  </a>
-                              </li>
-                              <li>
-                                  <a href="#" class="d-flex">
-                                      <p>Modern technology</p>
-                                      <p>(03)</p>
-                                  </a>
-                              </li>
-                              <li>
-                                  <a href="#" class="d-flex">
-                                      <p>Product</p>
-                                      <p>(11)</p>
-                                  </a>
-                              </li>
-                              <li>
-                                  <a href="#" class="d-flex">
-                                      <p>Inspiration</p>
-                                      <p>21</p>
-                                  </a>
-                              </li>
-                              <li>
-                                  <a href="#" class="d-flex">
-                                      <p>Health Care (21)</p>
-                                      <p>09</p>
-                                  </a>
-                              </li>
-                          </ul>
-                      </aside>
-                      <aside class="single_sidebar_widget popular_post_widget">
-                          <h3 class="widget_title" style="color: #2d2d2d;">Recent Post</h3>
-                          <div class="media post_item">
-                              <img src="assets/img/post/post_1.png" alt="post">
-                              <div class="media-body">
-                                  <a href="blog_details.html">
-                                      <h3 style="color: #2d2d2d;">From life was you fish...</h3>
-                                  </a>
-                                  <p>January 12, 2019</p>
-                              </div>
-                          </div>
-                          <div class="media post_item">
-                              <img src="assets/img/post/post_2.png" alt="post">
-                              <div class="media-body">
-                                  <a href="blog_details.html">
-                                      <h3 style="color: #2d2d2d;">The Amazing Hubble</h3>
-                                  </a>
-                                  <p>02 Hours ago</p>
-                              </div>
-                          </div>
-                          <div class="media post_item">
-                              <img src="assets/img/post/post_3.png" alt="post">
-                              <div class="media-body">
-                                  <a href="blog_details.html">
-                                      <h3 style="color: #2d2d2d;">Astronomy Or Astrology</h3>
-                                  </a>
-                                  <p>03 Hours ago</p>
-                              </div>
-                          </div>
-                          <div class="media post_item">
-                              <img src="assets/img/post/post_4.png" alt="post">
-                              <div class="media-body">
-                                  <a href="blog_details.html">
-                                      <h3 style="color: #2d2d2d;">Asteroids telescope</h3>
-                                  </a>
-                                  <p>01 Hours ago</p>
-                              </div>
-                          </div>
-                      </aside>
-                      <aside class="single_sidebar_widget tag_cloud_widget">
-                          <h4 class="widget_title" style="color: #2d2d2d;">Tag Clouds</h4>
-                          <ul class="list">
-                              <li>
-                                  <a href="#">project</a>
-                              </li>
-                              <li>
-                                  <a href="#">love</a>
-                              </li>
-                              <li>
-                                  <a href="#">technology</a>
-                              </li>
-                              <li>
-                                  <a href="#">travel</a>
-                              </li>
-                              <li>
-                                  <a href="#">restaurant</a>
-                              </li>
-                              <li>
-                                  <a href="#">life style</a>
-                              </li>
-                              <li>
-                                  <a href="#">design</a>
-                              </li>
-                              <li>
-                                  <a href="#">illustration</a>
-                              </li>
-                          </ul>
-                      </aside>
-
-                      <aside class="single_sidebar_widget instagram_feeds">
-                          <h4 class="widget_title" style="color: #2d2d2d;">Instagram Feeds</h4>
-                          <ul class="instagram_row flex-wrap">
-                              <li>
-                                  <a href="#">
-                                      <img class="img-fluid" src="assets/img/post/post_5.png" alt="">
-                                  </a>
-                              </li>
-                              <li>
-                                  <a href="#">
-                                      <img class="img-fluid" src="assets/img/post/post_6.png" alt="">
-                                  </a>
-                              </li>
-                              <li>
-                                  <a href="#">
-                                      <img class="img-fluid" src="assets/img/post/post_7.png" alt="">
-                                  </a>
-                              </li>
-                              <li>
-                                  <a href="#">
-                                      <img class="img-fluid" src="assets/img/post/post_8.png" alt="">
-                                  </a>
-                              </li>
-                              <li>
-                                  <a href="#">
-                                      <img class="img-fluid" src="assets/img/post/post_9.png" alt="">
-                                  </a>
-                              </li>
-                              <li>
-                                  <a href="#">
-                                      <img class="img-fluid" src="assets/img/post/post_10.png" alt="">
-                                  </a>
-                              </li>
-                          </ul>
-                      </aside>
-                      <aside class="single_sidebar_widget newsletter_widget">
-                          <h4 class="widget_title" style="color: #2d2d2d;">Newsletter</h4>
-                          <form action="#">
-                              <div class="form-group">
-                                  <input type="email" class="form-control" onfocus="this.placeholder = ''"
-                                      onblur="this.placeholder = 'Enter email'" placeholder='Enter email' required>
-                              </div>
-                              <button class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                                  type="submit">Subscribe</button>
-                          </form>
-                      </aside>
-                  </div>
+    <div class="container">
+      <div class="row">
+        <!-- Left Content -->
+        <div
+          class="col-lg-8 mb-5 mb-lg-0"
+          *ngIf="activeApprovedEvents.length > 0; else noEvents">
+          <div class="blog_left_sidebar">
+            <!-- Loop through events dynamically -->
+            <article
+              class="blog_item"
+              *ngFor="let eventItem of filteredEvents"
+              (click)="viewEventDetails(eventItem.Event_ID)"
+            >
+              <div class="blog_item_img">
+                <img
+                  class="card-img rounded-0"
+                  style="height: 300px; width: 100%; object-fit: cover;"
+                  [src]="getImagePath(eventItem.Event_Image)"
+                  [alt]="eventItem.Event_Name"
+                  (error)="this.src='assets/jb-symbol-logo.png'"
+                />
+                <a href="#" class="blog_item_date">
+                  <h3>{{ eventItem.Event_Start_Date | date: 'd' }}</h3>
+                  <p>{{ eventItem.Event_Start_Date | date: 'MMMM' }}</p>
+                </a>
               </div>
+              <div class="blog_details">
+                <a
+                  class="d-inline-block"
+                  (click)="viewEventDetails(eventItem.Event_ID)"
+                >
+                  <h2 class="blog-head" style="color: #2d2d2d;">
+                    {{ eventItem.Event_Name }}
+                  </h2>
+                </a>
+                <p>{{ eventItem.Event_Description }}</p>
+                <ul class="blog-info-link">
+                  <li>
+                    <a href="#"><i class="fa fa-comments"></i> 03 Comments</a>
+                  </li>
+                  <li>
+                    <a href="#"><i class="fa fa-map-marker-alt"></i
+                      >{{ eventItem.Event_Location }}</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </article>
           </div>
+        </div>
+
+        <!-- No Events Message -->
+        <ng-template #noEvents>
+          <div class="blog_item">
+            No active, approved events available at this time.
+          </div>
+        </ng-template>
+
+        <!-- Right Sidebar -->
+        <div class="col-lg-4">
+          <div class="blog_right_sidebar">
+            <!-- Search Sidebar -->
+            <aside class="single_sidebar_widget search_widget">
+              <form (ngSubmit)="searchEvents()">
+                <div class="form-group">
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Search Keyword"
+                      [(ngModel)]="searchQuery"
+                      name="searchQuery"
+                      onfocus="this.placeholder = ''"
+                      onblur="this.placeholder = 'Search Keyword'"
+                    />
+                    <div class="input-group-append">
+                      <button class="btns" type="submit">
+                        <i class="ti-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  class="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
+                  type="submit"
+                >
+                  Search
+                </button>
+              </form>
+            </aside>
+
+            <ng-template #noCampaigns>
+              <div class="blog_item">No active campaigns available at this time.</div>
+            </ng-template>
+
+            <!-- Join as Volunteer Sidebar -->
+            <aside class="single_sidebar_widget popular_post_widget">
+              <h3 class="widget_title" style="color: #2d2d2d;">
+                Latest Causes
+              </h3>
+              <div *ngIf="activeApprovedCampaigns.length > 0; else noCampaigns">
+                <div
+                  class="media post_item"
+                  *ngFor="let campaignItem of activeApprovedCampaigns"
+                  (click)="viewCampaignDetails(campaignItem.Campaign_ID)"
+                >
+                  <img
+                    class="card-img rounded-0"
+                    style="height: 50px; width: 50px; object-fit: cover;"
+                    [src]="getImagePath(campaignItem.Campaign_Image)"
+                    [alt]="campaignItem.Campaign_Name"
+                    (error)="this.src='assets/jb-symbol-logo.png'"
+                  />
+                  <div class="media-body">
+                    <a routerLink="/campaign-details/{{ campaignItem.Campaign_ID }}">
+                      <h3 style="color: #2d2d2d;">{{ campaignItem.Campaign_Name }}</h3>
+                    </a>
+                    <p>{{ campaignItem.Campaign_Start | date: 'd MMMM yyyy' }}</p>
+                  </div>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
       </div>
+    </div>
   </section>
   <!-- Blog Area End -->
 </main>

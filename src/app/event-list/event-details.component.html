@@ -1,10 +1,10 @@
 <!--? Hero Start -->
 <div class="slider-area2">
-  <div class="slider-height2 d-flex align-items-center">
+  <div class="slider-height2 d-flex align-items-center" style="height: 200px; width: 100%;">
     <div class="container">
       <div class="row">
         <div class="col-xl-12">
-          <div class="hero-cap hero-cap2 pt-20 text-center">
+          <div class="hero-cap hero-cap2 text-center">
             <h2>Event Details</h2>
           </div>
         </div>
@@ -12,15 +12,15 @@
     </div>
   </div>
 </div>
-
 <!--? Blog Area Start -->
-<section class="blog_area single-post-area section-padding">
+<section class="blog_area single-post-area section-padding mt-0 shadow-lg">
   <div class="container">
     <div class="row">
       <div class="col-lg-12 posts-list">
         <div class="single-post">
           <div class="feature-img">
-            <img [src]="event.Event_Image ? getImagePath(event.Event_Image) : 'assets/default-image.png'" alt="{{ event.Event_Name }}" />
+            <img [src]="event.Event_Image ? getImagePath(event.Event_Image) : 'assets/default-image.png'"
+            alt="{{ event.Event_Name }}" style="height: 500px ; width: 100%; object-fit: cover;"/>
           </div>
           <div class="blog_details">
             <h1 style="color: #2d2d2d;">{{ event.Event_Name }}</h1>

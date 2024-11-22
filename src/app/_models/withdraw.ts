@@ -11,4 +11,5 @@ export class Withdraw {
     acc_firstname?: string;
     acc_lastname?: string;
     acc_image?: string;
+    isWithdrawn?: boolean;
 }

@@ -313,7 +313,16 @@ p {
           <h4 class="text-danger">{{ campaign.Campaign_Category === 1 ? 'Medical' : 'Other' }}</h4>
           <h3 class="card-title">{{ campaign.Campaign_Name }}</h3>
           <p>{{ campaign.Campaign_Description }}</p>
-          <button *ngIf="!isFundRequest" class="btn btn-primary" (click)="openFundRequestModal(campaign)">Request To Collect</button>
+          <button
+          *ngIf="!campaign.withdraw || campaign.withdraw.Status !== 'Pending'"
+          class="btn btn-primary"
+          (click)="openFundRequestModal(campaign)"
+        >
+          Request To Collect
+        </button>
+        <p *ngIf="campaign.withdraw?.Status === 'Pending'" class="text-success">
+          Withdrawal Requested
+        </p>
         </div>
       </div>
     </div>
@@ -345,7 +354,7 @@ p {
           </div>
           <div class="mb-3">
             <!-- Pass the bank and account number directly to the method -->
-            <button [disabled]="loading" type="button" class="btn btn-success" (click)="submitFundRequest(selectedBank, accountNumber)">
+            <button [disabled] type="button" class="btn btn-success" (click)="submitFundRequest(selectedBank, accountNumber)">
               <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>Submit Request</button>
           </div>
         </form>

@@ -169,4 +169,13 @@ export class AccountService {
     getAccountActivities(id: string): Observable<any> {
         return this.http.get<any>(`${baseUrl}/${id}/activities`);
     }
+
+    getAllBeneficiaries(): Observable<Account[]> {
+        return this.http.get<Account[]>(`${baseUrl}/beneficiaries`);
+    }
+
+    // Get all donors
+    getAllDonors(): Observable<Account[]> {
+        return this.http.get<Account[]>(`${baseUrl}/donors`);
+    }
 }

@@ -42,7 +42,7 @@ import { BeneficiaryDashboardComponent } from './beneficiary/beneficiary-dashboa
 import { DonorDashboardComponent } from './donor/donor-dashboard.component';
 import { NotFoundComponent } from './lost-page/404.page.component';
 
-
+import { HelpComponent } from './help/help.component';
 
 @NgModule({
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -77,7 +77,8 @@ import { NotFoundComponent } from './lost-page/404.page.component';
         ContactUsComponent,
         BeneficiaryDashboardComponent,
         DonorDashboardComponent,
-        NotFoundComponent
+        NotFoundComponent,
+        HelpComponent
     ],
     providers: [
         { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AccountService] },

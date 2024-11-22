@@ -2,10 +2,33 @@
   <div id="wrapper">
     <div id="content-wrapper" class="d-flex flex-column">
       <div id="content">
-        <div class="container-fluid col-lg-12">
-          <h1 class="h3 mb-2 text-gray-800">Campaign</h1>
+        
+        <h1 class="h3 mb-2 text-gray-800">Campaign</h1>
           <p class="mb-4">This campaign is designed to streamline the review process, allowing you to approve or reject entries with ease. Use the tools below to manage and track submissions, making efficient decisions in one centralized location.</p>
+        
+        <div class="container-fluid col-lg-12">
+          <!-- Collapsable Card Example -->
+          <div class="card shadow mb-4">
+            <!-- Card Header - Accordion -->
+            <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
+                role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                <h6 class="m-0 font-weight-bold text-primary">Search</h6>
 
+            </a>
+            <!-- Card Content - Collapse -->
+            <div class="collapse show" id="collapseCardExample">
+                <div class="card-body">
+                    <!-- Page Heading -->
+                    <div class="py-3 d-flex justify-content-between align-items-center navbar-search ">
+                      <input 
+                        type="text" 
+                        class="form-control form-control-sm input-group-append" 
+                        placeholder="Search..." 
+                        [(ngModel)]="searchQuery" aria-label="Search" inputmode="fas fa-search fa-sm">
+                    </div>
+                </div>
+            </div>
+        </div>
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -17,11 +40,8 @@
                   <thead>
                     <th>Campaign Creator</th>
                     <th>Campaign Name</th>
-                    <th>Description</th>
                     <th>Target Fund</th>
                     <th>Current Raised</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
                     <th>Status</th>
                     <th>Approval Status</th>
                     <th scope="col">Proof Files</th>
@@ -29,38 +49,43 @@
                     <th scope="col">Actions</th>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let campaign of campaigns" (click)="showCampaignDetails(campaign)" style="cursor: pointer;">
-                      <td><input type="checkbox"></td>
-                      <td>{{ campaign.acc_firstname }} {{ campaign.acc_lastname }}</td>
-                      <td>{{ campaign.Campaign_Name }}</td>
-                      <td>{{ campaign.Campaign_TargetFund | currency }}</td>
-                      <td>{{ campaign.Campaign_CurrentRaised | currency }}</td>
-                      <td>{{ campaign.Campaign_Start | date:'MM/dd/yyyy' }}</td>
-                      <td>{{ campaign.Campaign_End | date:'MM/dd/yyyy' }}</td>
-                      <td>{{ getCampaignStatus(campaign.Campaign_Status) }}</td>
-                      <td>{{ campaign.Campaign_ApprovalStatus }}</td>
-                      <td>
-                        <!-- View Proofs Button -->
-                        <button class="btn btn-primary btn-sm mt-2" (click)="viewAllImages(campaign); $event.stopPropagation()">View Proofs</button>
-                      </td>
-                      <td>
-                        <!-- View Notes Button -->
-                        <button class="btn btn-primary btn-sm mt-2" (click)="openNotesModal(campaign.Campaign_ID); $event.stopPropagation()">View Notes</button>
-                      </td>
-                      <!-- Campaign Actions (Approve/Reject Buttons) -->
-                      <td>
-                        <div class="actions">
-                          <!-- Approve Button -->
-                          <button [disabled]="loading" class="btn btn-success btn-sm" (click)="approveCampaign(campaign.Campaign_ID); $event.stopPropagation()">
-                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span> Approve
-                          </button>
-                          <!-- Reject Button -->
-                          <button [disabled]="loading" class="btn btn-danger btn-sm" (click)="openRejectionModal(campaign.Campaign_ID); $event.stopPropagation()">
-                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span> Reject
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
+                    <ng-container *ngIf="filteredCampaigns.length > 0; else noResults">
+                      <tr *ngFor="let campaign of filteredCampaigns" (click)="showCampaignDetails(campaign)" style="cursor: pointer;">
+                        <td>{{ campaign.acc_firstname }} {{ campaign.acc_lastname }}</td>
+                        <td>{{ campaign.Campaign_Name }}</td>
+                        <td>{{ campaign.Campaign_TargetFund | currency }}</td>
+                        <td>{{ campaign.Campaign_CurrentRaised | currency }}</td>
+                        <td>{{ getCampaignStatus(campaign.Campaign_Status) }}</td>
+                        <td>{{ campaign.Campaign_ApprovalStatus }}</td>
+                        <td>
+                          <!-- View Proofs Button -->
+                          <button class="btn btn-primary btn-sm mt-2" (click)="viewAllImages(campaign); $event.stopPropagation()">View Proofs</button>
+                        </td>
+                        <td>
+                          <!-- View Notes Button -->
+                          <button class="btn btn-primary btn-sm mt-2" (click)="openNotesModal(campaign.Campaign_ID); $event.stopPropagation()">View Notes</button>
+                        </td>
+                        <!-- Campaign Actions (Approve/Reject Buttons) -->
+                        <td>
+                          <div class="actions">
+                            <!-- Approve Button -->
+                            <button [disabled]="loading" class="btn btn-success btn-sm" (click)="approveCampaign(campaign.Campaign_ID); $event.stopPropagation()">
+                              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span> Approve
+                            </button>
+                            <!-- Reject Button -->
+                            <button [disabled]="loading" class="btn btn-danger btn-sm" (click)="openRejectionModal(campaign.Campaign_ID); $event.stopPropagation()">
+                              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span> Reject
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </ng-container>
+                    <!-- Fallback Template for No Results -->
+                    <ng-template #noResults>
+                      <tr>
+                        <td colspan="12" class="text-center text-muted">Search not found :(</td>
+                      </tr>
+                    </ng-template>
                   </tbody>
                 </table>
               </div>
@@ -143,6 +168,7 @@
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
+  
 </div>
 
 <style>

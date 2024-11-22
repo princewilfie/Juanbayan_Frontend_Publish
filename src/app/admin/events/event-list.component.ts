@@ -14,12 +14,14 @@ export class EventListComponent implements OnInit {
   events: CommunityEvent[] = [];
   showRejectionModal: boolean = false; // Flag to control modal visibility
   loading = false;
+  searchQuery: string = '';
 
   constructor(private eventService: EventService) {}
 
   ngOnInit(): void {
     this.eventService.getAll().subscribe(
       (data: CommunityEvent[]) => {
+        console.log('Loaded events:', data); // Debugging
         this.events = data;
       },
       error => {
@@ -27,6 +29,7 @@ export class EventListComponent implements OnInit {
       }
     );
   }
+  
 
   approveEvent(id: number): void {
     this.loading = true;
@@ -53,6 +56,25 @@ export class EventListComponent implements OnInit {
       }
     );
   }
+
+  get filteredEvents(): CommunityEvent[] {
+    if (!this.searchQuery.trim()) {
+      return this.events;
+    }
+    
+    const lowerQuery = this.searchQuery.toLowerCase();
+    const filtered = this.events.filter(event =>
+      (event.Event_Name?.toLowerCase() || '').includes(lowerQuery) ||
+      (event.Event_Description?.toLowerCase() || '').includes(lowerQuery) ||
+      (event.Event_Location?.toLowerCase() || '').includes(lowerQuery) ||
+      (this.getEventStatus(event.Event_Status)?.toLowerCase() || '').includes(lowerQuery) ||
+      (event.Event_ApprovalStatus?.toLowerCase() || '').includes(lowerQuery)
+    );
+    
+    console.log('Filtered events:', filtered); // Debugging
+    return filtered;
+  }
+  
 
   rejectEventWithNote(eventId: number): void {
     if (!this.rejectionNote.trim()) {

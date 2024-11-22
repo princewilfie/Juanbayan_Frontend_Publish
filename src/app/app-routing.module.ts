@@ -21,6 +21,7 @@ import { EventDetailsComponent } from './event-list/event-details.component';
 import { ContactUsComponent } from './contact/contact.component';
 import { BeneficiaryDashboardComponent } from './beneficiary/beneficiary-dashboard.component';
 import { DonorDashboardComponent } from './donor/donor-dashboard.component';
+import { HelpComponent } from './help/help.component';
 
 const accountModule = () => import('./account/account.module').then(x => x.AccountModule);
 const adminModule = () => import('./admin/admin.module').then(x => x.AdminModule);
@@ -60,6 +61,8 @@ const routes: Routes = [
     
     { path: 'contact', component: ContactUsComponent},
     // Catch-all redirect for invalid routes
+    
+    { path: 'help', component: HelpComponent},
     
     { path: '**', redirectTo: '/landing-page', pathMatch: 'full' }
 ];

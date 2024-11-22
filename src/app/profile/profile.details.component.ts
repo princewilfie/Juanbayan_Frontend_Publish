@@ -15,6 +15,7 @@ import Swal from 'sweetalert2'; // Import SweetAlert
 })
 export class DetailsComponent implements OnInit {
   account: Account;
+  withdraw: Withdraw[] = [];
   campaigns: Campaign[] = [];
   currentSection: string = 'activities'; // Default section
   selectedImage: File | null = null;
@@ -25,7 +26,7 @@ export class DetailsComponent implements OnInit {
   selectedBank: string = '';
   accountNumber: string = '';
   banks: string[] = ['Bank of the Philippine Islands', 'GCash', 'PayPal', 'Banco De Oro', 'UnionBank', 'ChinaBank'];
-  amount: number = 0; 
+  amount: number; 
   selectedRequest: Campaign | null = null;
   events: CommunityEvent[] = [];
   joinedEvents: Participant[];
@@ -153,6 +154,16 @@ export class DetailsComponent implements OnInit {
         icon: 'error',
         title: 'Error',
         text: 'Please ensure all fields are filled out correctly.',
+        confirmButtonText: 'OK'
+      });
+      return;
+    }
+
+    if (this.amount == 0) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'No Funds',
+        text: 'No funds available for withdrawal.',
         confirmButtonText: 'OK'
       });
       return;

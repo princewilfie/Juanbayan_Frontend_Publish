@@ -17,4 +17,7 @@ export class Account {
     refreshToken?: string;
     acc_created? : Date;
     acc_type?: string;
+    donation_amount?: number;
+    campaign_currentraised?: number;
+    campaign_name?: string;
 }

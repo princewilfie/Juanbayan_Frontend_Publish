@@ -24,40 +24,6 @@
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Event Reports</h1>
                     <p class="mb-4">Event Reports where you can see the total number of events and the details.</p>
-
-                    <div class="row">
-                        <div class="col-xl-12 col-lg-5">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Accordion -->
-                                <a href="#collapseCardExample" class="d-block card-header py-3 bg-dark" data-toggle="collapse"
-                                    role="button" aria-expanded="true" aria-controls="collapseCardExample">
-                                    <h6 class="m-0 font-weight-bold text-light">Filter</h6>
-                                </a>
-                                <!-- Card Content - Collapse -->
-                                <div class="collapse show" id="collapseCardExample">
-                                    <div class="card-body ">
-                                        <form
-                                            class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                                            <div class="input-group">
-                                                <div class="row">
-                                                    <input type="number" class="form-control bg-light border-0 small ml-4" placeholder="Filter by Event ID"
-                                                    [(ngModel)]="filter.id" (input)="filterEvents()" aria-label="Id" aria-describedby="basic-addon2">
-                                                    <input type="text" class="form-control bg-light border-0 small ml-4" placeholder="Filter by Event Name"
-                                                    [(ngModel)]="filter.eventName" (input)="filterEvents()" aria-label="Name" aria-describedby="basic-addon2">
-
-                                                    <input type="date" class="form-control bg-light border-0 small ml-4" placeholder="Filter by Event Start Date"
-                                                    [(ngModel)]="filter.startDate" (input)="filterEvents()" aria-label="Start Date" aria-describedby="basic-addon2">
-
-                                                    <input type="date" class="form-control bg-light border-0 small ml-4" placeholder="Filter by Event End Date"
-                                                    [(ngModel)]="filter.endDate" (input)="filterEvents()" aria-label="End Date" aria-describedby="basic-addon2">
-                                                 </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> 
-                    </div>
                     <!-- Table Row -->
                     <div class="row">
                         <div class="col-xl-12 col-lg-5">
@@ -77,8 +43,6 @@
                                                     <th>Location</th>
                                                     <th>Start Date</th>
                                                     <th>End Date</th>
-                                                    <th>Status</th>
-                                                    <th>Approval Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -89,8 +53,6 @@
                                                     <td>{{ event.Event_Location }}</td>
                                                     <td>{{ event.Event_Start_Date | date }}</td>
                                                     <td>{{ event.Event_End_Date | date }}</td>
-                                                    <td>{{ event.Event_Status }}</td>
-                                                    <td>{{ event.Event_ApprovalStatus }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>

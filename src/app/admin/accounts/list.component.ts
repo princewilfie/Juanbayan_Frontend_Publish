@@ -7,6 +7,8 @@ import Swal from 'sweetalert2'; // Import SweetAlert
 @Component({ templateUrl: 'list.component.html' })
 export class ListComponent implements OnInit {
     accounts: Account[] = [];
+    searchQuery: string = '';
+
     currentAccount: Account = {
         id: '',
         acc_email: '',
@@ -33,6 +35,24 @@ export class ListComponent implements OnInit {
             .pipe(first())
             .subscribe(accounts => this.accounts = accounts);
     }
+
+    get filteredAccounts(): Account[] {
+        if (!this.searchQuery.trim()) {
+          return this.accounts;
+        }
+        
+        const lowerQuery = this.searchQuery.toLowerCase();
+        const filtered = this.accounts.filter(account =>
+          (account.acc_firstname?.toLowerCase() || account.acc_lastname?.toLowerCase() ||'').includes(lowerQuery) ||
+          (account.acc_email?.toLowerCase() || '').includes(lowerQuery) ||
+          (account.acc_pnumber?.toLowerCase() || '').includes(lowerQuery) ||
+          (account.acc_role?.toLowerCase() || '').includes(lowerQuery) ||
+          (account.acc_status ?.toLowerCase() || '').includes(lowerQuery) 
+        );
+        
+        console.log('Filtered campaigns:', filtered); // Debugging
+        return filtered;
+      }
 
     // Delete an account with confirmation alert
     deleteAccount(id: string) {

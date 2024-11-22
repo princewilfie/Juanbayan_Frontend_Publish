@@ -15,7 +15,7 @@ export class ReportsCampaignComponent implements OnInit, AfterViewInit {
   // Filter options
   filter = {
     id: null as number | null,
-    event: '',
+    campaignName: '',
     startDate: null as Date | null,
     endDate: null as Date | null,
   };
@@ -39,17 +39,39 @@ export class ReportsCampaignComponent implements OnInit, AfterViewInit {
       this.filteredCampaigns = campaigns;
       this.updateChart();
     });
+    console.log("Campaign data:", this.campaigns);
   }
 
+
   filterCampaigns(): void {
+    console.log('Current Filters:', this.filter); // Log current filter values
+  
+    // Parse dates if provided
+    const filterStartDate = this.filter.startDate ? new Date(this.filter.startDate) : null;
+    const filterEndDate = this.filter.endDate ? new Date(this.filter.endDate) : null;
+  
+    // Apply filtering
     this.filteredCampaigns = this.campaigns.filter(campaign => {
-      return (!this.filter.id || campaign.Campaign_ID === this.filter.id) &&
-             (!this.filter.event || campaign.Campaign_Name.includes(this.filter.event)) &&
-             (!this.filter.startDate || new Date(campaign.Campaign_Start) >= this.filter.startDate) &&
-             (!this.filter.endDate || new Date(campaign.Campaign_End) <= this.filter.endDate);
+      const matchesId = !this.filter.id || campaign.Campaign_ID === +this.filter.id;
+      const matchesName = !this.filter.campaignName || campaign.Campaign_Name.toLowerCase().includes(this.filter.campaignName.toLowerCase());
+      const matchesStartDate = !filterStartDate || new Date(campaign.Campaign_Start) >= filterStartDate;
+      const matchesEndDate = !filterEndDate || new Date(campaign.Campaign_End) <= filterEndDate;
+  
+      console.log(
+        `Checking Campaign ID ${campaign.Campaign_ID}:`,
+        { matchesId, matchesName, matchesStartDate, matchesEndDate }
+      );
+  
+      return matchesId && matchesName && matchesStartDate && matchesEndDate;
     });
-    this.updateChart();
+  
+    console.log('Filtered Campaigns:', this.filteredCampaigns); // Log filtered campaigns
+    this.updateChart(); // Update the chart with the filtered data
   }
+  
+  
+  
+  
 
   createChart(): void {
     const ctx = this.campaignsChart?.nativeElement.getContext('2d');

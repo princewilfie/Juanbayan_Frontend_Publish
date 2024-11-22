@@ -2,6 +2,7 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { AccountService, CampaignService } from '@app/_services'; // Make sure the path is correct
 import { Router } from '@angular/router';
 import { Campaign } from '@app/_models';
+import { EventService } from '../_services';
 
 @Component({
   selector: 'app-landing-page',
@@ -14,12 +15,14 @@ export class LandingPageComponent implements OnInit {
   totalGoal: number = 0;
   totalCollection: number = 0;
   progressPercentage: number = 0;
+  activeApprovedEvents: any[] = [];
 
   constructor(
     private renderer: Renderer2,
     private accountService: AccountService, // Inject the account service to check user status
     private router: Router,
-    private campaignService: CampaignService
+    private campaignService: CampaignService,
+    private eventService: EventService
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +40,18 @@ export class LandingPageComponent implements OnInit {
     if (progressBarElement) {
       this.renderer.setStyle(progressBarElement, 'width', `${this.progressPercentage}%`);
     }
+  }
+
+  loadActiveApprovedEvents() {
+    this.eventService.getApprovedActiveEvents().subscribe(
+      (data: any[]) => {
+        this.activeApprovedEvents = data;
+        console.log("Fetched events:", this.activeApprovedEvents);
+      },
+      (error) => {
+        console.error('Error fetching events:', error);
+      }
+    );
   }
 
   // Check if the user is logged in

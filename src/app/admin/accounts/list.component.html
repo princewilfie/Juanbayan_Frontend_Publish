@@ -6,6 +6,28 @@
           <h1 class="h3 mb-2 text-gray-800">Accounts</h1>
           <p class="mb-4">This account lists is designed to streamline the review process. Use the tools below to manage and track submissions, making efficient decisions in one centralized location.</p>
 
+          <!-- Collapsable Card Example -->
+          <div class="card shadow mb-4">
+              <!-- Card Header - Accordion -->
+              <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse"
+                  role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                  <h6 class="m-0 font-weight-bold text-primary">Search</h6>
+
+              </a>
+              <!-- Card Content - Collapse -->
+              <div class="collapse show" id="collapseCardExample">
+                  <div class="card-body">
+                      <!-- Page Heading -->
+                      <div class="py-3 d-flex justify-content-between align-items-center navbar-search ">
+                        <input 
+                          type="text" 
+                          class="form-control form-control-sm input-group-append" 
+                          placeholder="Search..." 
+                          [(ngModel)]="searchQuery" aria-label="Search" inputmode="fas fa-search fa-sm">
+                      </div>
+                  </div>
+              </div>
+          </div>
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -26,7 +48,7 @@
                     </tr>          
                   </thead>
                   <tbody>
-                    <tr *ngFor="let account of accounts">
+                    <tr *ngFor="let account of filteredAccounts">
                       <td><input type="checkbox"></td>
                       <td>{{ account.acc_firstname }} {{ account.acc_lastname }}</td>
                       <td>{{ account.acc_email }}</td>

@@ -130,10 +130,30 @@ export class CampaignDetailsComponent implements OnInit {
       Swal.fire({
         icon: 'warning',
         title: 'Minimum Donation Required',
-        text: 'Please enter a minimum donation of PHP 1.',
+        text: 'Please enter a minimum donation of PHP 100.',
       });
       return;
     }
+  
+    // Check if the campaign target fund has already been reached
+    if (this.campaign.Campaign_CurrentRaised >= this.campaign.Campaign_TargetFund) {
+      Swal.fire({
+        icon: 'info',
+        title: 'Target Fund Reached',
+        text: 'This campaign has already reached its target fund and no further donations are needed.',
+      });
+      return;
+    }
+
+     const totalRaisedAfterDonation = this.campaign.Campaign_CurrentRaised + donationAmount;
+  if (totalRaisedAfterDonation > this.campaign.Campaign_TargetFund) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Donation Exceeds Target Fund',
+      text: `The donation amount of ₱${donationAmount} exceeds the campaign's target fund. The maximum donation amount is ₱${this.campaign.Campaign_TargetFund - this.campaign.Campaign_CurrentRaised}.`,
+    });
+    return;
+  }
   
     Swal.fire({
       title: 'Confirm Donation',
@@ -165,17 +185,15 @@ export class CampaignDetailsComponent implements OnInit {
                 showConfirmButton: false,
               }).then(() => {
                 window.open(checkoutUrl, '_blank');  // Open GCash checkout in a new tab
-                
                 this.donationService.createDonation({
                   acc_id: Number(this.accountService.accountValue.id),
                   campaign_id: Number(this.campaign?.Campaign_ID),
                   donation_amount: Number(donationAmount),
-                })
+                });
                 // Update the campaign details after a successful donation
                 this.updateCampaignDonation(donationAmount);
               });
-
-
+  
               this.modalService.dismissAll();
             } else {
               Swal.fire({
@@ -338,5 +356,6 @@ export class CampaignDetailsComponent implements OnInit {
     this.termsAccepted = true;
     this.termsModalOpen = false;
     this.openDonationModal();
+
   }
 }

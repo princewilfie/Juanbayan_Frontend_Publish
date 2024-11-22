@@ -20,6 +20,7 @@ export class CampaignListComponent implements OnInit {
   showNotesModal = false;
   showDetailsModal = false;
   loading = false;
+  searchQuery: string = '';
 
   constructor(
     private campaignService: CampaignService
@@ -27,6 +28,24 @@ export class CampaignListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCampaigns();
+  }
+
+  get filteredCampaigns(): Campaign[] {
+    if (!this.searchQuery.trim()) {
+      return this.campaigns;
+    }
+    
+    const lowerQuery = this.searchQuery.toLowerCase();
+    const filtered = this.campaigns.filter(campaign =>
+      (campaign.acc_firstname?.toLowerCase() || campaign.acc_lastname?.toLowerCase() ||'').includes(lowerQuery) ||
+      (campaign.Campaign_Name?.toLowerCase() || '').includes(lowerQuery) ||
+      (campaign.Campaign_Description?.toLowerCase() || '').includes(lowerQuery) ||
+      (this.getCampaignStatus(campaign.Campaign_Status) ?.toLowerCase() || '').includes(lowerQuery) ||
+      (campaign.Campaign_ApprovalStatus?.toLowerCase() || '').includes(lowerQuery)
+    );
+    
+    console.log('Filtered campaigns:', filtered); // Debugging
+    return filtered;
   }
 
   loadCampaigns(): void {
@@ -177,8 +196,17 @@ confirmRejectCampaign(campaignId: number): void {
     );
   }
 
-  getCampaignStatus(status: string): string {
-    // Logic to return status label
-    return status === 'active' ? 'Active' : 'Inactive';
+  getCampaignStatus(status: number | string): string {
+    const statusMap: { [key: number]: string } = {
+      1: 'Active',
+      2: 'Inactive',
+    };
+  
+    if (typeof status === 'number') {
+      return statusMap[status] || 'Unknown';
+    }
+  
+    return status.toLowerCase() === 'active' ? 'Active' : 'Inactive';
   }
+  
 }
