@@ -25,22 +25,22 @@
                               <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
                                   <thead>
                                     <tr>
-                                      <th scope="col"></th>
                                       <th scope="col">Participant ID</th>
                                       <th scope="col">Event Name</th>
                                       <th scope="col">Name</th>
                                       <th scope="col">Email</th>
                                       <th scope="col">Registration Date</th>
+                                      <th>Attendance</th>
                                     </tr>
                                   </thead>
                                   <tbody>
                                     <tr *ngFor="let participant of participants">
-                                      <td><input type="checkbox"></td>
                                       <td>{{ participant.Participant_ID }}</td>
                                       <td>{{ participant.Event_Name }}</td>
                                       <td>{{ participant.acc_firstname }} {{ participant.acc_lastname }}</td>
                                       <td>{{ participant.acc_email }}</td>
                                       <td>{{ participant.joinedAt | date:'MM/dd/yyyy' }}</td>
+                                      <td>{{ participant.Participant_Attendance}}</td>
                                     </tr>                               
                                   </tbody>
                               </table>

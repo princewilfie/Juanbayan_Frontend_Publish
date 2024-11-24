@@ -260,16 +260,27 @@
   <div *ngIf="!participants || participants.length === 0">
     <p>No participants found for this event.</p>
   </div>
-  <ul *ngIf="participants && participants.length > 0" style="list-style: none; padding: 0;">
-    <li *ngFor="let participant of participants" style="display: flex; align-items: center; margin-bottom: 10px;">
-      <img [src]=" 'http://localhost:4000/assets/' + participant.acc_image" alt="{{ participant.acc_firstname }}" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
-      <div>
-        <strong>{{ participant.acc_firstname }} {{ participant.acc_lastname }}</strong><br>
-        <span>Phone: {{ participant.acc_pnumber }}</span><br>
-        <span>Email: {{ participant.acc_email }}</span>
-      </div>
-    </li>
-  </ul>
+  
+  <div *ngIf="participants && participants.length > 0">
+    <div class="card shadow mb-4" *ngFor="let participant of participants">
+        <div class="card-header py-3">
+            <div class="row d-flex">
+              <img [src]=" 'http://localhost:4000/assets/' + participant.acc_image" alt="{{ participant.acc_firstname }}" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+              <h6 class="m-0 font-weight-bold text-primary mt-2">{{ participant.acc_firstname }} {{ participant.acc_lastname }}</h6>
+            </div>
+        </div>
+        <div class="card-body">
+            <span>Phone: {{ participant.acc_pnumber }}</span><br>
+            <span>Email: {{ participant.acc_email }}</span><br>
+        </div>
+        <div class="card-footer">
+          <label>
+            Attendance:
+            <input type="checkbox" [(ngModel)]="participant.Participant_Attendance" (change)="toggleAttendance(participant)">
+          </label>
+        </div>
+    </div>
+  </div>
 </div>
 </div>
   

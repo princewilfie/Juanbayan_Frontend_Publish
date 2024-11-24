@@ -53,8 +53,8 @@
                       <tr *ngFor="let campaign of filteredCampaigns" (click)="showCampaignDetails(campaign)" style="cursor: pointer;">
                         <td>{{ campaign.acc_firstname }} {{ campaign.acc_lastname }}</td>
                         <td>{{ campaign.Campaign_Name }}</td>
-                        <td>{{ campaign.Campaign_TargetFund | currency }}</td>
-                        <td>{{ campaign.Campaign_CurrentRaised | currency }}</td>
+                        <td>₱{{ campaign.Campaign_TargetFund}}</td>
+                        <td>₱{{ campaign.Campaign_CurrentRaised}}</td>
                         <td>{{ getCampaignStatus(campaign.Campaign_Status) }}</td>
                         <td>{{ campaign.Campaign_ApprovalStatus }}</td>
                         <td>

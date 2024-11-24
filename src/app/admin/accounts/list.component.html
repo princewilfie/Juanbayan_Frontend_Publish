@@ -4,7 +4,7 @@
       <div id="content">
         <div class="container-fluid col-lg-12">
           <h1 class="h3 mb-2 text-gray-800">Accounts</h1>
-          <p class="mb-4">This account lists is designed to streamline the review process. Use the tools below to manage and track submissions, making efficient decisions in one centralized location.</p>
+          <p class="mb-4">This account list is designed to streamline the review process. Use the tools below to manage and track submissions, making efficient decisions in one centralized location.</p>
 
           <!-- Collapsable Card Example -->
           <div class="card shadow mb-4">
@@ -43,6 +43,7 @@
                       <th scope="col">Email</th>
                       <th scope="col">Phone Number</th>
                       <th scope="col">Role</th>
+                      <th scope="col">Type</th>
                       <th scope="col">Status</th>
                       <th scope="col">Actions</th>
                     </tr>          
@@ -54,12 +55,11 @@
                       <td>{{ account.acc_email }}</td>
                       <td>{{ account.acc_pnumber }}</td>
                       <td>{{ account.acc_role }}</td>
+                      <td>{{ account.acc_type }}</td>
                       <td><span class="text-primary">{{ account.acc_status }}</span></td>
                       <td>
                         <!-- Edit button to open the modal for editing the account -->
-                        <a routerLink="edit/{{account.id}}" class="btn btn-sm btn-primary mr-1">Edit</a> &nbsp;
-                        <!-- Delete button to remove the account -->
-                        <button class="btn btn-danger btn-sm" (click)="deleteAccount(account.id)">Delete</button>
+                        <a routerLink="edit/{{account.id}}" class="btn btn-sm btn-primary mr-1">Edit</a> &nbsp;                        
                       </td>
                     </tr>          
                   </tbody>
@@ -72,9 +72,75 @@
     </div>
   </div>
 
+  <!-- Details Modal -->
+  <div *ngIf="showDetailsModal" class="modal-overlay" (click)="closeDetailsModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h5 class="card-title">Account Details</h5>
+        <button type="button" class="btn-close" (click)="closeDetailsModal()"></button>
+      </div>
+      <div class="modal-body">
+        <img [src]="'http://localhost:4000/assets/' + account.acc_image" 
+     alt="account.acc_image" 
+     style="display: block; margin: 0 auto; width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
+
+        <p><strong>Name:</strong> {{ account.acc_firstname }} {{ account.acc_lastname }}</p>
+        <p><strong>Email:</strong> {{ account.acc_email }}</p>
+        <p><strong>Phone:</strong> {{ account.acc_pnumber }}</p>
+        <p><strong>Role:</strong> {{ account.acc_role }}</p>
+        <p><strong>Type:</strong> {{ account.acc_type }}</p>
+        <p><strong>Date Registered:</strong> {{ account.acc_created | date:'yyyy-MM-dd' }}</p>
+      </div>
+    </div>
+  </div>
+
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
-
-
 </div>
+
+<style>
+ /* Modal Overlay (to cover the whole screen) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050; /* Ensure it's above other content */
+}
+
+/* Modal Content (to make it look like it pops out) */
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%; /* Adjust width as needed */
+  max-width: 600px; /* Set a max width to ensure it doesn't get too large */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Drop shadow to make it pop */
+  z-index: 1060; /* Ensure modal content is above the overlay */
+  animation: modalPop 0.3s ease-out; /* Add a pop animation */
+  
+  /* Make the modal content scrollable */
+  max-height: 80vh; /* Set a maximum height for the modal */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+} 
+
+/* Animation for modal pop effect */
+@keyframes modalPop {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+</style>

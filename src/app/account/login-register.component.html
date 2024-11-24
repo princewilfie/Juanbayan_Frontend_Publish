@@ -175,103 +175,97 @@
 </div>
 
 <!-- Terms and Conditions Modal -->
-<div class="modal fade" [ngClass]="{ 'show': termsModalOpen }" tabindex="-1" [style.display]="termsModalOpen ? 'block' : 'none'"(click)="closeTermsModal()">
+<div class="modal fade" [ngClass]="{ 'show': termsModalOpen }" tabindex="-1" [style.display]="termsModalOpen ? 'block' : 'none'" (click)="closeTermsModal()">
 	<div class="modal-dialog modal-lg" (click)="$event.stopPropagation()">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">Terms and Conditions</h5>
-					<button type="button" class="btn-close" aria-label="Close" (click)="closeTermsModal()"> </button>
-	</div>
-<div
-	class="modal-body"
-	style="max-height: 70vh; overflow-y: auto;">
-	<p><strong>By creating a campaign on the JUANBAYAN platform, users agree to comply with the following terms:</strong></p>
-	<ul>
-		<li><strong>14.1 Campaign Creation Limit:</strong><br>
-		<ul>
-			<li>14.1.1 Users may create up to two (2) campaigns within a month period. Additional campaign creation requests beyond this limit will be denied.</li>
-			<li>14.1.2 Campaigns must have clear, accurate, and truthful descriptions, goals, and timelines.</li>
-		</ul>
-		</li>
-		<br>
-		<li><strong>14.2 Approval Process:</strong><br>
-		<ul>
-			<li>14.2.1 All campaigns are subject to an approval process by JUANBAYAN to ensure compliance with the platform’s guidelines and Philippine laws.</li>
-			<li>14.2.2 Campaigns may be rejected if they:
-			<ul>
-				<li>Do not align with JUANBAYAN’s mission.</li>
-				<li>Lack sufficient documentation or verification.</li>
-				<li>Contain false or misleading information.</li>
-			</ul>
-			</li>
-			<li>14.2.3 JUANBAYAN reserves the right to request additional supporting documents, such as proof of identity, financial need, or project plans, during the approval process.</li>
-		</ul>
-		</li>
-		<br>
-		<li><strong>14.3 Usage of Funds:</strong><br>
-		<ul>
-			<li>14.3.1 Funds raised must only be used for the stated purpose in the campaign description. Misuse of funds is grounds for account suspension, campaign removal, and legal action under Philippine law.</li>
-			<li>14.3.2 Beneficiaries must provide updates to donors on how the funds are being utilized and the progress of the campaign.</li>
-		</ul>
-		</li>
-		<br>
-		<li><strong>14.4 Platform Fees and Charges:</strong><br>
-		<ul>
-			<li>14.4.1 JUANBAYAN charges a platform fee for managing campaigns, deducted from each donation:
-			<ul>
-				<li>3% for donations between PHP 100 to 1,000.</li>
-				<li>5% for donations above PHP 1,000.</li>
-			</ul>
-			</li>
-			<li>14.4.2 These fees cover operational costs, including verification, platform maintenance, and secure payment processing.</li>
-			<li>14.4.3 Additional third-party payment processing fees may apply, depending on the payment gateway used.</li>
-		</ul>
-		</li>
-		<br>
-		<li><strong>14.5 Campaign Duration:</strong><br>
-		<ul>
-			<li>14.5.1 Campaigns must have a defined start and end date. Campaigns exceeding the stated duration without updates may be flagged for review or suspended.</li>
-			<li>14.5.2 Extensions to campaign durations must be requested in writing and are subject to JUANBAYAN’s approval.</li>
-		</ul>
-		</li>
-		<br>
-		<li><strong>14.6 Prohibited Campaigns:</strong><br>
-		<ul>
-			<li>Users may not create campaigns that:
-			<ul>
-				<li>Promote violence, hate, discrimination, or illegal activities.</li>
-				<li>Violate any laws of the Republic of the Philippines.</li>
-				<li>Solicit funds for personal loans or financial gain without sufficient justification.</li>
-			</ul>
-			</li>
-		</ul>
-		</li>
-		<br>
-		<li><strong>14.7 Transparency and Accountability:</strong><br>
-		<ul>
-			<li>14.7.1 JUANBAYAN is committed to providing transparency to all users. Campaign creators will be informed of any deductions and must ensure clarity in communicating net donation amounts to donors.</li>
-			<li>14.7.2 JUANBAYAN reserves the right to audit campaign records and request evidence of fund usage for transparency and accountability.</li>
-		</ul>
-		</li>
-		<br>
-		<li><strong>14.8 Campaign Termination or Suspension:</strong><br>
-		<ul>
-			<li>14.8.1 JUANBAYAN reserves the right to terminate or suspend campaigns if:
-			<ul>
-				<li>They violate these Terms and Conditions.</li>
-				<li>Fraudulent activity or misuse of funds is suspected.</li>
-			</ul>
-			</li>
-			<li>14.8.2 In such cases, any remaining funds may be withheld or returned to donors, depending on the circumstances.</li>
-		</ul>
-		</li>
-	</ul>
-	<p>Please read these terms carefully and indicate your agreement below.</p>
-	</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" (click)="closeTermsModal()">Cancel</button>
-				<button type="button" class="btn btn-primary" (click)="acceptTerms(); $event.stopPropagation()">I Agree</button>
-			</div>
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title">Terms and Conditions</h5>
+		  <button type="button" class="btn-close" aria-label="Close" (click)="closeTermsModal()"> </button>
 		</div>
+		<div class="modal-body" style="max-height: 70vh; overflow-y: auto; text-align: justify;">
+		  <p><strong>Welcome to JUANBAYAN, an online crowdfunding platform connecting communities and individuals to opportunities for support. By registering, accessing, or using the platform, you agree to the following terms and conditions:</strong></p>
+  
+		  <h6><strong>1. Definitions</strong></h6>
+		  <p>1.1 "Platform" refers to the JUANBAYAN crowdfunding website and its services.<br>
+			 1.2 "User" refers to anyone who registers as a donor, beneficiary, or admin.<br>
+			 1.3 "Campaign" refers to fundraising initiatives created by users or organizations on the platform.
+		  </p>
+  
+		  <h6><strong>2. User Responsibilities</strong></h6>
+		  <p>2.1 Users must provide accurate, truthful, and complete information during registration.<br>
+			 2.2 Users agree to use the platform for lawful purposes only and not engage in fraudulent, illegal, or unethical activities.<br>
+			 2.3 Users shall not impersonate others or create multiple accounts to exploit the system.
+		  </p>
+  
+		  <h6><strong>3. Campaigns</strong></h6>
+		  <p>3.1 Eligibility: Campaign creators must ensure that their campaigns align with JUANBAYAN's mission and community guidelines.<br>
+			 3.2 Transparency: Beneficiaries must provide updates on how funds are utilized and ensure accuracy in their campaign descriptions.<br>
+			 3.3 Approval: JUANBAYAN reserves the right to approve or reject campaigns at its discretion.
+		  </p>
+  
+		  <h6><strong>4. Donations</strong></h6>
+		  <p>4.1 Donations made through the platform are non-refundable unless otherwise determined by JUANBAYAN due to fraudulent or unauthorized activity.<br>
+			 4.2 Donors are encouraged to verify campaign details before contributing.<br>
+			 4.3 JUANBAYAN does not guarantee the success or outcomes of any campaign.
+		  </p>
+  
+		  <h6><strong>5. Fees and Transactions</strong></h6>
+		  <p>5.1 JUANBAYAN may charge a platform fee for managing campaigns. Additional third-party processing fees may apply.<br>
+			 5.2 All transaction details are processed securely. The platform is not liable for external banking or payment gateway issues.
+		  </p>
+  
+		  <h6><strong>6. Privacy and Data Protection</strong></h6>
+		  <p>6.1 User data is collected and processed in compliance with the Philippine Data Privacy Act of 2012 (R.A. 10173).<br>
+			 6.2 JUANBAYAN will not share user data with third parties without consent, except as required by law.<br>
+			 6.3 Users are responsible for safeguarding their account credentials.
+		  </p>
+  
+		  <h6><strong>7. Prohibited Activities</strong></h6>
+		  <p>Users agree not to:<br>
+			 Post misleading or false information.<br>
+			 Misuse funds or raise funds for activities violating Philippine laws.<br>
+			 Engage in hate speech, harassment, or discrimination on the platform.
+		  </p>
+  
+		  <h6><strong>8. Intellectual Property</strong></h6>
+		  <p>8.1 All platform content, including trademarks, logos, and code, is the property of JUANBAYAN.<br>
+			 8.2 Users may not replicate or redistribute platform content without prior written consent.
+		  </p>
+  
+		  <h6><strong>9. Disclaimer of Liability</strong></h6>
+		  <p>9.1 JUANBAYAN is a facilitator and not directly responsible for the management or outcomes of campaigns.<br>
+			 9.2 The platform is not liable for any losses, disputes, or damages resulting from platform use.
+		  </p>
+  
+		  <h6><strong>10. Suspension and Termination</strong></h6>
+		  <p>10.1 JUANBAYAN reserves the right to suspend or terminate accounts violating these terms.<br>
+			 10.2 Users whose accounts are terminated for violations will not be refunded any fees paid.
+		  </p>
+  
+		  <h6><strong>11. Amendments</strong></h6>
+		  <p>JUANBAYAN reserves the right to amend these terms and conditions at any time. Users will be notified of significant updates via email or the platform.
+		  </p>
+  
+		  <h6><strong>12. Governing Law</strong></h6>
+		  <p>These terms shall be governed by and construed under the laws of the Republic of the Philippines. Disputes arising from these terms shall be resolved in Philippine courts.
+		  </p>
+  
+		  <h6><strong>13. Contact Information</strong></h6>
+		  <p>For inquiries or concerns, contact us at:<br>
+			 Email: juanbayan.team&lt;gmail.com<br>
+			 Phone: [Insert Contact Number]
+		  </p>
+  
+		  <p><strong>Agreement</strong><br>
+			 By registering on the JUANBAYAN platform, you confirm that you have read, understood, and agree to these Terms and Conditions.
+		  </p>
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" (click)="closeTermsModal()">Cancel</button>
+		  <button type="button" class="btn btn-primary" (click)="acceptTerms(); $event.stopPropagation()">I Agree</button>
+		</div>
+	  </div>
 	</div>
-</div>
+  </div>
+  
+  

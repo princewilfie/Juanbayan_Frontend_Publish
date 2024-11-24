@@ -21,7 +21,7 @@
                 <tbody>
                   <tr *ngFor="let fee of feeAmounts">
                     <td>{{ fee.donation_id }}</td>
-                    <td>{{ fee.fee_amount | currency }}</td>
+                    <td>₱{{fee.fee_amount}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -30,7 +30,7 @@
         </div>
       </div>
     </div>
-  
+    
     <!-- Total Revenue Section -->
     <div class="row">
       <div class="col-xl-12 col-lg-12">
@@ -39,7 +39,7 @@
             <h6 class="m-0 font-weight-bold text-light">Total Revenue</h6>
           </div>
           <div class="card-body">
-            <h4>Total Fee Amount: {{ totalFeeAmount | currency }}</h4>
+            <h4>Total Fee Amount: ₱{{totalFeeAmount}}</h4>
             <div class="download-button mt-4">
               <button class="btn btn-primary" (click)="downloadReport()">Download Report</button>
             </div>

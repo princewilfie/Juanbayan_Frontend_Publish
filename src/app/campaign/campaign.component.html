@@ -28,7 +28,6 @@
                             style="height: 300px; width: 100%; object-fit: cover;"
                             [src]="getImagePath('assets/' + campaign.Campaign_Image)"
                             alt="{{ campaign.Campaign_Name }} Image" 
-                            (error)="this.src='assets/jb-symbol-logo.png'"
                           />
                         </div>
                         <div class="blog_details">
@@ -36,14 +35,43 @@
                             <h2 class="blog-head" style="color: #2d2d2d;">{{ campaign.Campaign_Name }}</h2>
                           </a>
                           <p>{{ campaign.Campaign_Description }}</p>
+                          <!-- Progress Bar -->
                           <div class="card-progress">
                             <div class="card-progress-bar" [style.width.%]="campaign.Progress_Percentage"></div>
-                          </div>
-                          <p class="raised-amount">{{ campaign.Raised_Amount | currency }} raised</p>
+                          </div>                                                   
+                          <p class="raised-amount">₱{{ campaign.Campaign_CurrentRaised || currency}} raised</p>
                         </div>
                       </article>
                   </div>
+
+                  <section class="testimonials-section py-5">
+                    <div class="container">
+                        <h2>What People Say About Us</h2>
+                        <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+                            <div class="carousel-inner">
+                                <div *ngFor="let testimony of testimonies; let i = index" [class.active]="i === 0" class="carousel-item">
+                                    <div class="testimonial-item d-flex flex-column align-items-center">
+                                        <img [src]="getImagePath('assets/' + testimony.acc_image)" 
+                                             [alt]="testimony.acc_firstname + ' ' + testimony.acc_lastname" 
+                                             class="testimonial-image" 
+                                             style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
+                                        <h5>{{ testimony.acc_firstname }} {{ testimony.acc_lastname }}</h5>
+                                        <p class="testimonial-text">"{{ testimony.Testimony }}"</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Carousel Controls -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
               </div>
+
   
                 <!-- Message if no events are available -->
                 <ng-template #noEvents>
@@ -266,6 +294,7 @@ overflow: hidden;
 width: 70%; /* Adjust dynamically based on progress */
 height: 100%;
 background-color: #2e42b6;
+transition: width 0.5s ease; /* Smooth transition for width change */
 }
 
 .raised-amount {

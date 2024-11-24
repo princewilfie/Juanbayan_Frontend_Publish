@@ -23,6 +23,9 @@ export class ListComponent implements OnInit {
         acc_status: ''
     };
     isEditing = false;
+    showDetailsModal = false;
+    account: any;
+
 
     constructor(private accountService: AccountService) {}
 

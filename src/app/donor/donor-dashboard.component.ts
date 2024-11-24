@@ -1,6 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
-import { AccountService, CampaignService, EventService } from '../_services';
-import { Campaign } from '../_models';
+import { AccountService, CampaignService, EventService, WithdrawService } from '../_services';
+import { Campaign, Withdraw } from '../_models';
 
 @Component({
   selector: 'app-donor-dashboard',
@@ -15,12 +15,14 @@ export class DonorDashboardComponent implements OnInit {
   progressPercentage: number = 0;
   activeApprovedEvents: any;
   account: any;
-
+  testimonies: Withdraw[] = [];
+  filteredCampaigns : Campaign[] = [];
   constructor(
     private renderer: Renderer2,
     private eventService: EventService,
     private accountService: AccountService,
-    private campaignService: CampaignService
+    private campaignService: CampaignService,
+    private withdrawService: WithdrawService
   ) {}
 
   ngOnInit() {
@@ -28,6 +30,9 @@ export class DonorDashboardComponent implements OnInit {
     this.account = this.accountService.accountValue;
     this.loadActiveApprovedEvents();
     this.loadApprovedCampaigns(); // Only check the login status, no redirection
+    this.withdrawService.getAll().subscribe((data: Withdraw[]) => {
+      this.testimonies = data.filter(withdraw => withdraw.Testimony); // Only include entries with testimony
+    });
   }
 
   updateProgressBar(): void {
@@ -56,14 +61,22 @@ export class DonorDashboardComponent implements OnInit {
   }
 
   loadApprovedCampaigns(): void {
-    this.campaignService.getApprovedCampaigns().subscribe({
-      next: (data) => {
-        this.campaigns = data;
-        this.calculateTotals();
-      },
-      error: (err) => {
-        console.error('Error loading campaigns:', err);
-      }
+    this.campaignService.getAllCampaigns().subscribe((campaigns: Campaign[]) => {
+      this.campaigns = campaigns.filter(campaign => campaign.Campaign_Status === 1);
+      
+      // Calculate Progress_Percentage for each campaign
+      this.campaigns = this.campaigns.map(campaign => {
+        const progress = campaign.Campaign_TargetFund
+          ? (campaign.Campaign_CurrentRaised || 0) / campaign.Campaign_TargetFund * 100
+          : 0;
+
+        // Log the individual progress for each campaign
+        console.log(`Campaign: ${campaign.Campaign_Name}, Progress: ${progress}%`);
+        // Add the calculated progress to each campaign
+        return { ...campaign, progress }; // Add progress to each campaign
+      });
+      this.calculateTotals();
+      this.filteredCampaigns = [...this.campaigns]; // Initialize filteredCampaigns with all approved campaigns
     });
   }
 

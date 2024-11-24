@@ -64,6 +64,7 @@ export class CampaignComponent implements OnInit {
     this.filteredCampaigns = this.campaigns.filter(campaign =>
       (campaign.Campaign_Name?.toLowerCase() || '').includes(lowerQuery) ||
       (campaign.Campaign_Description?.toLowerCase() || '').includes(lowerQuery)
+    
     );
   }
 
@@ -72,9 +73,20 @@ export class CampaignComponent implements OnInit {
   fetchApprovedCampaigns(): void {
     this.campaignService.getAllCampaigns().subscribe((campaigns: Campaign[]) => {
       this.campaigns = campaigns.filter(campaign => campaign.Campaign_Status === 1);
+      
+      // Calculate Progress_Percentage for each campaign
+      this.campaigns = this.campaigns.map(campaign => {
+        const progress = campaign.Campaign_TargetFund
+          ? (campaign.Campaign_CurrentRaised || 0) / campaign.Campaign_TargetFund * 100
+          : 0;
+        // Add the calculated progress to each campaign
+        return { ...campaign, Progress_Percentage: progress };
+      });
+  
       this.filteredCampaigns = [...this.campaigns]; // Initialize filteredCampaigns with all approved campaigns
     });
   }
+  
   
   filterCampaignsByCategory(categoryId: number): void {
     if (!categoryId) {

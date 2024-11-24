@@ -17,4 +17,6 @@ export class Campaign {
     Proof_Files? : string;
     Campaign_Notes? : string;
     Admin_Notes? : string;
+    Withdrawal_Status? : string;
+    progressPercentage?: number; // Add this property
 }

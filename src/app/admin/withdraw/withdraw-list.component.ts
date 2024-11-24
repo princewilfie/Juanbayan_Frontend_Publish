@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { WithdrawService } from '@app/_services';
 import { Withdraw } from '@app/_models';
-import Swal from 'sweetalert2';  // Import SweetAlert2
+import Swal from 'sweetalert2'; // Import SweetAlert2
 
 @Component({
   selector: 'app-withdrawal-list',
-  templateUrl: './withdraw-list.component.html'
+  templateUrl: './withdraw-list.component.html',
 })
 export class WithdrawalListComponent implements OnInit {
   withdrawals: Withdraw[] = [];
+  loading = false;
 
   constructor(private withdrawService: WithdrawService) {}
 
@@ -18,11 +19,14 @@ export class WithdrawalListComponent implements OnInit {
 
   // Method to load all withdrawals from the backend
   loadWithdrawals(): void {
+    this.loading = true; // Set loading state
     this.withdrawService.getAll().subscribe(
       (data: Withdraw[]) => {
         this.withdrawals = data;
+        this.loading = false; // Reset loading state after data is loaded
       },
-      error => {
+      (error) => {
+        this.loading = false; // Reset loading state on error
         Swal.fire('Error', 'Error fetching withdrawals', 'error');
       }
     );
@@ -36,15 +40,17 @@ export class WithdrawalListComponent implements OnInit {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, approve it!',
-      cancelButtonText: 'No, cancel'
+      cancelButtonText: 'No, cancel',
     }).then((result) => {
       if (result.isConfirmed) {
+        this.loading = true; // Set loading state
         this.withdrawService.approveWithdrawal(id).subscribe(
-          response => {
+          (response) => {
             Swal.fire('Approved!', 'The withdrawal has been approved.', 'success');
-            this.loadWithdrawals();  // Reload the withdrawal list after approval
+            this.loadWithdrawals(); // Reload the withdrawal list after approval
           },
-          error => {
+          (error) => {
+            this.loading = false; // Reset loading state on error
             Swal.fire('Error', 'Error approving withdrawal', 'error');
           }
         );
@@ -60,15 +66,17 @@ export class WithdrawalListComponent implements OnInit {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, reject it!',
-      cancelButtonText: 'No, cancel'
+      cancelButtonText: 'No, cancel',
     }).then((result) => {
       if (result.isConfirmed) {
+        this.loading = true; // Set loading state
         this.withdrawService.rejectWithdrawal(id).subscribe(
-          response => {
+          (response) => {
             Swal.fire('Rejected!', 'The withdrawal has been rejected.', 'success');
-            this.loadWithdrawals();  // Reload the withdrawal list after rejection
+            this.loadWithdrawals(); // Reload the withdrawal list after rejection
           },
-          error => {
+          (error) => {
+            this.loading = false; // Reset loading state on error
             Swal.fire('Error', 'Error rejecting withdrawal', 'error');
           }
         );

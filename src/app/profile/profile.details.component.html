@@ -310,19 +310,24 @@ p {
     <div *ngIf="getAccomplishedCampaigns().length > 0" >
       <div *ngFor="let campaign of getAccomplishedCampaigns()" class="card shadow-sm mb-3">
         <div class="card-body">
-          <h4 class="text-danger">{{ campaign.Campaign_Category === 1 ? 'Medical' : 'Other' }}</h4>
           <h3 class="card-title">{{ campaign.Campaign_Name }}</h3>
           <p>{{ campaign.Campaign_Description }}</p>
-          <button
-          *ngIf="!campaign.withdraw || campaign.withdraw.Status !== 'Pending'"
-          class="btn btn-primary"
-          (click)="openFundRequestModal(campaign)"
-        >
+          <!-- Button to show when Withdrawal_Status is not 'Done' or 'Pending' -->
+          <button *ngIf="campaign.Withdrawal_Status !== 'Done' && campaign.Withdrawal_Status !== 'Pending'" 
+          class="btn btn-primary" 
+          (click)="openFundRequestModal(campaign)">
           Request To Collect
-        </button>
-        <p *ngIf="campaign.withdraw?.Status === 'Pending'" class="text-success">
+          </button>
+          <!-- Text to show when Withdrawal_Status is 'Done' or 'Pending' -->
+          <p *ngIf="campaign.Withdrawal_Status === 'Pending'" 
+          class="text-primary">
           Withdrawal Requested
-        </p>
+          </p>
+
+          <p *ngIf="campaign.Withdrawal_Status === 'Done'" 
+          class="text-success">
+          Withdrawal Done
+          </p>
         </div>
       </div>
     </div>

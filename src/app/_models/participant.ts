@@ -10,4 +10,5 @@ export class Participant {
     acc_email: string;
     Event_Name: string;
     Event_Image: string;
+    Participant_Attendance: boolean;
   }

@@ -71,7 +71,7 @@ approve(id: number): Observable<Campaign> {
 
   // Add a method to get approved campaigns
   getApprovedCampaigns(): Observable<Campaign[]> {
-    return this.http.get<Campaign[]>(`${this.baseUrl}?status=approved`);
+    return this.http.get<Campaign[]>(`${this.baseUrl}?Campaign_Status=1`);
   }
 
   getProofFilesByCampaignId(campaignId: number): Observable<string[]> {

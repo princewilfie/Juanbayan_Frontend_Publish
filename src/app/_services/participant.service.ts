@@ -42,4 +42,9 @@ export class ParticipantService {
   getAllParticipants(): Observable<Participant[]> {
     return this.http.get<Participant[]>(`${baseUrl}/participants`);
   }
+
+  updateParticipantAttendance(participantId: number, attendance: boolean): Promise<any> {
+    return this.http.patch(`${baseUrl}/participant/${participantId}/attendance`, { attendance }).toPromise();
+  }
+
 }

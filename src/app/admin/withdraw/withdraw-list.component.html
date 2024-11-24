@@ -27,7 +27,6 @@
                               <table class="table table-striped" id="dataTable" width="100%" cellspacing="10">
                                   <thead>
                                     <tr>
-                                      <th scope="col"></th>
                                       <th scope="col">Account ID</th>
                                       <th scope="col">Account Number</th>
                                       <th scope="col">Bank</th>
@@ -40,17 +39,22 @@
                                   </thead>
                                   <tbody>
                                     <tr *ngFor="let withdrawal of withdrawals">
-                                      <td><input type="checkbox"></td>
                                       <td>{{ withdrawal.acc_id }}</td>
                                       <td>{{ withdrawal.Acc_number }}</td>
                                       <td>{{ withdrawal.Bank_account }}</td>
-                                      <td>{{ withdrawal.Withdraw_Amount | currency }}</td>
+                                      <td>₱{{ withdrawal.Withdraw_Amount}}</td>
                                       <td>{{ withdrawal.Request_Date | date:'MM/dd/yyyy' }}</td>
                                       <td>{{ withdrawal.Status }}</td>
                                       <td>
                                         <div class="actions">
-                                          <button class="btn btn-success btn-sm" (click)="approveWithdrawal(withdrawal.Withdraw_ID)">Approve</button>
-                                          <button class="btn btn-danger btn-sm" (click)="rejectWithdrawal(withdrawal.Withdraw_ID)">Reject</button>
+                                          <button [disabled]="loading" class="btn btn-success btn-sm" (click)="approveWithdrawal(withdrawal.Withdraw_ID)">
+                                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span> Approve
+                                          </button>
+                                          &nbsp;
+                                          <button [disabled]="loading" class="btn btn-danger btn-sm" (click)="rejectWithdrawal(withdrawal.Withdraw_ID)">
+                                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span> Reject
+                                          </button>
+                          
                                         </div>
                                       </td>
                                     </tr>                                  

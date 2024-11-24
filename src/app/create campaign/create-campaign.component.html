@@ -26,8 +26,8 @@
       <div class="card-body">
   
         <!-- Approved Campaigns Section -->
-        <div class="campaign-section">
-          <h2 class="text-primary">Approved Campaigns</h2>
+        <div class="campaign-section mt-5">
+          <h2 class="text-primary mb-5">Approved Campaigns</h2>
           <div *ngIf="approvedCampaigns.length === 0" class="alert alert-info">No approved campaigns.</div>
           <div class="row">
             <div class="col-md-3 mb-4" *ngFor="let campaign of approvedCampaigns" (click)="openCampaignDetails(campaign); $event.stopPropagation()">
@@ -53,8 +53,8 @@
         </div>
   
         <!-- Pending Campaigns Section -->
-        <div class="campaign-section">
-          <h3 class="text-warning">Pending Campaigns</h3>
+        <div class="campaign-section mt-5">
+          <h3 class="text-warning mb-5">Pending Campaigns</h3>
           <div *ngIf="pendingCampaigns.length === 0" class="alert alert-warning">No pending campaigns.</div>
           <div class="row">
             <div class="col-md-3 mb-4" *ngFor="let campaign of pendingCampaigns" (click)="openCampaignDetails(campaign); $event.stopPropagation()">
@@ -78,8 +78,8 @@
         </div>
   
         <!-- Rejected Campaigns Section -->
-        <div class="campaign-section">
-          <h3 class="text-danger">Rejected Campaigns</h3>
+        <div class="campaign-section mt-5">
+          <h3 class="text-danger mb-5">Rejected Campaigns</h3>
           <div *ngIf="rejectedCampaigns.length === 0" class="alert alert-danger">No rejected campaigns.</div>
           <div class="row">
             <div class="col-md-3 mb-4" *ngFor="let campaign of rejectedCampaigns" (click)="openCampaignDetails(campaign); $event.stopPropagation()">
@@ -103,11 +103,11 @@
         </div>
   
         <!-- Done Campaigns Section -->
-        <div class="campaign-section">
-          <h3 class="text-success">Done Campaigns</h3>
+        <div class="campaign-section mt-5">
+          <h3 class="text-success mb-5">Done Campaigns</h3>
           <div *ngIf="doneCampaigns.length === 0" class="alert alert-success">No campaigns marked as done.</div>
           <div class="row">
-            <div class="col-md-3 mb-4" *ngFor="let campaign of doneCampaigns">
+            <div class="col-md-4 mb-4" *ngFor="let campaign of doneCampaigns">
               <div class="card campaign-card h-100 shadow-sm d-flex flex-column">
                 <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" 
                   alt="{{ campaign.Campaign_Name }} Image" 
@@ -120,7 +120,7 @@
                   <div *ngIf="campaign.Campaign_ApprovalStatus === 'Done'" class="text-success mt-2">
                     <strong>Done</strong>
                   </div>
-                  <button *ngIf="!isTestimonySubmitted" class="btn btn-primary mt-3" (click)="openTestimonyModal(campaign.Campaign_ID)">Submit Testimony</button>
+                  <button *ngIf="campaign.Withdrawal_Status === 'Done'" class="btn btn-primary mt-3" (click)="openTestimonyModal(campaign.Campaign_ID)">Submit Testimony</button>
                 </div>
               </div>
             </div>

@@ -29,26 +29,26 @@
               <th>Email</th>
               <th>Phone Number</th>
               <th>Campaign</th>
-              <th>Total Donations</th>
+              <th>Donation Amount</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let donor of filteredDonors">
+            <tr *ngFor="let donor of flattenedDonors">
               <td>{{ donor.id }}</td>
               <td>{{ donor.acc_firstname }}</td>
               <td>{{ donor.acc_lastname }}</td>
               <td>{{ donor.acc_email }}</td>
               <td>{{ donor.acc_pnumber }}</td>
-              <td>{{ donor.campaign_name || 'No Campaign' }}</td>
-              <td>{{ donor.donation_amount || 0}}</td>
+              <td>{{ donor.campaign_name }}</td>
+              <td>{{ donor.donation_amount }}</td>
             </tr>
           </tbody>
         </table>
       </div>
       <!-- Summary -->
       <div class="mt-3">
-        <p>Total Donors: {{ filteredDonors.length }}</p>
-        <p>Total Donations: {{ totalDonations }}</p>
+        <p>Total Donors: {{ donors.length }}</p>
+        <p>Total Donations: ₱{{ totalDonations }}.00</p>
       </div>
     </div>
   </div>
@@ -81,26 +81,26 @@
               <th>Email</th>
               <th>Phone Number</th>
               <th>Campaign</th>
-              <th>Total Help Received</th>
+              <th>Amount Raised</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let beneficiary of filteredBeneficiaries">
+            <tr *ngFor="let beneficiary of flattenedBeneficiaries">
               <td>{{ beneficiary.id }}</td>
               <td>{{ beneficiary.acc_firstname }}</td>
               <td>{{ beneficiary.acc_lastname }}</td>
               <td>{{ beneficiary.acc_email }}</td>
               <td>{{ beneficiary.acc_pnumber }}</td>
-              <td>{{ beneficiary.campaign_name || 'No Campaign' }}</td>
-              <td>{{ beneficiary.campaign_currentraised || 0 }}</td>
+              <td>{{ beneficiary.campaign_name }}</td>
+              <td>{{ beneficiary.campaign_currentraised }}</td>
             </tr>
           </tbody>
         </table>
       </div>
       <!-- Summary -->
       <div class="mt-3">
-        <p>Total Beneficiaries: {{ filteredBeneficiaries.length }}</p>
-        <p>Total Help Received: {{ totalHelpReceived }}</p>
+        <p>Total Beneficiaries: {{ beneficiaries.length }}</p>
+        <p>Total Help Received: ₱{{ totalHelpReceived }}.00</p>
       </div>
     </div>
   </div>

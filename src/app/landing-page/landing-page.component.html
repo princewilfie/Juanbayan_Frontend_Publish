@@ -1,7 +1,7 @@
 
 <!-- slider Area Start-->
 <div class="slider-area">
-    <div class="slider-active">
+    <div class="slider-active shadow-lg">
         <!-- Single Slider -->
         <div class="single-slider slider-height d-flex align-items-center">
             <div class="container">
@@ -123,7 +123,7 @@
 <!-- About Law End-->
 
 <!-- Our Cases Start -->
-<div class="our-cases-area section-padding30">
+<div class="our-cases-area section-padding30 shadow-lg">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-xl-6 col-lg-7 col-md-10 col-sm-10">
@@ -134,8 +134,8 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let campaign of campaigns">
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 col-sm-6 shadow-sm" *ngFor="let campaign of campaigns">
                 <div class="single-cases mb-40">
                     <div class="cases-img">
                         <img [src]="getImagePath('assets/' + campaign.Campaign_Image)" alt="{{ campaign.Campaign_Name }}">
@@ -143,16 +143,11 @@
                     <div class="cases-caption">
                         <h3><a routerLink="/campaign-details/{{ campaign.Campaign_ID }}">{{campaign.Campaign_Name}}</a></h3>
                         <!-- Progress Bar -->
-                        <div class="single-skill mb-15">
-                            <div class="bar-progress">
-                                <div id="bar1" class="barfiller">
-                                    <div class="tipWrap">
-                                        <span class="tip"></span>
-                                    </div>
-                                    <span class="fill" role="progressbar" [style.width.%]="progressPercentage">
-                                        
-                                    </span>
-                                </div>
+                        <div class="progress-container">
+                            <div
+                              class="progress-bar"
+                              [style.width.%]="campaign.progress"
+                              [title]="campaign.progress.toFixed(2) + '%'">
                             </div>
                         </div>
                         <!-- / progress -->
@@ -196,17 +191,20 @@
                 <div class="h1-testimonial-active dot-style">
                     <!-- Single Testimonial -->
                     <div class="single-testimonial text-center">
-                        <div class="testimonial-caption ">
+                        <div class="testimonial-caption " *ngFor="let testimony of testimonies; let i = index" [class.active]="i === 0">
                             <!-- founder -->
                             <div class="testimonial-founder">
-                                <div class="founder-img mb-40">
-                                    <img src="assets/user-bootstrap/charityworks-master/assets/img/gallery/testimonial.png" alt="">
-                                    <span>Margaret Lawson</span>
-                                    <p>Creative Director</p>
+                                <div class="founder-img mb-40" >
+                                    <img [src]="getImagePath('assets/' + testimony.acc_image)" 
+                                             [alt]="testimony.acc_firstname + ' ' + testimony.acc_lastname" 
+                                             class="testimonial-image" 
+                                             style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
+                                    <span>{{ testimony.acc_firstname }} {{ testimony.acc_lastname }}</span>
+                                    <p>Beneficiary</p>
                                 </div>
                             </div>
                             <div class="testimonial-top-cap">
-                                <p>“I am at an age where I just want to be fit and healthy our bodies are our responsibility! So start caring for your body and it will care for you. Eat clean it will care for you and workout hard.”</p>
+                                <p>“{{ testimony.Testimony }}”</p>
                             </div>
                         </div>
                     </div>
@@ -230,7 +228,7 @@
             </div>
         </div>
         <div class="row" *ngIf="activeApprovedEvents.length > 0;">
-            <div class="col-xl-6 col-lg-6 col-md-6" *ngFor="let eventItem of activeApprovedEvents | slice:0:1" (click)="viewEventDetails(eventItem.Event_ID)">
+            <div class="col-xl-6 col-lg-6 col-md-6" *ngFor="let eventItem of activeApprovedEvents | slice:0:2" (click)="viewEventDetails(eventItem.Event_ID)">
                 <div class="home-blog-single mb-30">
                     <div class="blog-img-cap">
                         <div class="blog-img">
@@ -255,6 +253,8 @@
         </div>
     </div>
 </section>
+
+
 <!-- Blog Area End -->
 <!--? Count Down Start -->
 <div class="count-down-area pt-20 background-img">
@@ -262,21 +262,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-12 col-md-12">
                 <div class="count-down-wrapper" >
-                    <div class="row justify-content-between">
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <!-- Counter Up -->
-                            <div class="single-counter text-center">
-                                <div class="counter color-green">
-                                    <div 
-                                        id="progress" 
-                                        class="progress" 
-                                        [style.width.%]="progressPercentage">
-                                    </div>
-                                </div>
-                                <span class="plus">+</span>
-                                <p class="color-green">Donation</p>
-                            </div>
-                        </div>
+                    <div class="row justify-content-center">
                         <div class="col-lg-3 col-md-6 col-sm-6">
                             <!-- Counter Up -->
                             <div class="single-counter text-center">
@@ -291,14 +277,6 @@
                                 <span class="counter color-green">₱{{ totalGoal | number }}</span>
                                 <span class="plus">+</span>
                                 <p class="color-green">Goal</p>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6">
-                            <!-- Counter Up -->
-                            <div class="single-counter text-center">
-                                <span class="counter color-green">256</span>
-                                <span class="plus">+</span>
-                                <p class="color-green">Donation</p>
                             </div>
                         </div>
                     </div>
@@ -348,6 +326,22 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* Adjust the color and transparency */
     z-index: 1; /* Keeps the overlay on top of the image */
+}
+.progress-container {
+  background-color: #bab6b6;
+  border-radius: 5px;
+  height: 12px;
+  width: 100%;
+  margin-top: 10px;
+  position: relative;
+}
+
+.progress-bar {
+  background-color: #0252ff;  /* Green progress */
+  height: 100%;
+  width: 0%;  /* Initial width set to 0% */
+  border-radius: 5px;
+  transition: width 0.5s ease;
 }
 
 </style>

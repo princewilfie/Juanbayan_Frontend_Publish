@@ -16,6 +16,8 @@ export class ReportsProfilingComponent implements OnInit {
   beneficiarySearchTerm: string = '';
   totalDonations: number = 0;
   totalHelpReceived: number = 0;
+  flattenedDonors: any[] = [];
+  flattenedBeneficiaries: any[] = [];
 
   constructor(private accountService: AccountService) {}
 
@@ -24,31 +26,53 @@ export class ReportsProfilingComponent implements OnInit {
     this.loadBeneficiaries();
   }
   loadDonors(): void {
-    this.accountService.getAllDonors().subscribe(
-      (response: any) => {
-        console.log('Donors data:', response); // Inspect response
-        this.donors = response?.data || []; // Safely extract the `data` field
-        this.filteredDonors = this.donors;
-        this.calculateTotalDonations();
-      },
-      (error) => {
-        console.error('Error fetching donors:', error);
-      }
-    );
+    this.accountService.getAllDonors().subscribe((response: any) => {
+      this.donors = response?.data || [];
+      this.flattenedDonors = this.flattenDonations(this.donors);
+      console.log('Donors:', this.donors); // Debugging
+      this.calculateTotalDonations();
+    });
+  }
+
+  loadBeneficiaries(): void {
+    this.accountService.getAllBeneficiaries().subscribe((response: any) => {
+      this.beneficiaries = response?.data || [];
+      this.flattenedBeneficiaries = this.flattenCampaigns(this.beneficiaries);
+      console.log('Beneficiaries:', this.beneficiaries); // Debugging
+      this.calculateTotalHelpReceived();
+    });
+  }
+
+  flattenDonations(donors: any[]): any[] {
+    return donors
+      .map((donor) =>
+        donor.Donations.map((donation: any) => ({
+          id: donor.id,
+          acc_firstname: donor.acc_firstname,
+          acc_lastname: donor.acc_lastname,
+          acc_email: donor.acc_email,
+          acc_pnumber: donor.acc_pnumber,
+          campaign_name: donation.campaign.Campaign_Name,
+          donation_amount: donation.donation_amount,
+        }))
+      )
+      .reduce((acc, val) => acc.concat(val), []);
   }
   
-  loadBeneficiaries(): void {
-    this.accountService.getAllBeneficiaries().subscribe(
-      (response: any) => {
-        console.log('Beneficiaries data:', response); // Inspect response
-        this.beneficiaries = response?.data || []; // Safely extract the `data` field
-        this.filteredBeneficiaries = this.beneficiaries;
-        this.calculateTotalHelpReceived();
-      },
-      (error) => {
-        console.error('Error fetching beneficiaries:', error);
-      }
-    );
+  flattenCampaigns(beneficiaries: any[]): any[] {
+    return beneficiaries
+      .map((beneficiary) =>
+        beneficiary.Campaigns.map((campaign: any) => ({
+          id: beneficiary.id,
+          acc_firstname: beneficiary.acc_firstname,
+          acc_lastname: beneficiary.acc_lastname,
+          acc_email: beneficiary.acc_email,
+          acc_pnumber: beneficiary.acc_pnumber,
+          campaign_name: campaign.Campaign_Name,
+          campaign_currentraised: campaign.Campaign_CurrentRaised,
+        }))
+      )
+      .reduce((acc, val) => acc.concat(val), []);
   }
   
   filterDonors(): void {
@@ -57,6 +81,7 @@ export class ReportsProfilingComponent implements OnInit {
         .toLowerCase()
         .includes(this.donorSearchTerm.toLowerCase())
     );
+    this.calculateTotalDonations();
   }
 
   filterBeneficiaries(): void {
@@ -65,28 +90,19 @@ export class ReportsProfilingComponent implements OnInit {
         .toLowerCase()
         .includes(this.beneficiarySearchTerm.toLowerCase())
     );
+    this.calculateTotalHelpReceived();
   }
 
   calculateTotalDonations(): void {
-    if (!Array.isArray(this.donors)) {
-      console.error('Donors is not an array:', this.donors);
-      return;
-    }
-    this.totalDonations = this.donors.reduce(
-      (sum, donor) => sum + (donor.totalDonations || 0),
-      0
-    );
+    this.totalDonations = this.donors.reduce((sum, donor) => {
+      return sum + (donor.Donations?.reduce((donationSum, donation) => donationSum + donation.donation_amount, 0) || 0);
+    }, 0);
   }
   
   calculateTotalHelpReceived(): void {
-    if (!Array.isArray(this.beneficiaries)) {
-      console.error('Beneficiaries is not an array:', this.beneficiaries);
-      return;
-    }
-    this.totalHelpReceived = this.beneficiaries.reduce(
-      (sum, beneficiary) => sum + (beneficiary.totalHelpReceived || 0),
-      0
-    );
+    this.totalHelpReceived = this.beneficiaries.reduce((sum, beneficiary) => {
+      return sum + (beneficiary.Campaigns?.reduce((campaignSum, campaign) => campaignSum + campaign.Campaign_CurrentRaised, 0) || 0);
+    }, 0);
   }
   
 

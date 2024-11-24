@@ -91,19 +91,34 @@ export class CreateEventComponent implements OnInit {
     }
   }
 
-  viewParticipants(eventId): void {
-    // Clear participants before fetching new ones
+  viewParticipants(eventId: number): void {
     this.participants = [];
     this.showParticipantsModal = true;
 
     this.participantService.getEventParticipants(eventId).toPromise()
-      .then((data: Participant[]) => {
-        this.participants = data;  // Assign the fetched data to participants array
+        .then((data: Participant[]) => {
+            // Here, you set the default attendance to 'false' (absent) if not provided.
+            this.participants = data.map(participant => ({
+                ...participant,
+                attendance: participant.Participant_Attendance ?? false  // Default to 'false'
+            }));
+        })
+        .catch((error) => {
+            console.error('Error fetching participants', error);
+        });
+}
+
+
+toggleAttendance(participant: Participant): void {
+  const attendance = participant.Participant_Attendance;
+  this.participantService.updateParticipantAttendance(participant.Participant_ID, attendance)
+      .then(response => {
+          console.log('Attendance updated', response);
       })
       .catch((error) => {
-        console.error('Error fetching participants', error);
+          console.error('Error updating attendance', error);
       });
-  }
+}
 
   closeParticipantsModal(): void {
     this.showParticipantsModal = false;
