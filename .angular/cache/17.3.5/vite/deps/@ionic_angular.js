@@ -45,6 +45,8 @@ import {
   RouterLink,
   UrlSerializer
 } from "./chunk-T2TDYA6W.js";
+import "./chunk-E5STV6AS.js";
+import "./chunk-3ET75EXS.js";
 import {
   MaxValidator,
   MinValidator,
@@ -52,8 +54,6 @@ import {
   NG_VALUE_ACCESSOR,
   NgControl
 } from "./chunk-RMLFRR66.js";
-import "./chunk-E5STV6AS.js";
-import "./chunk-3ET75EXS.js";
 import {
   CommonModule,
   DOCUMENT,

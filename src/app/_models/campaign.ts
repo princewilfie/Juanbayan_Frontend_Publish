@@ -19,4 +19,6 @@ export class Campaign {
     Admin_Notes? : string;
     Withdrawal_Status? : string;
     progressPercentage?: number; // Add this property
+    createdAt?: Date;
+    updatedAt?: Date;
 }

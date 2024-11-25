@@ -9,6 +9,7 @@ import { OverviewComponent } from './overview.component';
 import { IonicModule } from '@ionic/angular';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { NotificationComponent } from '../_components/notification.component';
 
 @NgModule({
     imports: [
@@ -22,7 +23,8 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     ],
     declarations: [
         LayoutComponent,
-        OverviewComponent
+        OverviewComponent,
+        NotificationComponent
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

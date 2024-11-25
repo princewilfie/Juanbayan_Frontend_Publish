@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { Campaign, Withdraw } from '../_models';
 import { AccountService } from '../_services/account.service';
 import Swal from 'sweetalert2'; // Import SweetAlert
-import { DonationService, CategoryService, WithdrawService } from '../_services';
+import { DonationService, CategoryService, WithdrawService, NotificationService } from '../_services';
 import { Donation, Category } from '../_models';
 
 
@@ -61,7 +61,9 @@ export class CreateCampaignComponent implements OnInit {
     private accountService: AccountService,
     private donationService: DonationService,
     private categoryService: CategoryService,
-    private withdrawService: WithdrawService
+    private withdrawService: WithdrawService,
+    private notificationService: NotificationService
+
   ) {
     this.createCampaignForm = this.formBuilder.group({
       Campaign_Name: ['', Validators.required],
@@ -309,6 +311,7 @@ export class CreateCampaignComponent implements OnInit {
         });
       }
     );
+    this.notificationService.loadNotifications();
   }
 
   getImagePath(image: string): string {
@@ -382,6 +385,8 @@ export class CreateCampaignComponent implements OnInit {
         confirmButtonText: 'OK'
       });
     }
+
+    this.notificationService.loadNotifications();
   }
 
 

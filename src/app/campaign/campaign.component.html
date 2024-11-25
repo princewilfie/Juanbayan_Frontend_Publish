@@ -1,6 +1,6 @@
 <main>
     <!--? Hero Start -->
-    <div class="slider-area2">
+    <div class="mb-5">
         <!-- Welcome Banner -->
         <div class="welcome-banner">
             <h1 style="font-size: 70px;" class="text-light">JuanBayan Campaigns</h1>
@@ -144,13 +144,22 @@
     /* Welcome Banner */
     .welcome-banner {
         background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
-                        url('https://images.pexels.com/photos/17257618/pexels-photo-17257618/free-photo-of-silhouettes-of-people-raising-arms-at-golden-hour.jpeg');
-        background-size: cover;
-        background-position: center bottom;
+                        url('assets/campaign2.jpg');
+        background-size: 120%; /* Increases size to 120% for zoom effect */
+        background-position: center;
+        background-repeat: no-repeat; /* Ensures the image doesn't tile */
         color: #ffffff;
         padding: 180px 0;
         text-align: center;
+        height: 600px;
+        transition: background-size 0.3s ease-in-out; /* Smooth zoom effect */
     }
+
+    /* Optional: Add hover zoom effect */
+    .welcome-banner:hover {
+        background-size: 130%; /* Slightly more zoom on hover */
+    }
+
 
 
     /* Fade-in Animation for Text */

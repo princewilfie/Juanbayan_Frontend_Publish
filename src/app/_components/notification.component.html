@@ -1,0 +1,119 @@
+<!-- Notification Dropdown -->
+<li class="nav-item dropdown no-arrow mx-1" (click)="toggleNotificationDropdown()">
+  <a class="nav-link dropdown-toggle" routerLink="/admin" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <i class="fas fa-bell fa-fw"></i>
+    <span class="badge badge-danger badge-counter">{{ newNotifications.length }}</span>
+  </a>
+  <!-- Notification Dropdown -->
+  <div *ngIf="showNotificationDropdown" class="notification-dropdown dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" (click)="toggleNotificationDropdown()">
+    <h6 class="dropdown-header">NOTIFICATION</h6>
+
+    <!-- No Notifications -->
+    <div *ngIf="newNotifications.length === 0 && earlierNotifications.length === 0" class="no-notification">
+      <p>No notifications available.</p>
+    </div>
+
+    <!-- New Notifications -->
+    <div *ngIf="newNotifications.length > 0" class="notification-section">
+      <h6 class="notification-info">New</h6>
+      <ul class="notification-list">
+        <li 
+          *ngFor="let notification of newNotifications" 
+          class="notification-item" 
+          (click)="viewNotification(notification)"
+        > 
+          <b>{{ notification.name }}</b> - {{ notification.message }}
+          <p class="timestamp">{{ formatTimestamp(notification.createdAt) }}</p>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Earlier Notifications -->
+    <div *ngIf="earlierNotifications.length > 0" class="notification-section">
+      <h6 class="notification-info">Earlier</h6>
+      <ul class="notification-list">
+        <li 
+          *ngFor="let notification of earlierNotifications" 
+          class="notification-item" 
+          (click)="viewNotification(notification)"
+        >
+          <b>{{ notification.name }}</b> - {{ notification.message }}
+          <p class="timestamp">{{ formatTimestamp(notification.createdAt) }}</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="dropdown-item d-flex align-items-center mb-2 mt-0">
+    <div *ngIf="newNotifications.length === 0 && earlierNotifications.length === 0" class="text-truncate font-weight-bold">
+        No notifications available.
+    </div>
+</div>
+</li>
+
+
+
+
+<style>
+  .notification-wrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.notification-dropdown {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 300px;
+  z-index: 1000;
+  padding: 10px;
+}
+
+.dropdown-header {
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.notification-section {
+  margin-bottom: 15px;
+}
+
+.notification-info {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.notification-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.notification-item {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.notification-item:hover {
+  background-color: #f9f9f9;
+}
+
+.timestamp {
+  font-size: 12px;
+  color: #888;
+  margin-top: 5px;
+}
+
+.no-notification {
+  text-align: center;
+  color: #777;
+  font-size: 14px;
+  padding: 20px 0;
+}
+</style>

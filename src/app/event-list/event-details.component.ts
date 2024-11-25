@@ -170,24 +170,29 @@ export class EventDetailsComponent implements OnInit {
 
   confirmVolunteer() {
     if (this.accountId && this.event?.Event_ID) {
-      this.eventService.joinEvent(this.accountId, this.event.Event_ID).subscribe(
-        () => {
+      this.eventService.joinEvent(this.accountId, this.event.Event_ID).subscribe({
+        next: () => {
           Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: 'You have successfully joined as a volunteer!'
+            text: `You have successfully joined as a volunteer! Please contact ${this.event?.acc_firstname} ${this.event?.acc_lastname} at ${this.event?.acc_email}.`
           });
           this.closeTermsModal();
         },
-        (error) => {
+        error: (error: any) => {
+          const errorMessage = typeof error === 'string' 
+            ? error 
+            : error?.message || 'An unexpected error occurred.';
+          
           Swal.fire({
             icon: 'error',
-            title: 'Oops...',
-            text: error.error.message || 'Error joining event'
+            title: 'Volunteer Failed',
+            text: errorMessage,
+            confirmButtonText: 'OK',
           });
           this.closeTermsModal();
         }
-      );
+      });
     } else {
       Swal.fire({
         icon: 'warning',
@@ -196,6 +201,7 @@ export class EventDetailsComponent implements OnInit {
       });
     }
   }
+  
   
   
   

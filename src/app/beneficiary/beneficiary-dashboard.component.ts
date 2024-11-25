@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from '../_services';
+import { AccountService, NotificationService } from '../_services';
 @Component({
   selector: 'app-beneficiary-dashboard',
   templateUrl: './beneficiary-dashboard.component.html',
@@ -8,9 +8,10 @@ import { AccountService } from '../_services';
 export class BeneficiaryDashboardComponent implements OnInit {
   account: any; // Define the type based on your account structure
 
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService, private notificationService: NotificationService) {}
 
   ngOnInit(): void {
     this.account = this.accountService.accountValue;
+    this.notificationService.loadNotifications();
   }
 }

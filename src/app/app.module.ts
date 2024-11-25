@@ -66,7 +66,7 @@ import { HelpComponent } from './help/help.component';
         AlertComponent,
         HomeComponent,
         LandingPageComponent,
-        TeamMemberComponent,
+        TeamMemberComponent,        
         CampaignComponent, 
         CreateCampaignComponent,
         CampaignDetailsComponent,

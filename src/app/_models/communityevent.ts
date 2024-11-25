@@ -11,4 +11,6 @@ export interface CommunityEvent {
     Event_Image?: string; // Optional for fetching events
     Event_ApprovalStatus: string;
     Admin_Notes?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
 }

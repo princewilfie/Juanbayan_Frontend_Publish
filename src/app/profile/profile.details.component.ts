@@ -26,7 +26,7 @@ export class DetailsComponent implements OnInit {
   selectedBank: string = '';
   accountNumber: string = '';
   banks: string[] = ['Bank of the Philippine Islands', 'GCash', 'PayPal', 'Banco De Oro', 'UnionBank', 'ChinaBank'];
-  amount: number; 
+  amount: number = 0; 
   selectedRequest: Campaign | null = null;
   events: CommunityEvent[] = [];
   joinedEvents: Participant[];
@@ -159,7 +159,7 @@ export class DetailsComponent implements OnInit {
       return;
     }
 
-    if (this.amount == 0) {
+    if (!this.selectedRequest.Campaign_CurrentRaised || this.selectedRequest.Campaign_CurrentRaised <= 0) {
       Swal.fire({
         icon: 'warning',
         title: 'No Funds',
@@ -179,7 +179,7 @@ export class DetailsComponent implements OnInit {
       Acc_number: Number(accountNumber), // Ensure this is a valid number
       Campaign_ID: this.selectedRequest.Campaign_ID,
       acc_id: this.account.id, // Ensure this is not undefined or null
-      Withdraw_Amount: this.amount, // Ensure this is defined and valid
+      Withdraw_Amount: this.selectedRequest.Campaign_CurrentRaised, // Ensure this is defined and valid
     };
 
     this.loading = true;
@@ -210,6 +210,7 @@ export class DetailsComponent implements OnInit {
   
     this.loading = false;
   }
+  
   
 
   filterAccomplishedEvents() {
