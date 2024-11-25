@@ -46,6 +46,7 @@ export class NotificationService {
     );
   }
 
+  
   private loadEventNotifications() {
     this.eventService.getAll().subscribe(
       (events) => {
@@ -67,7 +68,7 @@ export class NotificationService {
         console.error('Error fetching events:', error);
       }
     );
-  }
+  } 
 
   private loadWithdrawNotifications() {
     this.withdrawService.getAll().subscribe(
@@ -92,20 +93,21 @@ export class NotificationService {
 
   private updateNotifications(newNotifications: any[]) {
     const currentNotifications = this.notificationsSource.getValue();
-
-    // Create a Set of existing notification IDs
-    const existingNotificationIds = new Set(currentNotifications.map(n => n.id));
-
-    // Filter new notifications to exclude duplicates
-    const mergedNotifications = newNotifications.map(newNotification => {
-      const existingNotification = currentNotifications.find(n => n.id === newNotification.id);
-      if (existingNotification) {
-        // If the notification exists, update its message and timestamp
-        return { ...existingNotification, ...newNotification };
-      }
-      return newNotification;
-    });
-
+  
+    // Merge new notifications with existing ones, avoiding duplicates by ID
+    const mergedNotifications = [
+      ...currentNotifications.filter(
+        (existingNotification) =>
+          !newNotifications.some((newNotification) => newNotification.id === existingNotification.id)
+      ),
+      ...newNotifications,
+    ];
+  
+    // Sort all notifications by `createdAt` in descending order (latest first)
+    mergedNotifications.sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+  
     // Update the notifications source
     this.notificationsSource.next(mergedNotifications);
   }

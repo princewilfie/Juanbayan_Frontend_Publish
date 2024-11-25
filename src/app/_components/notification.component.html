@@ -1,60 +1,43 @@
-<!-- Notification Dropdown -->
-<li class="nav-item dropdown no-arrow mx-1" (click)="toggleNotificationDropdown()">
-  <a class="nav-link dropdown-toggle" routerLink="/admin" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    <i class="fas fa-bell fa-fw"></i>
-    <span class="badge badge-danger badge-counter">{{ newNotifications.length }}</span>
-  </a>
+<div class="notification-wrapper" (click)="toggleNotificationDropdown()">
+  
+  <div class="nav-link dropdown-toggle">
+    <img
+    class="mt-4 bg-gray"
+    src="https://firebasestorage.googleapis.com/v0/b/ebarangayconnect-cbd22.appspot.com/o/notification.svg?alt=media&token=b3ff34d1-6fea-486a-9fed-a40641c643b8"
+    alt="notification"
+    width="25"
+  />
+  <span class="badge badge-danger badge-counter">{{ notifications.length }}</span>
+  </div>
+
   <!-- Notification Dropdown -->
-  <div *ngIf="showNotificationDropdown" class="notification-dropdown dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" (click)="toggleNotificationDropdown()">
-    <h6 class="dropdown-header">NOTIFICATION</h6>
+  <div *ngIf="showNotificationDropdown" class="notification-dropdown">
+    <div class="dropdown-header">
+      <h5>Notifications</h5>
+    </div>
 
     <!-- No Notifications -->
-    <div *ngIf="newNotifications.length === 0 && earlierNotifications.length === 0" class="no-notification">
+    <div *ngIf="notifications.length === 0" class="no-notification">
       <p>No notifications available.</p>
     </div>
 
-    <!-- New Notifications -->
-    <div *ngIf="newNotifications.length > 0" class="notification-section">
-      <h6 class="notification-info">New</h6>
-      <ul class="notification-list">
-        <li 
-          *ngFor="let notification of newNotifications" 
-          class="notification-item" 
-          (click)="viewNotification(notification)"
-        > 
-          <b>{{ notification.name }}</b> - {{ notification.message }}
-          <p class="timestamp">{{ formatTimestamp(notification.createdAt) }}</p>
-        </li>
-      </ul>
-    </div>
-
-    <!-- Earlier Notifications -->
-    <div *ngIf="earlierNotifications.length > 0" class="notification-section">
-      <h6 class="notification-info">Earlier</h6>
-      <ul class="notification-list">
-        <li 
-          *ngFor="let notification of earlierNotifications" 
-          class="notification-item" 
-          (click)="viewNotification(notification)"
-        >
-          <b>{{ notification.name }}</b> - {{ notification.message }}
-          <p class="timestamp">{{ formatTimestamp(notification.createdAt) }}</p>
-        </li>
-      </ul>
-    </div>
+    <!-- All Notifications -->
+    <ul class="notification-list" *ngIf="notifications.length > 0">
+      <li
+        *ngFor="let notification of notifications"
+        class="notification-item"
+        (click)="viewNotification(notification)"
+      >
+        <b>{{ notification.name }}</b> - {{ notification.message }}
+        <p class="timestamp">{{ formatTimestamp(notification.createdAt) }}</p>
+      </li>
+    </ul>
   </div>
-  <div class="dropdown-item d-flex align-items-center mb-2 mt-0">
-    <div *ngIf="newNotifications.length === 0 && earlierNotifications.length === 0" class="text-truncate font-weight-bold">
-        No notifications available.
-    </div>
 </div>
-</li>
-
-
 
 
 <style>
-  .notification-wrapper {
+ .notification-wrapper {
   position: relative;
   cursor: pointer;
 }
@@ -78,20 +61,14 @@
   margin-bottom: 10px;
 }
 
-.notification-section {
-  margin-bottom: 15px;
-}
-
-.notification-info {
-  font-size: 14px;
-  color: #555;
-  margin-bottom: 5px;
-}
-
 .notification-list {
   list-style: none;
   padding: 0;
   margin: 0;
+
+  /* Make the notification list scrollable */
+  max-height: 250px; /* Adjust the height as needed */
+  overflow-y: auto;
 }
 
 .notification-item {
@@ -116,4 +93,19 @@
   font-size: 14px;
   padding: 20px 0;
 }
+
+/* Optional: Add a scrollbar style for better aesthetics */
+.notification-list::-webkit-scrollbar {
+  width: 8px;
+}
+
+.notification-list::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.notification-list::-webkit-scrollbar-thumb:hover {
+  background-color: #aaa;
+}
+
 </style>

@@ -298,7 +298,8 @@ export class CreateCampaignComponent implements OnInit {
           confirmButtonText: 'OK'
         });
       },
-      error => {
+
+      error => { 
         this.loading = false;
         this.errorMessage = error.message;
 
@@ -311,7 +312,6 @@ export class CreateCampaignComponent implements OnInit {
         });
       }
     );
-    this.notificationService.loadNotifications();
   }
 
   getImagePath(image: string): string {
@@ -385,8 +385,6 @@ export class CreateCampaignComponent implements OnInit {
         confirmButtonText: 'OK'
       });
     }
-
-    this.notificationService.loadNotifications();
   }
 
 
@@ -417,8 +415,8 @@ export class CreateCampaignComponent implements OnInit {
       }
     );
   }
-  
 
+  
   deleteCampaign(campaignId: number) {
     this.campaignService.deleteCampaign(campaignId).subscribe(
       response => {
@@ -445,8 +443,9 @@ export class CreateCampaignComponent implements OnInit {
         });
       }
     );
-  }  
+  }
 
+  
   closeModal(): void {
     if (this.modalRef) {
       this.modalRef.dismiss(); 

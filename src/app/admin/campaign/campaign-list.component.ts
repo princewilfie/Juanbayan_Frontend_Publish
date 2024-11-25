@@ -203,7 +203,7 @@ confirmRejectCampaign(campaignId: number): void {
     };
   
     if (typeof status === 'number') {
-      return statusMap[status] || 'Unknown';
+      return statusMap[status] || 'Inactive';
     }
   
     return status.toLowerCase() === 'active' ? 'Active' : 'Inactive';

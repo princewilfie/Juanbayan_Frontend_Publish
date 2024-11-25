@@ -8,8 +8,7 @@ import { Router } from '@angular/router';
 })
 export class NotificationComponent implements OnInit {
   showNotificationDropdown: boolean = false;
-  newNotifications: any[] = [];
-  earlierNotifications: any[] = [];
+  notifications: any[] = []; // All notifications combined and sorted
 
   constructor(
     private notificationService: NotificationService,
@@ -19,25 +18,24 @@ export class NotificationComponent implements OnInit {
   ngOnInit() {
     this.notificationService.loadNotifications();
     this.notificationService.notifications$.subscribe((notifications) => {
-      this.filterNotifications(notifications);
+      console.log('All Notifications:', notifications);
+      this.notifications = this.sortNotifications(notifications); // Merge and sort notifications
     });
   }
 
-  filterNotifications(notifications: any[]) {
-    const now = new Date();
-    const oneDayInMillis = 24 * 60 * 60 * 1000;
-
-    this.newNotifications = notifications.filter((n) => 
-      !n.seen && new Date(now).getTime() - new Date(n.createdAt).getTime() < oneDayInMillis
-    );
-
-    this.earlierNotifications = notifications.filter((n) => 
-      n.seen || new Date(now).getTime() - new Date(n.createdAt).getTime() >= oneDayInMillis
+  // Sort notifications by createdAt in descending order
+  private sortNotifications(notifications: any[]): any[] {
+    return notifications.sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
   }
 
+  // Handle notification click
   viewNotification(notification: any) {
-    this.notificationService.markAsSeen(notification.id);
+    this.notificationService.markAsSeen(notification.id); // Mark notification as seen
+    this.notificationService.removeNotification(notification.id); // Remove after processing
+
+    // Navigate to the appropriate page based on notification type
     if (notification.id.startsWith('campaign')) {
       this.router.navigate(['/admin/campaigns']);
     } else if (notification.id.startsWith('event')) {
@@ -45,13 +43,13 @@ export class NotificationComponent implements OnInit {
     } else if (notification.id.startsWith('withdraw')) {
       this.router.navigate(['/admin/withdraw']);
     }
-    this.notificationService.removeNotification(notification.id); // Remove processed notifications
   }
 
   toggleNotificationDropdown() {
     this.showNotificationDropdown = !this.showNotificationDropdown;
   }
 
+  // Format timestamp for human-readable display
   formatTimestamp(createdAt: string): string {
     const now = new Date();
     const notificationDate = new Date(createdAt);
