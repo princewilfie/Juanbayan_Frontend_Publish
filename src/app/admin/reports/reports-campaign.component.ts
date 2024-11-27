@@ -2,6 +2,8 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angula
 import { CampaignService } from '../../_services';
 import { Campaign } from '../../_models';
 import { Chart } from 'chart.js/auto';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   templateUrl: './reports-campaign.component.html',
@@ -68,9 +70,35 @@ export class ReportsCampaignComponent implements OnInit, AfterViewInit {
     console.log('Filtered Campaigns:', this.filteredCampaigns); // Log filtered campaigns
     this.updateChart(); // Update the chart with the filtered data
   }
-  
-  
-  
+
+  downloadAsPDF(): void {
+    const doc = new jsPDF();
+
+    // Add title to the PDF
+    doc.setFontSize(18);
+    doc.text('Campaign Reports', 14, 20);
+
+    // Prepare data for the table
+    const tableData = this.filteredCampaigns.map((campaign) => [
+      campaign.Campaign_ID,
+      campaign.Campaign_Name,
+      campaign.Campaign_TargetFund,
+      campaign.Campaign_CurrentRaised,
+      campaign.Category_ID,
+      new Date(campaign.Campaign_Start).toLocaleDateString(),
+      new Date(campaign.Campaign_End).toLocaleDateString(),
+    ]);
+
+    // Add table to the PDF
+    (doc as any).autoTable({
+      head: [['ID', 'Name', 'Target Fund', 'Current Raised', 'Category', 'Start Date', 'End Date']],
+      body: tableData,
+      startY: 30,
+    });
+
+    // Save the PDF
+    doc.save('CampaignReports.pdf');
+  }  
   
 
   createChart(): void {

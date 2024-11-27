@@ -25,6 +25,30 @@
                     <h1 class="h3 mb-2 text-gray-800">Donation Reports</h1>
                     <p class="mb-4">Donation Reports where you can see the total number of donations and the details.</p>
 
+                    <div class="mb-4">
+                      <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="startDate">Start Date</label>
+                            <input type="date" id="startDate" [(ngModel)]="startDate" (change)="filterDonations()" class="form-control">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="endDate">End Date</label>
+                            <input type="date" id="endDate" [(ngModel)]="endDate" (change)="filterDonations()" class="form-control">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="searchTerm">Search</label>
+                            <input type="text" id="searchTerm" [(ngModel)]="searchTerm" (input)="filterDonations()" placeholder="Search by name..." class="form-control">
+                        </div>
+                    </div>
+                    
+                    <h4>Total Donations: ₱{{ totalDonations }}</h4>
+  
+                    <button class="btn btn-primary" (click)="pdfdownload()">
+                      <i class="fas fa-download"></i> Download PDF
+                  </button>
+                    </div>
+                
+
                      <!-- Table Row -->
                      <div class="row">
                         <div class="col-xl-12 col-lg-5">
@@ -46,7 +70,7 @@
                                               </tr>
                                           </thead>
                                           <tbody>
-                                            <tr *ngFor="let donation of donations">
+                                            <tr *ngFor="let donation of filteredDonations">
                                               <td>{{ donation.donation_id }}</td>
                                               <td>{{ donation.acc_firstname }}</td>
                                               <td>{{ donation.acc_lastname }}</td>

@@ -2,6 +2,9 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angula
 import { ParticipantService } from '../../_services';
 import { Participant } from '../../_models/participant';
 import { Chart } from 'chart.js/auto';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
+
 
 @Component({
   templateUrl: './reports-participant.component.html',
@@ -11,6 +14,9 @@ export class ReportsParticipantComponent implements OnInit, AfterViewInit {
   participants: Participant[] = [];
   filteredParticipants: Participant[] = [];
   chart: Chart | undefined;
+  eventFilter: string = '';
+  nameFilter: string = '';
+  dateFilter: string = '';
 
   @ViewChild('volunteerChart') volunteerChart!: ElementRef<HTMLCanvasElement>;
 
@@ -33,6 +39,32 @@ export class ReportsParticipantComponent implements OnInit, AfterViewInit {
     });
   }
 
+  downloadPDF(): void {
+    const doc = new jsPDF();
+  
+    // Add title
+    doc.text('Participant Report', 14, 10);
+  
+    // Prepare data for the table
+    const tableData = this.filteredParticipants.map(participant => [
+      participant.Participant_ID,
+      participant.acc_firstname,
+      participant.acc_lastname,
+      participant.Event_Name,
+      new Date(participant.joinedAt).toLocaleDateString(),
+    ]);
+  
+    // Add table
+    (doc as any).autoTable({
+      head: [['ID', 'First Name', 'Last Name', 'Event Name', 'Joined Date']],
+      body: tableData,
+    });
+  
+    // Download the PDF
+    doc.save('JuanBayan-Participants.pdf');
+  }
+  
+
   // Convert data to CSV and trigger download
   private downloadCSV(data: any[], fileName: string): void {
     const csvContent = data.map(row => Object.values(row).join(",")).join("\n");
@@ -43,6 +75,22 @@ export class ReportsParticipantComponent implements OnInit, AfterViewInit {
     a.download = fileName;
     a.click();
     window.URL.revokeObjectURL(url);
+  }
+
+  applyFilters(): void {
+    this.filteredParticipants = this.participants.filter(participant => {
+      const matchesEvent = this.eventFilter ? participant.Event_Name.toLowerCase().includes(this.eventFilter.toLowerCase()) : true;
+      const matchesName = this.nameFilter
+        ? `${participant.acc_firstname} ${participant.acc_lastname}`.toLowerCase().includes(this.nameFilter.toLowerCase())
+        : true;
+      const matchesDate = this.dateFilter
+        ? new Date(participant.joinedAt).toISOString().split('T')[0] === this.dateFilter
+        : true;
+  
+      return matchesEvent && matchesName && matchesDate;
+    });
+  
+    this.updateChart();
   }
 
   // Download Campaigns Report

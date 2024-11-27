@@ -47,6 +47,7 @@
                         <a class="collapse-item" routerLink="/admin/reports/reports-donation" routerLinkActive="active">Donations</a>
                         <a class="collapse-item" routerLink="/admin/reports/reports-revenue" routerLinkActive="active">Revenue</a>
                         <a class="collapse-item" routerLink="/admin/reports/reports-profiling" routerLinkActive="active">Profiling</a>
+                        <a class="collapse-item" routerLink="/admin/reports/reports-donationhistory" routerLinkActive="active">Donation History</a>
                     </div>
                 </div>
             </li>
@@ -179,10 +180,11 @@
                         </li>
                     </ul>
                 </nav>
+                <div class="container">
+                    <router-outlet></router-outlet>
+                </div>
                 <!-- End of Topbar -->
             </div>
-        <div class="container">
-            <router-outlet></router-outlet>
         </div>
     </div>
 </div>

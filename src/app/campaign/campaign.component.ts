@@ -72,7 +72,14 @@ export class CampaignComponent implements OnInit {
 
   fetchApprovedCampaigns(): void {
     this.campaignService.getAllCampaigns().subscribe((campaigns: Campaign[]) => {
-      this.campaigns = campaigns.filter(campaign => campaign.Campaign_Status === 1);
+
+      const currentDate = new Date();
+
+
+       this.campaigns = campaigns.filter(campaign => 
+      campaign.Campaign_Status === 1 && 
+      new Date(campaign.Campaign_End) >= currentDate
+    );
       
       // Calculate Progress_Percentage for each campaign
       this.campaigns = this.campaigns.map(campaign => {

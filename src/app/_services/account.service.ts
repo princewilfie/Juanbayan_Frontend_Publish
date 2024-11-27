@@ -178,4 +178,11 @@ export class AccountService {
     getAllDonors(): Observable<Account[]> {
         return this.http.get<Account[]>(`${baseUrl}/donors`);
     }
+
+    getBeneficiaryDonations(firstName: string, lastName: string): Observable<any> {
+        return this.http.post<any>(`${baseUrl}/beneficiary-donations`, {
+          firstName,
+          lastName,
+        });
+      }
 }

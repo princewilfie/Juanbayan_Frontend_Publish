@@ -2,6 +2,8 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angula
 import { AccountService } from '../../_services';
 import { Account } from '../../_models';
 import { Chart } from 'chart.js/auto';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-accounts-report',
@@ -12,6 +14,11 @@ export class ReportsAccountComponent implements OnInit, AfterViewInit {
   accounts: Account[] = [];
   filteredAccounts: Account[] = [];
   chart: Chart | undefined;
+  filter = {
+    name: '',
+    accType: '',
+    status: ''
+  };
 
   // Access the canvas element using ViewChild
   @ViewChild('accountsChart') accountsChart!: ElementRef<HTMLCanvasElement>;
@@ -32,6 +39,39 @@ export class ReportsAccountComponent implements OnInit, AfterViewInit {
       this.filteredAccounts = accounts;
       this.updateChart();
     });
+  }
+
+  filterAccounts(): void {
+    this.filteredAccounts = this.accounts.filter(account => {
+      const matchesName = !this.filter.name || `${account.acc_firstname} ${account.acc_lastname}`.toLowerCase().includes(this.filter.name.toLowerCase());
+      const matchesType = !this.filter.accType || account.acc_type === this.filter.accType;
+      const matchesStatus = !this.filter.status || account.acc_status === this.filter.status;
+      return matchesName && matchesType && matchesStatus;
+    });
+    this.updateChart();
+  }
+
+  downloadPDF(): void {
+    const doc = new jsPDF();
+    doc.text('Account Reports', 14, 20);
+
+    const tableData = this.filteredAccounts.map(account => [
+      account.id,
+      account.acc_firstname,
+      account.acc_lastname,
+      account.acc_email,
+      account.acc_totalpoints,
+      account.acc_type,
+      account.acc_status
+    ]);
+
+    (doc as any).autoTable({
+      head: [['ID', 'First Name', 'Last Name', 'Email', 'Total Points', 'Type', 'Status']],
+      body: tableData,
+      startY: 30,
+    });
+
+    doc.save('JuanBayan-Accounts.pdf');
   }
 
    // Convert data to CSV and trigger download

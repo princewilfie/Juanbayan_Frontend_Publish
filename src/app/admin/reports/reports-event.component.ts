@@ -2,6 +2,8 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angula
 import { EventService } from '../../_services';
 import { CommunityEvent } from '../../_models/communityevent';
 import { Chart } from 'chart.js/auto';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-reports-event',
@@ -60,15 +62,50 @@ export class ReportsEventComponent implements OnInit, AfterViewInit {
       this.downloadCSV(data, 'JuanBayan-Events.csv');
     });
   }
+
+  downloadPDF(): void {
+    const doc = new jsPDF();
+  
+    // Add title
+    doc.text('Event Report', 14, 10);
+  
+    // Prepare data for the table
+    const tableData = this.filteredEvents.map(event => [
+      event.Event_ID,
+      event.Event_Name,
+      event.Event_Location,
+      new Date(event.Event_Start_Date).toLocaleDateString(),
+      new Date(event.Event_End_Date).toLocaleDateString(),
+    ]);
+  
+    // Add table
+    (doc as any).autoTable({
+      head: [['ID', 'Name', 'Location', 'Start Date', 'End Date']],
+      body: tableData,
+    });
+  
+    // Download the PDF
+    doc.save('JuanBayan-Events.pdf');
+  }
+
   filterEvents(): void {
     this.filteredEvents = this.events.filter(event => {
-      return (!this.filter.id || event.Event_ID === this.filter.id) &&
-             (!this.filter.eventName || event.Event_Name.includes(this.filter.eventName)) &&
-             (!this.filter.startDate || new Date(event.Event_Start_Date) >= this.filter.startDate) &&
-             (!this.filter.endDate || new Date(event.Event_End_Date) <= this.filter.endDate);
+      const eventStartDate = new Date(event.Event_Start_Date);
+      const eventEndDate = new Date(event.Event_End_Date);
+
+      // Check for filter criteria
+      const idMatch = !this.filter.id || event.Event_ID === this.filter.id;
+      const nameMatch = !this.filter.eventName || event.Event_Name.toLowerCase().includes(this.filter.eventName.toLowerCase());
+      const startDateMatch = !this.filter.startDate || eventStartDate >= this.filter.startDate;
+      const endDateMatch = !this.filter.endDate || eventEndDate <= this.filter.endDate;
+
+      return idMatch && nameMatch && startDateMatch && endDateMatch;
     });
+
+    // Update the chart with filtered data
     this.updateChart();
-  }
+}
+
 
   createChart(): void {
     const ctx = this.eventsChart?.nativeElement.getContext('2d');

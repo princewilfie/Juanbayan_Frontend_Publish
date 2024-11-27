@@ -16,18 +16,43 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid mt-5 mb-5">
-
+                  
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Campaign Reports</h1>
                     <p class="mb-4">Campaign Reports where you can see the total number of campaigns and the details.</p>
 
+                    <!-- Default Card Example -->
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-header bg-dark text-light bold">
+                            Filter
+                        </div>
+                        <div class="card-body">
+                          <div class="row mb-4">
+                            <div class="col">
+                              <input type="text" class="form-control" placeholder="Search Campaign Name" [(ngModel)]="filter.campaignName" (input)="filterCampaigns()" />
+                            </div>
+                            <div class="col">
+                              <input type="date" class="form-control" [(ngModel)]="filter.startDate" (change)="filterCampaigns()" />
+                            </div>
+                            <div class="col">
+                              <input type="date" class="form-control" [(ngModel)]="filter.endDate" (change)="filterCampaigns()" />
+                            </div>
+                          </div>
+      
+                          <button class="btn btn-primary" (click)="downloadAsPDF()">Download PDF</button>
+                        </div>
+                    </div>
+
+                    
+
+
                     <!-- Content Row -->
                     <div class="row">
                       <div class="col-xl-12 col-lg-5">
-                          <div class="card shadow mb-4">
+                          <div class="card mb-4">
                      <!-- Table Row -->
                      <div class="row">
-                        <div class="col-xl-12 col-lg-5">
+                        <div class="col-xl-12 col-lg-5 ">
                             <!-- Bar Chart -->
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3 bg-dark">
@@ -40,7 +65,6 @@
                                                 <tr>
                                                     <th>ID</th>
                                                     <th>Name</th>
-                                                    <th>Description</th>
                                                     <th>Target Fund</th>
                                                     <th>Current Raised</th>
                                                     <th>Category</th>
@@ -52,7 +76,6 @@
                                                 <tr *ngFor="let campaign of filteredCampaigns">
                                                     <td>{{ campaign.Campaign_ID }}</td>
                                                     <td>{{ campaign.Campaign_Name }}</td>
-                                                    <td>{{ campaign.Campaign_Description }}</td>
                                                     <td>₱{{campaign.Campaign_TargetFund}}</td>
                                                     <td>₱{{campaign.Campaign_CurrentRaised}}</td>
                                                     <td>{{ campaign.Category_ID }}</td>

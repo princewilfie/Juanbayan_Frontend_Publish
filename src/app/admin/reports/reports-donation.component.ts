@@ -2,6 +2,8 @@ import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angula
 import { DonationService } from '../../_services';
 import { Donation } from '../../_models/donation';
 import { Chart } from 'chart.js/auto';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   templateUrl: './reports-donation.component.html',
@@ -9,6 +11,12 @@ import { Chart } from 'chart.js/auto';
 })
 export class ReportsDonationComponent implements OnInit, AfterViewInit {
   donations: Donation[] = [];
+  filteredDonations: Donation[] = [];
+  totalDonations: number = 0;
+  startDate!: string;
+  endDate!: string;
+  searchTerm: string = '';
+
   @ViewChild('donationChart') donationChart!: ElementRef<HTMLCanvasElement>;
   chart: Chart | undefined;
 
@@ -26,9 +34,60 @@ export class ReportsDonationComponent implements OnInit, AfterViewInit {
   loadDonations(): void {
     this.donationService.getAllDonations().subscribe((donations) => {
       this.donations = donations;
+      this.filteredDonations = donations;
+      this.calculateTotal();
       this.updateChart();
     });
   }
+
+
+  filterDonations(): void {
+    const start = this.startDate ? new Date(this.startDate) : null;
+    const end = this.endDate ? new Date(this.endDate) : null;
+
+    this.filteredDonations = this.donations.filter(donation => {
+      const donationDate = new Date(donation.donation_date);
+      const matchesDate =
+        (!start || donationDate >= start) && (!end || donationDate <= end);
+      const matchesSearch = donation.acc_firstname.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+                            donation.acc_lastname.toLowerCase().includes(this.searchTerm.toLowerCase());
+      return matchesDate && matchesSearch;
+    });
+
+    this.calculateTotal();
+  }
+
+  calculateTotal(): void {
+    this.totalDonations = this.filteredDonations.reduce((sum, donation) => sum + donation.donation_amount, 0);
+  }
+
+  pdfdownload(): void {
+    const doc = new jsPDF();
+    let finalY = 20; // Initial Y position for the content
+
+    // Table generation
+    (doc as any).autoTable({
+        head: [['Donation ID', 'First Name', 'Last Name', 'Amount', 'Donation Date']],
+        body: this.filteredDonations.map(d => [
+            d.donation_id,
+            d.acc_firstname,
+            d.acc_lastname,
+            `P${d.donation_amount}`,
+            new Date(d.donation_date).toLocaleDateString()
+        ]),
+        startY: finalY,
+        didDrawCell: (data: any) => {
+            finalY = data.cursor.y; // Capture the current Y position
+        },
+    });
+
+    // Add text after the table
+    doc.text(`Total Donations: P${this.totalDonations}`, 14, finalY + 10);
+
+    // Save the PDF
+    doc.save('JuanBayan-Donations.pdf');
+}
+
 
   // Convert data to CSV and trigger download
   private downloadCSV(data: any[], fileName: string): void {

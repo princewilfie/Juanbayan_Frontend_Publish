@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../../_services';
 import { Account } from '../../_models';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-reports-profiling',
@@ -43,6 +45,67 @@ export class ReportsProfilingComponent implements OnInit {
     });
   }
 
+  downloadDonorPDF(): void {
+    const doc = new jsPDF();
+    let finalY = 20; // Initial Y position for the content
+  
+    // Table generation
+    (doc as any).autoTable({
+      head: [['ID', 'First Name', 'Last Name', 'Email', 'Phone', 'Campaign', 'Donation Amount']],
+      body: this.flattenedDonors.map(donor => [
+        donor.id,
+        donor.acc_firstname,
+        donor.acc_lastname,
+        donor.acc_email,
+        donor.acc_pnumber,
+        donor.campaign_name,
+        `P${donor.donation_amount.toFixed(2)}`,
+      ]),
+      startY: finalY,
+      didDrawCell: (data: any) => {
+        finalY = data.cursor.y; // Capture the current Y position
+      },
+    });
+  
+    // Add text after the table
+    doc.text(`Total Donors: ${this.flattenedDonors.length}`, 14, finalY + 10);
+    doc.text(`Total Donations: P${this.totalDonations.toFixed(2)}`, 14, finalY + 20);
+  
+    // Save the PDF
+    doc.save('JuanBayan-Donors.pdf');
+  }
+  
+  downloadBeneficiaryPDF(): void {
+    const doc = new jsPDF();
+    let finalY = 20; // Initial Y position for the content
+  
+    // Table generation
+    (doc as any).autoTable({
+      head: [['ID', 'First Name', 'Last Name', 'Email', 'Phone', 'Campaign', 'Amount Raised']],
+      body: this.flattenedBeneficiaries.map(beneficiary => [
+        beneficiary.id,
+        beneficiary.acc_firstname,
+        beneficiary.acc_lastname,
+        beneficiary.acc_email,
+        beneficiary.acc_pnumber,
+        beneficiary.campaign_name,
+        `P${beneficiary.campaign_currentraised.toFixed(2)}`,
+      ]),
+      startY: finalY,
+      didDrawCell: (data: any) => {
+        finalY = data.cursor.y; // Capture the current Y position
+      },
+    });
+  
+    // Add text after the table
+    doc.text(`Total Beneficiaries: ${this.flattenedBeneficiaries.length}`, 14, finalY + 10);
+    doc.text(`Total Help Received: P${this.totalHelpReceived.toFixed(2)}`, 14, finalY + 20);
+  
+    // Save the PDF
+    doc.save('JuanBayan-Beneficiaries.pdf');
+  }
+  
+
   flattenDonations(donors: any[]): any[] {
     return donors
       .map((donor) =>
@@ -76,7 +139,7 @@ export class ReportsProfilingComponent implements OnInit {
   }
   
   filterDonors(): void {
-    this.filteredDonors = this.donors.filter((donor) =>
+    this.flattenedDonors = this.donors.filter((donor) =>
       `${donor.acc_firstname} ${donor.acc_lastname}`
         .toLowerCase()
         .includes(this.donorSearchTerm.toLowerCase())
@@ -85,7 +148,7 @@ export class ReportsProfilingComponent implements OnInit {
   }
 
   filterBeneficiaries(): void {
-    this.filteredBeneficiaries = this.beneficiaries.filter((beneficiary) =>
+    this.flattenedBeneficiaries = this.beneficiaries.filter((beneficiary) =>
       `${beneficiary.acc_firstname} ${beneficiary.acc_lastname}`
         .toLowerCase()
         .includes(this.beneficiarySearchTerm.toLowerCase())
@@ -94,14 +157,14 @@ export class ReportsProfilingComponent implements OnInit {
   }
 
   calculateTotalDonations(): void {
-    this.totalDonations = this.donors.reduce((sum, donor) => {
-      return sum + (donor.Donations?.reduce((donationSum, donation) => donationSum + donation.donation_amount, 0) || 0);
+    this.totalDonations = this.flattenedDonors.reduce((sum, donor) => {
+      return sum + (donor.donation_amount || 0); // Use the flattenedDonors donation_amount directly
     }, 0);
   }
   
   calculateTotalHelpReceived(): void {
-    this.totalHelpReceived = this.beneficiaries.reduce((sum, beneficiary) => {
-      return sum + (beneficiary.Campaigns?.reduce((campaignSum, campaign) => campaignSum + campaign.Campaign_CurrentRaised, 0) || 0);
+    this.totalHelpReceived = this.flattenedBeneficiaries.reduce((sum, beneficiary) => {
+      return sum + (beneficiary.campaign_currentraised || 0); // Use the flattenedBeneficiaries campaign_currentraised directly
     }, 0);
   }
   

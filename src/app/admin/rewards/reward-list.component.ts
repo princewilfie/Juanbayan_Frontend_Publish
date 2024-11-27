@@ -113,9 +113,12 @@ export class RewardListComponent implements OnInit {
   onFileChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input?.files?.length) {
-      this.selectedFileName = input.files[0].name;
+      const file = input.files[0];
+      this.rewardForm.patchValue({ reward_Image: file });
+      this.selectedFileName = file.name;
     } else {
       this.selectedFileName = null;
+      this.rewardForm.patchValue({ reward_Image: null });
     }
   }
 

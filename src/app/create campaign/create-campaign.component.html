@@ -38,7 +38,6 @@
                   (error)="this.src='assets/jb-symbol-logo.png'">
                 <div class="card-body d-flex flex-column">
                   <h5 class="card-title text-dark">{{ campaign.Campaign_Name }}</h5>
-                  <p class="card-text text-muted">{{ campaign.Campaign_Description }}</p>
                   <p><strong>Goal: ₱{{ campaign.Campaign_TargetFund }}</strong></p>
                   <div *ngIf="campaign.Campaign_ApprovalStatus === 'Approved'" class="text-success mt-2">
                     <strong>Approved</strong>
@@ -65,7 +64,6 @@
                   (error)="this.src='assets/jb-symbol-logo.png'">
                 <div class="card-body d-flex flex-column">
                   <h5 class="card-title text-dark">{{ campaign.Campaign_Name }}</h5>
-                  <p class="card-text text-muted">{{ campaign.Campaign_Description }}</p>
                   <p><strong>Goal: ₱{{ campaign.Campaign_TargetFund }}</strong></p>
                   <div *ngIf="campaign.Campaign_ApprovalStatus === 'Waiting For Approval'" class="text-warning mt-2">
                     <strong>Pending for Approval</strong>
@@ -90,7 +88,6 @@
                   (error)="this.src='assets/jb-symbol-logo.png'">
                 <div class="card-body d-flex flex-column">
                   <h5 class="card-title text-dark">{{ campaign.Campaign_Name }}</h5>
-                  <p class="card-text text-muted">{{ campaign.Campaign_Description }}</p>
                   <p><strong>Goal: ₱{{ campaign.Campaign_TargetFund }}</strong></p>
                   <button type="button" class="btn btn-danger mt-3" (click)="deleteCampaign(campaign.Campaign_ID)">Delete</button>
                   <div *ngIf="campaign.Campaign_ApprovalStatus === 'Rejected'" class="text-danger mt-2">
@@ -115,7 +112,6 @@
                   (error)="this.src='assets/jb-symbol-logo.png'">
                 <div class="card-body d-flex flex-column">
                   <h5 class="card-title text-dark">{{ campaign.Campaign_Name }}</h5>
-                  <p class="card-text text-muted">{{ campaign.Campaign_Description }}</p>
                   <p><strong>Goal: ₱{{ campaign.Campaign_TargetFund }}</strong></p>
                   <div *ngIf="campaign.Campaign_ApprovalStatus === 'Done'" class="text-success mt-2">
                     <strong>Done</strong>

@@ -37,7 +37,6 @@
                 <table class="table table-striped" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <th scope="col">Event Name</th>
-                    <th scope="col">Description</th>
                     <th scope="col">Start Date</th>
                     <th scope="col">End Date</th>
                     <th scope="col">Location</th>
@@ -49,7 +48,6 @@
                     <ng-container *ngIf="filteredEvents.length > 0; else noResults">
                       <tr *ngFor="let event of filteredEvents">
                         <td>{{ event.Event_Name }}</td>
-                        <td>{{ event.Event_Description }}</td>
                         <td>{{ event.Event_Start_Date | date:'MM/dd/yyyy' }}</td>
                         <td>{{ event.Event_End_Date | date:'MM/dd/yyyy' }}</td>
                         <td>{{ event.Event_Location }}</td>

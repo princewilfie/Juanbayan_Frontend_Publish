@@ -1,0 +1,59 @@
+<div class="container mt-4">
+    <h2>Donation History by Beneficiary</h2>
+  
+    <!-- Search Form -->
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="First Name"
+          [(ngModel)]="firstName"
+        />
+      </div>
+      <div class="col-md-4">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Last Name"
+          [(ngModel)]="lastName"
+        />
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-primary w-100" (click)="fetchDonations()">
+          Generate Report
+        </button>
+      </div>
+    </div>
+  
+    <!-- Report -->
+    <div *ngIf="donationData" class="mt-4">
+      <h4>Beneficiary: {{ donationData.beneficiary.firstName }} {{ donationData.beneficiary.lastName }}</h4>
+      <h5>Campaigns:</h5>
+      <ul>
+        <li *ngFor="let campaign of donationData.campaigns">
+          <strong>{{ campaign.name }}</strong>
+        </li>
+      </ul>
+  
+      <h5>Donations:</h5>
+      <table class="table table-bordered mt-3">
+        <thead>
+          <tr>
+            <th>Donor Name</th>
+            <th>Campaign</th>
+            <th>Amount (P)</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let donation of donationData.donations">
+            <td>{{ donation.donorFirstName }} {{ donation.donorLastName }}</td>
+            <td>{{ donation.campaignName }}</td>
+            <td>{{ donation.donationAmount }}</td>
+            <td>{{ donation.donationDate | date: 'mediumDate' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

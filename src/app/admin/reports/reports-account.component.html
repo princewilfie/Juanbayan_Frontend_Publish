@@ -24,6 +24,35 @@
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Account Reports</h1>
                     <p class="mb-4">Account Reports where you can see the total number of users and the details.</p>
+
+                    <!-- Filter Section -->
+                    <div class="row mb-3">
+                      <div class="col-md-4">
+                        <input type="text" class="form-control" placeholder="Search by Name" [(ngModel)]="filter.name" (input)="filterAccounts()" />
+                      </div>
+                      <div class="col-md-4">
+                        <select class="form-control" [(ngModel)]="filter.accType" (change)="filterAccounts()">
+                          <option value="">Filter by Type</option>
+                          <option value="Admin">Admin</option>
+                          <option value="Donor">Donor</option>
+                          <option value="Beneficiary">Beneficiary</option>
+                        </select>
+                      </div>
+                      <div class="col-md-4">
+                        <select class="form-control" [(ngModel)]="filter.status" (change)="filterAccounts()">
+                          <option value="">Filter by Status</option>
+                          <option value="Active">Active</option>
+                          <option value="Inactive">Inactive</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <!-- Add Download PDF Button -->
+                    <div class="row mb-3">
+                      <div class="col-md-12 text-end">
+                        <button class="btn btn-primary" (click)="downloadPDF()">Download PDF</button>
+                      </div>
+                    </div>
                      <!-- Table Row -->
                      <div class="row">
                         <div class="col-xl-12 col-lg-5">

@@ -298,17 +298,15 @@ export class CreateCampaignComponent implements OnInit {
           confirmButtonText: 'OK'
         });
       },
-
-      error => { 
-        this.loading = false;
-        this.errorMessage = error.message;
-
-        // SweetAlert failure for creating a campaign
+      error => {
+        this.loading = false; // Ensure loading is set to false on error
+        const errorMessage = typeof error === 'string' ? error : 'An unexpected error occurred.';
+        // Display SweetAlert with the error message
         Swal.fire({
           icon: 'error',
           title: 'Campaign Creation Failed',
-          html: `You have reached the maximum of 2 campaigns this month. For more information or assistance, please contact us at <a href="mailto:juanbayan.ph@gmail.com" style="color: #007bff;">juanbayan.ph@gmail.com</a>.`,
-          confirmButtonText: 'OK'
+          text: errorMessage, // Directly show the string error
+          confirmButtonText: 'OK',
         });
       }
     );

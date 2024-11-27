@@ -8,6 +8,7 @@ import { ReportsParticipantComponent } from './reports-participant.component';
 import { ReportsDonationComponent } from './reports-donation.component';
 import { ReportsRevenueComponent } from './reports-revenue.component';
 import { ReportsProfilingComponent } from './reports-profiling.component';
+import { ReportsDonationHistoryComponent } from './reports-dohistory.component';
 
 const routes: Routes = [
   { path: '', component: ReportsComponent },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'reports-participant', component: ReportsParticipantComponent },
   { path: 'reports-donation', component: ReportsDonationComponent },
   { path: 'reports-revenue', component: ReportsRevenueComponent},
-  { path: 'reports-profiling', component: ReportsProfilingComponent}
+  { path: 'reports-profiling', component: ReportsProfilingComponent},
+  { path: 'reports-donationhistory', component: ReportsDonationHistoryComponent }
 ];
 
 @NgModule({

@@ -5,7 +5,7 @@
   <div class="card shadow mb-4">
     <div class="card-header py-3 bg-dark d-flex justify-content-between align-items-center">
       <h6 class="m-0 font-weight-bold text-light">Donors</h6>
-      <button class="btn btn-light" (click)="downloadCSV(filteredDonors, 'Donors')">Download CSV</button>
+      <button class="btn btn-light" (click)="downloadDonorPDF()">Download PDF</button>
     </div>
     <div class="card-body">
       <!-- Search -->
@@ -47,7 +47,7 @@
       </div>
       <!-- Summary -->
       <div class="mt-3">
-        <p>Total Donors: {{ donors.length }}</p>
+        <p>Total Donors: {{ flattenedDonors.length }}</p>
         <p>Total Donations: ₱{{ totalDonations }}.00</p>
       </div>
     </div>
@@ -56,8 +56,8 @@
   <!-- Beneficiaries Section -->
   <div class="card shadow mb-4">
     <div class="card-header py-3 bg-dark d-flex justify-content-between align-items-center">
-      <h6 class="m-0 font-weight-bold text-light">Beneficiaries</h6>
-      <button class="btn btn-light" (click)="downloadCSV(filteredBeneficiaries, 'Beneficiaries')">Download CSV</button>
+      <h6 class="m-0 font-weight-bold text-light">Beneficiaries/Representative</h6>
+      <button class="btn btn-light" (click)="downloadBeneficiaryPDF()">Download PDF</button>
     </div>
     <div class="card-body">
       <!-- Search -->
@@ -99,7 +99,7 @@
       </div>
       <!-- Summary -->
       <div class="mt-3">
-        <p>Total Beneficiaries: {{ beneficiaries.length }}</p>
+        <p>Total Beneficiaries: {{ flattenedBeneficiaries.length }}</p>
         <p>Total Help Received: ₱{{ totalHelpReceived }}.00</p>
       </div>
     </div>

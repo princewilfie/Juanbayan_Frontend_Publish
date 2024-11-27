@@ -25,6 +25,23 @@
                     <h1 class="h3 mb-2 text-gray-800">Volunteer Reports</h1>
                     <p class="mb-4">Volunteer Reports where you can see the total number of volunteers and the details.</p>
 
+                    <div class="mb-4">
+                      <!-- Filters -->
+                    <div class="mb-3 row">
+                      <div class="col-md-4">
+                        <input type="text" class="form-control" placeholder="Search by Event Name" [(ngModel)]="eventFilter" (input)="applyFilters()" />
+                      </div>
+                      <div class="col-md-4">
+                        <input type="text" class="form-control" placeholder="Search by Participant Name" [(ngModel)]="nameFilter" (input)="applyFilters()" />
+                      </div>
+                      <div class="col-md-4">
+                        <input type="date" class="form-control" [(ngModel)]="dateFilter" (change)="applyFilters()" />
+                      </div>
+                    </div>
+
+                    <button class="btn btn-primary" (click)="downloadPDF()">Download PDF</button>
+                    </div>
+
                      <!-- Table Row -->
                      <div class="row">
                       <div class="col-xl-12 col-lg-5">

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DonationService } from '../../_services';
 import { ChartData, ChartOptions } from 'chart.js';
 import { Chart } from 'chart.js';
+import { jsPDF } from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-reports-revenue',
@@ -44,6 +46,52 @@ export class ReportsRevenueComponent implements OnInit {
     );
   }
   
+  generatePDF(): void {
+    const doc = new jsPDF();
+    let finalY = 10; // Starting Y position for content
+
+    // Add the title
+    doc.setFontSize(18);
+    doc.text('Revenue Reports', 14, finalY);
+    finalY += 10;
+
+    // Add description
+    doc.setFontSize(12);
+    finalY += 10;
+
+    // Add Fee Amounts Table
+    (doc as any).autoTable({
+      head: [['Donation ID', 'Campaign Name', 'Fee Amount', 'Date']],
+      body: this.feeAmounts.map(fee => [
+        fee.donation_id,
+        fee.Campaign_Name,
+        `P${fee.fee_amount.toFixed(2)}`,
+        new Date(fee.donation_date).toLocaleDateString(),
+      ]),
+      startY: finalY,
+      theme: 'grid',
+    });
+
+    // Capture the Y position after the table
+    finalY = (doc as any).lastAutoTable.finalY + 10;
+
+    // Add Total Revenue
+    doc.setFontSize(14);
+    doc.text(`Total Fee Amount: P${this.totalFeeAmount.toFixed(2)}`, 14, finalY);
+    finalY += 20;
+
+    // Add Bar Chart
+    const chartCanvas = document.getElementById('barChartCanvas') as HTMLCanvasElement;
+    if (chartCanvas) {
+      html2canvas(chartCanvas).then(canvas => {
+        const chartImg = canvas.toDataURL('image/png');
+        doc.addImage(chartImg, 'PNG', 14, finalY, 180, 80); // Adjust dimensions as needed
+        doc.save('Revenue-Report.pdf');
+      });
+    } else {
+      console.error('Bar chart canvas not found.');
+    }
+  }
   prepareChartData(): void {
     const monthlyRevenue: { [key: string]: number } = {};
     const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];

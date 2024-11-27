@@ -10,6 +10,7 @@ import { ReportsParticipantComponent } from './reports-participant.component';
 import { ReportsDonationComponent } from './reports-donation.component';
 import { ReportsRevenueComponent } from './reports-revenue.component';
 import { ReportsProfilingComponent } from './reports-profiling.component';
+import { ReportsDonationHistoryComponent } from './reports-dohistory.component';
 
 
 @NgModule({
@@ -21,8 +22,8 @@ import { ReportsProfilingComponent } from './reports-profiling.component';
     ReportsParticipantComponent,
     ReportsDonationComponent,
     ReportsRevenueComponent,
-    ReportsProfilingComponent
-  
+    ReportsProfilingComponent,
+    ReportsDonationHistoryComponent
     
 
   ],

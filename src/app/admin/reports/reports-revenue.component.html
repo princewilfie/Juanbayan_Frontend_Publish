@@ -15,13 +15,17 @@
                 <thead>
                   <tr>
                     <th>Donation ID</th>
+                    <th>Campaign Name</th>
                     <th>Fee Amount</th>
+                    <th>Date</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let fee of feeAmounts">
                     <td>{{ fee.donation_id }}</td>
+                    <td>{{fee.Campaign_Name}}</td>
                     <td>₱{{fee.fee_amount}}</td>
+                    <td>{{fee.donation_date | date}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -41,7 +45,7 @@
           <div class="card-body">
             <h4>Total Fee Amount: ₱{{totalFeeAmount}}</h4>
             <div class="download-button mt-4">
-              <button class="btn btn-primary" (click)="downloadReport()">Download Report</button>
+              <button class="btn btn-primary" (click)="generatePDF()">Download PDF</button>
             </div>
           </div>
         </div>

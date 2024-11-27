@@ -24,6 +24,32 @@
                     <!-- Page Heading -->
                     <h1 class="h3 mb-2 text-gray-800">Event Reports</h1>
                     <p class="mb-4">Event Reports where you can see the total number of events and the details.</p>
+                    <!-- Default Card Example -->
+                    <div class="card mb-4">
+                      <div class="card-header bg-dark text-light text-bold">
+                          Filter
+                      </div>
+                      <div class="card-body">
+                        <div class="row mb-4">
+                          <div class="col">
+                            <input type="text" class="form-control" placeholder="Event Name" [(ngModel)]="filter.eventName" (input)="filterEvents()" />
+
+                          </div>
+                          <div class="col">
+                            <input type="date" class="form-control" placeholder="Start Date" [(ngModel)]="filter.startDate" (change)="filterEvents()" />
+
+                          </div>
+                          <div class="col">
+                            <input type="date" class="form-control" placeholder="End Date" [(ngModel)]="filter.endDate" (change)="filterEvents()" />
+
+                          </div>
+                        </div>
+                      <button (click)="downloadPDF()" class="btn btn-primary">Download PDF</button>
+                      </div>
+                  </div>
+                    
+
+                                  
                     <!-- Table Row -->
                     <div class="row">
                         <div class="col-xl-12 col-lg-5">
@@ -39,7 +65,6 @@
                                                 <tr>
                                                     <th>ID</th>
                                                     <th>Name</th>
-                                                    <th>Description</th>
                                                     <th>Location</th>
                                                     <th>Start Date</th>
                                                     <th>End Date</th>
@@ -49,7 +74,6 @@
                                                 <tr *ngFor="let event of filteredEvents">
                                                     <td>{{ event.Event_ID }}</td>
                                                     <td>{{ event.Event_Name }}</td>
-                                                    <td>{{ event.Event_Description }}</td>
                                                     <td>{{ event.Event_Location }}</td>
                                                     <td>{{ event.Event_Start_Date | date }}</td>
                                                     <td>{{ event.Event_End_Date | date }}</td>
