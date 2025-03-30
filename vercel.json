@@ -1,9 +1,20 @@
 {
+    "version": 2,
     "builds": [
       {
-        "src": "angular.json",
+        "src": "package.json",
         "use": "@vercel/static-build",
         "config": { "distDir": "dist/angular-boilerplate" }
       }
+    ],
+    "routes": [
+      {
+        "src": "/(assets/.+)",
+        "dest": "/$1"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/index.html"
+      }
     ]
-}
+  }
