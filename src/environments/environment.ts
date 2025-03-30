@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    apiUrl: 'https://juanbayan.onrender.com' // Use live backend
+    apiUrl: 'https://verame-capstone-backend-backup.onrender.com' // Use live backend
   };
