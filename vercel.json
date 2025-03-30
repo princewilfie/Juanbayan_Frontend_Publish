@@ -5,14 +5,14 @@
         "src": "package.json",
         "use": "@vercel/static-build",
         "config": { 
+          "buildCommand": "npm run vercel-build",
           "distDir": "dist/angular-boilerplate/browser"
         }
       }
     ],
     "routes": [
       {
-        "src": "/(assets/.+)",
-        "dest": "/$1"
+        "handle": "filesystem"
       },
       {
         "src": "/(.*)",
