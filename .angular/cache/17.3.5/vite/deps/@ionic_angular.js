@@ -1,19 +1,4 @@
-import "./chunk-53LWSOII.js";
 import "./chunk-AN6QZJ65.js";
-import {
-  LIFECYCLE_DID_ENTER,
-  LIFECYCLE_DID_LEAVE,
-  LIFECYCLE_WILL_ENTER,
-  LIFECYCLE_WILL_LEAVE,
-  LIFECYCLE_WILL_UNLOAD,
-  componentOnReady,
-  createAnimation,
-  doc,
-  getIonMode,
-  getPlatforms,
-  isPlatform,
-  printIonWarning
-} from "./chunk-TJOIZZWA.js";
 import {
   iosTransitionAnimation
 } from "./chunk-2QWRM6MR.js";
@@ -36,6 +21,21 @@ import {
   isPlatform as isPlatform2,
   printIonWarning as printIonWarning2
 } from "./chunk-NR554Z3W.js";
+import "./chunk-53LWSOII.js";
+import {
+  LIFECYCLE_DID_ENTER,
+  LIFECYCLE_DID_LEAVE,
+  LIFECYCLE_WILL_ENTER,
+  LIFECYCLE_WILL_LEAVE,
+  LIFECYCLE_WILL_UNLOAD,
+  componentOnReady,
+  createAnimation,
+  doc,
+  getIonMode,
+  getPlatforms,
+  isPlatform,
+  printIonWarning
+} from "./chunk-TJOIZZWA.js";
 import {
   ActivatedRoute,
   ChildrenOutletContexts,
